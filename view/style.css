@@ -1,0 +1,24 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Inter', serif;
+	font-optical-sizing: auto;
+	font-weight: 300;
+	font-style: normal;
+}
+.logo{
+  font-family: "Gentium Book Plus", serif;
+  font-weight: 400;
+}
+
+.bold {
+	font-weight: bold;
+}
+.italic {
+	font-style: italic;
+}
+
+.autore-libro{
+    font-style: italic;
+    font-size: 0.9em;
+}

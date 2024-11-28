@@ -1,14 +1,80 @@
-body {
+:root {
+	--primary-color: #f7e6c0;
+}
+
+* {
 	margin: 0;
 	padding: 0;
+}
+
+body {
 	font-family: 'Inter', serif;
 	font-optical-sizing: auto;
 	font-weight: 300;
 	font-style: normal;
+
+	display: grid;
+	grid-template-rows: auto auto 1fr auto;
+	min-height: 100vh;
 }
-.logo{
-  font-family: "Gentium Book Plus", serif;
-  font-weight: 400;
+.logo > h1 {
+	font-size: x-large;
+}
+.logo > p {
+	font-size: large;
+}
+.logo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+	font-family: 'Gentium Book Plus', serif;
+}
+
+#menu ul {
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+	list-style-type: none;
+}
+
+header {
+	display: grid;
+	grid-template-columns: 1fr 2fr 1fr;
+	justify-content: space-between;
+	align-items: center;
+	justify-items: center;
+	gap: 2em;
+	padding: 1em;
+}
+header .logo {
+	justify-self: start;
+}
+header > button {
+	justify-self: end;
+}
+
+button {
+
+	padding: 1em 2em;
+	border: 0;
+	border-radius: 0.75rem;
+	background-color: var(--primary-color);
+}
+
+#breadcrumb {
+	justify-self: center;
+	text-align: center;
+	background-color: #ededed;
+	border-radius: 1em;
+}
+
+#breadcrumb > p {
+	padding: 0.5em;
+	margin: 0 5em;
+	font-size: small;
 }
 
 .bold {
@@ -16,9 +82,27 @@ body {
 }
 .italic {
 	font-style: italic;
+	font-weight: 300;
 }
 
-.autore-libro{
-    font-style: italic;
-    font-size: 0.9em;
+.autore-libro {
+	font-style: italic;
+	font-size: 0.9em;
+}
+
+footer {
+	background-color: var(--primary-color);
+	padding: 2em;
+}
+
+/*TEMP PADDING*/
+footer > .logo{
+	padding-top: 10em;
+}
+
+#unipd,
+#nomi {
+	text-align: center;
+	font-size: small;
+	padding-top: 1em;
 }

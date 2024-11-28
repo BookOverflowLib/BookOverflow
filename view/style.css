@@ -12,7 +12,6 @@ body {
 	font-optical-sizing: auto;
 	font-weight: 300;
 	font-style: normal;
-
 	display: grid;
 	grid-template-rows: auto auto 1fr auto;
 	min-height: 100vh;
@@ -24,11 +23,11 @@ body {
 	font-size: large;
 }
 .logo {
-	display: flex;
+	font-family: 'Gentium Book Plus', serif;
+	display: flex; 
 	justify-content: center;
 	align-items: center;
 	gap: 1em;
-	font-family: 'Gentium Book Plus', serif;
 }
 
 #menu ul {
@@ -38,6 +37,14 @@ body {
 	align-items: center;
 	gap: 1em;
 	list-style-type: none;
+}
+
+#menu > ul > li > a {
+	text-decoration: none;
+	color: black;
+}
+#menu > ul > li > a:hover {
+	text-decoration: underline;
 }
 
 header {
@@ -57,7 +64,6 @@ header > button {
 }
 
 button {
-
 	padding: 1em 2em;
 	border: 0;
 	border-radius: 0.75rem;
@@ -96,7 +102,7 @@ footer {
 }
 
 /*TEMP PADDING*/
-footer > .logo{
+footer > .logo {
 	padding-top: 10em;
 }
 
@@ -105,4 +111,32 @@ footer > .logo{
 	text-align: center;
 	font-size: small;
 	padding-top: 1em;
+}
+
+.underline {
+	text-decoration: underline;
+}
+
+main {
+	margin-top: 1em;
+}
+
+#landing {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	padding: 5em;
+	max-width: 70em;
+	margin: auto;
+}
+
+#landing > div > h1 {
+	font-size: 4em;
+	font-family: 'Gentium Book Plus', serif;
+	font-style: italic;
+	line-height: 1.2em;
+}
+
+#landing > div > p {
+	margin-top: 1em;
+	margin-bottom: 1em;
 }

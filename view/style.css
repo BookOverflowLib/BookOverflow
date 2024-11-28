@@ -24,7 +24,7 @@ body {
 }
 .logo {
 	font-family: 'Gentium Book Plus', serif;
-	display: flex; 
+	display: flex;
 	justify-content: center;
 	align-items: center;
 	gap: 1em;
@@ -124,19 +124,71 @@ main {
 #landing {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	padding: 5em;
+	padding: 2em;
 	max-width: 70em;
 	margin: auto;
+	gap: 2em;
+	align-items: center;
 }
 
 #landing > div > h1 {
 	font-size: 4em;
 	font-family: 'Gentium Book Plus', serif;
 	font-style: italic;
-	line-height: 1.2em;
+	line-height: 1.1em;
 }
 
 #landing > div > p {
+	font-size: 1.5em;
 	margin-top: 1em;
 	margin-bottom: 1em;
+}
+
+#landing > img {
+	border-radius: 1em;
+	/* min-width: 10em; */
+	width: 45vw;
+	max-width: 40em;
+	overflow: hidden;
+	mask-image: url('/assets/imgs/blob-mask2.svg');
+}
+
+#piu-scambiati {
+	background-color: #f7e6c0;
+	padding: 2em;
+	gap: 2em;
+}
+
+#piu-scambiati > article {
+	max-width: 55em;
+	margin:auto
+}
+
+.carosello-libri {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 1em;
+	margin-top: 1em;
+}
+
+.titolo-libro {
+	font-weight: normal;
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+}
+
+#citazione {
+	padding-top: 5em;
+	padding-bottom: 5em;
+	max-width: 30em;
+	margin: auto;
+}
+
+#citazione > blockquote {
+	font-style: italic;
+	font-size: 2em;
+}
+
+.serif {
+	font-family: 'Gentium Book Plus', serif;
 }

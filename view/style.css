@@ -64,10 +64,11 @@ header > button {
 }
 
 button {
-	padding: 1em 2em;
+	padding: 0.8em 2em;
 	border: 0;
 	border-radius: 0.75rem;
 	background-color: var(--primary-color);
+	font-size: medium;
 }
 
 #breadcrumb {
@@ -123,12 +124,13 @@ main {
 
 #landing {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 2fr auto;
 	padding: 2em;
-	max-width: 70em;
+	max-width: 60em;
 	margin: auto;
 	gap: 2em;
 	align-items: center;
+	justify-items: center;
 }
 
 #landing > div > h1 {
@@ -147,14 +149,14 @@ main {
 #landing > img {
 	border-radius: 1em;
 	/* min-width: 10em; */
-	width: 45vw;
-	max-width: 40em;
+	width: 35vw;
+	max-width: 38em;
 	overflow: hidden;
 	mask-image: url('/assets/imgs/blob-mask2.svg');
 }
 
 #piu-scambiati {
-	background-color: #f7e6c0;
+	background-color: var(--primary-color);
 	padding: 2em;
 	gap: 2em;
 }
@@ -166,9 +168,19 @@ main {
 
 .carosello-libri {
 	display: grid;
+	/* grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); */
 	grid-template-columns: 1fr 1fr 1fr 1fr;
-	gap: 1em;
+	gap: 2.5em;
 	margin-top: 1em;
+	justify-content: space-between;
+	align-items: center;
+	justify-items: center;
+}
+
+.libro > img {
+	border-radius: 0.5em;
+	width: 100%;
+	max-width: 11em;
 }
 
 .titolo-libro {
@@ -178,8 +190,9 @@ main {
 }
 
 #citazione {
-	padding-top: 5em;
-	padding-bottom: 5em;
+	/* padding-top: 5em;
+	padding-bottom: 5em; */
+	padding: 5em;
 	max-width: 30em;
 	margin: auto;
 }
@@ -189,6 +202,51 @@ main {
 	font-size: 2em;
 }
 
+#citazione > blockquote::before {
+	content: url('/assets/imgs/quote.svg');
+}
+
+#citazione > blockquote ::after {
+	content: "”";
+}
+
+#citazione > p {
+	font-size: 1.5em;
+	text-align: right;
+}
+
 .serif {
 	font-family: 'Gentium Book Plus', serif;
+}
+
+.intestazione{
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+}
+
+@media (max-width: 500px) {
+	header {
+		grid-template-columns: 1fr;
+	}
+
+	header > nav, header > button {
+		display: none;
+	}
+
+	#landing {
+		grid-template-columns: 1fr;
+	}
+	#landing > img {
+		width: 70vw;
+	}
+	.carosello-libri {
+		grid-template-columns: 1fr 1fr;
+	}
+	#citazione {
+		font-size: small;
+	}
+	#landing {
+		font-size: small;
+	}
 }

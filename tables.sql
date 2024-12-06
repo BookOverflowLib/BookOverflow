@@ -1,4 +1,3 @@
--- Table: Utente
 CREATE TABLE Utente (
     email VARCHAR(255) PRIMARY KEY,
     password_hash VARCHAR(255) NOT NULL,
@@ -8,9 +7,8 @@ CREATE TABLE Utente (
     citta VARCHAR(100)
 );
 
--- Table: Libri
-CREATE TABLE Libri (
-    isbn CHAR(13) PRIMARY KEY, -- ISBN is typically 13 characters
+CREATE TABLE Libro (
+    isbn CHAR(13) PRIMARY KEY,
     titolo VARCHAR(255) NOT NULL,
     autore VARCHAR(255),
     editore VARCHAR(255),
@@ -19,27 +17,24 @@ CREATE TABLE Libri (
     lingua VARCHAR(50)
 );
 
--- Table: Copia
 CREATE TABLE Copia (
     ID INT PRIMARY KEY AUTO_INCREMENT,
     ISBN CHAR(13),
-    condizioni VARCHAR(255),
-    disponibile BOOLEAN DEFAULT TRUE, -- Derived column for simplicity
+    disponibile BOOLEAN DEFAULT TRUE,
 
-    FOREIGN KEY (ISBN) REFERENCES Libri(isbn)
+    FOREIGN KEY (ISBN) REFERENCES Libro(isbn)
+    --condizioni VARCHAR(255),   -- Dobbiamo decidere i valori dell'ENUM
 );
 
--- Table: Desiderati
 CREATE TABLE Desiderati (
     email VARCHAR(255),
     ISBN CHAR(13),
 
     PRIMARY KEY (email, ISBN),
     FOREIGN KEY (email) REFERENCES Utente(email),
-    FOREIGN KEY (ISBN) REFERENCES Libri(isbn)
+    FOREIGN KEY (ISBN) REFERENCES Libro(isbn)
 );
 
--- Table: Posseduti
 CREATE TABLE Posseduti (
     email VARCHAR(255),
     idCopia INT,
@@ -49,10 +44,17 @@ CREATE TABLE Posseduti (
     FOREIGN KEY (idCopia) REFERENCES Copia(ID)
 );
 
--- Table: Scambio
 CREATE TABLE Scambio (
     emailProponente VARCHAR(255),
     emailAccettatore VARCHAR(255),
     idCopiaProp INT,
     idCopiaAcc INT,
-    data
+    dataProposta DATE, 
+    dataConclusione DATE, 
+
+    PRIMARY KEY (emailProponente, emailAccettatore, idCopiaProp, idCopiaAcc, dataProposta),
+    FOREIGN KEY (emailProponente) REFERENCES Utente(email),
+    FOREIGN KEY (emailAccettatore) REFERENCES Utente(email),
+    FOREIGN KEY (idCopiaProp) REFERENCES Copia(ID),
+    FOREIGN KEY (idCopiaAcc) REFERENCES Copia(ID)
+);

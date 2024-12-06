@@ -1,0 +1,252 @@
+:root {
+	--primary-color: #f7e6c0;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Inter', serif;
+	font-optical-sizing: auto;
+	font-weight: 300;
+	font-style: normal;
+	display: grid;
+	grid-template-rows: auto auto 1fr auto;
+	min-height: 100vh;
+}
+.logo > h1 {
+	font-size: x-large;
+}
+.logo > p {
+	font-size: large;
+}
+.logo {
+	font-family: 'Gentium Book Plus', serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+}
+
+#menu ul {
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+	list-style-type: none;
+}
+
+#menu > ul > li > a {
+	text-decoration: none;
+	color: black;
+}
+#menu > ul > li > a:hover {
+	text-decoration: underline;
+}
+
+header {
+	display: grid;
+	grid-template-columns: 1fr 2fr 1fr;
+	justify-content: space-between;
+	align-items: center;
+	justify-items: center;
+	gap: 2em;
+	padding: 1em;
+}
+header .logo {
+	justify-self: start;
+}
+header > button {
+	justify-self: end;
+}
+
+button {
+	padding: 0.8em 2em;
+	border: 0;
+	border-radius: 0.75rem;
+	background-color: var(--primary-color);
+	font-size: medium;
+}
+
+#breadcrumb {
+	justify-self: center;
+	text-align: center;
+	background-color: #ededed;
+	border-radius: 1em;
+}
+
+#breadcrumb > p {
+	padding: 0.5em;
+	margin: 0 5em;
+	font-size: small;
+}
+
+.bold {
+	font-weight: bold;
+}
+.italic {
+	font-style: italic;
+	font-weight: 300;
+}
+
+.autore-libro {
+	font-style: italic;
+	font-size: 0.9em;
+}
+
+footer {
+	background-color: var(--primary-color);
+	padding: 2em;
+}
+
+/*TEMP PADDING*/
+footer > .logo {
+	padding-top: 10em;
+}
+
+#unipd,
+#nomi {
+	text-align: center;
+	font-size: small;
+	padding-top: 1em;
+}
+
+.underline {
+	text-decoration: underline;
+}
+
+main {
+	margin-top: 1em;
+}
+
+#landing {
+	display: grid;
+	grid-template-columns: 2fr auto;
+	padding: 2em;
+	max-width: 60em;
+	margin: auto;
+	gap: 2em;
+	align-items: center;
+	justify-items: center;
+}
+
+#landing > div > h1 {
+	font-size: 4em;
+	font-family: 'Gentium Book Plus', serif;
+	font-style: italic;
+	line-height: 1.1em;
+}
+
+#landing > div > p {
+	font-size: 1.5em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+#landing > img {
+	border-radius: 1em;
+	/* min-width: 10em; */
+	width: 35vw;
+	max-width: 38em;
+	overflow: hidden;
+	mask-image: url('/assets/imgs/blob-mask2.svg');
+}
+
+#piu-scambiati {
+	background-color: var(--primary-color);
+	padding: 2em;
+	gap: 2em;
+}
+
+#piu-scambiati > article {
+	max-width: 55em;
+	margin:auto
+}
+
+.carosello-libri {
+	display: grid;
+	/* grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); */
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 2.5em;
+	margin-top: 1em;
+	justify-content: space-between;
+	align-items: center;
+	justify-items: center;
+}
+
+.libro > img {
+	border-radius: 0.5em;
+	width: 100%;
+	max-width: 11em;
+}
+
+.titolo-libro {
+	font-weight: normal;
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+}
+
+#citazione {
+	/* padding-top: 5em;
+	padding-bottom: 5em; */
+	padding: 5em;
+	max-width: 30em;
+	margin: auto;
+}
+
+#citazione > blockquote {
+	font-style: italic;
+	font-size: 2em;
+}
+
+#citazione > blockquote::before {
+	content: url('/assets/imgs/quote.svg');
+}
+
+#citazione > blockquote ::after {
+	content: "”";
+}
+
+#citazione > p {
+	font-size: 1.5em;
+	text-align: right;
+}
+
+.serif {
+	font-family: 'Gentium Book Plus', serif;
+}
+
+.intestazione{
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+}
+
+@media (max-width: 500px) {
+	header {
+		grid-template-columns: 1fr;
+	}
+
+	header > nav, header > button {
+		display: none;
+	}
+
+	#landing {
+		grid-template-columns: 1fr;
+	}
+	#landing > img {
+		width: 70vw;
+	}
+	.carosello-libri {
+		grid-template-columns: 1fr 1fr;
+	}
+	#citazione {
+		font-size: small;
+	}
+	#landing {
+		font-size: small;
+	}
+}

@@ -1,6 +1,13 @@
 :root {
+<<<<<<< HEAD
 	--primary-color: hsl(41, 77%, 86%);
 	--hover-color: hsl(41, 77%, 75%);
+=======
+	--primary-color: #f7e6c0;
+	--gray: hsl(0, 0%, 93%);
+	--dark-gray: hsl(0, 0%, 70%);
+	--light-gray:hsl(0, 0%, 94%);
+>>>>>>> d883cd0 (modifiche login e sign-in)
 }
 
 * {
@@ -92,7 +99,7 @@ button {
 #breadcrumb {
 	justify-self: center;
 	text-align: center;
-	background-color: #ededed;
+	background-color: var(--gray);
 	border-radius: 1em;
 }
 
@@ -243,6 +250,15 @@ main {
 	grid-template-columns: 1fr auto;
 	align-items: center;
 }
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.small{
+	font-size: small;
+} 
+
 
 /* PROFILO */
 .dati-profilo {
@@ -304,13 +320,50 @@ main {
 	gap: 0.5em;
 }
 
+fieldset {
+	border: none;
+}
+
 .login-data {
+	margin-top: 0.5em;
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;
 }
+.login-data > button {
+	margin-left: 50%;
+}
 
-.sr-only {
+input {
+	background-color: var(--gray);
+	min-height: 2.5em;
+	border-radius: 0.5em;
+	border-style: none;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+
+}
+
+
+section>p>a{
+	color:black;
+}
+
+.nome-cognome{
+	display: flex;
+	gap:1em;
+	
+}
+.nome-cognome>div{
+	display: flex;
+	flex-direction: column;
+	gap:0.5em;
+
+}
+
+
+.sr-only,
+.salta-al-contenuto {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -321,6 +374,16 @@ main {
 	border-width: 0;
 	clip: rect(0, 0, 0, 0);
 }
+
+.salta-al-contenuto:focus {
+	z-index: 999;
+	clip: auto;
+	width: auto;
+	height: auto;
+	padding: 0.5em;
+}
+
+
 
 @media (max-width: 500px) {
 	header {

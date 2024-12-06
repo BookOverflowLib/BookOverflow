@@ -1,12 +1,13 @@
-CREATE TABLE Utente (
-    email VARCHAR(255) PRIMARY KEY,
-    password_hash VARCHAR(255) NOT NULL, -- Password hashing will be done in PHP
-    password_salt VARCHAR(255) NOT NULL,
-    username VARCHAR(100) NOT NULL, 
-    nome VARCHAR(100),
-    cognome VARCHAR(100),
-    citta VARCHAR(100)
-);
+CREATE TABLE
+    Utente (
+        email VARCHAR(255) PRIMARY KEY,
+        password_hash VARCHAR(255) NOT NULL, -- Password hashing will be done in PHP
+        password_salt VARCHAR(255) NOT NULL,
+        username VARCHAR(100) NOT NULL,
+        nome VARCHAR(100),
+        cognome VARCHAR(100),
+        citta VARCHAR(100)
+    );
 
 CREATE TABLE
     Libro (
@@ -42,26 +43,32 @@ CREATE TABLE
         FOREIGN KEY (ISBN) REFERENCES Libro (isbn)
     );
 
-CREATE TABLE Posseduti (
-    email VARCHAR(255),
-    idCopia INT,
+CREATE TABLE
+    Posseduti (
+        email VARCHAR(255),
+        idCopia INT,
+        PRIMARY KEY (eamil, idCopia),
+        FOREIGN KEY (email) REFERENCES Utente (email),
+        FOREIGN KEY (idCopia) REFERENCES Copia (ID)
+    );
 
-    PRIMARY KEY (eamil, idCopia),
-    FOREIGN KEY (email) REFERENCES Utente(email),
-    FOREIGN KEY (idCopia) REFERENCES Copia(ID)
-);
-
-CREATE TABLE Scambio (
-    emailProponente VARCHAR(255),
-    emailAccettatore VARCHAR(255),
-    idCopiaProp INT,
-    idCopiaAcc INT,
-    dataProposta DATE, 
-    DataConclusione DATE, 
-
-    PRIMARY KEY (emailProponente, emailAccettatore, IdCopia1, IdCopia2, dataProposta),
-    FOREIGN KEY (emailProponente) REFERENCES Utente(email),
-    FOREIGN KEY (emailAccettatore) REFERENCES Utente(email),
-    FOREIGN KEY (IdCopiaProp) REFERENCES Copia(ID),
-    FOREIGN KEY (IdCopiaAcc) REFERENCES Copia(ID)
-);
+CREATE TABLE
+    Scambio (
+        emailProponente VARCHAR(255),
+        emailAccettatore VARCHAR(255),
+        idCopiaProp INT,
+        idCopiaAcc INT,
+        dataProposta DATE,
+        DataConclusione DATE,
+        PRIMARY KEY (
+            emailProponente,
+            emailAccettatore,
+            IdCopiaProp,
+            IdCopiaAcc,
+            dataProposta
+        ),
+        FOREIGN KEY (emailProponente) REFERENCES Utente (email),
+        FOREIGN KEY (emailAccettatore) REFERENCES Utente (email),
+        FOREIGN KEY (idCopiaProp) REFERENCES Copia (ID),
+        FOREIGN KEY (idCopiaAcc) REFERENCES Copia (ID)
+    );

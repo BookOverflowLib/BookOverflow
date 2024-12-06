@@ -1,18 +1,19 @@
 CREATE TABLE
     Utente (
         email VARCHAR(255) PRIMARY KEY,
-         -- Password hashing will be done in PHP
-        password_hash VARCHAR(255) NOT NULL,
-        password_salt VARCHAR(255) NOT NULL,
+         -- l'hashing verrà implementato in PHP, la lunghezza dell'hash dovrebbe essere 60 mentre quella del salt 22
+        password_hash CHAR(60) NOT NULL,
+        password_salt CHAR(22) NOT NULL,
         username VARCHAR(100) UNIQUE NOT NULL,
         nome VARCHAR(100),
         cognome VARCHAR(100),
-        citta VARCHAR(100)
+        citta VARCHAR(50)
     );
 
 CREATE TABLE
     Libro (
-        ISBN CHAR(13) PRIMARY KEY,
+        -- la lunghezza dell'ISBN può essere 10 o 13 
+        ISBN VARCHAR(13) PRIMARY KEY,
         titolo VARCHAR(255) NOT NULL,
         autore VARCHAR(255),
         editore VARCHAR(255),
@@ -52,10 +53,10 @@ CREATE TABLE
     Scambio (
         -- ID al posto di pk(emailProponente, emailAccettatore, idCopiaProp, idCopiaAcc, dataProposta)
         ID INT PRIMARY KEY AUTO_INCREMENT,
-        emailProponente VARCHAR(255),
-        emailAccettatore VARCHAR(255),
-        idCopiaProp INT,
-        idCopiaAcc INT,
+        emailProponente VARCHAR(255) NOT NULL,
+        emailAccettatore VARCHAR(255) NOT NULL,
+        idCopiaProp INT NOT NULL,
+        idCopiaAcc INT NOT NULL,
         dataProposta DATE DEFAULT CURRENT_DATE,
         dataConclusione DATE,
         FOREIGN KEY (emailProponente) REFERENCES Utente (email),
@@ -70,7 +71,7 @@ CREATE TABLE
         emailRecensore VARCHAR(255),
         idScambio INT,
         dataPubblicazione DATE DEFAULT CURRENT_DATE, 
-        valutazione TINYINT CHECK (valutazione >= 1 AND valutazione <= 5),
+        valutazione TINYINT UNSIGNED CHECK (valutazione >= 1 AND valutazione <= 5),
         contenuto TEXT, -- 65k caratteri
         FOREIGN KEY (emailRecensore) REFERENCES Utente (email),
         FOREIGN KEY (idScambio) REFERENCES Scambio (ID)

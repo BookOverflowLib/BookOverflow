@@ -170,7 +170,7 @@ main {
 
 #piu-scambiati>article {
 	max-width: 55em;
-	margin: auto
+	margin: auto;
 }
 
 .carosello-libri {
@@ -213,8 +213,8 @@ main {
 	content: url('/assets/imgs/quote.svg');
 }
 
-#citazione>blockquote ::after {
-	content: "”";
+#citazione > blockquote ::after {
+	content: '”';
 }
 
 #citazione>p {
@@ -226,10 +226,26 @@ main {
 	font-family: 'Gentium Book Plus', serif;
 }
 
-.intestazione {
+.intestazione  {
 	display: grid;
 	grid-template-columns: 1fr auto;
 	align-items: center;
+}
+
+/* PROFILO */
+.dati-profilo {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	justify-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: fit-content;
+	gap: 2em;
+}
+.dati-profilo > img {
+	border-radius: 50%;
+	aspect-ratio: 1/1;
+	
 }
 
 .login-signin {
@@ -270,8 +286,8 @@ main {
 		grid-template-columns: 1fr;
 	}
 
-	header>nav,
-	header>button {
+	header > nav,
+	header > button {
 		display: none;
 	}
 

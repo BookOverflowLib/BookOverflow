@@ -2,6 +2,7 @@
 CREATE TABLE Utente (
     email VARCHAR(255) PRIMARY KEY,
     password_hash VARCHAR(255) NOT NULL,
+    username VARCHAR(100) NOT NULL,
     nome VARCHAR(100),
     cognome VARCHAR(100),
     citta VARCHAR(100)
@@ -41,17 +42,17 @@ CREATE TABLE Desiderati (
 -- Table: Posseduti
 CREATE TABLE Posseduti (
     email VARCHAR(255),
-    IdCopia INT,
+    idCopia INT,
 
-    PRIMARY KEY (email, IdCopia),
+    PRIMARY KEY (email, idCopia),
     FOREIGN KEY (email) REFERENCES Utente(email),
-    FOREIGN KEY (IdCopia) REFERENCES Copia(ID)
+    FOREIGN KEY (idCopia) REFERENCES Copia(ID)
 );
 
 -- Table: Scambio
 CREATE TABLE Scambio (
     emailProponente VARCHAR(255),
     emailAccettatore VARCHAR(255),
-    IdCopia1 INT,
-    IdCopia2 INT,
+    idCopiaProp INT,
+    idCopiaAcc INT,
     data

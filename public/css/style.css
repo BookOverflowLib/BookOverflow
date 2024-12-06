@@ -62,7 +62,7 @@ body {
 	list-style-type: none;
 }
 
-#menu > ul > li > a {
+#menu>ul>li>a {
 	text-decoration: none;
 	color: black;
 }
@@ -104,7 +104,7 @@ button {
 	border-radius: 1em;
 }
 
-#breadcrumb > p {
+#breadcrumb>p {
 	padding: 0.5em;
 	margin: 0 5em;
 	font-size: small;
@@ -130,7 +130,7 @@ footer {
 }
 
 /*TEMP PADDING*/
-footer > .logo {
+footer>.logo {
 	padding-top: 10em;
 }
 
@@ -160,20 +160,20 @@ main {
 	justify-items: center;
 }
 
-#landing > div > h1 {
+#landing>div>h1 {
 	font-size: 4em;
 	font-family: 'Gentium Book Plus', serif;
 	font-style: italic;
 	line-height: 1.1em;
 }
 
-#landing > div > p {
+#landing>div>p {
 	font-size: 1.5em;
 	margin-top: 1em;
 	margin-bottom: 1.5em;
 }
 
-#landing > img {
+#landing>img {
 	border-radius: 1em;
 	/* min-width: 10em; */
 	width: 35vw;
@@ -188,7 +188,7 @@ main {
 	gap: 2em;
 }
 
-#piu-scambiati > article {
+#piu-scambiati>article {
 	max-width: 55em;
 	margin: auto;
 }
@@ -204,7 +204,7 @@ main {
 	justify-items: center;
 }
 
-.libro > img {
+.libro>img {
 	border-radius: 0.5em;
 	width: 100%;
 	max-width: 11em;
@@ -224,20 +224,20 @@ main {
 	margin: auto;
 }
 
-#citazione > blockquote {
+#citazione>blockquote {
 	font-style: italic;
 	font-size: 2em;
 }
 
-#citazione > blockquote::before {
+#citazione>blockquote::before {
 	content: url('/assets/imgs/quote.svg');
 }
 
-#citazione > blockquote ::after {
-	content: '”';
+#citazione>blockquote ::after {
+	content: "”";
 }
 
-#citazione > p {
+#citazione>p {
 	font-size: 1.5em;
 	text-align: right;
 }
@@ -321,12 +321,20 @@ main {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	max-width: 20em;
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: 2em;
-	padding-right: 2em;
-	gap: 0.5em;
+	min-width: 15em;
+	max-width: 30em;
+	gap: 1em;
+	border: 1px solid var(--light-gray);
+	border-radius: 1em;
+	padding: 1.5em 2em;
+	margin-bottom: 20em;
+	margin-top: 3em;
+}
+
+.login-signin  input:focus{
+	/* border: 3px solid black; */
+	outline-color: var(--dark-gray);
+
 }
 
 fieldset {

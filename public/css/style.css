@@ -1,13 +1,10 @@
 :root {
-<<<<<<< HEAD
-	--primary-color: hsl(41, 77%, 86%);
-	--hover-color: hsl(41, 77%, 75%);
-=======
+	--primary-color: hsl(40, 77%, 86%);
+	--hover-color: #f0d18f;
 	--primary-color: #f7e6c0;
 	--gray: hsl(0, 0%, 93%);
 	--dark-gray: hsl(0, 0%, 70%);
 	--light-gray:hsl(0, 0%, 94%);
->>>>>>> d883cd0 (modifiche login e sign-in)
 }
 
 * {
@@ -305,6 +302,14 @@ main {
 	display: flex;
 	align-items: baseline;
 	gap: 0.5em;
+}
+
+.stars {
+	user-select: none;
+}
+
+.stars > img {
+	filter: hsl(41, 77%, 86%);
 }
 
 /* LOGIN */

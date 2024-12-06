@@ -1,5 +1,6 @@
 :root {
-	--primary-color: #f7e6c0;
+	--primary-color: hsl(41, 77%, 86%);
+	--hover-color: hsl(41, 77%, 75%);
 }
 
 * {
@@ -17,11 +18,22 @@ body {
 	min-height: 100vh;
 }
 
-.logo>h1 {
+.button-layout {
+	padding: 1em;
+	background: var(--primary-color);
+	border-radius: 1em;
+	text-decoration: none;
+	color: black;
+}
+.button-layout:hover {
+	background: var(--hover-color);
+}
+
+.logo > h1 {
 	font-size: x-large;
 }
 
-.logo>p {
+.logo > p {
 	font-size: large;
 }
 
@@ -42,12 +54,12 @@ body {
 	list-style-type: none;
 }
 
-#menu>ul>li>a {
+#menu > ul > li > a {
 	text-decoration: none;
 	color: black;
 }
 
-#menu>ul>li>a:hover {
+#menu > ul > li > a:hover {
 	text-decoration: underline;
 }
 
@@ -65,7 +77,7 @@ header .logo {
 	justify-self: start;
 }
 
-header>button {
+header > button {
 	justify-self: end;
 }
 
@@ -84,7 +96,7 @@ button {
 	border-radius: 1em;
 }
 
-#breadcrumb>p {
+#breadcrumb > p {
 	padding: 0.5em;
 	margin: 0 5em;
 	font-size: small;
@@ -110,7 +122,7 @@ footer {
 }
 
 /*TEMP PADDING*/
-footer>.logo {
+footer > .logo {
 	padding-top: 10em;
 }
 
@@ -140,20 +152,20 @@ main {
 	justify-items: center;
 }
 
-#landing>div>h1 {
+#landing > div > h1 {
 	font-size: 4em;
 	font-family: 'Gentium Book Plus', serif;
 	font-style: italic;
 	line-height: 1.1em;
 }
 
-#landing>div>p {
+#landing > div > p {
 	font-size: 1.5em;
 	margin-top: 1em;
-	margin-bottom: 1em;
+	margin-bottom: 1.5em;
 }
 
-#landing>img {
+#landing > img {
 	border-radius: 1em;
 	/* min-width: 10em; */
 	width: 35vw;
@@ -168,7 +180,7 @@ main {
 	gap: 2em;
 }
 
-#piu-scambiati>article {
+#piu-scambiati > article {
 	max-width: 55em;
 	margin: auto;
 }
@@ -184,7 +196,7 @@ main {
 	justify-items: center;
 }
 
-.libro>img {
+.libro > img {
 	border-radius: 0.5em;
 	width: 100%;
 	max-width: 11em;
@@ -204,12 +216,12 @@ main {
 	margin: auto;
 }
 
-#citazione>blockquote {
+#citazione > blockquote {
 	font-style: italic;
 	font-size: 2em;
 }
 
-#citazione>blockquote::before {
+#citazione > blockquote::before {
 	content: url('/assets/imgs/quote.svg');
 }
 
@@ -217,7 +229,7 @@ main {
 	content: '”';
 }
 
-#citazione>p {
+#citazione > p {
 	font-size: 1.5em;
 	text-align: right;
 }
@@ -226,7 +238,7 @@ main {
 	font-family: 'Gentium Book Plus', serif;
 }
 
-.intestazione  {
+.intestazione {
 	display: grid;
 	grid-template-columns: 1fr auto;
 	align-items: center;
@@ -236,18 +248,50 @@ main {
 .dati-profilo {
 	display: grid;
 	grid-template-columns: auto 1fr;
-	justify-items: center;
-	margin-left: auto;
-	margin-right: auto;
-	max-width: fit-content;
+	justify-items: start;
+	max-width: 55em;
 	gap: 2em;
+	margin: auto;
+	padding: 2em;
 }
 .dati-profilo > img {
+	width: 100%;
+	max-width: 10em;
 	border-radius: 50%;
 	aspect-ratio: 1/1;
-	
+	object-fit: cover;
+}
+.dati-profilo > div {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
 }
 
+#libri-offerti {
+	margin: auto;
+	max-width: 55em;
+	padding: 2em;
+}
+
+#lista-desideri {
+	margin: auto;
+	max-width: 55em;
+	padding: 2em;
+}
+
+#storico-scambi {
+	margin: auto;
+	max-width: 55em;
+	padding: 2em;
+}
+
+.user-rating {
+	display: flex;
+	align-items: baseline;
+	gap: 0.5em;
+}
+
+/* LOGIN */
 .login-signin {
 	display: flex;
 	justify-content: center;
@@ -258,8 +302,6 @@ main {
 	padding-left: 2em;
 	padding-right: 2em;
 	gap: 0.5em;
-
-
 }
 
 .login-data {
@@ -278,7 +320,6 @@ main {
 	white-space: nowrap;
 	border-width: 0;
 	clip: rect(0, 0, 0, 0);
-
 }
 
 @media (max-width: 500px) {
@@ -295,7 +336,7 @@ main {
 		grid-template-columns: 1fr;
 	}
 
-	#landing>img {
+	#landing > img {
 		width: 70vw;
 	}
 

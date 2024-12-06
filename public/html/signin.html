@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="Login BookOverflow" />
-    <meta name="description" content="pagina per effettuare login a Bookoveflow" />
+    <meta name="title" content="Sign-in BookOverflow" />
+    <meta name="description" content="pagina per effettuare sign-in a Bookoveflow" />
     <meta name="keywords" content="login, BookOverflow, unipd" />
     <meta name="author" content="BookOverflowLib" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -47,21 +47,33 @@
                 <li><a href="/contatti">Contatti</a></li>
             </ul>
         </nav>
-        <a href="./signin.html" class="button-layout">Registrati</a>
+        <a href="./login.html" class="button-layout">Login</a>
     </header>
     <nav id="breadcrumb">
         <p>
             Ti trovi in :
-            <span lang="en" class="bold">Login</span>
+            <span lang="en" class="bold">Sign-in</span>
         </p>
     </nav>
     <main class="center">
         <section class="login-signin">
-            <h1 class="center">Accedi</h1>
-            <p class="center small">Non hai un <span lang="en">account</span>? <a href="./signin">Registrati</a></p>
+            <h1 class="center">Registrati</h1>
+            <p class="center small">Hai già un <span lang="en">account</span>? <a href="./">Accedi</a></p>
             <form action="" method="post">
                 <fieldset class="login-data">
-                    <legend class="sr-only">Inserisci dati per il <span lang="en">login</span></legend>
+                    <legend class="sr-only">Inserisci dati per il <span lang="en">sign-in</span></legend>
+                    <div class="nome-cognome">
+                        <div>
+                            <label for="nome" class="small">Nome</label>
+                            <input name="nome" id="nome" maxlenght="25" required></input>
+                        </div>
+                        <div >
+                            <label for="cognome" class="small">Cognome</label>
+                            <input name="cognome" id="cognome" maxlenght="25" required></input> 
+                        </div>
+                    </div>
+
+
                     <label for="username" class="small">Username</label>
                     <input name="username" id="username" maxlenght="25" required></input>
 

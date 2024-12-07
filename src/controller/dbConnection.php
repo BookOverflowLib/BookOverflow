@@ -2,8 +2,8 @@
 
 namespace DB;
 
+// TODO: settare namespace che venga usato
 use mysqli;
-
 class DBAccess
 {
     private const HOST_DB = "localhost";
@@ -38,7 +38,7 @@ class DBAccess
 
     public function getList()
     {
-        // usare prepare statement
+        // TODO: usare prepare statement
         $query = "";
         $queryRes = mysqli_query($this->connection, $query or die(mysqli_error($this->connection)));
 
@@ -56,7 +56,7 @@ class DBAccess
 
     public function insertNewElement()
     {
-        // usare prepare statement
+        // TODO: usare prepare statement
         $queryIns = "";
         $queryRes = mysqli_query($this->connection, $queryIns or die(mysqli_error($this->connection)));
 

@@ -1,10 +1,19 @@
 :root {
+	--primary-color: hsl(40, 77%, 86%);
+	--hover-color: #f0d18f;
 	--primary-color: #f7e6c0;
+	--gray: hsl(0, 0%, 93%);
+	--dark-gray: hsl(0, 0%, 70%);
+	--light-gray:hsl(0, 0%, 94%);
 }
 
 * {
 	margin: 0;
 	padding: 0;
+}
+
+html{
+	scroll-behavior: smooth;
 }
 
 body {
@@ -16,12 +25,26 @@ body {
 	grid-template-rows: auto auto 1fr auto;
 	min-height: 100vh;
 }
+
+.button-layout {
+	padding: 1em;
+	background: var(--primary-color);
+	border-radius: 1em;
+	text-decoration: none;
+	color: black;
+}
+.button-layout:hover {
+	background: var(--hover-color);
+}
+
 .logo > h1 {
 	font-size: x-large;
 }
+
 .logo > p {
 	font-size: large;
 }
+
 .logo {
 	font-family: 'Gentium Book Plus', serif;
 	display: flex;
@@ -39,10 +62,11 @@ body {
 	list-style-type: none;
 }
 
-#menu > ul > li > a {
+#menu>ul>li>a {
 	text-decoration: none;
 	color: black;
 }
+
 #menu > ul > li > a:hover {
 	text-decoration: underline;
 }
@@ -56,9 +80,11 @@ header {
 	gap: 2em;
 	padding: 1em;
 }
+
 header .logo {
 	justify-self: start;
 }
+
 header > button {
 	justify-self: end;
 }
@@ -74,11 +100,11 @@ button {
 #breadcrumb {
 	justify-self: center;
 	text-align: center;
-	background-color: #ededed;
+	background-color: var(--gray);
 	border-radius: 1em;
 }
 
-#breadcrumb > p {
+#breadcrumb>p {
 	padding: 0.5em;
 	margin: 0 5em;
 	font-size: small;
@@ -87,6 +113,7 @@ button {
 .bold {
 	font-weight: bold;
 }
+
 .italic {
 	font-style: italic;
 	font-weight: 300;
@@ -103,7 +130,7 @@ footer {
 }
 
 /*TEMP PADDING*/
-footer > .logo {
+footer>.logo {
 	padding-top: 10em;
 }
 
@@ -133,20 +160,20 @@ main {
 	justify-items: center;
 }
 
-#landing > div > h1 {
+#landing>div>h1 {
 	font-size: 4em;
 	font-family: 'Gentium Book Plus', serif;
 	font-style: italic;
 	line-height: 1.1em;
 }
 
-#landing > div > p {
+#landing>div>p {
 	font-size: 1.5em;
 	margin-top: 1em;
-	margin-bottom: 1em;
+	margin-bottom: 1.5em;
 }
 
-#landing > img {
+#landing>img {
 	border-radius: 1em;
 	/* min-width: 10em; */
 	width: 35vw;
@@ -161,9 +188,9 @@ main {
 	gap: 2em;
 }
 
-#piu-scambiati > article {
+#piu-scambiati>article {
 	max-width: 55em;
-	margin:auto
+	margin: auto;
 }
 
 .carosello-libri {
@@ -177,7 +204,7 @@ main {
 	justify-items: center;
 }
 
-.libro > img {
+.libro>img {
 	border-radius: 0.5em;
 	width: 100%;
 	max-width: 11em;
@@ -197,20 +224,20 @@ main {
 	margin: auto;
 }
 
-#citazione > blockquote {
+#citazione>blockquote {
 	font-style: italic;
 	font-size: 2em;
 }
 
-#citazione > blockquote::before {
+#citazione>blockquote::before {
 	content: url('/assets/imgs/quote.svg');
 }
 
-#citazione > blockquote ::after {
+#citazione>blockquote ::after {
 	content: "”";
 }
 
-#citazione > p {
+#citazione>p {
 	font-size: 1.5em;
 	text-align: right;
 }
@@ -219,33 +246,188 @@ main {
 	font-family: 'Gentium Book Plus', serif;
 }
 
-.intestazione{
+.intestazione {
 	display: grid;
 	grid-template-columns: 1fr auto;
 	align-items: center;
 }
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.small{
+	font-size: small;
+} 
+
+
+/* PROFILO */
+.dati-profilo {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	justify-items: start;
+	max-width: 55em;
+	gap: 2em;
+	margin: auto;
+	padding: 2em;
+}
+.dati-profilo > img {
+	width: 100%;
+	max-width: 10em;
+	border-radius: 50%;
+	aspect-ratio: 1/1;
+	object-fit: cover;
+}
+.dati-profilo > div {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+}
+
+#libri-offerti {
+	margin: auto;
+	max-width: 55em;
+	padding: 2em;
+}
+
+#lista-desideri {
+	margin: auto;
+	max-width: 55em;
+	padding: 2em;
+}
+
+#storico-scambi {
+	margin: auto;
+	max-width: 55em;
+	padding: 2em;
+}
+
+.user-rating {
+	display: flex;
+	align-items: baseline;
+	gap: 0.5em;
+}
+
+.stars {
+	user-select: none;
+}
+
+.stars > img {
+	filter: hsl(41, 77%, 86%);
+}
+
+/* LOGIN */
+.login-signin {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	min-width: 15em;
+	max-width: 30em;
+	gap: 1em;
+	border: 1px solid var(--light-gray);
+	border-radius: 1em;
+	padding: 1.5em 2em;
+	margin-bottom: 20em;
+	margin-top: 3em;
+}
+
+.login-signin  input:focus{
+	/* border: 3px solid black; */
+	outline-color: var(--dark-gray);
+
+}
+
+fieldset {
+	border: none;
+}
+
+.login-data {
+	margin-top: 0.5em;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+}
+.login-data > button {
+	margin-left: 50%;
+}
+
+input {
+	background-color: var(--gray);
+	min-height: 2.5em;
+	border-radius: 0.5em;
+	border-style: none;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+
+}
+
+
+section>p>a{
+	color:black;
+}
+
+.nome-cognome{
+	display: flex;
+	gap:1em;
+	
+}
+.nome-cognome>div{
+	display: flex;
+	flex-direction: column;
+	gap:0.5em;
+
+}
+
+
+.sr-only,
+.salta-al-contenuto {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	white-space: nowrap;
+	border-width: 0;
+	clip: rect(0, 0, 0, 0);
+}
+
+.salta-al-contenuto:focus {
+	z-index: 999;
+	clip: auto;
+	width: auto;
+	height: auto;
+	padding: 0.5em;
+}
+
+
 
 @media (max-width: 500px) {
 	header {
 		grid-template-columns: 1fr;
 	}
 
-	header > nav, header > button {
+	header > nav,
+	header > button {
 		display: none;
 	}
 
 	#landing {
 		grid-template-columns: 1fr;
 	}
+
 	#landing > img {
 		width: 70vw;
 	}
+
 	.carosello-libri {
 		grid-template-columns: 1fr 1fr;
 	}
+
 	#citazione {
 		font-size: small;
 	}
+
 	#landing {
 		font-size: small;
 	}

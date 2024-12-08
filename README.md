@@ -1,7 +1,7 @@
 # BookOverflow
 
 ## Usage
-Run the following commands to start the server inside the project folder:
+Run the following commands inside the project folder to start the apache server:
 ```bash
 docker compose up
 ```

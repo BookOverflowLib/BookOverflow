@@ -1,7 +1,7 @@
 # BookOverflow
 
 ## Usage
-Run the following commands to start the server:
+Run the following commands to start the server inside the project folder:
 ```bash
 docker compose up
 ```
@@ -50,6 +50,7 @@ Connect to the server at `http://localhost:8080/public/index.php`.
 
 ## TODO
 - [ ] nel form di registrazione, implementare l'inserimento della città con suggerimenti
+- [ ] alleggerire foto
 
 ## Note:
 

@@ -1,14 +1,17 @@
-version: '3'	
 name: bookoverflow
 
 services:
   # PHP
   php:
     image: php:8.1-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - 8080:80
     volumes:
-      - ./public/:/var/www/html/
+      - ./:/var/www/html/
 
 #   # MariaDB
 #   db:
@@ -17,8 +20,6 @@ services:
 #     environment:
 #       MYSQL_ROOT_PASSWORD: $[MYSQL_ROOT_PASSWORD]
 #       MYSQL_DATABASE: $[MYSQL_DATABASE]
-#       MYSQL_USER: $[MYSQL_USER]
-#       MYSQL_PASSWORD: $[MYSQL_PASSWORD]
 #     ports:
 #       - "3306:3306"
 #     volumes:

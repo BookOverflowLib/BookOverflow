@@ -1,5 +1,12 @@
 # BookOverflow
 
+## Usage
+Run the following commands to start the server:
+```bash
+docker compose up
+```
+Connect to the server at `http://localhost:8080/public/index.php`.
+
 ## Idee funzionalità
 
 ### Gestione Libri:

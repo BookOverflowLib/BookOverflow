@@ -13,19 +13,19 @@ services:
     volumes:
       - ./:/var/www/html/
 
-#   # MariaDB
-#   db:
-#     image: mariadb:10.6.7
-#     restart: always
-#     environment:
-#       MYSQL_ROOT_PASSWORD: $[MYSQL_ROOT_PASSWORD]
-#       MYSQL_DATABASE: $[MYSQL_DATABASE]
-#     ports:
-#       - "3306:3306"
-#     volumes:
-#       - data:/var/lib/mysql
-#     networks:
-#       - bookoverflow-mariadb-network
+  # MariaDB
+  db:
+    image: mariadb:10.6.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: $[MYSQL_ROOT_PASSWORD]
+      MYSQL_DATABASE: $[MYSQL_DATABASE]
+    ports:
+      - "3306:3306"
+    # volumes:
+    #   - data:/var/lib/mysql
+    networks:
+      - bookoverflow-mariadb-network
 
 #   # PHPMyAdmin
 #   phpmyadmin:
@@ -41,8 +41,8 @@ services:
 #     networks:
 #       - bookoverflow-phpmyadmin-network
 
-# networks:
-#   bookoverflow-mariadb-network:
-#     driver: bridge
-#   mysql-phpmyadmin:
-#     driver: bridge
+networks:
+  bookoverflow-mariadb-network:
+    driver: bridge
+  mysql-phpmyadmin:
+    driver: bridge

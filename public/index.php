@@ -3,7 +3,7 @@ require_once '../src/model/dbAPI.php';
 
 use DB\DBAccess;
 
-$index = file_get_contents('./public/index.php');
+$index = file_get_contents('./html/index.html');
 
 $db = new DBAccess();
 $dbOK = $db->open_connection();

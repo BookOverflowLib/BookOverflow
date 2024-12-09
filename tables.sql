@@ -1,7 +1,7 @@
 CREATE TABLE
     Utente (
         email VARCHAR(255) PRIMARY KEY,
-         -- l'hashing verrà implementato in PHP, la lunghezza dell'hash dovrebbe essere 60 mentre quella del salt 22
+        -- l'hashing verrà implementato in PHP, la lunghezza dell'hash dovrebbe essere 60 mentre quella del salt 22
         password_hash CHAR(60) NOT NULL,
         password_salt CHAR(22) NOT NULL,
         username VARCHAR(100) UNIQUE NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE
         ISBN CHAR(13) NOT NULL,
         proprietario VARCHAR(255) NOT NULL,
         -- utile se un utente vuole mettere tutta la lista dei suoi libri nella piattaforma perché gli altri possano vedere che libri ha, senza però che risultino disponibili per essere scambiati
-        disponibile BOOLEAN DEFAULT TRUE, 
+        disponibile BOOLEAN DEFAULT TRUE,
         condizioni ENUM (
             'nuovo',
             'come nuovo',
@@ -70,8 +70,11 @@ CREATE TABLE
         -- email del recensito derivata dalla tabella scambio
         emailRecensore VARCHAR(255),
         idScambio INT,
-        dataPubblicazione DATE DEFAULT CURRENT_DATE, 
-        valutazione TINYINT UNSIGNED CHECK (valutazione >= 1 AND valutazione <= 5),
+        dataPubblicazione DATE DEFAULT CURRENT_DATE,
+        valutazione TINYINT UNSIGNED CHECK (
+            valutazione >= 1
+            AND valutazione <= 5
+        ),
         contenuto TEXT, -- 65k caratteri
         FOREIGN KEY (emailRecensore) REFERENCES Utente (email),
         FOREIGN KEY (idScambio) REFERENCES Scambio (ID)
@@ -84,4 +87,13 @@ CREATE TABLE
         PRIMARY KEY (emailSeguito, emailSeguace),
         FOREIGN KEY (emailSeguace) REFERENCES Utente (email),
         FOREIGN KEY (emailSeguito) REFERENCES Utente (email)
+    );
+
+CREATE TABLE
+    Immagine (
+        ISBN VARCHAR(13),
+        url VARCHAR(255),
+        isCopertina BOOLEAN DEFAULT FALSE,
+        PRIMARY KEY (ISBN, url),
+        FOREIGN KEY (ISBN) REFERENCES Libro (ISBN)
     );

@@ -4,6 +4,7 @@ namespace DB;
 
 // TODO: settare namespace che venga usato
 use mysqli;
+
 class DBAccess
 {
     private const HOST_DB = "localhost";
@@ -13,7 +14,7 @@ class DBAccess
 
     private $connection;
 
-    public function openDBConnection()
+    public function open_connection()
     {
         // turn on the errors | convert those errors into exceptions
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
@@ -31,15 +32,23 @@ class DBAccess
         // }
     }
 
-    public function closeConnection()
+    public function close_connection()
     {
         mysqli_close($this->connection);
     }
 
-    public function getList()
+    public function get_most_traded_with_cover($limit)
     {
-        // TODO: usare prepare statement
-        $query = "";
+        $query = "SELECT L.ISBN, L.titolo, L.autore, I.url, COUNT(*) AS numero_vendite
+                    FROM Scambio AS S 
+                    JOIN Copia AS CProp ON S.idCopiaProp = CProp.ID
+                    JOIN Copia AS CAcc ON (S.idCopiaAcc = CAcc.ID AND CProp.ID != CAcc.ID) 
+                    JOIN Libro AS L ON (CProp.ISBN = L.ISBN AND CAcc.ISBN = L.ISBN)
+                    JOIN Immagine AS I ON L.ISBN = I.ISBN
+                    WHERE I.isCopertina = TRUE
+                    GROUP BY L.ISBN, L.titolo, L.autore, I.url
+                    ORDER BY numero_vendite DESC
+                    LIMIT " . $limit;
         $queryRes = mysqli_query($this->connection, $query or die(mysqli_error($this->connection)));
 
         if (mysqli_num_rows($queryRes) == 0) {
@@ -54,16 +63,16 @@ class DBAccess
         }
     }
 
-    public function insertNewElement()
-    {
-        // TODO: usare prepare statement
-        $queryIns = "";
-        $queryRes = mysqli_query($this->connection, $queryIns or die(mysqli_error($this->connection)));
+    // public function insertNewElement()
+    // {
+    //     // TODO: usare prepare statement
+    //     $queryIns = "";
+    //     $queryRes = mysqli_query($this->connection, $queryIns or die(mysqli_error($this->connection)));
 
-        if (mysqli_affected_rows($this->connection) > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    //     if (mysqli_affected_rows($this->connection) > 0) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 }

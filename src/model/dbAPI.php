@@ -1,7 +1,5 @@
 <?php
 
-namespace DB;
-
 // TODO: settare namespace che venga usato
 use mysqli;
 
@@ -19,6 +17,11 @@ class DBAccess
         // turn on the errors | convert those errors into exceptions
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
+        try {
+            $this->connection = new mysqli(DBAccess::HOST_DB, DBAccess::USERNAME, DBAccess::PASSWORD, DBAccess::DATABASE_NAME);
+        } catch (mysqli_sql_exception $e) {
+            throw new Exception("Connection error: " . $e->getMessage());
+        }
         $this->connection = mysqli_connect(DBAccess::HOST_DB, DBAccess::USERNAME, DBAccess::PASSWORD, DBAccess::DATABASE_NAME);
 
         // errors check in debug

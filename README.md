@@ -1,10 +1,16 @@
 # BookOverflow
 
 ## Usage
-Run the following commands inside the project folder to start the apache server:
+If it is your first time running this docker or if you did changes to the Dockerfile/docker-compose:
+```bash
+docker compose up --build
+```
+Then you can just use this: 
 ```bash
 docker compose up
 ```
+If you get _permission denied_ error use _sudo_ before the command.
+
 Connect to the server at `http://localhost:8080/public/index.php`.
 
 ## Idee funzionalità

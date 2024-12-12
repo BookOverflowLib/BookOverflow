@@ -19,6 +19,7 @@ services:
       - "3306:3306"
     volumes:
       - ./data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
     networks:
       - bookoverflow-mariadb
 

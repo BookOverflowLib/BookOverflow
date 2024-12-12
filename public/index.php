@@ -1,7 +1,7 @@
 <?php
 require_once '../src/model/dbAPI.php';
 
-use DB\DBAccess;
+use DBAccess;
 
 $index = file_get_contents('./html/index.html');
 

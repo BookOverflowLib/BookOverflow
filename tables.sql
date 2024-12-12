@@ -74,6 +74,7 @@ CREATE TABLE
         contenuto TEXT, -- 65k caratteri
         FOREIGN KEY (emailRecensore) REFERENCES Utente (email),
         FOREIGN KEY (idScambio) REFERENCES Scambio (ID)
+        PRIMARY KEY (emailRecensore, idScambio)
     );
 
 CREATE TABLE

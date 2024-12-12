@@ -1,3 +1,12 @@
+DROP TABLE IF EXISTS Immagine;
+DROP TABLE IF EXISTS Follow;
+DROP TABLE IF EXISTS Recensione;
+DROP TABLE IF EXISTS Scambio;
+DROP TABLE IF EXISTS Desiderio;
+DROP TABLE IF EXISTS Copia;
+DROP TABLE IF EXISTS Libro;
+DROP TABLE IF EXISTS Utente;
+
 CREATE TABLE
     Utente (
         email VARCHAR(255) PRIMARY KEY,
@@ -7,9 +16,8 @@ CREATE TABLE
         username VARCHAR(100) UNIQUE NOT NULL,
         nome VARCHAR(100),
         cognome VARCHAR(100),
-        citta VARCHAR(50)
-        path_immagine VARCHAR(255),
-        FOREIGN KEY (immagine) REFERENCES Immagine (path)
+        citta VARCHAR(50),
+        path_immagine VARCHAR(255)
     );
 
 CREATE TABLE
@@ -22,7 +30,7 @@ CREATE TABLE
         anno YEAR,
         genere VARCHAR(100),
         lingua VARCHAR(50),
-        path_copertina VARCHAR(255),
+        path_copertina VARCHAR(255)
     );
 
 CREATE TABLE
@@ -80,7 +88,7 @@ CREATE TABLE
         ),
         contenuto TEXT, -- 65k caratteri
         FOREIGN KEY (emailRecensore) REFERENCES Utente (email),
-        FOREIGN KEY (idScambio) REFERENCES Scambio (ID)
+        FOREIGN KEY (idScambio) REFERENCES Scambio (ID),
         PRIMARY KEY (emailRecensore, idScambio)
     );
 
@@ -95,7 +103,7 @@ CREATE TABLE
 
 CREATE TABLE
     Immagine (
-        path VARCHAR(255) PRIMARY KEY
+        path VARCHAR(255) PRIMARY KEY,
         idCopia INT,
         FOREIGN KEY (idCopia) REFERENCES Copia (ID)
     );

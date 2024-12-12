@@ -4,7 +4,7 @@
 	--primary-color: #f7e6c0;
 	--gray: hsl(0, 0%, 93%);
 	--dark-gray: hsl(0, 0%, 70%);
-	--light-gray:hsl(0, 0%, 94%);
+	--light-gray: hsl(0, 0%, 94%);
 }
 
 * {
@@ -12,7 +12,7 @@
 	padding: 0;
 }
 
-html{
+html {
 	scroll-behavior: smooth;
 }
 
@@ -62,7 +62,7 @@ body {
 	list-style-type: none;
 }
 
-#menu>ul>li>a {
+#menu > ul > li > a {
 	text-decoration: none;
 	color: black;
 }
@@ -104,7 +104,7 @@ button {
 	border-radius: 1em;
 }
 
-#breadcrumb>p {
+#breadcrumb > p {
 	padding: 0.5em;
 	margin: 0 5em;
 	font-size: small;
@@ -130,7 +130,7 @@ footer {
 }
 
 /*TEMP PADDING*/
-footer>.logo {
+footer > .logo {
 	padding-top: 10em;
 }
 
@@ -160,20 +160,20 @@ main {
 	justify-items: center;
 }
 
-#landing>div>h1 {
+#landing > div > h1 {
 	font-size: 4em;
 	font-family: 'Gentium Book Plus', serif;
 	font-style: italic;
 	line-height: 1.1em;
 }
 
-#landing>div>p {
+#landing > div > p {
 	font-size: 1.5em;
 	margin-top: 1em;
 	margin-bottom: 1.5em;
 }
 
-#landing>img {
+#landing > img {
 	border-radius: 1em;
 	/* min-width: 10em; */
 	width: 35vw;
@@ -188,7 +188,7 @@ main {
 	gap: 2em;
 }
 
-#piu-scambiati>article {
+#piu-scambiati > article {
 	max-width: 55em;
 	margin: auto;
 }
@@ -204,7 +204,7 @@ main {
 	justify-items: center;
 }
 
-.libro>img {
+.libro > img {
 	border-radius: 0.5em;
 	width: 100%;
 	max-width: 11em;
@@ -224,20 +224,20 @@ main {
 	margin: auto;
 }
 
-#citazione>blockquote {
+#citazione > blockquote {
 	font-style: italic;
 	font-size: 2em;
 }
 
-#citazione>blockquote::before {
+#citazione > blockquote::before {
 	content: url('/assets/imgs/quote.svg');
 }
 
-#citazione>blockquote ::after {
-	content: "”";
+#citazione > blockquote ::after {
+	content: '”';
 }
 
-#citazione>p {
+#citazione > p {
 	font-size: 1.5em;
 	text-align: right;
 }
@@ -256,10 +256,9 @@ main {
 	margin-right: auto;
 }
 
-.small{
+.small {
 	font-size: small;
-} 
-
+}
 
 /* PROFILO */
 .dati-profilo {
@@ -310,10 +309,12 @@ main {
 
 .stars {
 	user-select: none;
+	gap: 0.5em;
 }
 
-.stars > img {
+.stars > svg {
 	filter: hsl(41, 77%, 86%);
+	width: 15;
 }
 
 /* LOGIN */
@@ -331,10 +332,9 @@ main {
 	margin-top: 3em;
 }
 
-.login-signin  input:focus{
+.login-signin input:focus {
 	/* border: 3px solid black; */
 	outline-color: var(--dark-gray);
-
 }
 
 fieldset {
@@ -358,26 +358,21 @@ input {
 	border-style: none;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
-
 }
 
-
-section>p>a{
-	color:black;
+section > p > a {
+	color: black;
 }
 
-.nome-cognome{
+.nome-cognome {
 	display: flex;
-	gap:1em;
-	
+	gap: 1em;
 }
-.nome-cognome>div{
+.nome-cognome > div {
 	display: flex;
 	flex-direction: column;
-	gap:0.5em;
-
+	gap: 0.5em;
 }
-
 
 .sr-only,
 .salta-al-contenuto {
@@ -395,12 +390,8 @@ section>p>a{
 .salta-al-contenuto:focus {
 	z-index: 999;
 	clip: auto;
-	width: auto;
-	height: auto;
 	padding: 0.5em;
 }
-
-
 
 @media (max-width: 500px) {
 	header {

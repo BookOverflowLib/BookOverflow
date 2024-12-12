@@ -8,6 +8,8 @@ CREATE TABLE
         nome VARCHAR(100),
         cognome VARCHAR(100),
         citta VARCHAR(50)
+        immagine VARCHAR(255),
+        FOREIGN KEY (immagine) REFERENCES Immagine (path)
     );
 
 CREATE TABLE
@@ -20,6 +22,8 @@ CREATE TABLE
         anno YEAR,
         genere VARCHAR(100),
         lingua VARCHAR(50)
+        immagine VARCHAR(255),
+        FOREIGN KEY (immagine) REFERENCES Immagine (path)
     );
 
 CREATE TABLE
@@ -78,6 +82,7 @@ CREATE TABLE
         contenuto TEXT, -- 65k caratteri
         FOREIGN KEY (emailRecensore) REFERENCES Utente (email),
         FOREIGN KEY (idScambio) REFERENCES Scambio (ID)
+        PRIMARY KEY (emailRecensore, idScambio)
     );
 
 CREATE TABLE
@@ -91,9 +96,5 @@ CREATE TABLE
 
 CREATE TABLE
     Immagine (
-        ISBN VARCHAR(13),
-        path VARCHAR(255),
-        isCopertina BOOLEAN DEFAULT FALSE,
-        PRIMARY KEY (ISBN, url),
-        FOREIGN KEY (ISBN) REFERENCES Libro (ISBN)
+        path VARCHAR(255) PRIMARY KEY,
     );

@@ -8,7 +8,7 @@ CREATE TABLE
         nome VARCHAR(100),
         cognome VARCHAR(100),
         citta VARCHAR(50)
-        immagine VARCHAR(255),
+        path_immagine VARCHAR(255),
         FOREIGN KEY (immagine) REFERENCES Immagine (path)
     );
 
@@ -21,9 +21,8 @@ CREATE TABLE
         editore VARCHAR(255),
         anno YEAR,
         genere VARCHAR(100),
-        lingua VARCHAR(50)
-        immagine VARCHAR(255),
-        FOREIGN KEY (immagine) REFERENCES Immagine (path)
+        lingua VARCHAR(50),
+        path_copertina VARCHAR(255),
     );
 
 CREATE TABLE
@@ -96,5 +95,7 @@ CREATE TABLE
 
 CREATE TABLE
     Immagine (
-        path VARCHAR(255) PRIMARY KEY,
+        path VARCHAR(255) PRIMARY KEY
+        idCopia INT,
+        FOREIGN KEY (idCopia) REFERENCES Copia (ID)
     );

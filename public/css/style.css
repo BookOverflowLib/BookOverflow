@@ -1,11 +1,19 @@
 :root {
-	--primary-color: hsl(41, 77%, 86%);
-	--hover-color: hsl(41, 77%, 75%);
+	--primary-color: hsl(40, 77%, 86%);
+	--hover-color: #f0d18f;
+	--primary-color: #f7e6c0;
+	--gray: hsl(0, 0%, 93%);
+	--dark-gray: hsl(0, 0%, 70%);
+	--light-gray: hsl(0, 0%, 94%);
 }
 
 * {
 	margin: 0;
 	padding: 0;
+}
+
+html {
+	scroll-behavior: smooth;
 }
 
 body {
@@ -92,7 +100,7 @@ button {
 #breadcrumb {
 	justify-self: center;
 	text-align: center;
-	background-color: #ededed;
+	background-color: var(--gray);
 	border-radius: 1em;
 }
 
@@ -243,6 +251,14 @@ main {
 	grid-template-columns: 1fr auto;
 	align-items: center;
 }
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.small {
+	font-size: small;
+}
 
 /* PROFILO */
 .dati-profilo {
@@ -291,26 +307,75 @@ main {
 	gap: 0.5em;
 }
 
+.stars {
+	user-select: none;
+	gap: 0.5em;
+}
+
+.stars > svg {
+	filter: hsl(41, 77%, 86%);
+	width: 15;
+}
+
 /* LOGIN */
 .login-signin {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	max-width: 20em;
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: 2em;
-	padding-right: 2em;
-	gap: 0.5em;
+	min-width: 15em;
+	max-width: 30em;
+	gap: 1em;
+	border: 1px solid var(--light-gray);
+	border-radius: 1em;
+	padding: 1.5em 2em;
+	margin-bottom: 20em;
+	margin-top: 3em;
+}
+
+.login-signin input:focus {
+	/* border: 3px solid black; */
+	outline-color: var(--dark-gray);
+}
+
+fieldset {
+	border: none;
 }
 
 .login-data {
+	margin-top: 0.5em;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+}
+.login-data > button {
+	margin-left: 50%;
+}
+
+input {
+	background-color: var(--gray);
+	min-height: 2.5em;
+	border-radius: 0.5em;
+	border-style: none;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+section > p > a {
+	color: black;
+}
+
+.nome-cognome {
+	display: flex;
+	gap: 1em;
+}
+.nome-cognome > div {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;
 }
 
-.sr-only {
+.sr-only,
+.salta-al-contenuto {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -320,6 +385,12 @@ main {
 	white-space: nowrap;
 	border-width: 0;
 	clip: rect(0, 0, 0, 0);
+}
+
+.salta-al-contenuto:focus {
+	z-index: 999;
+	clip: auto;
+	padding: 0.5em;
 }
 
 @media (max-width: 500px) {

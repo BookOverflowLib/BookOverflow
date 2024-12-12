@@ -364,11 +364,11 @@ section > p > a {
 	color: black;
 }
 
-.nome-cognome {
+.doppio-input {
 	display: flex;
 	gap: 1em;
 }
-.nome-cognome > div {
+.doppio-input > div {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;

@@ -41,13 +41,13 @@
         </div>
         <nav id="menu">
             <ul>
-                <li lang="en"><a href="index.html">Home</a></li>
+                <li lang="en"><a href="./index.html">Home</a></li>
                 <li><a href="/esplora">Esplora</a></li>
                 <li><a href="/info">Info</a></li>
                 <li><a href="/contatti">Contatti</a></li>
             </ul>
         </nav>
-        <a href="./login.html" class="button-layout">Login</a>
+        <a href="./accedi.html" class="button-layout">Accedi</a>
     </header>
     <nav id="breadcrumb">
         <p>
@@ -59,28 +59,56 @@
         <section class="login-signin">
             <h1 class="center">Registrati</h1>
             <p class="center small">Hai già un <span lang="en">account</span>? <a href="./login.html">Accedi</a></p>
+            <!-- nome cognome username email città(provincia e città)-->
             <form action="" method="post">
                 <fieldset class="login-data">
-                    <legend class="sr-only">Inserisci dati per il <span lang="en">sign-in</span></legend>
-                    <div class="nome-cognome">
+                    <legend class="sr-only">Inserire i dati per registrarsi</legend>
+                    <div class="doppio-input">
                         <div>
                             <label for="nome" class="small">Nome</label>
-                            <input name="nome" id="nome" maxlenght="25" required></input>
+                            <input name="nome" id="nome" maxlenght="25" required>
                         </div>
                         <div >
                             <label for="cognome" class="small">Cognome</label>
-                            <input name="cognome" id="cognome" maxlenght="25" required></input> 
+                            <input name="cognome" id="cognome" maxlenght="25" required> 
                         </div>
                     </div>
 
+                    <!-- provincia e citta -->
+                    <div class="doppio-input">
+                        <div>
+                            <label for="provincia" class="small">Provincia</label>
+                            <input list="provincia" type="text" name="provincia"  required>
+                            <datalist id="provincia">
+                            </datalist>
+                        </div>
+                        <div >
+                            <label for="citta" class="small">Città</label>
+                            <input list="citta" type="text" name="citta" required />
+                            <datalist id="citta">
+        
 
-                    <label for="username" class="small">Username</label>
-                    <input name="username" id="username" maxlenght="25" required></input>
+                            </datalist>
+                        </div>
+                    </div>
 
-                    <label for="password" class="small">Password</label>
-                    <input name="password" id="password" type="password" maxlenght="25" required></input>
+                    <!-- username -->
+                    <label for="username" class="small" lang="en">Username</label>
+                    <input name="username" id="username" maxlenght="25" required>
+
+                    <!-- email -->
+                    <label for="email" class="small">Indirizzo Mail</label>
+                    <input name="email" type="email" id="email" required>
+
+                    <!-- password -->
+                    <label for="password" class="small" lang="en">Password</label>
+                    <input name="password" id="password" type="password" maxlenght="20" required>
+
+                    <!-- conferma password -->
+                    <label for="conferma-password" class="small">Conferma <span lang="en">Password</span></label>
+                    <input name="conferma-password" id="password" type="password" maxlenght="20" required>
                
-                    <button type="submit">Accedi</button>
+                    <button type="submit">Registrati</button>
                 </fieldset>
             </form>
 

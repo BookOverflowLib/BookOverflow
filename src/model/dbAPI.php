@@ -8,6 +8,23 @@ class DBAccess
 
     private $connection;
 
+    public function __construct()
+    {
+        $this->open_connection();
+    }
+
+    public function __destruct()
+    {
+        $this->close_connection();
+    }
+
+    private function ensure_connection(): void
+    {
+        if (!$this->connection) {
+            $this->open_connection();
+        }
+    }
+
     private function handle_query_error($query)
     {
         if (!$query) {
@@ -67,40 +84,36 @@ class DBAccess
 
     private function prepare_and_execute_query($query, $types = null, $params = null): ?array
     {
-        if (!$this->connection) {
-            $this->open_connection();
-        }
+        $this->ensure_connection();
+        try {
+            $stmt = $this->connection->prepare($query);
+            if ($types && $params) {
+                // there must be the same number of types and parameters
+                // e.g types = "iss", params = [1, "hello", 3.14]
+                if (strlen($types) !== count($params)) {
+                    throw new Exception("Number of types does not match number of parameters");
+                }
 
-        $stmt = $this->connection->prepare($query);
-        if (!$stmt) {
-            throw new Exception("Prepare failed: " . $this->connection->error);
-        }
-
-        if ($types && $params) {
-            // there must be the same number of types and parameters
-            // e.g types = "iss", params = [1, "hello", 3.14]
-            if (strlen($types) !== count($params)) {
-                throw new Exception("Number of types does not match number of parameters");
+                // Bind parameters dynamically
+                if (!$stmt->bind_param($types, ...$params)) {
+                    throw new Exception("Parameter binding failed: " . $stmt->error);
+                }
             }
 
-            // Bind parameters dynamically
-            if (!$stmt->bind_param($types, ...$params)) {
-                throw new Exception("Parameter binding failed: " . $stmt->error);
+            if (!$stmt->execute()) {
+                throw new Exception("Execute failed: " . $stmt->error);
             }
+
+            $result = $this->query_results_to_array($stmt->get_result());
+
+            $stmt->close();
+            return $result;
+        } catch (Exception $e) {
+            if ($stmt ?? null) {
+                $stmt->close();
+            }
+            throw $e;
         }
-
-        if (!$stmt->execute()) {
-            throw new Exception("Execute failed: " . $stmt->error);
-        }
-
-        $result = $this->query_results_to_array($stmt->get_result());
-
-        $stmt->close();
-        $this->close_connection();
-        // we might want to keep the connection open
-        // constant opening and closing is slow
-
-        return $result;
     }
 
     public function get_most_traded_with_cover($limit)
@@ -128,15 +141,7 @@ class DBAccess
     // No need for prepared statements? 
     function get_province(): ?array
     {
-        $this->open_connection();
-
         $query = "SELECT id, nome FROM province";
-
-        $queryRes = mysqli_query($this->connection, $query);
-        $this->handle_query_error($queryRes);
-
-        $this->close_connection();
-
-        return $this->query_results_to_array($queryRes);
+        return $this->prepare_and_execute_query($query);
     }
 }

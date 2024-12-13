@@ -1,7 +1,4 @@
 <?php
-
-// TODO: settare namespace che venga usato
-
 class DBAccess
 {
     private const HOST_DB = "localhost";

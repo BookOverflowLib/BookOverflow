@@ -15,12 +15,15 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: bookoverflow
+      MARIADB_USER: test
+      MARIADB_PASSWORD: test
     ports:
       - "3306:3306"
     volumes:
       - ./data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d
     networks:
-      - bookoverflow-mariadb
+      - bookoverflow-network
 
   phpmyadmin:
     depends_on:
@@ -30,12 +33,12 @@ services:
     ports:
       - "2222:80"
     environment:
-      PMA_HOST: localhost:3306
-      PMA_USER: root
-      MYSQL_ROOT_PASSWORD: root
+      PMA_HOST: db
+      PMA_USER: test
+      PMA_PASSWORD: test
+    networks:
+      - bookoverflow-network
 
 networks:
-  bookoverflow-mariadb:
-    driver: bridge
-  mysql-phpmyadmin:
+  bookoverflow-network:
     driver: bridge

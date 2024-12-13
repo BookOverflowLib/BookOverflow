@@ -1,163 +1,163 @@
 <!DOCTYPE html>
 <html lang="it">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="title" content="Home BookOverflow" />
-		<meta
-			name="description"
-			content="BookOverflow è un sito web che
-		permette di scambiare libri con altri utenti" />
-		<meta name="keywords" content="libri, scambio, BookOverflow, unipd" />
-		<meta name="author" content="BookOverflowLib" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+	<meta charset="UTF-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="Home BookOverflow" name="title" />
+	<meta
+		content="BookOverflow è un sito web che
+		permette di scambiare libri con altri utenti"
+		name="description" />
+	<meta content="libri, scambio, BookOverflow, unipd" name="keywords" />
+	<meta content="BookOverflowLib" name="author" />
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
 
-		<!-- favicon -->
-		<link
-			rel="icon"
-			type="image/png"
-			href="../../assets/imgs/favicon/favicon-96x96.png"
-			sizes="96x96" />
-		<link
-			rel="icon"
-			type="image/svg+xml"
-			href="../../assets/imgs/favicon/favicon.svg" />
-		<link
-			rel="shortcut icon"
-			href="../../assets/imgs/favicon/favicon.ico" />
-		<link
-			rel="apple-touch-icon"
-			sizes="180x180"
-			href="../../assets/imgs/favicon/apple-touch-icon.png" />
-		<meta name="apple-mobile-web-app-title" content="BookOverflow" />
-		<link
-			rel="manifest"
-			href="../../assets/imgs/favicon/site.webmanifest" />
+	<!-- favicon -->
+	<link
+		href="../../assets/imgs/favicon/favicon-96x96.png"
+		rel="icon"
+		sizes="96x96"
+		type="image/png" />
+	<link
+		href="../../assets/imgs/favicon/favicon.svg"
+		rel="icon"
+		type="image/svg+xml" />
+	<link
+		href="../../assets/imgs/favicon/favicon.ico"
+		rel="shortcut icon" />
+	<link
+		href="../../assets/imgs/favicon/apple-touch-icon.png"
+		rel="apple-touch-icon"
+		sizes="180x180" />
+	<meta content="BookOverflow" name="apple-mobile-web-app-title" />
+	<link
+		href="../../assets/imgs/favicon/site.webmanifest"
+		rel="manifest" />
 
-		<!-- css -->
-		<link rel="stylesheet" href="../css/style.css" />
-		<link rel="stylesheet" href="../css/printStyle.css" />
-		<link rel="stylesheet" href="../css/mobileStyle.css" />
-		<!-- font -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-			rel="stylesheet" />
-		<title>BookOverflow</title>
-	</head>
-	<body>
-		<header>
-			<div class="logo">
-				<img src="../../assets/imgs/logo.png" alt="" width="40" />
-				<h1 lang="en">
+	<!-- css -->
+	<link href="../css/style.css" rel="stylesheet" />
+	<link href="../css/printStyle.css" rel="stylesheet" />
+	<link href="../css/mobileStyle.css" rel="stylesheet" />
+	<!-- font -->
+	<link href="https://fonts.googleapis.com" rel="preconnect" />
+	<link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+		rel="stylesheet" />
+	<title>BookOverflow</title>
+</head>
+<body>
+<header>
+	<div class="logo">
+		<img alt="" src="../../assets/imgs/logo.png" width="40" />
+		<h1 lang="en">
 					<span class="bold">Book</span
 					><span class="italic">Overflow</span>
-				</h1>
+		</h1>
+	</div>
+	<nav id="menu">
+		<ul>
+			<li lang="en"><a href="/home">Home</a></li>
+			<li><a href="/esplora">Esplora</a></li>
+			<li><a href="/info">Info</a></li>
+			<li><a href="/contatti">Contatti</a></li>
+		</ul>
+	</nav>
+	<a href="/login">Accedi</a>
+</header>
+<nav id="breadcrumb">
+	<p>
+		Ti trovi in :
+		<a class="" href="./index.html" lang="en">Home</a>
+		>>
+		<span class="bold">Profilo</span>
+	</p>
+</nav>
+<main>
+	<section class="dati-profilo">
+		<img alt="" class="" src="/assets/imgs/cars.gif" width="90" />
+		<div>
+			<h2>Nome Cognome</h2>
+			<p>@Username</p>
+			<p class="bold">Luogo</p>
+			<div class="user-rating">
+				<p>5.0</p>
+				<div class="stars">
+					{{rating-stars}}
+				</div>
 			</div>
-			<nav id="menu">
-				<ul>
-					<li lang="en"><a href="/home">Home</a></li>
-					<li><a href="/esplora">Esplora</a></li>
-					<li><a href="/info">Info</a></li>
-					<li><a href="/contatti">Contatti</a></li>
-				</ul>
-			</nav>
-			<button href="/login">Accedi</button>
-		</header>
-		<nav id="breadcrumb">
-			<p>
-				Ti trovi in :
-				<a lang="en" class="" href="./index.html">Home</a>
-				>>
-				<span class="bold">Profilo</span>
-			</p>
-		</nav>
-		<main>
-			<section class="dati-profilo">
-				<img src="/assets/imgs/cars.gif" alt="" class="" width="90" />
-				<div>
-					<h2>Nome Cognome</h2>
-					<p>@Username</p>
-					<p class="bold">Luogo</p>
-					<div class="user-rating">
-						<p>5.0</p>
-						<div class="stars">
-							
-						</div>
-					</div>
-				</div>
-			</section>
-			<section id="libri-offerti">
-				<div class="intestazione">
-					<h2>Libri che offri</h2>
-					<button>Aggiungi un libro</button>
-				</div>
-				<div class="carosello-libri">
-					<div class="libro">
-						<img
-							src="../../assets/imgs/artedicorrere.png"
-							alt=""
-							width="150" />
-						<p class="titolo-libro">L'arte di correre</p>
-						<p class="autore-libro">Haruki Murakami</p>
-					</div>
-					<div class="libro">
-						<img
-							src="../../assets/imgs/artedicorrere.png"
-							alt=""
-							width="150" />
-						<p class="titolo-libro">L'arte di correre</p>
-						<p class="autore-libro">Haruki Murakami</p>
-					</div>
-					<div class="libro">
-						<img
-							src="../../assets/imgs/artedicorrere.png"
-							alt=""
-							width="150" />
-						<p class="titolo-libro">L'arte di correre</p>
-						<p class="autore-libro">Haruki Murakami</p>
-					</div>
-					<div class="libro">
-						<img
-							src="../../assets/imgs/artedicorrere.png"
-							alt=""
-							width="150" />
-						<p class="titolo-libro">L'arte di correre</p>
-						<p class="autore-libro">Haruki Murakami</p>
-					</div>
-				</div>
-			</section>
-			<section id="lista-desideri">
-				<div class="intestazione">
-					<h2>Lista dei desideri</h2>
-					<button>Aggiungi un libro</button>
-				</div>
-				<p>Non ci sono ancora libri qui!</p>
-				<a href="">Aggiungi subito un libro alla lista dei desideri</a>
-			</section>
-			<section id="storico-scambi">
-				<div class="intestazione">
-					<h2>Storico degli scambi</h2>
-				</div>
-			</section>
-		</main>
-		<footer>
-			<div class="logo">
-				<img src="../../assets/imgs/logo.png" alt="" width="30" />
-				<p lang="en">
+		</div>
+	</section>
+	<section class="sezione-libri">
+		<div class="intestazione">
+			<h2>Libri che offri</h2>
+			<button>Aggiungi un libro</button>
+		</div>
+		<div class="carosello-libri">
+			<div class="libro">
+				<img
+					alt=""
+					src="../../assets/imgs/artedicorrere.png"
+					width="150" />
+				<p class="titolo-libro">L'arte di correre</p>
+				<p class="autore-libro">Haruki Murakami</p>
+			</div>
+			<div class="libro">
+				<img
+					alt=""
+					src="../../assets/imgs/artedicorrere.png"
+					width="150" />
+				<p class="titolo-libro">L'arte di correre</p>
+				<p class="autore-libro">Haruki Murakami</p>
+			</div>
+			<div class="libro">
+				<img
+					alt=""
+					src="../../assets/imgs/artedicorrere.png"
+					width="150" />
+				<p class="titolo-libro">L'arte di correre</p>
+				<p class="autore-libro">Haruki Murakami</p>
+			</div>
+			<div class="libro">
+				<img
+					alt=""
+					src="../../assets/imgs/artedicorrere.png"
+					width="150" />
+				<p class="titolo-libro">L'arte di correre</p>
+				<p class="autore-libro">Haruki Murakami</p>
+			</div>
+		</div>
+	</section>
+	<section class="sezione-libri">
+		<div class="intestazione">
+			<h2>Lista dei desideri</h2>
+			<button>Aggiungi un libro</button>
+		</div>
+		<p>Non ci sono ancora libri qui!</p>
+		<a href="">Aggiungi subito un libro alla lista dei desideri</a>
+	</section>
+	<section id="storico-scambi">
+		<div class="intestazione">
+			<h2>Storico degli scambi</h2>
+		</div>
+	</section>
+</main>
+<footer>
+	<div class="logo">
+		<img alt="" src="../../assets/imgs/logo.png" width="30" />
+		<p lang="en">
 					<span class="bold">Book</span
 					><span class="italic">Overflow</span>
-				</p>
-			</div>
-			<p id="unipd">
-				Sito web progettato e sviluppato per l'esame di Tecnologie Web
-				dell'Università degli Studi di Padova.
-			</p>
-			<p id="nomi">
-				@Aleena Mathew @Alessandro Bernardello @Luca Ribon @Matteo
-				Bazzan
-			</p>
-		</footer>
-	</body>
+		</p>
+	</div>
+	<p id="unipd">
+		Sito web progettato e sviluppato per l'esame di Tecnologie Web
+		dell'Università degli Studi di Padova.
+	</p>
+	<p id="nomi">
+		@Aleena Mathew @Alessandro Bernardello @Luca Ribon @Matteo
+		Bazzan
+	</p>
+</footer>
+</body>
 </html>

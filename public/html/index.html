@@ -1,62 +1,93 @@
 <!-- TODO: c'è qualcosa di strano con i path per il css, se usate docker dovrebbero andare così, se non lo usate dovete aggiungere ../ nel path -->
 <!DOCTYPE html>
 <html lang="it">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="title" content="Home BookOverflow" />
-		<meta
-			name="description"
-			content="BookOverflow è un sito web che
-		permette di scambiare libri con altri utenti" />
-		<meta name="keywords" content="libri, scambio, BookOverflow, unipd" />
-		<meta name="author" content="BookOverflowLib" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+	<meta charset="UTF-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="Home BookOverflow" name="title" />
+	<meta
+		content="BookOverflow è un sito web che
+		permette di scambiare libri con altri utenti"
+		name="description" />
+	<meta content="libri, scambio, BookOverflow, unipd" name="keywords" />
+	<meta content="BookOverflowLib" name="author" />
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
 
-		<!-- favicon -->
-		<link
-			rel="icon"
-			type="image/png"
-			href="../../assets/imgs/favicon/favicon-96x96.png"
-			sizes="96x96" />
-		<link
-			rel="icon"
-			type="image/svg+xml"
-			href="../../assets/imgs/favicon/favicon.svg" />
-		<link
-			rel="shortcut icon"
-			href="../../assets/imgs/favicon/favicon.ico" />
-		<link
-			rel="apple-touch-icon"
-			sizes="180x180"
-			href="../../assets/imgs/favicon/apple-touch-icon.png" />
-		<meta name="apple-mobile-web-app-title" content="BookOverflow" />
-		<link
-			rel="manifest"
-			href="../../assets/imgs/favicon/site.webmanifest" />
+	<!-- favicon -->
+	<link
+		href="../../assets/imgs/favicon/favicon-96x96.png"
+		rel="icon"
+		sizes="96x96"
+		type="image/png" />
+	<link
+		href="../../assets/imgs/favicon/favicon.svg"
+		rel="icon"
+		type="image/svg+xml" />
+	<link
+		href="../../assets/imgs/favicon/favicon.ico"
+		rel="shortcut icon" />
+	<link
+		href="../../assets/imgs/favicon/apple-touch-icon.png"
+		rel="apple-touch-icon"
+		sizes="180x180" />
+	<meta content="BookOverflow" name="apple-mobile-web-app-title" />
+	<link
+		href="../../assets/imgs/favicon/site.webmanifest"
+		rel="manifest" />
 
-		<!-- css -->
-		<link rel="stylesheet" href="../css/style.css" />
-		<link rel="stylesheet" href="../css/printStyle.css" />
-		<link rel="stylesheet" href="../css/mobileStyle.css" />
-		<!-- font -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-			rel="stylesheet" />
-		<title>BookOverflow</title>
-	</head>
+	<!-- css -->
+	<link href="../css/style.css" rel="stylesheet" />
+	<link href="../css/printStyle.css" rel="stylesheet" />
+	<link href="../css/mobileStyle.css" rel="stylesheet" />
+	<!-- font -->
+	<link href="https://fonts.googleapis.com" rel="preconnect" />
+	<link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+		rel="stylesheet" />
+	<title>BookOverflow</title>
+</head>
 
-	<body>
-		<a class="salta-al-contenuto" href="#contenuto">Salta al contenuto</a>
-		<header>
-			<div class="logo">
-				<img src="../../assets/imgs/logo.png" alt="" width="40" />
-				<h1 lang="en">
+<body>
+<a class="salta-al-contenuto" href="#contenuto">Salta al contenuto</a>
+<header>
+	<div class="logo">
+		<img alt="" src="../../assets/imgs/logo.png" width="40" />
+		<h1 lang="en">
 					<span class="bold">Book</span
 					><span class="italic">Overflow</span>
-				</h1>
+		</h1>
+	</div>
+	<nav id="menu">
+		<ul>
+			<li lang="en">Home</li>
+			<li><a href="/esplora">Esplora</a></li>
+			<li><a href="/info">Info</a></li>
+			<li><a href="/contatti">Contatti</a></li>
+		</ul>
+	</nav>
+	<a class="button-layout" href="./login.html">Accedi</a>
+</header>
+<nav id="breadcrumb">
+	<!-- [breadcrumb] -->
+</nav>
+<main id="contenuto">
+	<section id="landing">
+		<div>
+			<h1>Un nuovo capitolo per i tuoi libri</h1>
+			<p>
+				La prima piattaforma di scambi di libri gratuita e
+				accessibile
+			</p>
+			<button href="/login">Inizia</button>
+		</div>
+		<img alt="" src="../../assets/imgs/jaredd-square.png" />
+	</section>
+	<section id="piu-scambiati">
+		<article class="sezione-libri">
+			<div class="intestazione">
+				<h2>I libri più scambiati</h2>
+				<a href="">Mostra tutti</a>
 			</div>
 			<nav id="menu">
 				<ul>

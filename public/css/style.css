@@ -104,10 +104,13 @@ button {
 	border-radius: 1em;
 }
 
-#breadcrumb > p {
+#breadcrumb > p{
 	padding: 0.5em;
 	margin: 0 5em;
 	font-size: small;
+}
+#breadcrumb a{
+	color: black;	
 }
 
 .bold {
@@ -256,6 +259,10 @@ main {
 	margin-right: auto;
 }
 
+.center-text{
+	text-align: center;
+}
+
 .small {
 	font-size: small;
 }
@@ -392,6 +399,53 @@ section > p > a {
 	clip: auto;
 	padding: 0.5em;
 }
+/* MATCH PER TE */
+.titolo{
+	margin: 0.5em 0;
+}
+#matchperte{
+	display: flex;
+    flex-wrap: wrap;
+	gap: 2em;
+	padding: 1em 2em; 
+	justify-content: center;
+	margin: 2em 5em;
+	margin-top: 0;
+
+	
+}
+.match-copertine{
+	flex: 1 1 calc(25% - 2em); 
+    max-width: calc(25% - 2em);
+    box-sizing: border-box;
+	margin-top: 1em; 
+}
+
+#matchperte img {
+	max-width: 20rem;
+	max-height: 17rem;
+	border-radius: 0.3em;
+	object-fit: cover;
+}
+
+.titolo-libro-match{
+	font-size: 1.3em;
+	font-weight:bold;
+	margin-top: 0.3em;
+}
+
+#mostra-ancora{
+	color: black;
+}
+#mostra-ancora:hover{
+	color: var(--dark-gray);
+}
+.mostra-ancora{
+	padding: 3em 0;
+	margin-bottom: 2em;
+}
+
+
 
 @media (max-width: 500px) {
 	header {

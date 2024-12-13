@@ -1,30 +1,122 @@
-@media (max-width: 500px) {
-    header {
-        grid-template-columns: 1fr;
-    }
+#menu {
+	display: none;
+}
+.header .button-layout {
+	display: none;
+}
+.header {
+	grid-template-columns: 2fr 1fr;
+}
 
-    header > nav,
-    header > button {
-        display: none;
-    }
+#landing {
+	grid-template-columns: 1fr;
+}
+#landing img {
+	width: 80vw;
+}
+#landing > div > h1 {
+	font-size: 3em;
+}
+#landing > div > p {
+	font-size: 1.3em;
+}
 
-    #landing {
-        grid-template-columns: 1fr;
-    }
+.carosello-libri{
+    grid-template-columns: 1fr 1fr;
+    margin-top: 2em;
+}
 
-    #landing > img {
-        width: 70vw;
-    }
+.libro img {
+    max-width: 7em;
+} 
 
-    .carosello-libri {
-        grid-template-columns: 1fr 1fr;
-    }
+#citazione {
+	padding: 3em;
+}
+#citazione > blockquote {
+	font-size: 1.5em;
+}
 
-    #citazione {
-        font-size: small;
-    }
+#citazione > p {
+	font-size: 1.3em;
+}
+footer {
+	padding: 2em;
+}
+footer .logo p {
+    font-size: 1.5em;
+}
+#unipd,
+#nomi {
+	font-size: 1em;
+}
+/* ACCEDI */
+#accedi{
+    padding-left: 2em;
+    padding-right: 2em;
 
-    #landing {
-        font-size: small;
-    }
+}
+
+/* HAMBURGERINO:) */
+
+#hamburger {
+    display: block;
+    justify-self: end;
+   
+}
+#hamburger-icon{
+    background-image: url("/assets/imgs/hamburger.svg");
+    width: 2.5em;
+    height: 2.5em;
+    background-size: cover;
+}
+
+#hamburger-icon.active{
+    background-image: url("/assets/imgs/cross.svg");
+    width: 2.5em;
+    height: 2.5em;
+    background-size: cover;
+}
+#hamburger-menu{
+    display: none;
+    /* grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f1f1f1;
+    z-index: 1;
+    overflow-x: hidden; */
+    transition: 0.5s;
+    user-select: none;
+}
+
+#hamburger-menu.active{
+display: flex;
+height: fit-content;
+margin: 1em;
+}
+#hamburger-menu.active ul{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: auto auto;
+}
+#hamburger-menu.active ul li{
+    text-align: center;
+}
+#hamburger-menu.active ul li a{
+text-decoration: none;
+color: var(--text-color);
+}
+#hamburger-menu.active ul li a:hover{
+    text-decoration: underline;
+}
+#hamburger-menu.active ul>* + *{
+    margin-top: 1em;
+
 }

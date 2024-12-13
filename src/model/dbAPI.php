@@ -15,9 +15,9 @@ class DBAccess
         }
     }
 
-    private function query_results_to_array($queryRes) : ?array
+    private function query_results_to_array($queryRes): ?array
     {
-        if(mysqli_num_rows($queryRes) == 0 ) {
+        if (mysqli_num_rows($queryRes) == 0) {
             return null;
         }
         $res = array();
@@ -34,7 +34,12 @@ class DBAccess
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
         try {
-            $this->connection = new mysqli(DBAccess::HOST_DB, DBAccess::USERNAME, DBAccess::PASSWORD, DBAccess::DATABASE_NAME);
+            $this->connection = new mysqli(
+                DBAccess::HOST_DB,
+                DBAccess::USERNAME,
+                DBAccess::PASSWORD,
+                DBAccess::DATABASE_NAME
+            );
         } catch (mysqli_sql_exception $e) {
             throw new Exception("Connection error: " . $e->getMessage());
         }
@@ -60,7 +65,7 @@ class DBAccess
         mysqli_close($this->connection);
     }
 
-    private function prepare_and_execute_query($query, $types = null, $params = null) : ?array
+    private function prepare_and_execute_query($query, $types = null, $params = null): ?array
     {
         if (!$this->connection) {
             $this->open_connection();
@@ -77,24 +82,24 @@ class DBAccess
             if (strlen($types) !== count($params)) {
                 throw new Exception("Number of types does not match number of parameters");
             }
-            
+
             // Bind parameters dynamically
             if (!$stmt->bind_param($types, ...$params)) {
                 throw new Exception("Parameter binding failed: " . $stmt->error);
             }
         }
-    
+
         if (!$stmt->execute()) {
             throw new Exception("Execute failed: " . $stmt->error);
         }
 
         $result = $this->query_results_to_array($stmt->get_result());
-        
+
         $stmt->close();
-        $this->close_connection(); 
+        $this->close_connection();
         // we might want to keep the connection open
         // constant opening and closing is slow
-        
+
         return $result;
     }
 
@@ -110,7 +115,7 @@ class DBAccess
                     GROUP BY L.ISBN, L.titolo, L.autore, I.url
                     ORDER BY numero_vendite DESC
                     LIMIT ?";
-        
+
         return $this->prepare_and_execute_query($query, "i", [$limit]);
     }
 

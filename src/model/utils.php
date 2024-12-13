@@ -35,5 +35,4 @@ function ratingStars($rating){
 
     echo $rating_stars;
 }
-
 ?>

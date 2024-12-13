@@ -25,13 +25,6 @@ class DBAccess
         }
     }
 
-    private function handle_query_error($query)
-    {
-        if (!$query) {
-            throw new Exception("Query failed: " . mysqli_error($this->connection));
-        }
-    }
-
     private function query_results_to_array($queryRes): ?array
     {
         if (mysqli_num_rows($queryRes) == 0) {

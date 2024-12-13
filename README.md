@@ -56,7 +56,7 @@ Connect to the server at `http://localhost:8080/public/index.php`.
 
 ## TODO
 - [ ] nel form di registrazione, implementare l'inserimento della città con suggerimenti
-- [ ] alleggerire foto
+- [x] alleggerire foto
 
 ## Note:
 

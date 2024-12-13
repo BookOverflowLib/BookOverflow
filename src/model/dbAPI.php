@@ -1,8 +1,5 @@
 <?php
 
-// TODO: settare namespace che venga usato
-use mysqli;
-
 class DBAccess
 {
     private const HOST_DB = "localhost";

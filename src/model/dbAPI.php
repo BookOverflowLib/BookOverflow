@@ -1,5 +1,4 @@
 <?php
-
 class DBAccess
 {
     private const HOST_DB = "localhost";
@@ -8,6 +7,26 @@ class DBAccess
     private const PASSWORD = "linai0aiMohgooPh";
 
     private $connection;
+
+    private function handle_query_error($query)
+    {
+        if (!$query) {
+            throw new Exception("Query failed: " . mysqli_error($this->connection));
+        }
+    }
+
+    private function query_results_to_array($queryRes) : ?array
+    {
+        if(mysqli_num_rows($queryRes) == 0 ) {
+            return null;
+        }
+        $res = array();
+        while ($row = mysqli_fetch_assoc($queryRes)) {
+            array_push($res, $row);
+        }
+        $queryRes->free();
+        return $res;
+    }
 
     public function open_connection()
     {
@@ -19,7 +38,7 @@ class DBAccess
         } catch (mysqli_sql_exception $e) {
             throw new Exception("Connection error: " . $e->getMessage());
         }
-        $this->connection = mysqli_connect(DBAccess::HOST_DB, DBAccess::USERNAME, DBAccess::PASSWORD, DBAccess::DATABASE_NAME);
+        //$this->connection = mysqli_connect(DBAccess::HOST_DB, DBAccess::USERNAME, DBAccess::PASSWORD, DBAccess::DATABASE_NAME);
 
         // errors check in debug
         return mysqli_connect_error();
@@ -34,6 +53,10 @@ class DBAccess
 
     public function close_connection()
     {
+        // la connessione è già stata chiusa
+        if (!$this->connection) {
+            return;
+        }
         mysqli_close($this->connection);
     }
 
@@ -75,4 +98,30 @@ class DBAccess
     //         return false;
     //     }
     // }
+
+    function get_province(): ?array
+    {
+        $this->open_connection();
+
+        $query = "SELECT id, nome FROM province";
+
+        $queryRes = mysqli_query($this->connection, $query);
+        $this->handle_query_error($queryRes);
+
+        $this->close_connection();
+
+        return $this->query_results_to_array($queryRes);
+    }
+    function get_citta_by_provincia($provincia): ?array
+    {
+        $this->open_connection();
+
+        $query = "SELECT * FROM citta WHERE provincia = '$provincia'";
+        $queryRes = mysqli_query($this->connection, $query);
+        $this->handle_query_error($queryRes);
+
+        $this->close_connection();
+
+        return $this->query_results_to_array($queryRes);
+    }
 }

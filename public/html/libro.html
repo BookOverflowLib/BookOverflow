@@ -1,3 +1,4 @@
+<!-- TODO: c'è qualcosa di strano con i path per il css, se usate docker dovrebbero andare così, se non lo usate dovete aggiungere ../ nel path -->
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -46,7 +47,9 @@
 		rel="stylesheet" />
 	<title>BookOverflow</title>
 </head>
+
 <body>
+<a class="salta-al-contenuto" href="#contenuto">Salta al contenuto</a>
 <header>
 	<div class="logo">
 		<img alt="" src="../../assets/imgs/logo.png" width="40" />
@@ -57,88 +60,58 @@
 	</div>
 	<nav id="menu">
 		<ul>
-			<li lang="en"><a href="/home">Home</a></li>
+			<li lang="en">Home</li>
 			<li><a href="/esplora">Esplora</a></li>
 			<li><a href="/info">Info</a></li>
 			<li><a href="/contatti">Contatti</a></li>
 		</ul>
 	</nav>
-	<a href="/login">Accedi</a>
+	<a class="button-layout" href="./login.html">Accedi</a>
 </header>
 <nav id="breadcrumb">
-	<p>
-		Ti trovi in :
-		<a class="" href="./index.html" lang="en">Home</a>
-		>>
-		<span class="bold">Profilo</span>
-	</p>
+	<!-- [breadcrumb] -->
 </nav>
-<main>
-	<section class="dati-profilo">
-		<img alt="" class="" src="/assets/imgs/cars.gif" width="90" />
+<main id="contenuto">
+	<section class="libro-panoramica center">
+		<img alt="" src="/assets/imgs/artedicorrere.png" width="200">
 		<div>
-			<h2>Nome Cognome</h2>
-			<p>@Username</p>
-			<p class="bold">Luogo</p>
-			<div class="user-rating">
-				<p>5.0</p>
-				<div class="stars">
-					{{rating-stars}}
+			<p>X utenti lo scambiano</p>
+			<h1>{{titolo}}</h1>
+			<p>Di : {{autore}}</p>
+			<h2>Descrizione</h2>
+			<p>{{descrizione}}</p>
+		</div>
+	</section>
+	<section class="sezione-scambi">
+		<div>
+			<img alt="" src="">
+			<h2>Scambialo con</h2>
+		</div>
+		<div> <!-- pannello con tutti i possibili scambi -->
+			<div> <!-- uno scambio -->
+				<div> <!-- info utente -->
+					<img alt="" src="/assets/imgs/cars.gif" width="100" />
+					<div>
+						<p>Nome Cognome</p>
+						<p>@Username</p>
+						<p class="bold">Luogo</p>
+						<div class="user-rating">
+							<p>5.0</p>
+							<div class="stars">
+								{{rating-stars}}
+							</div>
+						</div>
+					</div>
+				</div>
+				<p>Vorrebbe in cambio: </p>
+				<div>
+					<img alt="" src="/assets/imgs/artedicorrere.png" width="100" />
+					<div>
+						<p>Titolo</p>
+						<p>Autore</p>
+					</div>
 				</div>
 			</div>
-		</div>
-	</section>
-	<section class="sezione-libri">
-		<div class="intestazione">
-			<h2>Libri che offri</h2>
-			<button>Aggiungi un libro</button>
-		</div>
-		<div class="carosello-libri">
-			<div class="libro">
-				<img
-					alt=""
-					src="../../assets/imgs/artedicorrere.png"
-					width="150" />
-				<p class="titolo-libro">L'arte di correre</p>
-				<p class="autore-libro">Haruki Murakami</p>
-			</div>
-			<div class="libro">
-				<img
-					alt=""
-					src="../../assets/imgs/artedicorrere.png"
-					width="150" />
-				<p class="titolo-libro">L'arte di correre</p>
-				<p class="autore-libro">Haruki Murakami</p>
-			</div>
-			<div class="libro">
-				<img
-					alt=""
-					src="../../assets/imgs/artedicorrere.png"
-					width="150" />
-				<p class="titolo-libro">L'arte di correre</p>
-				<p class="autore-libro">Haruki Murakami</p>
-			</div>
-			<div class="libro">
-				<img
-					alt=""
-					src="../../assets/imgs/artedicorrere.png"
-					width="150" />
-				<p class="titolo-libro">L'arte di correre</p>
-				<p class="autore-libro">Haruki Murakami</p>
-			</div>
-		</div>
-	</section>
-	<section class="sezione-libri">
-		<div class="intestazione">
-			<h2>Lista dei desideri</h2>
-			<button>Aggiungi un libro</button>
-		</div>
-		<p>Non ci sono ancora libri qui!</p>
-		<a href="">Aggiungi subito un libro alla lista dei desideri</a>
-	</section>
-	<section id="storico-scambi">
-		<div class="intestazione">
-			<h2>Storico degli scambi</h2>
 		</div>
 	</section>
 </main>

@@ -34,6 +34,7 @@ Connect to the server at `http://localhost:8080/public/index.php`.
 ### Features di Sicurezza:
 
 -   [ ] Password salvata in hash
+-   [ ] Usare regex per verificare che la password abbia A-z, 0-9, simbolo e lunghezza minima
 
 ### Features di Accessibilità
 

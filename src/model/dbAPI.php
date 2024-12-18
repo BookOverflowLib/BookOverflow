@@ -1,10 +1,10 @@
 <?php
 class DBAccess
 {
-    private const HOST_DB = "localhost";
-    private const DATABASE_NAME = "lribon";
-    private const USERNAME = "lribon";
-    private const PASSWORD = "linai0aiMohgooPh";
+    private const HOST_DB = "db";
+    private const DATABASE_NAME = "bookoverflow";
+    private const USERNAME = "test";
+    private const PASSWORD = "test";
 
     private $connection;
 

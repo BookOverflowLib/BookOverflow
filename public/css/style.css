@@ -110,8 +110,8 @@ button {
     font-size: small;
 }
 
-#breadcrumb a{
-	color: black;	
+#breadcrumb a {
+    color: black;
 }
 
 .bold {
@@ -263,8 +263,8 @@ main {
     margin-right: auto;
 }
 
-.center-text{
-	text-align: center;
+.center-text {
+    text-align: center;
 }
 
 .small {
@@ -356,13 +356,14 @@ section > p > a {
 }
 
 .doppio-input {
-	display: flex;
-	gap: 1em;
+    display: flex;
+    gap: 1em;
 }
+
 .doppio-input > div {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
 }
 
 .sr-only,
@@ -397,81 +398,57 @@ section > p > a {
 .sezione-scambi {
 
 }
-/* MATCH PER TE */
-.titolo{
-	margin: 0.5em 0;
-}
-#matchperte{
-	display: flex;
-    flex-wrap: wrap;
-	gap: 2em;
-	padding: 1em 2em; 
-	justify-content: center;
-	margin: 2em 5em;
-	margin-top: 0;
 
-	
+/* MATCH PER TE */
+.titolo {
+    margin: 0.5em 0;
 }
-.match-copertine{
-	flex: 1 1 calc(25% - 2em); 
+
+#matchperte {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    padding: 1em 2em;
+    justify-content: center;
+    margin: 2em 5em;
+    margin-top: 0;
+
+
+}
+
+.match-copertine {
+    flex: 1 1 calc(25% - 2em);
     max-width: calc(25% - 2em);
     box-sizing: border-box;
-	margin-top: 1em; 
+    margin-top: 1em;
 }
 
 #matchperte img {
-	max-width: 20rem;
-	max-height: 17rem;
-	border-radius: 0.3em;
-	object-fit: cover;
+    max-width: 20rem;
+    max-height: 17rem;
+    border-radius: 0.3em;
+    object-fit: cover;
 }
 
-.titolo-libro-match{
-	font-size: 1.3em;
-	font-weight:bold;
-	margin-top: 0.3em;
+.titolo-libro-match {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-top: 0.3em;
 }
 
-#mostra-ancora{
-	color: black;
-}
-#mostra-ancora:hover{
-	color: var(--dark-gray);
-}
-.mostra-ancora{
-	padding: 3em 0;
-	margin-bottom: 2em;
+#mostra-ancora {
+    color: black;
 }
 
+#mostra-ancora:hover {
+    color: var(--dark-gray);
+}
 
+.mostra-ancora {
+    padding: 3em 0;
+    margin-bottom: 2em;
+}
 
-@media (max-width: 500px) {
-    header {
-        grid-template-columns: 1fr;
-    }
-
-    header > nav,
-    header > button {
-        display: none;
-    }
-
-    #landing {
-        grid-template-columns: 1fr;
-    }
-
-    #landing > img {
-        width: 70vw;
-    }
-
-    .carosello-libri {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    #citazione {
-        font-size: small;
-    }
-
-    #landing {
-        font-size: small;
-    }
+li.activePage {
+    font-weight: 600;
 }

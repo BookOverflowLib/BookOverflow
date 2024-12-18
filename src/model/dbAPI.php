@@ -8,16 +8,26 @@ class DBAccess
 
     private $connection;
 
-    private function handle_query_error($query)
+    public function __construct()
     {
-        if (!$query) {
-            throw new Exception("Query failed: " . mysqli_error($this->connection));
+        $this->open_connection();
+    }
+
+    public function __destruct()
+    {
+        $this->close_connection();
+    }
+
+    private function ensure_connection(): void
+    {
+        if (!$this->connection) {
+            $this->open_connection();
         }
     }
 
-    private function query_results_to_array($queryRes) : ?array
+    private function query_results_to_array($queryRes): ?array
     {
-        if(mysqli_num_rows($queryRes) == 0 ) {
+        if (mysqli_num_rows($queryRes) == 0) {
             return null;
         }
         $res = array();
@@ -34,14 +44,19 @@ class DBAccess
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
         try {
-            $this->connection = new mysqli(DBAccess::HOST_DB, DBAccess::USERNAME, DBAccess::PASSWORD, DBAccess::DATABASE_NAME);
+            $this->connection = new mysqli(
+                DBAccess::HOST_DB,
+                DBAccess::USERNAME,
+                DBAccess::PASSWORD,
+                DBAccess::DATABASE_NAME
+            );
         } catch (mysqli_sql_exception $e) {
             throw new Exception("Connection error: " . $e->getMessage());
         }
         //$this->connection = mysqli_connect(DBAccess::HOST_DB, DBAccess::USERNAME, DBAccess::PASSWORD, DBAccess::DATABASE_NAME);
 
         // errors check in debug
-        return mysqli_connect_error();
+        return mysqli_connect_error();  // ???
 
         // errors check in production
         // if(mysqli_connect_errno()) {
@@ -60,6 +75,40 @@ class DBAccess
         mysqli_close($this->connection);
     }
 
+    private function prepare_and_execute_query($query, $types = null, $params = null): ?array
+    {
+        $this->ensure_connection();
+        try {
+            $stmt = $this->connection->prepare($query);
+            if ($types && $params) {
+                // there must be the same number of types and parameters
+                // e.g types = "iss", params = [1, "hello", 3.14]
+                if (strlen($types) !== count($params)) {
+                    throw new Exception("Number of types does not match number of parameters");
+                }
+
+                // Bind parameters dynamically
+                if (!$stmt->bind_param($types, ...$params)) {
+                    throw new Exception("Parameter binding failed: " . $stmt->error);
+                }
+            }
+
+            if (!$stmt->execute()) {
+                throw new Exception("Execute failed: " . $stmt->error);
+            }
+
+            $result = $this->query_results_to_array($stmt->get_result());
+
+            $stmt->close();
+            return $result;
+        } catch (Exception $e) {
+            if ($stmt ?? null) {
+                $stmt->close();
+            }
+            throw $e;
+        }
+    }
+
     public function get_most_traded_with_cover($limit)
     {
         $query = "SELECT L.ISBN, L.titolo, L.autore, I.url, COUNT(*) AS numero_vendite
@@ -71,57 +120,21 @@ class DBAccess
                     WHERE I.isCopertina = TRUE
                     GROUP BY L.ISBN, L.titolo, L.autore, I.url
                     ORDER BY numero_vendite DESC
-                    LIMIT " . $limit;
-        $queryRes = mysqli_query($this->connection, $query or die(mysqli_error($this->connection)));
+                    LIMIT ?";
 
-        if (mysqli_num_rows($queryRes) == 0) {
-            return null;
-        } else {
-            $res = array();
-            while ($row = mysqli_fetch_assoc($queryRes)) {
-                array_push($res, $row);
-            }
-            $queryRes->free();
-            return $res;
-        }
+        return $this->prepare_and_execute_query($query, "i", [$limit]);
     }
 
-    // public function insertNewElement()
-    // {
-    //     // TODO: usare prepare statement
-    //     $queryIns = "";
-    //     $queryRes = mysqli_query($this->connection, $queryIns or die(mysqli_error($this->connection)));
-
-    //     if (mysqli_affected_rows($this->connection) > 0) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-    function get_province(): ?array
-    {
-        $this->open_connection();
-
-        $query = "SELECT id, nome FROM province";
-
-        $queryRes = mysqli_query($this->connection, $query);
-        $this->handle_query_error($queryRes);
-
-        $this->close_connection();
-
-        return $this->query_results_to_array($queryRes);
-    }
     function get_citta_by_provincia($provincia): ?array
     {
-        $this->open_connection();
+        $query = "SELECT * FROM citta WHERE provincia = ?";
+        return $this->prepare_and_execute_query($query, "s", [$provincia]);
+    }
 
-        $query = "SELECT * FROM citta WHERE provincia = '$provincia'";
-        $queryRes = mysqli_query($this->connection, $query);
-        $this->handle_query_error($queryRes);
-
-        $this->close_connection();
-
-        return $this->query_results_to_array($queryRes);
+    // No need for prepared statements? 
+    function get_province(): ?array
+    {
+        $query = "SELECT id, nome FROM province";
+        return $this->prepare_and_execute_query($query);
     }
 }

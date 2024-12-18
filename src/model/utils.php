@@ -1,5 +1,5 @@
 <?php
-function ratingStars($rating)
+function ratingStars($rating): string
 {
     if ($rating > 5 || $rating < 0) {
         throw new Exception("Rating non nei vincoli", 1);
@@ -34,5 +34,35 @@ function ratingStars($rating)
         $total_star--;
     }
 
-    echo $rating_stars;
+    return $rating_stars;
+}
+
+
+function getNavBarLi(): string
+{
+    $currentPage = $_SERVER['REQUEST_URI'];
+
+    $navbarReferences = array(
+        array('href' => '/', 'text' => 'Home'),
+        array('href' => '/esplora', 'text' => 'Esplora'),
+        array('href' => '/contatti', 'text' => 'Contatti'),
+        array('href' => '/profilo', 'text' => 'Profilo')
+    );
+
+    $li = '';
+    foreach ($navbarReferences as $ref) {
+        if ($currentPage != $ref['href']) {
+            $li .= '<li><a href="' . $ref['href'] . '">' . $ref['text'] . '</a></li>';
+        } else {
+            $li .= '<li class="activePage">' . $ref['text'] . '</li>';
+        }
+    }
+    return $li;
+}
+
+function getHeaderSection(): string
+{
+    $header = file_get_contents('./html/header.html');
+    $li = getNavBarLi();
+    return str_replace('<!-- [navbar] -->', $li, $header);
 }

@@ -1,9 +1,9 @@
 <?php
 require_once '../src/model/dbAPI.php';
 
-use DBAccess;
-
+$header = file_get_contents('./html/header.html');
 $index = file_get_contents('./html/index.html');
+$footer = file_get_contents('./html/footer.html');
 
 $db = new DBAccess();
 $dbOK = $db->open_connection();
@@ -22,4 +22,6 @@ if ($dbOK) {
     // TODO: gestire errore connesione
 }
 
+echo str_replace('<!--[header]-->', $header, $index);
+echo str_replace('<!--[footer]-->', $footer, $index);
 echo str_replace('<!--[mostTraded]-->', $mostTradedCoversHTML, $index);

@@ -1,9 +1,6 @@
 <?php
 require_once '../src/model/dbAPI.php';
-
-$header = file_get_contents('./html/header.html');
-$index = file_get_contents('./html/index.html');
-$footer = file_get_contents('./html/footer.html');
+require_once '../src/model/utils.php';
 
 $db = new DBAccess();
 $dbOK = $db->open_connection();
@@ -23,26 +20,16 @@ if ($dbOK) {
     // TODO: gestire errore connesione
 }
 
-$currentPage = $_SERVER['REQUEST_URI'];
+$PAGE_TITLE = "BookOverflow";
 
-$navbarReferences = array(
-    array('href' => '/', 'text' => 'Home'),
-    array('href' => '/esplora', 'text' => 'Esplora'),
-    array('href' => '/contatti', 'text' => 'Contatti'),
-    array('href' => '/profilo', 'text' => 'Profilo')
-);
+$template = file_get_contents('./html/templatePage.html');
+$header = getHeaderSection();
+$index = file_get_contents('./html/index.html');
+$footer = file_get_contents('./html/footer.html');
 
-$li = '';
-foreach ($navbarReferences as $ref) {
-    if ($currentPage != $ref['href']) {
-        $li .= '<li class="active"><a href="' . $ref['href'] . '">' . $ref['text'] . '</a></li>';
-    } else {
-
-        $li .= '<li>' . $ref['text'] . '</li>';
-    }
-}
-$header = str_replace('<!-- [navbar] -->', $li, $header);
-$index = str_replace('<!-- [header] -->', $header, $index);
-$index = str_replace('<!-- [footer] -->', $footer, $index);
-$index = str_replace('<!-- [mostTraded] -->', $mostTradedCoversHTML, $index);
-echo $index;
+$page = str_replace('<!-- [pageTitle] -->', $PAGE_TITLE, $template);
+$page = str_replace('<!-- [header] -->', $header, $page);
+$page = str_replace('<!-- [footer] -->', $footer, $page);
+$page = str_replace('<!-- [content] -->', $index, $page);
+$page = str_replace('<!-- [mostTraded] -->', $mostTradedCoversHTML, $page);
+echo $page;

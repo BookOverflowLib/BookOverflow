@@ -1,0 +1,30 @@
+@media (max-width: 500px) {
+    header {
+        grid-template-columns: 1fr;
+    }
+
+    header > nav,
+    header > button {
+        display: none;
+    }
+
+    #landing {
+        grid-template-columns: 1fr;
+    }
+
+    #landing > img {
+        width: 70vw;
+    }
+
+    .carosello-libri {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #citazione {
+        font-size: small;
+    }
+
+    #landing {
+        font-size: small;
+    }
+}

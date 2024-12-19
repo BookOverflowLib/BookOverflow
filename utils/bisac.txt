@@ -13,41 +13,41 @@
 "business & economics" => "Economia e Business"
 "performing arts" => "Arti performative"
 "comics & graphic novels" => "Fumetti e graphic novels"
-"pets" => 
-computers
-philosophy
-cooking
-photography
-crafts & hobbies
-poetry
-design
-political science
-drama
-psychology
-education
-reference
-family & relationships
-religion
-fiction
-science
-foreign language study
-self=>help
-games & activities
-social science
-gardening
-sports & recreation
-health & fitness
-study aids
-history
-technology & engineering
-house & home
-transportation
-humor
-travel
-juvenile fiction
-true crime
-juvenile nonfiction
-young adult fiction
-language arts & disciplines
-young adult nonfiction
-law
+"pets" => "Animali"
+"computers" => "Computers"
+"philosophy" => "Filosofia"
+"cooking" => "Cucina"
+"photography" => "Fotografia"
+"crafts & hobbies" => "Artigianato e hobby"
+"poetry" => "Poesia"
+"design" => "Design"
+"political science" => "Scienze politiche"
+"drama" => "Drammatico" 
+"psychology" => "Psicologia"
+"education" => "Istruzione"
+"reference" => "Riferimento"
+"family & relationships" => "Famiglia e relazioni"
+"religion" => "Religione"
+"fiction" => "Di fantasia"
+"science" => "Scienza"
+"foreign language study" => "Studio di lingue straniere"
+"self-help" => "Auto-aiuto"
+"games & activities" => "Giochi e attività"
+"social science" => "Scienze sociali"
+"gardening" => "Giardinaggio"
+"sports & recreation" => "Sport e attività ricreative"
+"health & fitness" => "Salute e fitness"
+"study aids" => "Aiuti allo studio" 
+"history" => "Storia"
+"technology & engineering" => "Tecnologia e ingegneria"
+"house & home" => "Abitazione e casa"
+"transportation" => "Trasporti"
+"humor" => "Umorismo"
+"travel" => "Viaggio"
+"juvenile fiction" => "Narrativa giovanile" 
+"true crime" => "Vero crimine"
+"juvenile nonfiction" => "Saggistica per ragazzi"
+"young adult fiction" => "Narrativa per giovani adulti" 
+"language arts & disciplines" => "Arti e discipline linguistiche"
+"young adult nonfiction" => "Saggistica per giovani adulti"
+"law" => "Legge"

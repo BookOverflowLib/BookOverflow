@@ -75,6 +75,7 @@ class DBAccess
         mysqli_close($this->connection);
     }
 
+<<<<<<< HEAD
     private function prepare_and_execute_query($query, $types = null, $params = null): ?array
     {
         $this->ensure_connection();
@@ -107,6 +108,44 @@ class DBAccess
             }
             throw $e;
         }
+=======
+    private function prepare_and_execute_query($query, $types = null, $params = null) : ?array
+    {
+        if (!$this->connection) {
+            $this->open_connection();
+        }
+
+        $stmt = $this->connection->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Prepare failed: " . $this->connection->error);
+        }
+
+        if ($types && $params) {
+            // there must be the same number of types and parameters
+            // e.g types = "iss", params = [1, "hello", 3.14]
+            if (strlen($types) !== count($params)) {
+                throw new Exception("Number of types does not match number of parameters");
+            }
+            
+            // Bind parameters dynamically
+            if (!$stmt->bind_param($types, ...$params)) {
+                throw new Exception("Parameter binding failed: " . $stmt->error);
+            }
+        }
+    
+        if (!$stmt->execute()) {
+            throw new Exception("Execute failed: " . $stmt->error);
+        }
+
+        $result = $this->query_results_to_array($stmt->get_result());
+        
+        $stmt->close();
+        $this->close_connection(); 
+        // we might want to keep the connection open
+        // constant opening and closing is slow
+        
+        return $result;
+>>>>>>> 3a9f15b (refactor: make queries use prepared statements)
     }
 
     public function get_most_traded_with_cover($limit)
@@ -121,7 +160,11 @@ class DBAccess
                     GROUP BY L.ISBN, L.titolo, L.autore, I.url
                     ORDER BY numero_vendite DESC
                     LIMIT ?";
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 3a9f15b (refactor: make queries use prepared statements)
         return $this->prepare_and_execute_query($query, "i", [$limit]);
     }
 
@@ -134,7 +177,20 @@ class DBAccess
     // No need for prepared statements? 
     function get_province(): ?array
     {
+<<<<<<< HEAD
         $query = "SELECT id, nome FROM province";
         return $this->prepare_and_execute_query($query);
+=======
+        $this->open_connection();
+
+        $query = "SELECT id, nome FROM province";
+
+        $queryRes = mysqli_query($this->connection, $query);
+        $this->handle_query_error($queryRes);
+
+        $this->close_connection();
+
+        return $this->query_results_to_array($queryRes);
+>>>>>>> 3a9f15b (refactor: make queries use prepared statements)
     }
 }

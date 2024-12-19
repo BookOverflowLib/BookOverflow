@@ -1,0 +1,53 @@
+"antiques & collectibles" => "Antichi e da collezione"
+"literary collections" => "Collezioni letterarie"
+"architecture" => "Architettura"
+"literary criticism" => "Critica letteraria"
+"art" => "Arte"
+"mathematics" => "Matematica"
+"bibles" => "Bibbia"
+"medical" => "Medicina"
+"biography & autobiography" => "Biografie e Autobiografie"
+"music" => "Musica"   
+"body, mind & spirit" => "Corpo, mente e spirito"
+"nature" => "Natura"
+"business & economics" => "Economia e Business"
+"performing arts" => "Arti performative"
+"comics & graphic novels" => "Fumetti e graphic novels"
+"pets" => 
+computers
+philosophy
+cooking
+photography
+crafts & hobbies
+poetry
+design
+political science
+drama
+psychology
+education
+reference
+family & relationships
+religion
+fiction
+science
+foreign language study
+self=>help
+games & activities
+social science
+gardening
+sports & recreation
+health & fitness
+study aids
+history
+technology & engineering
+house & home
+transportation
+humor
+travel
+juvenile fiction
+true crime
+juvenile nonfiction
+young adult fiction
+language arts & disciplines
+young adult nonfiction
+law

@@ -15,6 +15,8 @@ services:
     image: mariadb:10.6.7
     restart: always
     environment:
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: bookoverflow
       MARIADB_USER: test

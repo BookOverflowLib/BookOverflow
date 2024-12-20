@@ -313,7 +313,7 @@ main {
     justify-content: center;
     flex-direction: column;
     min-width: 15em;
-    max-width: 30em;
+    max-width: 20em;
     gap: 1em;
     border: 1px solid var(--light-gray);
     border-radius: 1em;

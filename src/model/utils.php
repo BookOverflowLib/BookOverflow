@@ -1,9 +1,18 @@
 <?php
+
+/**
+ * Genera una stringa HTML per visualizzare il rating sotto forma di stelle
+ *
+ * @param float $rating Valore del rating (compreso tra 0.0 e 5.0)
+ * @return string HTML con gli svg delle stelle
+ * @throws Exception Se il rating non è compreso tra 0 e 5
+ */
 function ratingStars($rating): string
 {
     if ($rating > 5 || $rating < 0) {
         throw new Exception("Rating non nei vincoli", 1);
     }
+
     $n_full_star = floor($rating); //PARTE INTERA
     $n_partial_star = $rating - $n_full_star; //PARTE FRAZIONARIA
     $star_svg = file_get_contents("../assets/imgs/star.svg");
@@ -37,7 +46,11 @@ function ratingStars($rating): string
     return $rating_stars;
 }
 
-
+/**
+ * Genera gli elementi \<li\> della navbar rimuovendo il link dalla pagina corrente (circolari!)
+ *
+ * @return string HTML contenente i vari elementi \<li\>
+ */
 function getNavBarLi(): string
 {
     $currentPage = $_SERVER['REQUEST_URI'];
@@ -45,7 +58,7 @@ function getNavBarLi(): string
     $navbarReferences = array(
         array('href' => '/', 'text' => 'Home'),
         array('href' => '/esplora', 'text' => 'Esplora'),
-        array('href' => '/contatti', 'text' => 'Contatti'),
+        array('href' => '/chi-siamo', 'text' => 'Chi siamo'),
         array('href' => '/profilo', 'text' => 'Profilo')
     );
 
@@ -60,9 +73,15 @@ function getNavBarLi(): string
     return $li;
 }
 
+/**
+ * Restituisce l'header con la navbar aggiornata
+ *
+ * @return string HTML dell'header con la navbar sostituita
+ */
 function getHeaderSection(): string
 {
     $header = file_get_contents('./html/header.html');
+    // Genera i link della navbar
     $li = getNavBarLi();
     return str_replace('<!-- [navbar] -->', $li, $header);
 }

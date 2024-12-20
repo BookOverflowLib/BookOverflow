@@ -56,7 +56,7 @@ Connect to the server at `http://localhost:8080/public/index.php`.
 -   [ ] Visualizzare quanto si ha risparmiato con gli scambi fatti
 
 ## TODO
-- [ ] nel form di registrazione, implementare l'inserimento della città con suggerimenti
+- [x] nel form di registrazione, implementare l'inserimento della città con suggerimenti
 - [x] alleggerire foto
 
 ## Note:

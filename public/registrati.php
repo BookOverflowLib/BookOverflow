@@ -1,17 +1,26 @@
 <?php
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    header("Location: profilo");
-    exit();
-}
-
 require_once '../src/model/dbAPI.php';
 require_once '../src/model/utils.php';
 require_once '../src/model/registrationSelect.php';
 
 $db = new DBAccess();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if(isset($_POST['nome'], $_POST['cognome'], $_POST['provincia'], $_POST['comune'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['conferma-password'])) {
+        $nome = $_POST['nome'];
+        $cognome = $_POST['cognome'];
+        $provincia = $_POST['provincia'];
+        $comune = $_POST['comune'];
+        $email = $_POST['email'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $password2 = $_POST['conferma-password'];
+
+        //TODO: MANCANO I CONTROLLI SUI CAMPI
+        
+    }
+}
+
 
 $PAGE_TITLE = "Registrati - BookOverflow";
 

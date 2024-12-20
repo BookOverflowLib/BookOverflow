@@ -1,96 +1,18 @@
-<!DOCTYPE html>
-<html lang="it">
-
-<head>
-	<meta charset="UTF-8" />
-	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-	<meta content="Login BookOverflow" name="title" />
-	<meta content="pagina per effettuare login a Bookoveflow" name="description" />
-	<meta content="login, BookOverflow, unipd" name="keywords" />
-	<meta content="BookOverflowLib" name="author" />
-	<meta content="width=device-width, initial-scale=1" name="viewport" />
-
-	<!-- favicon -->
-	<link href="../assets/imgs/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png" />
-	<link href="../assets/imgs/favicon/favicon.svg" rel="icon" type="image/svg+xml" />
-	<link href="../assets/imgs/favicon/favicon.ico" rel="shortcut icon" />
-	<link href="../assets/imgs/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
-	<meta content="BookOverflow" name="apple-mobile-web-app-title" />
-	<link href="../assets/imgs/favicon/site.webmanifest" rel="manifest" />
-
-	<!-- css -->
-	<link href="../css/style.css" rel="stylesheet" />
-	<link href="../css/printStyle.css" rel="stylesheet" />
-	<link href="../css/mobileStyle.css" rel="stylesheet" />
-	<!-- font -->
-	<link href="https://fonts.googleapis.com" rel="preconnect" />
-	<link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-	<link
-		href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-		rel="stylesheet" />
-	<title>BookOverflow</title>
-</head>
-
-<body>
-<header>
-	<div class="logo">
-		<img alt="" src="../assets/imgs/logo.png" width="40" />
-		<h1 lang="en">
-			<span class="bold">Book</span><span class="italic">Overflow</span>
-		</h1>
-	</div>
-	<nav id="menu">
-		<ul>
-			<li lang="en"><a href="./index.html">Home</a></li>
-			<li><a href="/esplora">Esplora</a></li>
-			<li><a href="/info">Info</a></li>
-			<li><a href="/contatti">Contatti</a></li>
-		</ul>
-	</nav>
-	<a class="button-layout" href="./registrati.html">Registrati</a>
-</header>
-<nav id="breadcrumb">
-	<p>
-		Ti trovi in :
-		<span class="bold">Accedi</span>
+<section class="login-signin center">
+	<h1 class="center">Accedi</h1>
+	<p class="center">
+		Non hai un <span lang="en">account</span>? <a href="/registrati">Registrati</a>
 	</p>
-</nav>
-<main class="center">
-	<section class="login-signin">
-		<h1 class="center">Accedi</h1>
-		<p class="center small">Non hai un <span lang="en">account</span>? <a href="./registrati.html">Registrati</a>
-		</p>
-		<form action="" method="post">
-			<fieldset class="login-data">
-				<legend class="sr-only">Inserire i dati per il <span lang="en">login</span></legend>
-				<label class="small" for="username" lang="en">Username</label>
-				<input id="username" maxlenght="25" name="username" required>
+	<form action="/accedi.php" method="post">
+		<fieldset class="login-data">
+			<legend class="sr-only">Inserire i dati per il <span lang="en">login</span></legend>
+			<label class="" for="username" lang="en">Username</label>
+			<input id="username" maxlenght="25" name="username" required>
 
-				<label class="small" for="password" lang="en">Password</label>
-				<input id="password" maxlenght="25" name="password" required type="password">
+			<label class="" for="password" lang="en">Password</label>
+			<input id="password" maxlenght="25" name="password" required type="password">
 
-				<button type="submit">Accedi</button>
-			</fieldset>
-		</form>
-
-	</section>
-</main>
-<footer>
-	<div class="logo">
-		<img alt="" src="../assets/imgs/logo.png" width="30" />
-		<p lang="en">
-			<span class="bold">Book</span><span class="italic">Overflow</span>
-		</p>
-	</div>
-	<p id="unipd">
-		Sito web progettato e sviluppato per l'esame di Tecnologie Web
-		dell'Università degli Studi di Padova.
-	</p>
-	<p id="nomi">
-		@Aleena Mathew @Alessandro Bernardello @Luca
-		Ribon @Matteo Bazzan
-	</p>
-</footer>
-</body>
-
-</html>
+			<button type="submit">Accedi</button>
+		</fieldset>
+	</form>
+</section>

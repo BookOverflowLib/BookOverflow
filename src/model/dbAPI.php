@@ -49,11 +49,10 @@ class DBAccess
 
     public function close_connection()
     {
-        // la connessione è già stata chiusa
-        if (!$this->connection) {
-            return;
+        if($this->connection){
+            mysqli_close($this->connection);
+            $this->connection = null;
         }
-        mysqli_close($this->connection);
     }
 
     public function get_most_traded_with_cover($limit)
@@ -142,14 +141,12 @@ class DBAccess
         return null;
     }
 
-    // No need for prepared statements?
     function get_province(): ?array
     {
         $this->open_connection();
         $query = "SELECT id, nome FROM province ORDER BY nome";
         $queryRes = mysqli_query($this->connection, $query);
       
-        $this->handle_query_error($queryRes);
         $this->close_connection();
 
         return $this->query_results_to_array($queryRes);

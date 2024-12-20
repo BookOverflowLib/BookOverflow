@@ -1,4 +1,5 @@
 <?php
+
 class DBAccess
 {
     private const HOST_DB = "db";
@@ -11,31 +12,6 @@ class DBAccess
     public function __construct()
     {
         $this->open_connection();
-    }
-
-    public function __destruct()
-    {
-        $this->close_connection();
-    }
-
-    private function ensure_connection(): void
-    {
-        if (!$this->connection) {
-            $this->open_connection();
-        }
-    }
-
-    private function query_results_to_array($queryRes): ?array
-    {
-        if (mysqli_num_rows($queryRes) == 0) {
-            return null;
-        }
-        $res = array();
-        while ($row = mysqli_fetch_assoc($queryRes)) {
-            array_push($res, $row);
-        }
-        $queryRes->free();
-        return $res;
     }
 
     public function open_connection()
@@ -66,6 +42,11 @@ class DBAccess
         // }
     }
 
+    public function __destruct()
+    {
+        $this->close_connection();
+    }
+
     public function close_connection()
     {
         // la connessione è già stata chiusa
@@ -73,6 +54,22 @@ class DBAccess
             return;
         }
         mysqli_close($this->connection);
+    }
+
+    public function get_most_traded_with_cover($limit)
+    {
+        $query = "SELECT L.ISBN, L.titolo, L.autore, I.url, COUNT(*) AS numero_vendite
+                    FROM Scambio AS S 
+                    JOIN Copia AS CProp ON S.idCopiaProp = CProp.ID
+                    JOIN Copia AS CAcc ON (S.idCopiaAcc = CAcc.ID AND CProp.ID != CAcc.ID) 
+                    JOIN Libro AS L ON (CProp.ISBN = L.ISBN AND CAcc.ISBN = L.ISBN)
+                    JOIN Immagine AS I ON L.ISBN = I.ISBN
+                    WHERE I.isCopertina = TRUE
+                    GROUP BY L.ISBN, L.titolo, L.autore, I.url
+                    ORDER BY numero_vendite DESC
+                    LIMIT ?";
+
+        return $this->prepare_and_execute_query($query, "i", [$limit]);
     }
 
     private function prepare_and_execute_query($query, $types = null, $params = null): ?array
@@ -109,32 +106,47 @@ class DBAccess
         }
     }
 
-    public function get_most_traded_with_cover($limit)
+    private function ensure_connection(): void
     {
-        $query = "SELECT L.ISBN, L.titolo, L.autore, I.url, COUNT(*) AS numero_vendite
-                    FROM Scambio AS S 
-                    JOIN Copia AS CProp ON S.idCopiaProp = CProp.ID
-                    JOIN Copia AS CAcc ON (S.idCopiaAcc = CAcc.ID AND CProp.ID != CAcc.ID) 
-                    JOIN Libro AS L ON (CProp.ISBN = L.ISBN AND CAcc.ISBN = L.ISBN)
-                    JOIN Immagine AS I ON L.ISBN = I.ISBN
-                    WHERE I.isCopertina = TRUE
-                    GROUP BY L.ISBN, L.titolo, L.autore, I.url
-                    ORDER BY numero_vendite DESC
-                    LIMIT ?";
-
-        return $this->prepare_and_execute_query($query, "i", [$limit]);
+        if (!$this->connection) {
+            $this->open_connection();
+        }
     }
 
-    function get_citta_by_provincia($provincia): ?array
+    private function query_results_to_array($queryRes): ?array
     {
-        $query = "SELECT * FROM citta WHERE provincia = ?";
-        return $this->prepare_and_execute_query($query, "s", [$provincia]);
+        if (mysqli_num_rows($queryRes) == 0) {
+            return null;
+        }
+        $res = array();
+        while ($row = mysqli_fetch_assoc($queryRes)) {
+            array_push($res, $row);
+        }
+        $queryRes->free();
+        return $res;
     }
 
-    // No need for prepared statements? 
+    function get_comune_by_provincia($idProvincia): ?array
+    {
+        $query = "SELECT * FROM comuni WHERE id_provincia = ?";
+        try {
+            return $this->prepare_and_execute_query($query, "s", [$idProvincia]);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        return null;
+    }
+
+    // No need for prepared statements?
     function get_province(): ?array
     {
-        $query = "SELECT id, nome FROM province";
-        return $this->prepare_and_execute_query($query);
+        $query = "SELECT id, nome FROM province ORDER BY nome";
+        try {
+            return $this->prepare_and_execute_query($query);
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        return null;
     }
 }

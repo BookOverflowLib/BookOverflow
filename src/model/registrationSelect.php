@@ -1,7 +1,7 @@
 <?php
 require_once '../src/model/dbAPI.php';
 
-function datalistProvince(): string
+function optionProvince(): string
 {
     $html_output = "";
     $db = new DBAccess(); // ma che diamine? dubito sia giusto
@@ -19,12 +19,12 @@ function datalistProvince(): string
     return $html_output;
 }
 
-function datalistCity($province_id): string
+function optionComuni($province_id): string
 {
     $html_output = "";
     $db = new DBAccess();
     try {
-        $array_citta = $db->get_citta_by_provincia($province_id);
+        $array_citta = $db->get_comune_by_provincia($province_id);
 
         if ($array_citta) {
             foreach ($array_citta as $citta) {

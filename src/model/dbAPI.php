@@ -151,4 +151,9 @@ class DBAccess
 
         return $this->query_results_to_array($queryRes);
     }
+
+    function register_user($nome, $cognome, $provincia, $comune, $email, $username, $password): bool
+    {
+        // TODO: implement
+    }
 }

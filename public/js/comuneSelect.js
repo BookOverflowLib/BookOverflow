@@ -2,7 +2,7 @@ let provinciaSelect = document.querySelector('select[name="provincia"]')
 if (provinciaSelect) {
 	provinciaSelect.addEventListener('change', function (e) {
 		//find target Select menu
-		let cittaSelect = document.querySelector('select[name="citta"]')
+		let cittaSelect = document.querySelector('select[name="comune"]')
 
 		//create payload to send to server
 		let fd = new FormData()

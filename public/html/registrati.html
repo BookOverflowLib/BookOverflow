@@ -1,135 +1,59 @@
-<!DOCTYPE html>
-<html lang="it">
-
-<head>
-	<meta charset="UTF-8" />
-	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-	<meta content="Sign-in BookOverflow" name="title" />
-	<meta content="pagina per effettuare sign-in a Bookoveflow" name="description" />
-	<meta content="login, BookOverflow, unipd" name="keywords" />
-	<meta content="BookOverflowLib" name="author" />
-	<meta content="width=device-width, initial-scale=1" name="viewport" />
-
-	<!-- favicon -->
-	<link href="../assets/imgs/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png" />
-	<link href="../assets/imgs/favicon/favicon.svg" rel="icon" type="image/svg+xml" />
-	<link href="../assets/imgs/favicon/favicon.ico" rel="shortcut icon" />
-	<link href="../assets/imgs/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
-	<meta content="BookOverflow" name="apple-mobile-web-app-title" />
-	<link href="../assets/imgs/favicon/site.webmanifest" rel="manifest" />
-
-	<!-- css -->
-	<link href="../css/style.css" rel="stylesheet" />
-	<link href="../css/printStyle.css" rel="stylesheet" />
-	<link href="../css/mobileStyle.css" rel="stylesheet" />
-	<!-- font -->
-	<link href="https://fonts.googleapis.com" rel="preconnect" />
-	<link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
-	<link
-		href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-		rel="stylesheet" />
-	<title>BookOverflow</title>
-</head>
-
-<body>
-<header>
-	<div class="logo">
-		<img alt="" src="../assets/imgs/logo.png" width="40" />
-		<h1 lang="en">
-			<span class="bold">Book</span><span class="italic">Overflow</span>
-		</h1>
-	</div>
-	<nav id="menu">
-		<ul>
-			<li lang="en"><a href="./index.html">Home</a></li>
-			<li><a href="/esplora">Esplora</a></li>
-			<li><a href="/info">Info</a></li>
-			<li><a href="/contatti">Contatti</a></li>
-		</ul>
-	</nav>
-	<a class="button-layout" href="./accedi.html">Accedi</a>
-</header>
-<nav id="breadcrumb">
-	<p>
-		Ti trovi in :
-		<span class="bold" lang="en">Registrati</span>
-	</p>
-</nav>
-<main class="center">
-	<section class="login-signin">
-		<h1 class="center">Registrati</h1>
-		<p class="center small">Hai già un <span lang="en">account</span>? <a href="./accedi.html">Accedi</a></p>
-		<!-- nome cognome username email città(provincia e città)-->
-		<form action="" method="post">
-			<fieldset class="login-data">
-				<legend class="sr-only">Inserire i dati per registrarsi</legend>
-				<div class="doppio-input">
-					<div>
-						<label class="small" for="nome">Nome</label>
-						<input id="nome" maxlenght="25" name="nome" required>
-					</div>
-					<div>
-						<label class="small" for="cognome">Cognome</label>
-						<input id="cognome" maxlenght="25" name="cognome" required>
-					</div>
+<section class="signin center">
+	<h1 class="center">Registrati</h1>
+	<p class="center">Hai già un <span lang="en">account</span>? <a href="/accedi">Accedi</a></p>
+	<!-- nome cognome username email città(provincia e città)-->
+	<form action="" method="post">
+		<fieldset class="login-data">
+			<legend class="sr-only">Inserire i dati per registrarsi</legend>
+			<div class="doppio-input">
+				<div>
+					<label for="nome">Nome</label>
+					<input equired id="nome" maxlenght="25" name="nome" type="text">
 				</div>
-
-				<!-- provincia e citta -->
-				<div class="doppio-input">
-					<div>
-						<label class="small" for="provincia">Provincia</label>
-						<input list="provincia" name="provincia" required type="text">
-						<datalist id="provincia">
-						</datalist>
-					</div>
-					<div>
-						<label class="small" for="citta">Città</label>
-						<input list="citta" name="citta" required type="text" />
-						<datalist id="citta">
-
-
-						</datalist>
-					</div>
+				<div>
+					<label for="cognome">Cognome</label>
+					<input id="cognome" maxlenght="25" name="cognome" required type="text">
 				</div>
+			</div>
 
-				<!-- username -->
-				<label class="small" for="username" lang="en">Username</label>
-				<input id="username" maxlenght="25" name="username" required>
+			<!-- provincia e citta -->
+			<div class="doppio-input">
+				<div>
+					<label for="provincia">Provincia</label>
+					<select id="provincia" name="provincia" required>
+						<option value="">Seleziona una provincia</option>
+						<hr />
+						<!-- [province] -->
+					</select>
+				</div>
+				<div>
+					<label for="citta">Comune</label>
+					<select name="citta" required>
+						<option value="">Seleziona un comune</option>
+						<hr />
+					</select>
+				</div>
+			</div>
 
-				<!-- email -->
-				<label class="small" for="email">Indirizzo Mail</label>
-				<input id="email" name="email" required type="email">
+			<!-- username -->
+			<label for="username" lang="en">Username</label>
+			<input id="username" maxlenght="25" name="username" required type="text">
 
-				<!-- password -->
-				<label class="small" for="password" lang="en">Password</label>
-				<input id="password" maxlenght="20" name="password" required type="password">
+			<!-- email -->
+			<label for="email">Indirizzo Mail</label>
+			<input id="email" name="email" required type="email">
 
-				<!-- conferma password -->
-				<label class="small" for="conferma-password">Conferma <span lang="en">Password</span></label>
-				<input id="password" maxlenght="20" name="conferma-password" required type="password">
+			<!-- password -->
+			<label for="password" lang="en">Password</label>
+			<input id="password" maxlenght="20" name="password" required type="password">
 
-				<button type="submit">Registrati</button>
-			</fieldset>
-		</form>
+			<!-- conferma password -->
+			<label for="conferma-password">Conferma <span lang="en">Password</span></label>
+			<input id="password" maxlenght="20" name="conferma-password" required type="password">
 
-	</section>
-</main>
-<footer>
-	<div class="logo">
-		<img alt="" src="../assets/imgs/logo.png" width="30" />
-		<p lang="en">
-			<span class="bold">Book</span><span class="italic">Overflow</span>
-		</p>
-	</div>
-	<p id="unipd">
-		Sito web progettato e sviluppato per l'esame di Tecnologie Web
-		dell'Università degli Studi di Padova.
-	</p>
-	<p id="nomi">
-		@Aleena Mathew @Alessandro Bernardello @Luca
-		Ribon @Matteo Bazzan
-	</p>
-</footer>
-</body>
+			<button type="submit">Registrati</button>
+		</fieldset>
+	</form>
 
-</html>
+</section>
+<script src="../js/comuneSelect.js"></script>

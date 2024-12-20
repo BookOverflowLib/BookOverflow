@@ -1,4 +1,7 @@
 :root {
+    --background: #fff;
+    --text-color: #000;
+    --colored-background: rgba(255, 236, 194, 0.8);
     --primary-color: hsl(40, 77%, 86%);
     --hover-color: #f0d18f;
     --gray: hsl(0, 0%, 93%);
@@ -12,14 +15,18 @@
 }
 
 html {
+    font-family: 'Inter', serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
     scroll-behavior: smooth;
+    scroll-padding-top: 5em;
 }
 
 body {
-    font-family: 'Inter', serif;
-    font-optical-sizing: auto;
-    font-weight: 300;
-    font-style: normal;
+    background-color: var(--background);
+    color: var(--text-color);
     display: grid;
     grid-template-rows: auto auto 1fr auto;
     min-height: 100vh;
@@ -71,21 +78,39 @@ body {
     text-decoration: underline;
 }
 
+/* HEADER NAVBAR */
 header {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    justify-content: space-between;
-    align-items: center;
-    justify-items: center;
-    gap: 2em;
+    top: 0;
+    position: sticky;
+    z-index: 999;
     padding: 1em;
 }
 
-header .logo {
+.header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    justify-content: space-between;
+    justify-items: center;
+    border-radius: 1em;
+    gap: 2em;
+    padding: 1em;
+    margin-inline: auto;
+    max-width: 66em;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--background);
+}
+
+.header.activeHeader {
+    background-color: var(--colored-background);
+    backdrop-filter: blur(80px);
+}
+
+.header .logo {
     justify-self: start;
 }
 
-header > .button-layout {
+.header > .button-layout {
     justify-self: end;
 }
 
@@ -197,7 +222,6 @@ main {
     padding: 2em;
     gap: 2em;
 }
-
 
 .carosello-libri {
     display: grid;
@@ -376,13 +400,18 @@ section > p > a {
     overflow: hidden;
     white-space: nowrap;
     border-width: 0;
-    clip: rect(0, 0, 0, 0);
+    clip-path: rect(0, 0, 0, 0);
 }
 
 .salta-al-contenuto:focus {
-    z-index: 999;
-    clip: auto;
-    padding: 0.5em;
+    z-index: 1000;
+    clip-path: auto;
+    margin: 0.5em;
+    padding: 1em;
+    width: auto;
+    height: auto;
+    border-radius: 1em;
+    background-color: var(--background);
 }
 
 .libro-panoramica {

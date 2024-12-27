@@ -15,9 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_POST['username'];
         $password = $_POST['password'];
         $password2 = $_POST['conferma-password'];
-
-        //TODO: MANCANO I CONTROLLI SUI CAMPI
+        $image = getUserImageUrlByEmail($email);
         
+        //TODO: MANCANO I CONTROLLI SUI CAMPI
+        if($password == $password2) {
+            $db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
+        }
     }
 }
 

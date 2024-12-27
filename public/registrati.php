@@ -5,23 +5,6 @@ require_once '../src/model/registrationSelect.php';
 
 $db = new DBAccess();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if(isset($_POST['nome'], $_POST['cognome'], $_POST['provincia'], $_POST['comune'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['conferma-password'])) {
-        $nome = $_POST['nome'];
-        $cognome = $_POST['cognome'];
-        $provincia = $_POST['provincia'];
-        $comune = $_POST['comune'];
-        $email = $_POST['email'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $password2 = $_POST['conferma-password'];
-
-        //TODO: MANCANO I CONTROLLI SUI CAMPI
-        
-    }
-}
-
-
 $PAGE_TITLE = "Registrati - BookOverflow";
 
 $template = file_get_contents('./html/templatePage.html');

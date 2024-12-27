@@ -19,11 +19,13 @@ CREATE TABLE
         email VARCHAR(255) PRIMARY KEY,
         -- l'hashing verrà implementato in PHP, la lunghezza dell'hash dovrebbe essere 60 mentre quella del salt 22
         password_hash CHAR(60) NOT NULL,
-        password_salt CHAR(22) NOT NULL,
-        username VARCHAR(100) UNIQUE NOT NULL,
-        nome VARCHAR(100),
-        cognome VARCHAR(100),
-        citta VARCHAR(50),
+        -- non è necessario memorizzare il salt in quanto la funzione password_hash() lo genera automaticamente e poi la funzione password_verify() sarà capace di verificarlo solamente con il risultato di password_hash()
+        -- password_salt CHAR(22) NOT NULL,
+        username VARCHAR(50) UNIQUE NOT NULL,
+        nome VARCHAR(50),
+        cognome VARCHAR(50),
+        provincia VARCHAR(50),
+        comune VARCHAR(50),
         path_immagine VARCHAR(255)
     );
 

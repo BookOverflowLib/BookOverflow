@@ -113,7 +113,7 @@ CREATE TABLE
 CREATE TABLE
     Immagine (
         path VARCHAR(255) PRIMARY KEY,
-        idCopia INT,
+        libro CHAR(13) NOT NULL,
         isCopertina BOOLEAN DEFAULT FALSE,
-        FOREIGN KEY (idCopia) REFERENCES Copia (ID)
+        FOREIGN KEY (libro) REFERENCES Libro (ISBN)
     );

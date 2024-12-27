@@ -98,7 +98,7 @@ class DBAccess
 		if (str_starts_with($query, "SELECT")) {
 			$results = $this->query_results_to_array($stmt->get_result());
 		} else {
-			if (!$stmt->get_result() && !$stmt->errno()) {
+			if (!$stmt->get_result() && !$stmt->errno) {
 				$results = true;
 			} else {
 				$results = false;
@@ -164,6 +164,31 @@ class DBAccess
 		return false;
 	}
 
+	public function get_user_by_username($username): ?array
+	{
+		$query = "SELECT * FROM Utente WHERE username = ?";
+		try {
+			return $this->prepare_and_execute_query($query, "s", [$username]);
+		} catch (Exception $e) {
+			echo $e->getMessage();
+		}
+		return null;
+	}
+
+	public function get_provincia_comune_by_ids($idProvincia, $idComune): ?array
+	{
+		$queryProvincia = "SELECT nome FROM province WHERE id = ?";
+		$queryComune = "SELECT nome FROM comuni WHERE id = ?";
+		try {
+			$prov = $this->prepare_and_execute_query($queryProvincia, "i", [$idProvincia]);
+			$comu = $this->prepare_and_execute_query($queryComune, "i", [$idComune]);
+			return array("provincia"=>$prov[0]['nome'],"comune"=>$comu[0]['nome']);
+		} catch (Exception $e) {
+			echo $e->getMessage();
+		}
+		return null;
+	}
+
 	private function query_results_to_array($queryRes): ?array
 	{
 		if (mysqli_num_rows($queryRes) == 0) {
@@ -176,7 +201,5 @@ class DBAccess
 		$queryRes->free();
 		return $res;
 	}
-
-	// ritorna un true se l'utente è stato aggiunto
 
 }

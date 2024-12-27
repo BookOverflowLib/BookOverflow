@@ -139,7 +139,7 @@ class DBAccess
 
     public function get_most_traded_with_cover($limit)
     {
-        $query = "SELECT L.ISBN, L.titolo, L.autore, I.url, COUNT(*) AS numero_vendite
+        $query = "SELECT L.ISBN, L.titolo, L.autore, I.path, COUNT(*) AS numero_vendite
                     FROM Scambio AS S 
                     JOIN Copia AS CProp ON S.idCopiaProp = CProp.ID
                     JOIN Copia AS CAcc ON (S.idCopiaAcc = CAcc.ID AND CProp.ID != CAcc.ID) 

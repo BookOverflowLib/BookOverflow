@@ -12,6 +12,7 @@ docker compose up
 If you get _permission denied_ error use _sudo_ before the command.
 
 Connect to the server at `http://localhost:8080/public/index.php`.
+
 To use phpmyadmin go to `http://localhost:8081/`.
 
 ## Idee funzionalità

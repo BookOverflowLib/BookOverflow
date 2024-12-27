@@ -39,7 +39,7 @@ class DBAccess
         // return mysqli_connect_error();
 
         // errors check in production
-        if(mysqli_connect_errno()) {
+        if (mysqli_connect_errno()) {
             return false;
         } else {
             return true;
@@ -118,7 +118,7 @@ class DBAccess
                     JOIN Copia AS CProp ON S.idCopiaProp = CProp.ID
                     JOIN Copia AS CAcc ON (S.idCopiaAcc = CAcc.ID AND CProp.ID != CAcc.ID) 
                     JOIN Libro AS L ON (CProp.ISBN = L.ISBN AND CAcc.ISBN = L.ISBN)
-                    JOIN Immagine AS I ON L.ISBN = I.ISBN
+                    JOIN Immagine AS I ON L.ISBN = I.libro
                     WHERE I.isCopertina = TRUE
                     GROUP BY L.ISBN, L.titolo, L.autore, I.path
                     ORDER BY numero_vendite DESC
@@ -164,5 +164,40 @@ class DBAccess
             echo $e->getMessage();
         }
         return false;
+    }
+
+    // ritorna un array con i dati dell'utente se il login è andato a buon fine
+    public function login_user($email, $password): ?array
+    {
+        $query = "SELECT * FROM Utente WHERE email = ?";
+        try {
+            $res = $this->prepare_and_execute_query($query, "s", [$email]);
+            if ($res) {
+                if (password_verify($password, $res[0]['password_hash'])) {
+                    return $res;
+                } else {
+                    throw new Exception("Wrong password");
+                }
+            } else {
+                throw new Exception("User not registered");
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        return null;
+    }
+
+    public function get_user_rating_by_email($email): ?array
+    {
+        $query = 'DECLARE @emailUtente AS VARCHAR(255) = ?;
+                    SELECT AVG(R.valutazione) AS media_valutazioni 
+                    FROM Recensione R JOIN Scambio S ON R.idScambio = S.ID 
+                    WHERE S.emailAccettatore = @emailUtente OR S.emailProponente = @emailUtente';
+        try {
+            return $this->prepare_and_execute_query($query, "s", [$email]);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        return null;
     }
 }

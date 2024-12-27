@@ -106,8 +106,8 @@ class DBAccess
         }
 
         $stmt->close();
-
-        $this->close_connection();
+        // maybe it's better to keep the connection open for browser session
+        // $this->close_connection();
 
         return $results;
     }
@@ -130,8 +130,6 @@ class DBAccess
         $this->ensure_connection();
         $query = "SELECT id, nome FROM province ORDER BY nome";
         $queryRes = mysqli_query($this->connection, $query);
-
-        $this->close_connection();
 
         return $this->query_results_to_array($queryRes);
     }

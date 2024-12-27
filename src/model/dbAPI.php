@@ -68,7 +68,8 @@ class DBAccess
      * se è un SELECT ritorna un array,
      * se è un INSERT o qualsiasi altra cosa ritorna bool
      */
-    public function prepare_and_execute_query($query, $types = null, $params = null): array|bool
+    // FIXME: null should not be a return type, remove result handling from this function
+    public function prepare_and_execute_query($query, $types = null, $params = null): array|bool|null
     {
         $this->ensure_connection();
 

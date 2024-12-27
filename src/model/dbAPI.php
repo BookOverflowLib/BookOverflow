@@ -36,14 +36,14 @@ class DBAccess
         }
 
         // errors check in debug; returns the error message from the last connection attempt
-        return mysqli_connect_error();
+        // return mysqli_connect_error();
 
         // errors check in production
-        // if(mysqli_connect_errno()) {
-        // 	return false;
-        // } else {
-        // 	return true;
-        // }
+        if(mysqli_connect_errno()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public function close_connection()
@@ -113,14 +113,14 @@ class DBAccess
 
     public function get_most_traded_with_cover($limit)
     {
-        $query = "SELECT L.ISBN, L.titolo, L.autore, I.url, COUNT(*) AS numero_vendite
+        $query = "SELECT L.ISBN, L.titolo, L.autore, I.path, COUNT(*) AS numero_vendite
                     FROM Scambio AS S 
                     JOIN Copia AS CProp ON S.idCopiaProp = CProp.ID
                     JOIN Copia AS CAcc ON (S.idCopiaAcc = CAcc.ID AND CProp.ID != CAcc.ID) 
                     JOIN Libro AS L ON (CProp.ISBN = L.ISBN AND CAcc.ISBN = L.ISBN)
                     JOIN Immagine AS I ON L.ISBN = I.ISBN
                     WHERE I.isCopertina = TRUE
-                    GROUP BY L.ISBN, L.titolo, L.autore, I.url
+                    GROUP BY L.ISBN, L.titolo, L.autore, I.path
                     ORDER BY numero_vendite DESC
                     LIMIT ?";
 
@@ -156,7 +156,7 @@ class DBAccess
 
         $query = "INSERT INTO Utente (email, password_hash, username, nome, cognome, provincia, comune, path_immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
-            $res = $this->prepare_and_execute_query($query, "ssssssss" , [$email, $passwordHashed, $username, $nome, $cognome, $provincia, $comune, $profileImg]);
+            $res = $this->prepare_and_execute_query($query, "ssssssss", [$email, $passwordHashed, $username, $nome, $cognome, $provincia, $comune, $profileImg]);
             if ($res) {
                 return true;
             }

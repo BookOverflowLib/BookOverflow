@@ -114,5 +114,6 @@ CREATE TABLE
     Immagine (
         path VARCHAR(255) PRIMARY KEY,
         idCopia INT,
+        isCopertina BOOLEAN DEFAULT FALSE,
         FOREIGN KEY (idCopia) REFERENCES Copia (ID)
     );

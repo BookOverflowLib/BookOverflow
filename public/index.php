@@ -17,7 +17,7 @@ if ($dbOK) {
 						</div>';
     }
 } else {
-    // TODO: gestire errore connesione
+    $mostTradedCoversHTML = '<p>Siamo spiacenti ma il conenuto richiesto non è disponibile o non esiste. Risolveremo al più presto e dopodiché potremo voltare pagina.</p>';
 }
 
 $PAGE_TITLE = "BookOverflow";

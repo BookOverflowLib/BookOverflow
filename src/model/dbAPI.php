@@ -1,4 +1,5 @@
 <?php
+
 // TODO: maybe exception could be handled using best practices but i don´t think it's a requirement
 class DBAccess
 {
@@ -54,6 +55,7 @@ class DBAccess
         }
     }
 
+
     public function ensure_connection(): void
     {
         if (!$this->connection) {
@@ -61,7 +63,12 @@ class DBAccess
         }
     }
 
-    public function prepare_and_execute_query($query, $types = null, $params = null): ?array
+    /**
+     * Forse è troppo cursata :(
+     * se è un SELECT ritorna un array,
+     * se è un INSERT o qualsiasi altra cosa ritorna bool
+     */
+    public function prepare_and_execute_query($query, $types = null, $params = null): array|bool
     {
         $this->ensure_connection();
 
@@ -87,14 +94,22 @@ class DBAccess
             throw new Exception("Execute failed: " . $stmt->error);
         }
 
-        $result = $this->query_results_to_array($stmt->get_result());
+        $results = "";
+        if (str_starts_with($query, "SELECT")) {
+            $results = $this->query_results_to_array($stmt->get_result());
+        } else {
+            if (!$stmt->get_result() && !$stmt->errno) {
+                $results = true;
+            } else {
+                $results = false;
+            }
+        }
 
         $stmt->close();
-        // we might want to keep the connection open
-        // constant opening and closing is slow
+
         $this->close_connection();
 
-        return $result;
+        return $results;
     }
 
     private function query_results_to_array($queryRes): ?array
@@ -110,10 +125,20 @@ class DBAccess
         return $res;
     }
 
+    public function get_province(): ?array
+    {
+        $this->ensure_connection();
+        $query = "SELECT id, nome FROM province ORDER BY nome";
+        $queryRes = mysqli_query($this->connection, $query);
+
+        $this->close_connection();
+
+        return $this->query_results_to_array($queryRes);
+    }
 
     public function get_most_traded_with_cover($limit)
     {
-        $query = "SELECT L.ISBN, L.titolo, L.autore, I.path, COUNT(*) AS numero_vendite
+        $query = "SELECT L.ISBN, L.titolo, L.autore, I.url, COUNT(*) AS numero_vendite
                     FROM Scambio AS S 
                     JOIN Copia AS CProp ON S.idCopiaProp = CProp.ID
                     JOIN Copia AS CAcc ON (S.idCopiaAcc = CAcc.ID AND CProp.ID != CAcc.ID) 
@@ -127,7 +152,7 @@ class DBAccess
         return $this->prepare_and_execute_query($query, "i", [$limit]);
     }
 
-    function get_comune_by_provincia($idProvincia): ?array
+    public function get_comune_by_provincia($idProvincia): ?array
     {
         $query = "SELECT * FROM comuni WHERE id_provincia = ?";
         try {
@@ -138,18 +163,6 @@ class DBAccess
         return null;
     }
 
-    public function get_province(): ?array
-    {
-        $this->ensure_connection();
-        $query = "SELECT id, nome FROM province ORDER BY nome";
-        $queryRes = mysqli_query($this->connection, $query);
-
-        $this->close_connection();
-
-        return $this->query_results_to_array($queryRes);
-    }
-
-    // ritorna un true se l'utente è stato aggiunto
     public function register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $profileImg = null): bool
     {
         $passwordHashed = password_hash($password, PASSWORD_BCRYPT);
@@ -195,6 +208,31 @@ class DBAccess
                     WHERE S.emailAccettatore = @emailUtente OR S.emailProponente = @emailUtente';
         try {
             return $this->prepare_and_execute_query($query, "s", [$email]);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        return null;
+    }
+
+    public function get_user_by_username($username): ?array
+    {
+        $query = "SELECT * FROM Utente WHERE username = ?";
+        try {
+            return $this->prepare_and_execute_query($query, "s", [$username]);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        return null;
+    }
+
+    public function get_provincia_comune_by_ids($idProvincia, $idComune): ?array
+    {
+        $queryProvincia = "SELECT nome FROM province WHERE id = ?";
+        $queryComune = "SELECT nome FROM comuni WHERE id = ?";
+        try {
+            $prov = $this->prepare_and_execute_query($queryProvincia, "i", [$idProvincia]);
+            $comu = $this->prepare_and_execute_query($queryComune, "i", [$idComune]);
+            return array("provincia" => $prov[0]['nome'], "comune" => $comu[0]['nome']);
         } catch (Exception $e) {
             echo $e->getMessage();
         }

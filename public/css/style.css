@@ -1,510 +1,519 @@
 :root {
-    --background: #fff;
-    --text-color: #000;
-    --colored-background: rgba(255, 236, 194, 0.8);
-    --primary-color: hsl(40, 77%, 86%);
-    --hover-color: #f0d18f;
-    --gray: hsl(0, 0%, 93%);
-    --dark-gray: hsl(0, 0%, 70%);
-    --light-gray: hsl(0, 0%, 94%);
+	--background: #fff;
+	--text-color: #000;
+	--colored-background: rgba(255, 236, 194, 0.8);
+	--primary-color: hsl(40, 77%, 86%);
+	--hover-color: #f0d18f;
+	--gray: hsl(0, 0%, 93%);
+	--dark-gray: hsl(0, 0%, 70%);
+	--light-gray: hsl(0, 0%, 94%);
 }
 
 * {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 html {
-    font-family: 'Inter', serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
+	font-family: 'Inter', serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
 
-    scroll-behavior: smooth;
-    scroll-padding-top: 5em;
+	scroll-behavior: smooth;
+	scroll-padding-top: 5em;
 }
 
 body {
-    background-color: var(--background);
-    color: var(--text-color);
-    display: grid;
-    grid-template-rows: auto auto 1fr auto;
-    min-height: 100vh;
+	background-color: var(--background);
+	color: var(--text-color);
+	display: grid;
+	grid-template-rows: auto auto 1fr auto;
+	min-height: 100vh;
 }
 
 .button-layout {
-    padding: 1em;
-    background: var(--primary-color);
-    border-radius: 1em;
-    text-decoration: none;
-    color: black;
+	padding: 1em;
+	background: var(--primary-color);
+	border-radius: 1em;
+	text-decoration: none;
+	color: black;
 }
 
 .button-layout:hover {
-    background: var(--hover-color);
+	background: var(--hover-color);
 }
 
 .logo > h1 {
-    font-size: x-large;
+	font-size: x-large;
 }
 
 .logo > p {
-    font-size: large;
+	font-size: large;
 }
 
 .logo {
-    font-family: 'Gentium Book Plus', serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1em;
+	font-family: 'Gentium Book Plus', serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
 }
 
 #menu ul {
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1em;
-    list-style-type: none;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+	list-style-type: none;
 }
 
 #menu > ul > li > a {
-    text-decoration: none;
-    color: black;
+	text-decoration: none;
+	color: black;
 }
 
 #menu > ul > li > a:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 /* HEADER NAVBAR */
 header {
-    top: 0;
-    position: sticky;
-    z-index: 999;
-    padding: 1em;
+	top: 0;
+	position: sticky;
+	z-index: 999;
+	padding: 1em;
 }
 
 .header {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    align-items: center;
-    justify-content: space-between;
-    justify-items: center;
-    border-radius: 1em;
-    gap: 2em;
-    padding: 1em;
-    margin-inline: auto;
-    max-width: 66em;
-    transition: all 0.3s ease-in-out;
-    background-color: var(--background);
+	display: grid;
+	grid-template-columns: 1fr 2fr 1fr;
+	align-items: center;
+	justify-content: space-between;
+	justify-items: center;
+	border-radius: 1em;
+	gap: 2em;
+	padding: 1em;
+	margin-inline: auto;
+	max-width: 66em;
+	transition: all 0.3s ease-in-out;
+	background-color: var(--background);
 }
 
 .header.activeHeader {
-    background-color: var(--colored-background);
-    backdrop-filter: blur(80px);
+	background-color: var(--colored-background);
+	backdrop-filter: blur(80px);
 }
 
 .header .logo {
-    justify-self: start;
+	justify-self: start;
 }
 
 .header > .button-layout {
-    justify-self: end;
+	justify-self: end;
 }
 
 button {
-    padding: 0.8em 2em;
-    border: 0;
-    border-radius: 0.75rem;
-    background-color: var(--primary-color);
-    font-size: medium;
+	padding: 0.8em 2em;
+	border: 0;
+	border-radius: 0.75rem;
+	background-color: var(--primary-color);
+	font-size: medium;
 }
 
 #breadcrumb {
-    justify-self: center;
-    text-align: center;
-    background-color: var(--gray);
-    border-radius: 1em;
+	justify-self: center;
+	text-align: center;
+	background-color: var(--gray);
+	border-radius: 1em;
 }
 
 #breadcrumb > p {
-    padding: 0.5em;
-    margin: 0 5em;
-    font-size: small;
+	padding: 0.5em;
+	margin: 0 5em;
+	font-size: small;
 }
 
 #breadcrumb a {
-    color: black;
+	color: black;
 }
 
 .bold {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .italic {
-    font-style: italic;
-    font-weight: 300;
+	font-style: italic;
+	font-weight: 300;
 }
 
 .autore-libro {
-    font-style: italic;
-    font-size: 0.9em;
+	font-style: italic;
+	font-size: 0.9em;
 }
 
 footer {
-    background-color: var(--primary-color);
-    padding: 2em;
+	background-color: var(--primary-color);
+	padding: 2em;
 }
 
 /*TEMP PADDING*/
 footer > .logo {
-    padding-top: 10em;
+	padding-top: 10em;
 }
 
 #unipd,
 #nomi {
-    text-align: center;
-    font-size: small;
-    padding-top: 1em;
+	text-align: center;
+	font-size: small;
+	padding-top: 1em;
 }
 
 .underline {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 main {
-    margin-top: 1em;
+	margin-top: 1em;
 }
 
 #landing {
-    display: grid;
-    grid-template-columns: 2fr auto;
-    padding: 2em;
-    max-width: 60em;
-    margin: auto;
-    gap: 2em;
-    align-items: center;
-    justify-items: center;
+	display: grid;
+	grid-template-columns: 2fr auto;
+	padding: 2em;
+	max-width: 60em;
+	margin: auto;
+	gap: 2em;
+	align-items: center;
+	justify-items: center;
 }
 
 #landing > div > h1 {
-    font-size: 4em;
-    font-family: 'Gentium Book Plus', serif;
-    font-style: italic;
-    line-height: 1.1em;
+	font-size: 4em;
+	font-family: 'Gentium Book Plus', serif;
+	font-style: italic;
+	line-height: 1.1em;
 }
 
 #landing > div > p {
-    font-size: 1.5em;
-    margin-top: 1em;
-    margin-bottom: 1.5em;
+	font-size: 1.5em;
+	margin-top: 1em;
+	margin-bottom: 1.5em;
 }
 
 #landing > img {
-    border-radius: 1em;
-    /* min-width: 10em; */
-    width: 35vw;
-    max-width: 38em;
-    overflow: hidden;
-    mask-image: url('/assets/imgs/blob-mask2.svg');
+	border-radius: 1em;
+	/* min-width: 10em; */
+	width: 35vw;
+	max-width: 38em;
+	overflow: hidden;
+	mask-image: url('/assets/imgs/blob-mask2.svg');
 }
 
 .sezione-libri {
-    padding: 2em;
-    max-width: 55em;
-    margin: auto;
+	padding: 2em;
+	max-width: 55em;
+	margin: auto;
 }
 
 #piu-scambiati {
-    background-color: var(--primary-color);
-    padding: 2em;
-    gap: 2em;
+	background-color: var(--primary-color);
+	padding: 2em;
+	gap: 2em;
 }
 
 .carosello-libri {
-    display: grid;
-    /* grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); */
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 2.5em;
-    margin-top: 1em;
-    justify-content: space-between;
-    align-items: center;
-    justify-items: center;
+	display: grid;
+	/* grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); */
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 2.5em;
+	margin-top: 1em;
+	justify-content: space-between;
+	align-items: center;
+	justify-items: center;
 }
 
 .libro > img {
-    border-radius: 0.5em;
-    width: 100%;
-    max-width: 11em;
+	border-radius: 0.5em;
+	width: 100%;
+	max-width: 11em;
 }
 
 .titolo-libro {
-    font-weight: normal;
-    margin-top: 1em;
-    margin-bottom: 0.5em;
+	font-weight: normal;
+	margin-top: 1em;
+	margin-bottom: 0.5em;
 }
 
 #citazione {
-    /* padding-top: 5em;
+	/* padding-top: 5em;
     padding-bottom: 5em; */
-    padding: 5em;
-    max-width: 30em;
-    margin: auto;
+	padding: 5em;
+	max-width: 30em;
+	margin: auto;
 }
 
 #citazione > blockquote {
-    font-style: italic;
-    font-size: 2em;
+	font-style: italic;
+	font-size: 2em;
 }
 
 #citazione > blockquote::before {
-    content: url('/assets/imgs/quote.svg');
+	content: url('/assets/imgs/quote.svg');
 }
 
 #citazione > blockquote ::after {
-    content: '”';
+	content: '”';
 }
 
 #citazione > p {
-    font-size: 1.5em;
-    text-align: right;
+	font-size: 1.5em;
+	text-align: right;
 }
 
 .serif {
-    font-family: 'Gentium Book Plus', serif;
+	font-family: 'Gentium Book Plus', serif;
 }
 
 .intestazione {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
 }
 
 .center {
-    margin-left: auto;
-    margin-right: auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .center-text {
-    text-align: center;
+	text-align: center;
 }
 
 .small {
-    font-size: small;
+	font-size: small;
 }
 
 /* PROFILO */
 .dati-profilo {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    justify-items: start;
-    max-width: 55em;
-    gap: 2em;
-    margin: auto;
-    padding: 2em;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	justify-items: start;
+    align-items: center;
+	max-width: 55em;
+	gap: 2em;
+	margin: auto;
+	padding: 2em;
 }
 
 .dati-profilo > img {
-    width: 100%;
-    max-width: 10em;
-    border-radius: 50%;
-    aspect-ratio: 1/1;
-    object-fit: cover;
+	width: 100%;
+	max-width: 10em;
+	border-radius: 50%;
+	aspect-ratio: 1/1;
+	object-fit: cover;
 }
 
 .dati-profilo > div {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
 }
 
 .user-rating {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5em;
+	display: flex;
+	align-items: baseline;
+	gap: 0.5em;
 }
 
 .stars {
-    user-select: none;
-    gap: 0.5em;
+	user-select: none;
+	gap: 0.5em;
 }
 
 /* LOGIN */
 .login {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    min-width: 15em;
-    max-width: 20em;
-    gap: 1em;
-    border: 1px solid var(--light-gray);
-    border-radius: 1em;
-    padding: 1.5em 2em;
-    margin-bottom: 20em;
-    margin-top: 3em;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	min-width: 15em;
+	max-width: 20em;
+	gap: 1em;
+	border: 1px solid var(--light-gray);
+	border-radius: 1em;
+	padding: 1.5em 2em;
+	margin-bottom: 20em;
+	margin-top: 3em;
 }
 
-.login, .signin input:focus {
-    /* border: 3px solid black; */
-    outline-color: var(--dark-gray);
+.login,
+.signin input:focus {
+	/* border: 3px solid black; */
+	outline-color: var(--dark-gray);
 }
 
 /* SIGNIN */
 .signin {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    max-width: 30em;
-    gap: 1em;
-    border: 1px solid var(--light-gray);
-    border-radius: 1em;
-    padding: 1.5em 2em;
-    margin-bottom: 20em;
-    margin-top: 3em;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	max-width: 30em;
+	gap: 1em;
+	border: 1px solid var(--light-gray);
+	border-radius: 1em;
+	padding: 1.5em 2em;
+	margin-bottom: 20em;
+	margin-top: 3em;
 }
 
-
 fieldset {
-    border: none;
+	border: none;
 }
 
 .login-data {
-    margin-top: 0.5em;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
+	margin-top: 0.5em;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
 }
 
 .login-data > button {
-    margin-left: 50%;
+	margin-left: 50%;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-    background-color: var(--gray);
-    min-height: 3em;
-    border-radius: 0.5em;
-    border-style: none;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+input[type='text'],
+input[type='password'],
+input[type='email'] {
+	background-color: var(--gray);
+	min-height: 3em;
+	border-radius: 0.5em;
+	border-style: none;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
 }
 
 select {
-    background-color: var(--gray);
-    min-height: 3em;
-    border-radius: 0.5em;
-    border-style: none;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+	background-color: var(--gray);
+	min-height: 3em;
+	border-radius: 0.5em;
+	border-style: none;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
 }
 
 section > p > a {
-    color: black;
+	color: black;
 }
 
 .doppio-input {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1em;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1em;
 }
 
 .doppio-input > div {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
 }
 
 .sr-only,
 .salta-al-contenuto {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    white-space: nowrap;
-    border-width: 0;
-    clip-path: rect(0, 0, 0, 0);
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	white-space: nowrap;
+	border-width: 0;
+	clip-path: rect(0, 0, 0, 0);
 }
 
 .salta-al-contenuto:focus {
-    z-index: 1000;
-    clip-path: auto;
-    margin: 0.5em;
-    padding: 1em;
-    width: auto;
-    height: auto;
-    border-radius: 1em;
-    background-color: var(--background);
+	z-index: 1000;
+	clip-path: auto;
+	margin: 0.5em;
+	padding: 1em;
+	width: auto;
+	height: auto;
+	border-radius: 1em;
+	background-color: var(--background);
 }
 
 .libro-panoramica {
-    max-width: 55em;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 4em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    justify-items: start;
+	max-width: 55em;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 4em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	justify-items: start;
 }
 
 .sezione-scambi {
-
 }
 
 /* MATCH PER TE */
 .titolo {
-    margin: 0.5em 0;
+	margin: 0.5em 0;
 }
 
 #matchperte {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2em;
-    padding: 1em 2em;
-    justify-content: center;
-    margin: 2em 5em;
-    margin-top: 0;
-
-
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2em;
+	padding: 1em 2em;
+	justify-content: center;
+	margin: 2em 5em;
+	margin-top: 0;
 }
 
 .match-copertine {
-    flex: 1 1 calc(25% - 2em);
-    max-width: calc(25% - 2em);
-    box-sizing: border-box;
-    margin-top: 1em;
+	flex: 1 1 calc(25% - 2em);
+	max-width: calc(25% - 2em);
+	box-sizing: border-box;
+	margin-top: 1em;
 }
 
 #matchperte img {
-    max-width: 20rem;
-    max-height: 17rem;
-    border-radius: 0.3em;
-    object-fit: cover;
+	max-width: 20rem;
+	max-height: 17rem;
+	border-radius: 0.3em;
+	object-fit: cover;
 }
 
 .titolo-libro-match {
-    font-size: 1.3em;
-    font-weight: bold;
-    margin-top: 0.3em;
+	font-size: 1.3em;
+	font-weight: bold;
+	margin-top: 0.3em;
 }
 
 #mostra-ancora {
-    color: black;
+	color: black;
 }
 
 #mostra-ancora:hover {
-    color: var(--dark-gray);
+	color: var(--dark-gray);
 }
 
 .mostra-ancora {
-    padding: 3em 0;
-    margin-bottom: 2em;
+	padding: 3em 0;
+	margin-bottom: 2em;
 }
 
 li.activePage {
-    font-weight: 600;
+	font-weight: 600;
+}
+
+.user-rating {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+}
+
+.luogo::before{
+	content: '📍';
+	margin-right: 0.5em;
 }

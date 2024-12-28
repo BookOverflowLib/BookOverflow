@@ -518,3 +518,9 @@ li.activePage {
     content: '📍';
     margin-right: 0.5em;
 }
+
+#results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+}

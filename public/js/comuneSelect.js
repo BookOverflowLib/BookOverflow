@@ -1,6 +1,6 @@
 let provinciaSelect = document.querySelector('select[name="provincia"]')
 if (provinciaSelect) {
-	provinciaSelect.addEventListener('change', function (e) {
+	provinciaSelect.addEventListener('change', function(e) {
 		//find target Select menu
 		let cittaSelect = document.querySelector('select[name="comune"]')
 
@@ -9,7 +9,7 @@ if (provinciaSelect) {
 		fd.set('provinciaSelezionata', this.value)
 
 		// send the ajax request using fetch
-		fetch('ottieniComuni.php', { method: 'post', body: fd })
+		fetch('/api/ottieni-comuni', { method: 'post', body: fd })
 			.then(response => response.json())
 			.then(json => {
 				let options = '<option value="">Seleziona un comune</option><hr />'

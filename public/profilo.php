@@ -39,8 +39,15 @@ $profilo = str_replace('<!-- [userUsername] -->', $user['username'], $profilo);
 $location = $db->get_provincia_comune_by_ids($user['provincia'], $user['comune']);
 $profilo = str_replace('<!-- [userLuogo] -->', $location['comune'].', '.$location['provincia'], $profilo);
 
-//TODO: calc user rating
 $userRating = $db->get_user_rating_by_email($user['email']);
+if(!$userRating){
+    $userRating = "0.0";
+}else if (!$userRating[0]['media_valutazioni']){
+    $userRating = "0.0";
+}else{
+    $userRating = $userRating[0]['media_valutazioni'];
+}
+
 $profilo = str_replace('<!-- [userRating] -->', $userRating, $profilo);
 $profilo = str_replace('<!-- [userRatingStars] -->', ratingStars($userRating), $profilo);
 

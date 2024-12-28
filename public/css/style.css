@@ -508,3 +508,9 @@ section > p > a {
 li.activePage {
     font-weight: 600;
 }
+
+.user-rating{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}

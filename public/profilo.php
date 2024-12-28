@@ -40,7 +40,7 @@ $location = $db->get_provincia_comune_by_ids($user['provincia'], $user['comune']
 $profilo = str_replace('<!-- [userLuogo] -->', $location['comune'].', '.$location['provincia'], $profilo);
 
 //TODO: calc user rating
-$userRating = 3.5;
+$userRating = $db->get_user_rating_by_email($user['email']);
 $profilo = str_replace('<!-- [userRating] -->', $userRating, $profilo);
 $profilo = str_replace('<!-- [userRatingStars] -->', ratingStars($userRating), $profilo);
 

@@ -82,9 +82,9 @@ function getTemplatePage($title = null): string
  *
  * @return string HTML contenente i vari elementi \<li\>
  */
-function getNavBarLi(): string
+function getNavBarLi($path): string
 {
-	$currentPage = $_SERVER['REQUEST_URI'];
+	$currentPage = $path;
 
 	$navbarReferences = array(
 		array('href' => '/', 'text' => 'Home'),
@@ -109,11 +109,11 @@ function getNavBarLi(): string
  *
  * @return string HTML dell'header con la navbar sostituita
  */
-function getHeaderSection(): string
+function getHeaderSection($path): string
 {
 	$header = file_get_contents('../src/templates/header.html');
 	// Genera i link della navbar
-	$li = getNavBarLi();
+	$li = getNavBarLi($path);
 	return str_replace('<!-- [navbar] -->', $li, $header);
 }
 

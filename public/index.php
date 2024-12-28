@@ -8,16 +8,18 @@ $dbOK = $db->open_connection();
 $mostTradedCoversHTML = '';
 if ($dbOK) {
     $mostTradedCovers = $db->get_most_traded_with_cover("4");
-    foreach ($mostTradedCovers as $cover) {
-        $mostTradedCoversHTML .= '
-            <div class="libro">
-				<img src="' . $cover['url'] . '" alt="" width="150" />
-							<p class="titolo-libro">' . $cover['titolo'] . '</p>
-							<p class="autore-libro">' . $cover['autore'] . '</p>
-						</div>';
+    if (!is_null($mostTradedCovers) && is_array($mostTradedCovers)) {
+        foreach ($mostTradedCovers as $cover) {
+            $mostTradedCoversHTML .= '
+                <div class="libro">
+	    			<img src="' . $cover['url'] . '" alt="" width="150" />
+	    						<p class="titolo-libro">' . $cover['titolo'] . '</p>
+	    						<p class="autore-libro">' . $cover['autore'] . '</p>
+	    		</div>';
+        }
     }
 } else {
-    // TODO: gestire errore connesione
+    $mostTradedCoversHTML = '<p>Siamo spiacenti ma il conenuto richiesto non è disponibile o non esiste. Risolveremo al più presto e dopodiché potremo voltare pagina.</p>';
 }
 
 $PAGE_TITLE = "BookOverflow";

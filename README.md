@@ -13,6 +13,8 @@ If you get _permission denied_ error use _sudo_ before the command.
 
 Connect to the server at `http://localhost:8080/public/index.php`.
 
+To use phpmyadmin go to `http://localhost:8081/`.
+
 ## Idee funzionalità
 
 ### Gestione Libri:
@@ -56,7 +58,7 @@ Connect to the server at `http://localhost:8080/public/index.php`.
 -   [ ] Visualizzare quanto si ha risparmiato con gli scambi fatti
 
 ## TODO
-- [ ] nel form di registrazione, implementare l'inserimento della città con suggerimenti
+- [x] nel form di registrazione, implementare l'inserimento della città con suggerimenti
 - [x] alleggerire foto
 
 ## Note:

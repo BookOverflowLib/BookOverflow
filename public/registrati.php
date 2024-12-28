@@ -1,12 +1,4 @@
 <?php
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    header("Location: profilo");
-    exit();
-}
-
 require_once '../src/model/dbAPI.php';
 require_once '../src/model/utils.php';
 require_once '../src/model/registrationSelect.php';

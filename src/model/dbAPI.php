@@ -203,12 +203,11 @@ class DBAccess
 
     public function get_user_rating_by_email($email): ?array
     {
-        $query = 'DECLARE @emailUtente AS VARCHAR(255) = ?;
-                    SELECT AVG(R.valutazione) AS media_valutazioni 
+        $query = 'SELECT AVG(R.valutazione) AS media_valutazioni 
                     FROM Recensione R JOIN Scambio S ON R.idScambio = S.ID 
-                    WHERE S.emailAccettatore = @emailUtente OR S.emailProponente = @emailUtente';
+                    WHERE S.emailAccettatore = ? OR S.emailProponente = ?';
         try {
-            return $this->prepare_and_execute_query($query, "s", [$email]);
+            return $this->prepare_and_execute_query($query, "ss", [$email, $email]);
         } catch (Exception $e) {
             echo $e->getMessage();
         }

@@ -47,6 +47,36 @@ function ratingStars($rating): string
 }
 
 /**
+ * Genera la pagina HTML con il template
+ * aggiunge header, breadcrumb e footer
+ * aggiorna il titolo della pagina
+ *
+ * @param string $title Titolo della pagina (se null, viene messo "BookOverflow")
+ * @return string HTML della pagina
+ */
+function getTemplatePage($title=null): string{
+    $template = file_get_contents($GLOBALS['TEMPLATES_PATH'].'templatePage.html');
+    $header = getHeaderSection($_SERVER['REQUEST_URI']);
+    $breadcrumb = getBreadcrumb($_SERVER['REQUEST_URI']);
+    $footer = file_get_contents($GLOBALS['TEMPLATES_PATH'].'footer.html');
+
+    $PAGE_TITLE = '';
+    if($title == null){
+        $PAGE_TITLE = "BookOverflow";
+    }else{
+        $PAGE_TITLE = ucfirst($title)." - BookOverflow";
+    }
+
+    $page = str_replace('<!-- [pageTitle] -->', $PAGE_TITLE, $template);
+
+    $page = str_replace('<!-- [header] -->', $header, $page);
+    $page = str_replace('<!-- [breadcrumb] -->', $breadcrumb, $page);
+    $page = str_replace('<!-- [footer] -->', $footer, $page);
+
+    return $page;
+}
+
+/**
  * Genera gli elementi \<li\> della navbar rimuovendo il link dalla pagina corrente (circolari!)
  *
  * @return string HTML contenente i vari elementi \<li\>
@@ -80,7 +110,7 @@ function getNavBarLi(): string
  */
 function getHeaderSection(): string
 {
-    $header = file_get_contents('./html/header.html');
+    $header = file_get_contents('../src/templates/header.html');
     // Genera i link della navbar
     $li = getNavBarLi();
     return str_replace('<!-- [navbar] -->', $li, $header);

@@ -1,39 +1,42 @@
 <?php
-require_once '../src/model/dbAPI.php';
-require_once '../src/model/utils.php';
+require_once '../src/paths.php';
+$request = $_SERVER['REQUEST_URI'];
 
-$db = new DBAccess();
-$dbOK = $db->open_connection();
+// Rimuovi eventuali query string dal percorso principale
+$path = parse_url($request, PHP_URL_PATH);
 
-$mostTradedCoversHTML = '';
-if ($dbOK) {
-    $mostTradedCovers = $db->get_most_traded_with_cover("4");
-    if (!is_null($mostTradedCovers) && is_array($mostTradedCovers)) {
-        foreach ($mostTradedCovers as $cover) {
-            $mostTradedCoversHTML .= '
-                <div class="libro">
-	    			<img src="' . $cover['url'] . '" alt="" width="150" />
-	    						<p class="titolo-libro">' . $cover['titolo'] . '</p>
-	    						<p class="autore-libro">' . $cover['autore'] . '</p>
-	    		</div>';
-        }
-    }
-} else {
-    $mostTradedCoversHTML = '<p>Siamo spiacenti ma il conenuto richiesto non è disponibile o non esiste. Risolveremo al più presto e dopodiché potremo voltare pagina.</p>';
+// Controlla se il percorso è "/profilo/*"
+if (preg_match("#^/profilo/([^/]+)$#", $path, $matches)) {
+	$_GET['user'] = $matches[1]; // "*" diventa $_GET['user']
+	$path = '/profilo'; // Reimposta il path come se fosse "/profilo"
 }
 
-$PAGE_TITLE = "BookOverflow";
-
-$template = file_get_contents('./html/templatePage.html');
-$header = getHeaderSection();
-$breadcrumb = getBreadcrumb($_SERVER['REQUEST_URI']);
-$index = file_get_contents('./html/index.html');
-$footer = file_get_contents('./html/footer.html');
-
-$page = str_replace('<!-- [pageTitle] -->', $PAGE_TITLE, $template);
-$page = str_replace('<!-- [header] -->', $header, $page);
-$page = str_replace('<!-- [breadcrumb] -->', $breadcrumb, $page);
-$page = str_replace('<!-- [footer] -->', $footer, $page);
-$page = str_replace('<!-- [content] -->', $index, $page);
-$page = str_replace('<!-- [mostTraded] -->', $mostTradedCoversHTML, $page);
-echo $page;
+switch ($path) {
+	case '/':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'index.php';
+		break;
+	case '/esplora':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'esplora.php';
+		break;
+	case '/esplora/per-te':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'esplora-per-te.php';
+		break;
+	case '/accedi':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'accedi.php';
+		break;
+	case '/registrati':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'registrati.php';
+		break;
+	case '/profilo':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'profilo.php';
+		break;
+	case '/api/ottieni-comuni':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'ottieni-comuni.php';
+		break;
+	case '/api/registra-utente':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'registra-utente.php';
+		break;
+	default:
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . '404.php';
+		break;
+}

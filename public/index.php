@@ -30,6 +30,9 @@ switch ($path) {
 	case '/profilo':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'profilo.php';
 		break;
+	case '/cerca':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'cerca.php';
+		break;
 	case '/api/ottieni-comuni':
 		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'ottieni-comuni.php';
 		break;

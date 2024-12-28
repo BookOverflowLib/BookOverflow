@@ -32,10 +32,11 @@ var formChecks = {
     ]
 };
 
-function checkForm() {
+window.onload = function fillSuggestion() {
     for (var id in formChecks) {
+        console.log(id);
         var input = document.getElementById(id);
-        inputMessage(input, 0);
+        setSuggestion(input, 0);
         input.onblur = function () {
             checkRegex(this);
         };
@@ -52,7 +53,7 @@ function checkRegex(input) {
         var parent = input.parentNode;
         parent.removeChild(parent.children[2]);
 
-        inputMessage(input, 1);
+        setSuggestion(input, 1);
         input.focus();
         input.select();
         return false;
@@ -60,7 +61,7 @@ function checkRegex(input) {
     return true;
 }
 
-function validazioneForm() {
+function checkForm() {
     var form = document.forms[0];
     var inputs = form.getElementsByTagName("input");
 
@@ -76,21 +77,26 @@ function validazioneForm() {
 * mode = 0, modalità input
 * mode = 1, modalità errore 
 */
-function inputMessage(input, mode) {
-    // tag con il inputMessage
+function setSuggestion(input, mode) {
+    // tag con il suggerimento o l'errore
     var node;
-    // padre dell'input
-    var parent = input.parentNode;
-
-    node = document.createElement("span");
-    if (!mode) {
-        // TODO: definire classe suggerimento
-        node.className = "";
-        node.appendChild(createTextNode(formChecks[input.id][0]));
-    } else {
+    
+    try {
+        // padre dell'input
+        var parent = input.parentNode;
+        node = document.createElement("span");
+        if (!mode) {
+            node = document.createTextNode(formChecks[input.id][0]);
+            // TODO: definire classe suggerimento
+            node.className = "input-hint";
+        } else {
+            node = document.createTextNode(formChecks[input.id][2]);
+            // TODO: definire classe errore
+            node.className = "input-error";
+        }
+    } catch (TypeError) {
+        node = document.createTextNode("Campo obbligatorio");
         // TODO: definire classe errore
-        node.className = "";
-        node.appendChild(createTextNode(formChecks[input.id][2]));
+        node.className = "input-error";
     }
-    parent.appendChild(node);
 }

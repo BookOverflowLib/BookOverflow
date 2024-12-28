@@ -12,10 +12,10 @@ if ($dbOK) {
         foreach ($mostTradedCovers as $cover) {
             $mostTradedCoversHTML .= '
                 <div class="libro">
-	    			<img src="' . $cover['url'] . '" alt="" width="150" />
-	    						<p class="titolo-libro">' . $cover['titolo'] . '</p>
-	    						<p class="autore-libro">' . $cover['autore'] . '</p>
-	    		</div>';
+                    <img src="' . $cover['url'] . '" alt="" width="150" />
+                                <p class="titolo-libro">' . $cover['titolo'] . '</p>
+                                <p class="autore-libro">' . $cover['autore'] . '</p>
+            </div>';
         }
     }
 } else {

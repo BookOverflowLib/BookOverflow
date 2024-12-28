@@ -1,4 +1,4 @@
-<section class="signin center">
+<section class="signin center" onload="checkForm()">
 	<h1 class="center">Registrati</h1>
 	<p class="center">Hai già un <span lang="en">account</span>? <a href="/accedi">Accedi</a></p>
 	<!-- nome cognome username email città(provincia e città)-->
@@ -8,11 +8,11 @@
 			<div class="doppio-input">
 				<div>
 					<label for="nome">Nome</label>
-					<input equired id="nome" maxlenght="25" name="nome" type="text">
+					<input equired id="nome" maxlenght="50" name="nome" type="text">
 				</div>
 				<div>
 					<label for="cognome">Cognome</label>
-					<input id="cognome" maxlenght="25" name="cognome" required type="text">
+					<input id="cognome" maxlenght="50" name="cognome" required type="text">
 				</div>
 			</div>
 
@@ -37,7 +37,7 @@
 
 			<!-- username -->
 			<label for="username" lang="en">Username</label>
-			<input id="username" maxlenght="25" name="username" required type="text">
+			<input id="username" maxlenght="50" name="username" required type="text">
 
 			<!-- email -->
 			<label for="email">Indirizzo Mail</label>
@@ -54,6 +54,6 @@
 			<button type="submit">Registrati</button>
 		</fieldset>
 	</form>
-
 </section>
 <script src="../js/comuneSelect.js"></script>
+<script src="../js/checkerRegistrati.js"></script>

@@ -3,6 +3,7 @@ require_once '../src/model/dbAPI.php';
 require_once '../src/model/utils.php';
 
 $profileId = null;
+//se non è stato passato un id utente, reindirizza alla home
 if (!isset($_GET['user'])) {
     header('Location: /');
     exit();
@@ -13,7 +14,15 @@ $db = new DBAccess();
 $dbOK = $db->open_connection();
 
 // GET PROFILE DATA BY ID
-$user = $db->get_user_by_username($profileId)[0];
+$user = $db->get_user_by_username($profileId);
+
+if (!$user) {
+    // throw new Exception("Utente non trovato");
+    header('Location: /404');
+    exit();
+}else{
+    $user = $user[0];
+}
 
 $PAGE_TITLE = $user["username"]. " - BookOverflow";
 

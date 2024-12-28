@@ -1,0 +1,59 @@
+<section class="signin center">
+	<h1 class="center">Registrati</h1>
+	<p class="center">Hai già un <span lang="en">account</span>? <a href="/accedi">Accedi</a></p>
+	<!-- nome cognome username email città(provincia e città)-->
+	<form action="/api/registra-utente" method="post">
+		<fieldset class="login-data">
+			<legend class="sr-only">Inserire i dati per registrarsi</legend>
+			<div class="doppio-input">
+				<div>
+					<label for="nome">Nome</label>
+					<input equired id="nome" maxlenght="25" name="nome" type="text">
+				</div>
+				<div>
+					<label for="cognome">Cognome</label>
+					<input id="cognome" maxlenght="25" name="cognome" required type="text">
+				</div>
+			</div>
+
+			<!-- provincia e citta -->
+			<div class="doppio-input">
+				<div>
+					<label for="provincia">Provincia</label>
+					<select id="provincia" name="provincia" required>
+						<option value="">Seleziona una provincia</option>
+						<hr />
+						<!-- [province] -->
+					</select>
+				</div>
+				<div>
+					<label for="comune">Comune</label>
+					<select name="comune" required>
+						<option value="">Seleziona un comune</option>
+						<hr />
+					</select>
+				</div>
+			</div>
+
+			<!-- username -->
+			<label for="username" lang="en">Username</label>
+			<input id="username" maxlenght="25" name="username" required type="text">
+
+			<!-- email -->
+			<label for="email">Indirizzo Mail</label>
+			<input id="email" name="email" required type="email">
+
+			<!-- password -->
+			<label for="password" lang="en">Password</label>
+			<input id="password" maxlenght="20" name="password" required type="password">
+
+			<!-- conferma password -->
+			<label for="conferma-password">Conferma <span lang="en">Password</span></label>
+			<input id="password" maxlenght="20" name="conferma-password" required type="password">
+
+			<button type="submit">Registrati</button>
+		</fieldset>
+	</form>
+
+</section>
+<script src="/js/comuneSelect.js"></script>

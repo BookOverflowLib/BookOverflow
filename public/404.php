@@ -16,8 +16,3 @@ $page = str_replace('<!-- [header] -->', $header, $page);
 $page = str_replace('<!-- [footer] -->', $footer, $page);
 $page = str_replace('<!-- [content] -->', $error404, $page);
 echo $page;
-
-
-
-
-echo "ERROR 404: PAGE NOT FOUND";

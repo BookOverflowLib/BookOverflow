@@ -25,7 +25,7 @@ var formChecks = {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+=])[A-Za-z\d!@#$%^&*()\-+=]{8,20}$/,
         "La password deve essere lunga tra 8 e 20 caratteri, contenere almeno una lettera maiuscola (A-Z), una lettera minuscola (a-z), un numero (0-9) e un carattere speciale tra i seguenti: !@#$%^&*()-+=.",
     ],
-    confermaPassword: [
+    conferma: [
         "Ex: Password123",
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+=])[A-Za-z\d!@#$%^&*()\-+=]{8,20}$/,
         "La password deve essere lunga tra 8 e 20 caratteri, contenere almeno una lettera maiuscola (A-Z), una lettera minuscola (a-z), un numero (0-9) e un carattere speciale tra i seguenti: !@#$%^&*()-+=.",
@@ -44,6 +44,7 @@ window.onload = function fillSuggestion() {
 }
 
 function checkRegex(input) {
+    // TODO: adapt
     var regex = formChecks[input.id][1];
     var text = input.value;
 
@@ -51,7 +52,7 @@ function checkRegex(input) {
     if (text.search(regex) != 0) {
         // tolgo suggerimento o errore precedente
         var parent = input.parentNode;
-        parent.removeChild(parent.children[2]);
+        parent.removeChild(parent.lastChild.previousSibling.previousSibling);
 
         setSuggestion(input, 1);
         input.focus();
@@ -61,42 +62,45 @@ function checkRegex(input) {
     return true;
 }
 
-function checkForm() {
-    var form = document.forms[0];
-    var inputs = form.getElementsByTagName("input");
+// TODO: maybe useless
+// function checkForm() {
+//     var form = document.forms[0];
+//     var inputs = form.getElementsByTagName("input");
 
-    for (var i = 0; i < inputs.length; i++) {
-        if (!checkRegex(inputs[i])) {
-            return false;
-        }
-    }
-    return true;
-}
+//     for (var i = 0; i < inputs.length; i++) {
+//         if (!checkRegex(inputs[i])) {
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 
 /* 
-* mode = 0, modalità input
-* mode = 1, modalità errore 
+* mode = 0, modalità suggerimento
+* mode = 1, modalità errore
+* mode = 2, modalità input vuoto
 */
 function setSuggestion(input, mode) {
-    // tag con il suggerimento o l'errore
-    var node;
-    
-    try {
-        // padre dell'input
-        var parent = input.parentNode;
-        node = document.createElement("span");
-        if (!mode) {
-            node = document.createTextNode(formChecks[input.id][0]);
-            // TODO: definire classe suggerimento
-            node.className = "input-hint";
-        } else {
-            node = document.createTextNode(formChecks[input.id][2]);
-            // TODO: definire classe errore
-            node.className = "input-error";
-        }
-    } catch (TypeError) {
-        node = document.createTextNode("Campo obbligatorio");
-        // TODO: definire classe errore
-        node.className = "input-error";
+    var parent = input.parentNode;
+    console.log(parent);
+    var newNode = document.createElement("p");
+
+    switch (mode) {
+        case 0:
+            newNode.textContent = formChecks[input.id][0];
+            newNode.className = "input-hint";
+            break;
+        case 1:
+            newNode.textContent = formChecks[input.id][2];
+            newNode.className = "input-error";
+            break;
+        case 2:
+            newNode.textContent = "Campo obbligatorio";
+            newNode.className = "input-error";
+            break;
+        default:
+            break;
     }
+
+    parent.insertBefore(newNode, parent.lastChild.previousSibling);
 }

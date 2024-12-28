@@ -86,7 +86,41 @@ function getHeaderSection(): string
     return str_replace('<!-- [navbar] -->', $li, $header);
 }
 
+/**
+ * Restituisce il breadcrumb della pagina
+ *
+ * @param string $path Path della pagina corrente
+ * @return string HTML del breadcrumb
+ */
+function getBreadcrumb($path): string
+{
+    //TODO: sistemare quando ci saranno più pagine
+    $url = $path;
+    $breadcrumb = '';
+    if($path == '/'){
+        $breadcrumb = '<p>Ti trovi in : <span lang="en" class="bold">Home</span></p>';
+    }else{
+        $path = explode('/', $path);
+        $path = array_filter($path);
+        $path = array_values($path);
+        $breadcrumb = '<p>Ti trovi in : <span lang="en"><a href="/">Home</a></span> > ';
+        $last = count($path) - 1;
+        $currentUrl = '';
+        for ($i = 0; $i < $last; $i++) {
+            $currentUrl .= '/'.$path[$i];
+            $breadcrumb .= '<a href="'.$currentUrl.'">' . ucfirst($path[$i]) . '</a> > ';
+        }
+        $breadcrumb .= '<span class="bold">' . ucfirst($path[$last]) . '</span></p>';
+    }
+    return $breadcrumb;
+}
 
+/**
+ * Restituisce l'URL dell'immagine dell'utente generata usando come seed la sua email
+ *
+ * @param string $email Email dell'utente
+ * @return string URL dell'immagine
+ */
 function getUserImageUrlByEmail($email): string {
     $image = 'https://picsum.photos/seed/'.$email.'/500';
 

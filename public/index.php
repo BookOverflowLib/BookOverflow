@@ -26,11 +26,13 @@ $PAGE_TITLE = "BookOverflow";
 
 $template = file_get_contents('./html/templatePage.html');
 $header = getHeaderSection();
+$breadcrumb = getBreadcrumb($_SERVER['REQUEST_URI']);
 $index = file_get_contents('./html/index.html');
 $footer = file_get_contents('./html/footer.html');
 
 $page = str_replace('<!-- [pageTitle] -->', $PAGE_TITLE, $template);
 $page = str_replace('<!-- [header] -->', $header, $page);
+$page = str_replace('<!-- [breadcrumb] -->', $breadcrumb, $page);
 $page = str_replace('<!-- [footer] -->', $footer, $page);
 $page = str_replace('<!-- [content] -->', $index, $page);
 $page = str_replace('<!-- [mostTraded] -->', $mostTradedCoversHTML, $page);

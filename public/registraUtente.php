@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if($password === $password2) {
             $db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
-            header('Location: /profilo?user='.$username);
+            header('Location: /profilo/'.$username);
         }else {
             echo "Le password non corrispondono";
         }

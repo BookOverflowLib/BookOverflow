@@ -32,12 +32,13 @@ CREATE TABLE
 CREATE TABLE
     Libro (
         -- la lunghezza dell'ISBN può essere 10 o 13 
-        ISBN VARCHAR(13) PRIMARY KEY,
+        ISBN VARCHAR(13) PRIMARY KEY NOT NULL,
         titolo VARCHAR(255) NOT NULL,
         autore VARCHAR(255),
         editore VARCHAR(255),
         anno YEAR,
         genere VARCHAR(100),
+        descrizione TEXT, -- giusto?
         lingua VARCHAR(50),
         path_copertina VARCHAR(255)
     );

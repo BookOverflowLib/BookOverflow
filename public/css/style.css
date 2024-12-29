@@ -236,8 +236,9 @@ main {
 
 .libro > img {
     border-radius: 0.5em;
-    width: 100%;
     max-width: 11em;
+    aspect-ratio: 1/1.5;
+    object-fit: cover;
 }
 
 .titolo-libro {
@@ -300,6 +301,7 @@ main {
     display: grid;
     grid-template-columns: auto 1fr;
     justify-items: start;
+    align-items: center;
     max-width: 55em;
     gap: 2em;
     margin: auto;
@@ -346,7 +348,8 @@ main {
     margin-top: 3em;
 }
 
-.login, .signin input:focus {
+.login,
+.signin input:focus {
     /* border: 3px solid black; */
     outline-color: var(--dark-gray);
 }
@@ -365,7 +368,6 @@ main {
     margin-top: 3em;
 }
 
-
 fieldset {
     border: none;
 }
@@ -381,9 +383,9 @@ fieldset {
     margin-left: 50%;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"] {
+input[type='text'],
+input[type='password'],
+input[type='email'] {
     background-color: var(--gray);
     min-height: 3em;
     border-radius: 0.5em;
@@ -452,7 +454,6 @@ section > p > a {
 }
 
 .sezione-scambi {
-
 }
 
 /* MATCH PER TE */
@@ -468,8 +469,6 @@ section > p > a {
     justify-content: center;
     margin: 2em 5em;
     margin-top: 0;
-
-
 }
 
 .match-copertine {
@@ -507,4 +506,21 @@ section > p > a {
 
 li.activePage {
     font-weight: 600;
+}
+
+.user-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.luogo::before {
+    content: '📍';
+    margin-right: 0.5em;
+}
+
+#results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
 }

@@ -4,7 +4,8 @@
 		Hai già un <span lang="en">account</span>? <a href="/accedi">Accedi</a>
 	</p>
 	<!-- nome cognome username email città(provincia e città)-->
-	<form action="/registraUtente.php" method="post">
+	 <!-- TODO: fix form submit -->
+	<form action="/registraUtente.php" method="post" onsubmit="return checkForm() && checkPasswordConfirm()" >
 		<fieldset class="login-data">
 			<legend class="sr-only">Inserire i dati per registrarsi</legend>
 			<div class="doppio-input">

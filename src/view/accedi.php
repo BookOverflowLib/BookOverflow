@@ -1,33 +1,10 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    header("Location: profilo");
-    exit();
-}
+require_once '../src/paths.php';
+require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
+require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
-require_once '../src/model/dbAPI.php';
-require_once '../src/model/utils.php';
+$page = getTemplatePage('Accedi');
+$accedi = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'accedi.html');
 
-
-$db = new DBAccess();
-$dbOK = $db->open_connection();
-
-
-$PAGE_TITLE = "Accedi - BookOverflow";
-
-$template = file_get_contents('./html/templatePage.html');
-$header = getHeaderSection();
-$accedi = file_get_contents('./html/accedi.html');
-$footer = file_get_contents('./html/footer.html');
-
-$page = str_replace('<!-- [pageTitle] -->', $PAGE_TITLE, $template);
-$page = str_replace('<!-- [header] -->', $header, $page);
-$page = str_replace('<!-- [footer] -->', $footer, $page);
 $page = str_replace('<!-- [content] -->', $accedi, $page);
 echo $page;
-
-if (isset($_POST['username'], $_POST['password'])) {
-    echo "username: " . $_POST['username'] . "<br>";
-    echo "password: " . $_POST['password'] . "<br>";
-}

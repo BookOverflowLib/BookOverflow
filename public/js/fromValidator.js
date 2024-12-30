@@ -1,54 +1,16 @@
-// [0]: hint
-// [1]: regex
-// [2]: error
-// [3]: isValid
-var formChecks = {
-    nome: [
-        "Ex: Mario",
-        /^[A-Za-z]{2,50}$/,
-        "Inserire un nome di lunghezza almeno 2 e massimo 50, non sono ammessi numeri o caratteri speciali",
-        false
-    ],
-    cognome: [
-        "Ex: Rossi",
-        /^[A-Za-z' ]{2,50}$/,
-        "Inserire un cognome di lunghezza almeno 2 e massimo 50, non sono ammessi numeri o caratteri speciali",
-        false
-    ],
-    // all characters are allowed
-    username: [
-        "Ex: MarioRossi",
-        /^[^\s\r\n]{2,50}$/,
-        "Inserire un username di lunghezza almeno 2 e massimo 50, sono ammessi caratteri speciali e numeri",
-        false
-    ],
-    email: [
-        "Ex: mariorossi@gmail.com",
-        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        "Inserire un'email valida",
-        false
-    ],
-    password: [
-        "Ex: Password123",
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+=])[A-Za-z\d!@#$%^&*()\-+=]{8,20}$/,
-        "La password deve essere lunga tra 8 e 20 caratteri, contenere almeno una lettera maiuscola (A-Z), una lettera minuscola (a-z), un numero (0-9) e un carattere speciale tra i seguenti: !@#$%^&*()-+=.",
-        false
-    ],
-    conferma: [
-        "Ex: Password123",
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+=])[A-Za-z\d!@#$%^&*()\-+=]{8,20}$/,
-        "La password deve essere lunga tra 8 e 20 caratteri, contenere almeno una lettera maiuscola (A-Z), una lettera minuscola (a-z), un numero (0-9) e un carattere speciale tra i seguenti: !@#$%^&*()-+=.",
-        false
-    ]
-};
-
-window.onload = function fillSuggestion() {
+export function fillSuggestion(formChecks) {
     for (var id in formChecks) {
         var input = document.getElementById(id);
-        setSuggestion(input, 0);
+        setSuggestion(input, 0, formChecks);
         input.onblur = function () {
-            checkRegex(this);
+            checkRegex(this, formChecks);
         };
+
+        if (id == "conferma") {
+            input.onblur = function () {
+                checkPassword(formChecks);
+            };
+        }
     }
 }
 
@@ -56,8 +18,9 @@ window.onload = function fillSuggestion() {
 * mode = 0, modalità suggerimento
 * mode = 1, modalità errore
 * mode = 2, modalità input vuoto
+* mode = 3, modalità password non corrispondente
 */
-function setSuggestion(input, mode) {
+function setSuggestion(input, mode, formChecks) {
     var parent = input.parentNode;
     var newNode = document.createElement("span");
     newNode.id = input.id + "-sugg";
@@ -75,6 +38,10 @@ function setSuggestion(input, mode) {
             newNode.textContent = "Campo obbligatorio";
             newNode.className = "input-error";
             break;
+        case 3:
+            newNode.textContent = "Le password non corrispondono";
+            newNode.className = "input-error";
+            break;
         default:
             break;
     }
@@ -82,7 +49,7 @@ function setSuggestion(input, mode) {
     parent.insertBefore(newNode, parent.lastChild.previousSibling);
 }
 
-function checkRegex(input) {
+function checkRegex(input, formChecks) {
     // TODO: isValid true but it shouldn't??? maybe checkForm is not working properly
     var regex = formChecks[input.id][1];
     var text = input.value;
@@ -125,10 +92,20 @@ function checkForm() {
     return true;
 }
 
-function checkPasswordConfirm() {
-    // TODO: implement
+function checkPassword(formChecks) {
     var password = document.getElementById("password");
     var conferma = document.getElementById("conferma");
 
-    return true;
+    if (password.value != conferma.value) {
+        if (document.getElementById("conferma-sugg")) {
+            document.getElementById("conferma-sugg").remove();
+        }
+        setSuggestion(conferma, 3);
+        formChecks["conferma"][3] = false;
+    } else {
+        if (document.getElementById("conferma-sugg")) {
+            document.getElementById("conferma-sugg").remove();
+        }
+        formChecks["conferma"][3] = true;
+    }
 }

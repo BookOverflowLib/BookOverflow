@@ -3,7 +3,7 @@
 	<p class="center">Hai già un <span lang="en">account</span>? <a href="/accedi">Accedi</a></p>
 	<!-- nome cognome username email città(provincia e città)-->
 	  <!-- TODO: fix form submit -->
-	<form action="/api/registra-utente" method="post" onsubmit="" >
+	<form action="/api/registra-utente" method="post" onsubmit="">
 		<fieldset class="login-data">
 			<legend class="sr-only">Inserire i dati per registrarsi</legend>
 			<div class="doppio-input">
@@ -40,12 +40,13 @@
 				<div>
 					<label for="comune">Comune</label>
 					<select name="comune" required>
-						<option value="">Seleziona un comune</option>
+						<option value="Alessandria">Seleziona un comune</option>
 						<hr />
 					</select>
 				</div>
 			</div>
 
+			<!-- spans required to make validation work -->
 			<!-- username -->
 			<span>
 				<label for="username" lang="en">Username</label>
@@ -87,5 +88,5 @@
 		</fieldset>
 	</form>
 </section>
-<script src="../js/comuneSelect.js"></script>
-<script src="../js/checkerRegistrati.js"></script>
+<script src="./js/comuneSelect.js"></script>
+<script src="./js/registratiValidator.js" type="module"></script>

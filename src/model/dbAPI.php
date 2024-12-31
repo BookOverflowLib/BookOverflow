@@ -10,23 +10,6 @@ class DBAccess
 
 	private $connection;
 
-    public function __construct()
-    {
-        $this->open_connection();
-    }
-
-    public function __destruct()
-    {
-        $this->close_connection();
-    }
-
-    private function ensure_connection(): void
-    {
-        if (!$this->connection) {
-            $this->open_connection();
-        }
-    }
-
 	public function __construct()
 	{
 		$this->open_connection();

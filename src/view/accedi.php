@@ -7,4 +7,3 @@ $page = getTemplatePage('Accedi');
 $accedi = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'accedi.html');
 
 $page = str_replace('<!-- [content] -->', $accedi, $page);
-echo $page;

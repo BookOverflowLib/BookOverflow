@@ -17,15 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$password2 = $_POST['conferma-password'];
 		$image = getUserImageUrlByEmail($email);
 
-		//TODO: MANCANO I CONTROLLI SUI CAMPI
+		$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
 
-		if ($password === $password2) {
-			$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
-			header('Location: /profilo/' . $username);
-		} else {
-			echo "Le password non corrispondono";
-		}
+		header('Location: /profilo/' . $username);
+
 		exit();
 	}
 }
-

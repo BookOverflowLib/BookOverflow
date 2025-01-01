@@ -49,6 +49,6 @@ window.onload = function () {
 
     const form = document.getElementById('registrati');
     form.addEventListener('submit', function (event) {
-        return checkForm("registrati", formChecks);
+        return checkForm("registrati", "/api/registra-utente", formChecks);
     });
 };

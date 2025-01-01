@@ -96,7 +96,7 @@ function checkPassword(passwordId, passwordConfId, formChecks) {
     }
 }
 
-export function checkForm(formId, formChecks) {
+export function checkForm(formId, redirect, formChecks) {
     var form = document.getElementById(formId);
     var inputs = form.getElementsByTagName("input");
 
@@ -106,6 +106,6 @@ export function checkForm(formId, formChecks) {
         }
     }
 
-    form.setAttribute("action", "api/registra-utente");
+    form.setAttribute("action", redirect);
     return true;
 }

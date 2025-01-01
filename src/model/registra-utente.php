@@ -17,6 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$password2 = $_POST['conferma-password'];
 		$image = getUserImageUrlByEmail($email);
 
+		$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
+
+		header('Location: /profilo/' . $username);
+
 		exit();
 	}
 }

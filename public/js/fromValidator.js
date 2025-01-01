@@ -8,7 +8,7 @@ export function fillSuggestion(formChecks) {
 
         if (id == "conferma") {
             input.onblur = function () {
-                checkPassword(formChecks);
+                checkPassword("password", "conferma", formChecks);
             };
         }
     }
@@ -50,7 +50,6 @@ function setSuggestion(input, mode, formChecks) {
 }
 
 function checkRegex(input, formChecks) {
-    // TODO: isValid true but it shouldn't??? maybe checkForm is not working properly
     var regex = formChecks[input.id][1];
     var text = input.value;
     var suggestionElement = document.getElementById(input.id + "-sugg");
@@ -60,7 +59,7 @@ function checkRegex(input, formChecks) {
         if (suggestionElement) {
             suggestionElement.remove();
         }
-        setSuggestion(input, 2);
+        setSuggestion(input, 2, formChecks);
         input.focus();
         input.select();
     } else if (text.search(regex) != 0) {
@@ -68,7 +67,7 @@ function checkRegex(input, formChecks) {
         if (suggestionElement) {
             suggestionElement.remove();
         }
-        setSuggestion(input, 1);
+        setSuggestion(input, 1, formChecks);
         input.focus();
         input.select();
     } else if (!formChecks[input.id][3]) {
@@ -79,22 +78,9 @@ function checkRegex(input, formChecks) {
     }
 }
 
-function checkForm() {
-    var form = document.getElementById("form-registrati");
-    var inputs = form.getElementsByTagName("input");
-
-    for (var i = 0; i < inputs.length; i++) {
-        if (!formChecks[inputs[i].id][3]) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-function checkPassword(formChecks) {
-    var password = document.getElementById("password");
-    var conferma = document.getElementById("conferma");
+function checkPassword(passwordId, passwordConfId, formChecks) {
+    var password = document.getElementById(passwordId);
+    var conferma = document.getElementById(passwordConfId);
 
     if (password.value != conferma.value) {
         if (document.getElementById("conferma-sugg")) {
@@ -108,4 +94,18 @@ function checkPassword(formChecks) {
         }
         formChecks["conferma"][3] = true;
     }
+}
+
+export function checkForm(formId, formChecks) {
+    var form = document.getElementById(formId);
+    var inputs = form.getElementsByTagName("input");
+
+    for (var i = 0; i < inputs.length; i++) {
+        if (!formChecks[inputs[i].id][3]) {
+            return false;
+        }
+    }
+
+    form.setAttribute("action", "api/registra-utente");
+    return true;
 }

@@ -1,9 +1,12 @@
+<script src="./js/comuneSelect.js"></script>
+<script src="./js/registratiValidator.js" type="module"></script>
+
 <section class="signin center">
 	<h1 class="center">Registrati</h1>
 	<p class="center">Hai già un <span lang="en">account</span>? <a href="/accedi">Accedi</a></p>
 	<!-- nome cognome username email città(provincia e città)-->
 	  <!-- TODO: fix form submit -->
-	<form action="/api/registra-utente" method="post" onsubmit="">
+	<form id="registrati" action="" method="post" onsubmit="">
 		<fieldset class="login-data">
 			<legend class="sr-only">Inserire i dati per registrarsi</legend>
 			<div class="doppio-input">
@@ -88,5 +91,3 @@
 		</fieldset>
 	</form>
 </section>
-<script src="./js/comuneSelect.js"></script>
-<script src="./js/registratiValidator.js" type="module"></script>

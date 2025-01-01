@@ -1,4 +1,4 @@
-import { fillSuggestion } from './fromValidator.js';
+import { fillSuggestion, checkForm } from './fromValidator.js';
 
 // [0]: hint
 // [1]: regex
@@ -44,5 +44,11 @@ var formChecks = {
     ]
 };
 
-window.onload = fillSuggestion(formChecks);
+window.onload = function () {
+    fillSuggestion(formChecks);
 
+    const form = document.getElementById('registrati');
+    form.addEventListener('submit', function (event) {
+        return checkForm("registrati", formChecks);
+    });
+};

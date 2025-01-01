@@ -1,7 +1,7 @@
 <?php
-
-require_once '../src/model/dbAPI.php';
-require_once '../src/model/registrationSelect.php';
+require_once '../src/paths.php';
+require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
+require_once $GLOBALS['MODEL_PATH'] . 'registration-select.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['provinciaSelezionata'])) {
     $provinciaSelezionata = $_POST['provinciaSelezionata'];

@@ -33,6 +33,7 @@ body {
 }
 
 .button-layout {
+    border: none;
     padding: 1em;
     background: var(--primary-color);
     border-radius: 1em;
@@ -84,26 +85,29 @@ header {
     position: sticky;
     z-index: 999;
     padding: 1em;
+
 }
 
 .header {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr 0;
     align-items: center;
     justify-content: space-between;
-    justify-items: center;
-    border-radius: 1em;
-    gap: 2em;
+    justify-items: center;    
+}
+.header-container {
     padding: 1em;
+    gap: 2em;
     margin-inline: auto;
     max-width: 66em;
     transition: all 0.3s ease-in-out;
-    background-color: var(--background);
 }
 
-.header.activeHeader {
+.header-container.activeHeader {
+    border-radius: 1em;
     background-color: var(--colored-background);
     backdrop-filter: blur(80px);
+
 }
 
 .header .logo {
@@ -113,15 +117,18 @@ header {
 .header > .button-layout {
     justify-self: end;
 }
-
-button {
+button{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.login button  {
     padding: 0.8em 2em;
     border: 0;
     border-radius: 0.75rem;
     background-color: var(--primary-color);
     font-size: medium;
 }
-
 #breadcrumb {
     justify-self: center;
     text-align: center;
@@ -236,8 +243,9 @@ main {
 
 .libro > img {
     border-radius: 0.5em;
-    width: 100%;
     max-width: 11em;
+    aspect-ratio: 1/1.5;
+    object-fit: cover;
 }
 
 .titolo-libro {
@@ -300,6 +308,7 @@ main {
     display: grid;
     grid-template-columns: auto 1fr;
     justify-items: start;
+    align-items: center;
     max-width: 55em;
     gap: 2em;
     margin: auto;
@@ -346,7 +355,8 @@ main {
     margin-top: 3em;
 }
 
-.login, .signin input:focus {
+.login,
+.signin input:focus {
     /* border: 3px solid black; */
     outline-color: var(--dark-gray);
 }
@@ -365,7 +375,6 @@ main {
     margin-top: 3em;
 }
 
-
 fieldset {
     border: none;
 }
@@ -381,9 +390,9 @@ fieldset {
     margin-left: 50%;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"] {
+input[type='text'],
+input[type='password'],
+input[type='email'] {
     background-color: var(--gray);
     min-height: 3em;
     border-radius: 0.5em;
@@ -452,7 +461,6 @@ section > p > a {
 }
 
 .sezione-scambi {
-
 }
 
 /* MATCH PER TE */
@@ -468,8 +476,6 @@ section > p > a {
     justify-content: center;
     margin: 2em 5em;
     margin-top: 0;
-
-
 }
 
 .match-copertine {
@@ -507,4 +513,197 @@ section > p > a {
 
 li.activePage {
     font-weight: 600;
+}
+
+.user-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.luogo::before {
+    content: '📍';
+    margin-right: 0.5em;
+}
+
+#results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+}
+
+.hidden {
+    display: none;
+}
+
+.hamburger{
+    display: none;
+}
+#hamburger-menu{
+    display: none;
+    height: 0;
+}
+
+.input-error{
+    color: red;
+    font-size: small;
+}
+.input-hint{
+    font-size: small;
+}
+
+.login-data > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+/* come funziona */
+#come-funziona {
+    display: grid;
+    grid-template-columns: 1.8fr 2fr;
+    background: var(--colored-background);
+
+}
+
+#come-funziona>div {
+    margin: auto;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+}
+
+#come-funziona>div>h1 {
+    font-size: 3em;
+    font-family: 'Gentium Book Plus', serif;
+    font-style: italic;
+
+}
+
+#come-funziona>div>p {
+    font-size: 1.3em;
+    font-family: 'Gentium Book Plus', serif;
+    margin-bottom: 1.5em;
+    padding-left: 3em;
+    padding-top: 1em;
+    text-align: center;
+
+}
+
+#come-funziona>img {
+    border-radius: 1em;
+    width: 22vw;
+    max-width: 23em;
+    overflow: hidden;
+    mask-image: url('/assets/imgs/blob-mask3.svg');
+    justify-self: end;
+    padding-bottom: 0;
+    margin-right: 2em;
+}
+
+#perche-farlo>h2 {
+    margin-top: 1em;
+    font-size: 2.5em;
+    font-family: 'Gentium Book Plus', serif;
+    font-style: italic;
+    justify-self: center;
+}
+
+#perche-farlo>div {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    padding-left: 1em;
+    margin: 2em;
+    gap: 4em;
+}
+
+.motivo1,
+.motivo2 {
+    font-size: 1.7em;
+    font-family: 'Gentium Book Plus', serif;
+    justify-self: center;
+
+}
+
+.motivo1::before,
+.motivo1::after {
+    content: '💰';
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+}
+
+.motivo2::before,
+.motivo2::after {
+    content: '🌱';
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+}
+
+#perche-farlo p {
+    font-size: 1.2em;
+    margin-bottom: 1.5em;
+    justify-self: center;
+    font-family: 'Gentium Book Plus', serif;
+    padding-left: 2em;
+    padding-right: 2em;
+    text-align: center;
+    margin-top: 1em;
+}
+
+#step {
+    background: var(--colored-background);
+}
+
+#step>h2 {
+    padding-top: 1em;
+    font-size: 2.5em;
+    font-family: 'Gentium Book Plus', serif;
+    font-style: italic;
+    justify-self: center;
+}
+
+#step>div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2em;
+    padding-left: 1em;
+    margin: 2em;
+}
+
+#step>div h3 {
+    font-size: 2em;
+    font-family: 'American Typewriter', serif;
+    justify-self: center;
+    color: var(--primary-dark-color);
+}
+
+#step>div p {
+    font-size: 1.2em;
+    margin-bottom: 1.5em;
+    justify-self: center;
+    font-family: 'Gentium Book Plus', serif;
+    padding-left: 2em;
+    padding-right: 2em;
+    text-align: center;
+    margin-top: 1em;
+}
+#inizia{
+margin-bottom: 5em;;
+}
+
+#inizia>h3 {
+    font-size: 2em;
+    font-family: 'Gentium Book Plus', serif;
+    font-style: italic;
+    justify-self: center;
+    margin-bottom: 1em;
+}
+
+#inizia>a {
+    font-size: 1.3em;
+    font-family: 'Gentium Book Plus', serif;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    padding:1em;
 }

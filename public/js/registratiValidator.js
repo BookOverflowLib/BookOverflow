@@ -1,4 +1,4 @@
-import { fillSuggestion, checkForm } from './fromValidator.js';
+import { fillSuggestion, checkForm } from './formValidator.js';
 
 // [0]: hint
 // [1]: regex

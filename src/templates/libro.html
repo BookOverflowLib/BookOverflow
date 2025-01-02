@@ -1,4 +1,3 @@
-<!-- TODO: c'è qualcosa di strano con i path per il css, se usate docker dovrebbero andare così, se non lo usate dovete aggiungere ../ nel path -->
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -72,92 +71,47 @@
 	<!-- [breadcrumb] -->
 </nav>
 <main id="contenuto">
-	<h1 class="center-text">Esplora</h1>
-	<section>
-		<article class="sezione-libri">
-			<div class="intestazione">
-				<h2>Match per te</h2>
-				<a href="">Mostra tutti</a>
-			</div>
-			<div class="carosello-libri">
-				<!-- [mostTraded] -->
-				<div class="libro">
-					<img
-						alt=""
-						src="../assets/imgs/artedicorrere.png"
-						width="150" />
-					<p class="titolo-libro">L'arte di correre</p>
-					<p class="autore-libro">Haruki Murakami</p>
-				</div>
-				<div class="libro">
-					<img
-						alt=""
-						src="../assets/imgs/artedicorrere.png"
-						width="150" />
-					<p class="titolo-libro">L'arte di correre</p>
-					<p class="autore-libro">Haruki Murakami</p>
-				</div>
-				<div class="libro">
-					<img
-						alt=""
-						src="../assets/imgs/artedicorrere.png"
-						width="150" />
-					<p class="titolo-libro">L'arte di correre</p>
-					<p class="autore-libro">Haruki Murakami</p>
-				</div>
-				<div class="libro">
-					<img
-						alt=""
-						src="../assets/imgs/artedicorrere.png"
-						width="150" />
-					<p class="titolo-libro">L'arte di correre</p>
-					<p class="autore-libro">Haruki Murakami</p>
-				</div>
-			</div>
-		</article>
+	<section class="libro-panoramica center">
+		<img alt="" src="/assets/imgs/artedicorrere.png" width="200">
+		<div>
+			<p>X utenti lo scambiano</p>
+			<h1>{{titolo}}</h1>
+			<p>Di : {{autore}}</p>
+			<h2>Descrizione</h2>
+			<p>{{descrizione}}</p>
+		</div>
 	</section>
-	<section>
-		<article class="sezione-libri">
-			<div class="intestazione">
-				<h2>Potrebbe piacerti anche</h2>
-				<a href="">Mostra tutti</a>
-			</div>
-			<div class="carosello-libri">
-				<!-- [mostTraded] -->
-				<div class="libro">
-					<img
-						alt=""
-						src="../assets/imgs/artedicorrere.png"
-						width="150" />
-					<p class="titolo-libro">L'arte di correre</p>
-					<p class="autore-libro">Haruki Murakami</p>
+	<section class="sezione-scambi">
+		<div>
+			<img alt="" src="">
+			<h2>Scambialo con</h2>
+		</div>
+		<div> <!-- pannello con tutti i possibili scambi -->
+			<div> <!-- uno scambio -->
+				<div> <!-- info utente -->
+					<img alt="" src="/assets/imgs/cars.gif" width="100" />
+					<div>
+						<p>Nome Cognome</p>
+						<p>@Username</p>
+						<p class="bold">Luogo</p>
+						<div class="user-rating">
+							<p>5.0</p>
+							<div class="stars">
+								{{rating-stars}}
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="libro">
-					<img
-						alt=""
-						src="../assets/imgs/artedicorrere.png"
-						width="150" />
-					<p class="titolo-libro">L'arte di correre</p>
-					<p class="autore-libro">Haruki Murakami</p>
-				</div>
-				<div class="libro">
-					<img
-						alt=""
-						src="../assets/imgs/artedicorrere.png"
-						width="150" />
-					<p class="titolo-libro">L'arte di correre</p>
-					<p class="autore-libro">Haruki Murakami</p>
-				</div>
-				<div class="libro">
-					<img
-						alt=""
-						src="../assets/imgs/artedicorrere.png"
-						width="150" />
-					<p class="titolo-libro">L'arte di correre</p>
-					<p class="autore-libro">Haruki Murakami</p>
+				<p>Vorrebbe in cambio: </p>
+				<div>
+					<img alt="" src="/assets/imgs/artedicorrere.png" width="100" />
+					<div>
+						<p>Titolo</p>
+						<p>Autore</p>
+					</div>
 				</div>
 			</div>
-		</article>
+		</div>
 	</section>
 </main>
 <footer>

@@ -542,3 +542,17 @@ li.activePage {
     display: none;
     height: 0;
 }
+
+.input-error{
+    color: red;
+    font-size: small;
+}
+.input-hint{
+    font-size: small;
+}
+
+.login-data > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}

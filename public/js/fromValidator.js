@@ -22,7 +22,7 @@ export function fillSuggestion(formChecks) {
 */
 function setSuggestion(input, mode, formChecks) {
     var parent = input.parentNode;
-    var newNode = document.createElement("span");
+    var newNode = document.createElement("p");
     newNode.id = input.id + "-sugg";
 
     switch (mode) {

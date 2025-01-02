@@ -559,3 +559,26 @@ li.activePage {
 	flex-direction: column;
 	gap: 0.5em;
 }
+
+.scegli-generi{
+	max-width: 60em;
+	margin: auto;
+}
+.button-genere {
+	border: 2px solid var(--hover-color);
+	border-radius: 0.5em;
+	padding: 0.5em 1em;
+	font-size: 1em;
+}
+.button-pressed {
+	background-color: var(--primary-color);
+}
+.lista-generi {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em;
+	max-width: 40em;
+	justify-content: center;
+	margin-top: 2em;
+	margin-bottom: 2em;
+}

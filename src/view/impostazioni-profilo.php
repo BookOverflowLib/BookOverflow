@@ -6,12 +6,16 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 $fileGeneri = file_get_contents('../utils/bisac.json');
 $fileGeneri = json_decode($fileGeneri, true);
 
-$db = new DBAccess();
-$dbOK = $db->open_connection();
+
+$buttonsGeneri = '';
+foreach ($fileGeneri as $key => $value) {
+    $buttonsGeneri .= '<button type="button" class="button-genere" aria-pressed="false"><span aria-hidden="true">'. $value['emoji']."</span> ".$value['name'].'</button>';
+}
 
 $page = getTemplatePage("Impostazioni profilo");
 
-// $esplora = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'esplora.html');
+$generi = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'scegli-generi.html');
 
-// $page = str_replace('<!-- [content] -->', $esplora, $page);
+$page = str_replace('<!-- [content] -->', $generi, $page);
+$page = str_replace('<!-- [opzioniGeneri] -->', $buttonsGeneri, $page);
 echo $page;

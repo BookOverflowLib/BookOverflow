@@ -5,7 +5,7 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 //se non è stato passato un id utente, reindirizza alla home
 if (!isset($_GET['user'])) {
-	header('Location: /');
+	header('Location: /accedi');
 	exit();
 }
 $profileId = $_GET['user'];

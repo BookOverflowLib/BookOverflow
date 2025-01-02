@@ -12,6 +12,7 @@ cerca.onkeyup = function () {
     timeout = setTimeout(fetch_books_API, 1000);
 }
 
+// sarebbe bello renderla più generica passando value come parametro ma poi non verrebbe applicato il delay da setTimeout; mettendo un parametro diventerebbe una chiamata diretta a fetch_books_API e quindi istantanea, infatti setTimeout richiede come parametro una funzione che verrà eseguita da lui
 function fetch_books_API() {
     let url = 'https://www.googleapis.com/books/v1/volumes?q=' + cerca.value;
     fetch(url)

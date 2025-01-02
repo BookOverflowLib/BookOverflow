@@ -2,8 +2,18 @@ let cerca = document.getElementById("cerca");
 let cercaButton = document.getElementById("cercaButton")
 
 cercaButton.addEventListener('click', function () {
-    let value = cerca.value;
-    let url = 'https://www.googleapis.com/books/v1/volumes?q=' + value;
+    fetch_books_API();
+});
+
+// Suggerimenti di ricerca
+var timeout;
+cerca.onkeyup = function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(fetch_books_API, 1000);
+}
+
+function fetch_books_API() {
+    let url = 'https://www.googleapis.com/books/v1/volumes?q=' + cerca.value;
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -23,5 +33,4 @@ cercaButton.addEventListener('click', function () {
             });
             document.getElementById('results').innerHTML = output;
         })
-
-});
+}

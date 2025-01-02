@@ -1,18 +1,33 @@
+<script src="./js/comuneSelect.js"></script>
+<script src="./js/registratiValidator.js" type="module"></script>
+
 <section class="signin center">
 	<h1 class="center">Registrati</h1>
-	<p class="center">Hai già un <span lang="en">account</span>? <a href="/accedi">Accedi</a></p>
+	<p class="center">
+		Hai già un <span lang="en">account</span>? <a href="/accedi">Accedi</a>
+	</p>
 	<!-- nome cognome username email città(provincia e città)-->
-	<form action="/api/registra-utente" method="post">
+	<form id="registrati" action="" method="post" onsubmit="">
 		<fieldset class="login-data">
 			<legend class="sr-only">Inserire i dati per registrarsi</legend>
 			<div class="doppio-input">
 				<div>
 					<label for="nome">Nome</label>
-					<input equired id="nome" maxlenght="25" name="nome" type="text">
+					<input
+						equired
+						id="nome"
+						maxlenght="50"
+						name="nome"
+						type="text" />
 				</div>
 				<div>
 					<label for="cognome">Cognome</label>
-					<input id="cognome" maxlenght="25" name="cognome" required type="text">
+					<input
+						id="cognome"
+						maxlenght="50"
+						name="cognome"
+						required
+						type="text" />
 				</div>
 			</div>
 
@@ -35,25 +50,45 @@
 				</div>
 			</div>
 
+			<!-- spans required to make validation work -->
 			<!-- username -->
-			<label for="username" lang="en">Username</label>
-			<input id="username" maxlenght="25" name="username" required type="text">
-
+			<span>
+				<label for="username" lang="en">Username</label>
+				<input
+					id="username"
+					maxlenght="50"
+					name="username"
+					required
+					type="text" />
+			</span>
 			<!-- email -->
-			<label for="email">Indirizzo Mail</label>
-			<input id="email" name="email" required type="email">
-
+			<span>
+				<label for="email">Indirizzo Mail</label>
+				<input id="email" name="email" required type="email" />
+			</span>
 			<!-- password -->
-			<label for="password" lang="en">Password</label>
-			<input id="password" maxlenght="20" name="password" required type="password">
-
+			<span>
+				<label for="password" lang="en">Password</label>
+				<input
+					id="password"
+					maxlenght="20"
+					name="password"
+					required
+					type="password" />
+			</span>
 			<!-- conferma password -->
-			<label for="conferma-password">Conferma <span lang="en">Password</span></label>
-			<input id="password" maxlenght="20" name="conferma-password" required type="password">
-
+			<span>
+				<label for="conferma-password"
+					>Conferma <span lang="en">Password</span></label
+				>
+				<input
+					id="conferma"
+					maxlenght="20"
+					name="conferma-password"
+					required
+					type="password" />
+			</span>
 			<button type="submit">Registrati</button>
 		</fieldset>
 	</form>
-
 </section>
-<script src="/js/comuneSelect.js"></script>

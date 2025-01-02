@@ -84,26 +84,29 @@ header {
     position: sticky;
     z-index: 999;
     padding: 1em;
+
 }
 
 .header {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr 0;
     align-items: center;
     justify-content: space-between;
-    justify-items: center;
-    border-radius: 1em;
-    gap: 2em;
+    justify-items: center;    
+}
+.header-container {
     padding: 1em;
+    gap: 2em;
     margin-inline: auto;
     max-width: 66em;
     transition: all 0.3s ease-in-out;
-    background-color: var(--background);
 }
 
-.header.activeHeader {
+.header-container.activeHeader {
+    border-radius: 1em;
     background-color: var(--colored-background);
     backdrop-filter: blur(80px);
+
 }
 
 .header .logo {
@@ -113,15 +116,18 @@ header {
 .header > .button-layout {
     justify-self: end;
 }
-
-button {
+button{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.login button  {
     padding: 0.8em 2em;
     border: 0;
     border-radius: 0.75rem;
     background-color: var(--primary-color);
     font-size: medium;
 }
-
 #breadcrumb {
     justify-self: center;
     text-align: center;
@@ -517,4 +523,22 @@ li.activePage {
 .luogo::before {
     content: '📍';
     margin-right: 0.5em;
+}
+
+#results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+}
+
+.hidden {
+    display: none;
+}
+
+.hamburger{
+    display: none;
+}
+#hamburger-menu{
+    display: none;
+    height: 0;
 }

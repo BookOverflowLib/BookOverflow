@@ -12,7 +12,7 @@
 			<div>
 				<label for="nome">Nome</label>
 				<input
-					equired
+					class="form-input"
 					id="nome"
 					maxlenght="50"
 					name="nome"
@@ -32,7 +32,11 @@
 			<!-- provincia e citta -->
 			<div>
 				<label for="provincia">Provincia</label>
-				<select id="provincia" name="provincia" required>
+				<select
+					class="form-input"
+					id="provincia"
+					name="provincia"
+					required>
 					<option value="">Seleziona una provincia</option>
 					<hr />
 					<!-- [province] -->
@@ -40,7 +44,7 @@
 			</div>
 			<div>
 				<label for="comune">Comune</label>
-				<select id="comune" name="comune" required>
+				<select class="form-input" id="comune" name="comune" required>
 					<option value="">Seleziona un comune</option>
 					<hr />
 				</select>
@@ -51,6 +55,7 @@
 			<div>
 				<label for="username" lang="en">Username</label>
 				<input
+					class="form-input"
 					id="username"
 					maxlenght="50"
 					name="username"
@@ -60,12 +65,18 @@
 			<!-- email -->
 			<div>
 				<label for="email">Indirizzo Mail</label>
-				<input id="email" name="email" required type="email" />
+				<input
+					class="form-input"
+					id="email"
+					name="email"
+					required
+					type="email" />
 			</div>
 			<!-- password -->
 			<div>
 				<label for="password" lang="en">Password</label>
 				<input
+					class="form-input"
 					id="password"
 					maxlenght="20"
 					name="password"
@@ -78,6 +89,7 @@
 					>Conferma <span lang="en">Password</span></label
 				>
 				<input
+					class="form-input"
 					id="conferma"
 					maxlenght="20"
 					name="conferma-password"

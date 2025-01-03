@@ -4,6 +4,7 @@
 	--colored-background: rgba(255, 236, 194, 0.8);
 	--primary-color: #f7e4c0;
 	--hover-color: #f0d18f;
+	--dark-yellow-color: #74520a;
 	--gray: hsl(0, 0%, 93%);
 	/* --dark-gray: hsl(0, 0%, 70%); */
 	--light-gray: hsl(0, 0%, 94%);
@@ -821,8 +822,9 @@ li.activePage {
 	margin-bottom: 2em;
 }
 /* come funziona */
+
 #come-funziona {
-	background: var(--colored-background);
+	background: var(--primary-color);
 }
 #come-funziona > div {
 	max-width: 60em;
@@ -918,7 +920,7 @@ li.activePage {
 }
 
 #step {
-	background: var(--colored-background);
+background: var(--primary-color)
 }
 
 #step > div {
@@ -942,11 +944,11 @@ li.activePage {
 	margin: 2em;
 }
 
-#step > div h3 {
+#step h3 {
 	font-size: 2em;
 	font-family: 'American Typewriter', serif;
 	justify-self: center;
-	color: var(--primary-dark-color);
+	color: var(--dark-yellow-color);
 }
 
 #step > div p {

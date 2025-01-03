@@ -629,7 +629,7 @@ fieldset {
 	margin-left: 50%;
 }
 
-.error {
+.input-error-regular {
     color: var(--text-error);
     text-align: center;
 	margin: 0.625em 0;

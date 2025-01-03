@@ -11,13 +11,13 @@ if (isset($_GET['error'])) {
     $errorMessage = '';
     switch ($_GET['error']) {
         case 'wrong-password':
-            $errorMessage = '<p class="error">La password inserita non è valida</p>';
+            $errorMessage = '<p class="input-error-regular">La password inserita non è valida</p>';
             break;
         case 'missing':
-            $errorMessage = '<p class="error">Inserire tutti i campi richiesti</p>';
+            $errorMessage = '<p class="input-error-regular">Inserire tutti i campi richiesti</p>';
             break;
         case 'user-not-found':
-            $errorMessage = '<p class="error">Utente non registrato</p>';
+            $errorMessage = '<p class="input-error-regular">Utente non registrato</p>';
             break;
     }
     // Insert error message after the h1

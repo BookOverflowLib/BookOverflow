@@ -1,9 +1,10 @@
 #menu {
 	display: none;
 }
-.header .button-layout {
+.header .header-buttons {
 	display: none;
 }
+
 .header {
 	grid-template-columns: 2fr 1fr;
 }
@@ -67,7 +68,10 @@ footer .logo p {
 	width: 2.5em;
 	height: 2.5em;
 	background-size: cover;
+	filter: var(--svg-invert);
 }
+
+
 
 #hamburger-icon.active {
 	background-image: url('/assets/imgs/cross.svg');

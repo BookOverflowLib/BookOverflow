@@ -112,6 +112,59 @@ footer .logo p {
 	margin-top: 1em;
 }
 
+
+/* come funziona */
+#come-funziona > div > div {
+	display: flex;
+	flex-direction: column;
+}
+#come-funziona>div>h1 {
+	font-size: 2em;
+}
+
+#come-funziona h1, #come-funziona p {
+justify-self: center;
+}
+#come-funziona>div>div>p{
+	margin:0;
+	padding:1.5em;
+	font-size: 1.2em;
+}
+
+#come-funziona>div>div>img {
+	border-radius: 1em;
+	width: 22vw;
+	max-width: 23em;
+	overflow: hidden;
+	mask-image: url('/assets/imgs/blob-mask3.svg');
+	justify-self: center;
+	padding-bottom: 0;
+	margin-right: 2em;
+}
+#perche-farlo>div>div {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap:2em;
+		padding: 0em;
+}
+#perche-farlo>div>h2 {
+	font-size: 1.8em;
+	
+}
+#step>div>div {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 2em;
+	padding:0em;
+	margin: 2em;
+}
+#step>div>h2 {
+	font-size: 1.8em;
+}
+#inizia>h3 {
+	font-size: 1.5em;
+
+}
 /* 
 @keyframes slide-in-top {
 	0% {

@@ -194,11 +194,12 @@ class DBAccess
 			} else {
 				throw new Exception("User not registered");
 			}
-		} catch (Exception $e) {
+		}
+		catch (Exception $e) {
 			//echo $e->getMessage();
 			//a meno che non si voglia una pagina completaemente bianca
 			//questo non è l'approccio giusto
-			return null;
+			throw $e;
 		}
 		return null;
 	}

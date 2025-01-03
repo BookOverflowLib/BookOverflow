@@ -36,6 +36,8 @@ switch ($path) {
 	case '/come-funziona':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'come-funziona.php';
 		break;
+	case '/impostazioni':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'impostazioni-profilo.php';
 
 	case '/api/ottieni-comuni':
 		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'ottieni-comuni.php';

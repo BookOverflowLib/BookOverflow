@@ -10,11 +10,14 @@ $accedi = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'accedi.html');
 if (isset($_GET['error'])) {
     $errorMessage = '';
     switch ($_GET['error']) {
-        case 'invalid':
-            $errorMessage = '<p class="error">Email o password non validi</p>';
+        case 'wrong-password':
+            $errorMessage = '<p class="error">La password inserita non è valida</p>';
             break;
         case 'missing':
             $errorMessage = '<p class="error">Inserire tutti i campi richiesti</p>';
+            break;
+        case 'user-not-found':
+            $errorMessage = '<p class="error">Utente non registrato</p>';
             break;
     }
     // Insert error message after the h1

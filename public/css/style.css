@@ -2,11 +2,310 @@
 	--background: #fff;
 	--text-color: #000;
 	--colored-background: rgba(255, 236, 194, 0.8);
-	--primary-color: hsl(40, 77%, 86%);
+	--primary-color: #f7e4c0;
 	--hover-color: #f0d18f;
 	--gray: hsl(0, 0%, 93%);
-	--dark-gray: hsl(0, 0%, 70%);
+	/* --dark-gray: hsl(0, 0%, 70%); */
 	--light-gray: hsl(0, 0%, 94%);
+
+	/* PALETTE */
+	--light-yellow: #fefae0ff;
+	--light-green: #ccd5aeff;
+	--light-orange: #d4a373ff;
+	--slate-gray: #6f8695ff;
+	--dark-rose: #ab4e68ff;
+
+	--background: #fffaeeff;
+	--background: #fbf9f5ff;
+	--background: #fcf7efff;
+
+	--dark-gray: var(--slate-gray);
+	--colored-background: var(--light-yellow);
+	--hover-color: var(--light-orange);
+}
+/* 
+:balls {
+	--text-50: #fbf5e9;
+	--text-100: #f8ebd3;
+	--text-200: #f1d7a7;
+	--text-300: #eac37b;
+	--text-400: #e2af50;
+	--text-500: #db9b24;
+	--text-600: #af7c1d;
+	--text-700: #845d15;
+	--text-800: #583e0e;
+	--text-900: #2c1f07;
+	--text-950: #161004;
+
+	--background-50: #fbf4ea;
+	--background-100: #f7ead4;
+	--background-200: #efd4a9;
+	--background-300: #e7bf7e;
+	--background-400: #dea954;
+	--background-500: #d69429;
+	--background-600: #ab7621;
+	--background-700: #815918;
+	--background-800: #563b10;
+	--background-900: #2b1e08;
+	--background-950: #150f04;
+
+	--primary-50: #fcf5e8;
+	--primary-100: #f9ebd2;
+	--primary-200: #f3d8a5;
+	--primary-300: #edc478;
+	--primary-400: #e8b14a;
+	--primary-500: #e29d1d;
+	--primary-600: #b57e17;
+	--primary-700: #875e12;
+	--primary-800: #5a3f0c;
+	--primary-900: #2d1f06;
+	--primary-950: #171003;
+
+	--secondary-50: #f4f6ee;
+	--secondary-100: #eaeedd;
+	--secondary-200: #d5dcbc;
+	--secondary-300: #c0cb9a;
+	--secondary-400: #aaba78;
+	--secondary-500: #95a857;
+	--secondary-600: #778745;
+	--secondary-700: #5a6534;
+	--secondary-800: #3c4323;
+	--secondary-900: #1e2211;
+	--secondary-950: #0f1109;
+
+	--accent-50: #f9f2eb;
+	--accent-100: #f3e6d8;
+	--accent-200: #e7ccb1;
+	--accent-300: #dbb38a;
+	--accent-400: #cf9963;
+	--accent-500: #c3803c;
+	--accent-600: #9c6630;
+	--accent-700: #754d24;
+	--accent-800: #4e3318;
+	--accent-900: #271a0c;
+	--accent-950: #140d06;
+}
+	*/
+@media (prefers-color-scheme: light) {
+	:root {
+		--text: #18140c;
+		--text-error: #ab4e68;
+		--background: #f8f6f1;
+		--primary: #655024;
+		--secondary: #ccd5ae;
+		--accent: #d4a373;
+
+		/* --neutral-50: #fafaf9;
+		--neutral-100: #f5f5f4; */
+		--neutral-50: #e7e5e4;
+		--neutral-100: #d6d3d1;
+		--neutral-200: #a8a29e;
+		--neutral-300: #78716c;
+		--neutral-400: #57534e;
+		--neutral-500: #44403c;
+		--neutral-600: #292524;
+		--neutral-700: #1c1917;
+
+		--text-50: #fbf5e9;
+		--text-100: #f8ebd3;
+		--text-200: #f1d7a7;
+		--text-300: #eac37b;
+		--text-400: #e2af50;
+		--text-500: #db9b24;
+		--text-600: #af7c1d;
+		--text-700: #845d15;
+		--text-800: #583e0e;
+		--text-900: #2c1f07;
+		--text-950: #161004;
+
+		--background-50: #fbf4ea;
+		--background-100: #f7ead4;
+		--background-200: #efd4a9;
+		--background-300: #e7bf7e;
+		--background-400: #dea954;
+		--background-500: #d69429;
+		--background-600: #ab7621;
+		--background-700: #815918;
+		--background-800: #563b10;
+		--background-900: #2b1e08;
+		--background-950: #150f04;
+
+		--primary-50: #fcf5e8;
+		--primary-100: #f9ebd2;
+		--primary-200: #f3d8a5;
+		--primary-300: #edc478;
+		--primary-400: #e8b14a;
+		--primary-500: #e29d1d;
+		--primary-600: #b57e17;
+		--primary-700: #875e12;
+		--primary-800: #5a3f0c;
+		--primary-900: #2d1f06;
+		--primary-950: #171003;
+
+		--secondary-50: #f4f6ee;
+		--secondary-100: #eaeedd;
+		--secondary-200: #d5dcbc;
+		--secondary-300: #c0cb9a;
+		--secondary-400: #aaba78;
+		--secondary-500: #95a857;
+		--secondary-600: #778745;
+		--secondary-700: #5a6534;
+		--secondary-800: #3c4323;
+		--secondary-900: #1e2211;
+		--secondary-950: #0f1109;
+
+		--accent-50: #f9f2eb;
+		--accent-100: #f3e6d8;
+		--accent-200: #e7ccb1;
+		--accent-300: #dbb38a;
+		--accent-400: #cf9963;
+		--accent-500: #c3803c;
+		--accent-600: #9c6630;
+		--accent-700: #754d24;
+		--accent-800: #4e3318;
+		--accent-900: #271a0c;
+		--accent-950: #140d06;
+	}
+}
+@media (prefers-color-scheme: dark) {
+	:root {
+		--text: #f3efe6;
+		--text-error: #ab4e68;
+		--background: #0f0c07;
+		--primary: #dbc69b;
+		--secondary: #48512a;
+		--accent: #8c5c2b;
+
+		--neutral-900: #fafaf9;
+		--neutral-800: #f5f5f4;
+		--neutral-700: #e7e5e4;
+		--neutral-600: #d6d3d1;
+		--neutral-500: #a8a29e;
+		--neutral-400: #78716c;
+		--neutral-300: #57534e;
+		--neutral-200: #44403c;
+		--neutral-100: #292524;
+		--neutral-50: #1c1917;
+
+		--text-50: #110f08;
+		--text-100: #221d11;
+		--text-200: #453a21;
+		--text-300: #675732;
+		--text-400: #8a7442;
+		--text-500: #ac9153;
+		--text-600: #bda775;
+		--text-700: #cdbd98;
+		--text-800: #ded3ba;
+		--text-900: #eee9dd;
+		--text-950: #f7f4ee;
+
+		--background-50: #110e08;
+		--background-100: #231c10;
+		--background-200: #453821;
+		--background-300: #685431;
+		--background-400: #8b7041;
+		--background-500: #ad8c52;
+		--background-600: #bea374;
+		--background-700: #ceba97;
+		--background-800: #ded1ba;
+		--background-900: #efe8dc;
+		--background-950: #f7f3ee;
+
+		--primary-50: #130f07;
+		--primary-100: #251d0e;
+		--primary-200: #4b3b1b;
+		--primary-300: #705829;
+		--primary-400: #967636;
+		--primary-500: #bb9344;
+		--primary-600: #c9a969;
+		--primary-700: #d6be8f;
+		--primary-800: #e4d4b4;
+		--primary-900: #f1e9da;
+		--primary-950: #f8f4ec;
+
+		--secondary-50: #0f1109;
+		--secondary-100: #1e2211;
+		--secondary-200: #3c4323;
+		--secondary-300: #5a6534;
+		--secondary-400: #778745;
+		--secondary-500: #95a857;
+		--secondary-600: #aaba78;
+		--secondary-700: #c0cb9a;
+		--secondary-800: #d5dcbc;
+		--secondary-900: #eaeedd;
+		--secondary-950: #f4f6ee;
+
+		--accent-50: #140d06;
+		--accent-100: #271a0c;
+		--accent-200: #4e3318;
+		--accent-300: #754d24;
+		--accent-400: #9c6630;
+		--accent-500: #c3803c;
+		--accent-600: #cf9963;
+		--accent-700: #dbb38a;
+		--accent-800: #e7ccb1;
+		--accent-900: #f3e6d8;
+		--accent-950: #f9f2eb;
+	}
+}
+
+/* @media (prefers-color-scheme: light) {
+	:root {
+		--text: #18140c;
+		--background: #f8f6f1;
+		--primary: #655024;
+		--secondary: #ccd5ae;
+		--accent: #d4a373;
+	}
+}
+@media (prefers-color-scheme: dark) {
+	:root {
+		--text: #f3efe6;
+		--background: #0f0c07;
+		--primary: #dbc69b;
+		--secondary: #48512a;
+		--accent: #8c5c2b;
+	}
+} */
+
+/* For browsers that support clamp  */
+@supports (font-size: clamp(1rem, 1vi, 1rem)) {
+	:root {
+		--font-sm: clamp(0.8rem, 0.17vi + 0.76rem, 0.89rem);
+		--font-base: clamp(1rem, 0.34vi + 0.91rem, 1.19rem);
+		--font-md: clamp(1.25rem, 0.61vi + 1.1rem, 1.58rem);
+		--font-lg: clamp(1.56rem, 1vi + 1.31rem, 2.11rem);
+		--font-xl: clamp(1.95rem, 1.56vi + 1.56rem, 2.81rem);
+		--font-xxl: clamp(2.44rem, 2.38vi + 1.85rem, 3.75rem);
+		--font-xxxl: clamp(3.05rem, 3.54vi + 2.17rem, 5rem);
+	}
+}
+/* For browsers that don't support clamp */
+@supports not (font-size: clamp(1rem, 1vi, 1rem)) {
+	:root {
+		--font-sm: 0.8rem;
+		--font-base: 1rem;
+		--font-md: 1.25rem;
+		--font-lg: 1.56rem;
+		--font-xl: 1.95rem;
+		--font-xxl: 2.44rem;
+		--font-xxxl: 3.05rem;
+	}
+	@media screen and (min-width: 1280px) {
+		:root {
+			--font-sm: 0.89rem;
+			--font-base: 1.19rem;
+			--font-md: 1.58rem;
+			--font-lg: 2.11rem;
+			--font-xl: 2.81rem;
+			--font-xxl: 3.75rem;
+			--font-xxxl: 5rem;
+		}
+	}
+}
+
+@media (prefers-reduced-motion) {
+	/* TODO: togliere animazioni? */
 }
 
 * {
@@ -26,33 +325,34 @@ html {
 
 body {
 	background-color: var(--background);
-	color: var(--text-color);
+	color: var(--text);
 	display: grid;
 	grid-template-rows: auto auto 1fr auto;
 	min-height: 100vh;
 }
 
+button {
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
 .button-layout {
 	border: none;
-	padding: 1em;
-	background: var(--primary-color);
 	border-radius: 1em;
+	padding: 1em;
+	background: var(--primary-200);
+	color: var(--text);
 	text-decoration: none;
-	color: black;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
 }
 
 .button-layout:hover {
-	background: var(--hover-color);
+	background: var(--primary-300);
 }
 
-.logo > h1 {
-	font-size: x-large;
-}
-
-.logo > p {
-	font-size: large;
-}
-
+/* LOGO */
 .logo {
 	font-family: 'Gentium Book Plus', serif;
 	display: flex;
@@ -61,29 +361,15 @@ body {
 	gap: 1em;
 }
 
-#menu ul {
-	padding: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 1em;
-	list-style-type: none;
+.logo > h1 {
+	font-size: var(--font-md);
 }
 
-#menu > ul > li > a {
-	text-decoration: none;
-	color: black;
-	padding-top: 1em;
-	padding-bottom: 1em;
-	margin-top: -2em;
-	margin-bottom: -2em;
+.logo > p {
+	font-size: var(--font-sm);
 }
 
-#menu > ul > li > a:hover {
-	text-decoration: underline;
-}
-
-/* HEADER NAVBAR */
+/* HEADER */
 header {
 	top: 0;
 	position: sticky;
@@ -98,6 +384,7 @@ header {
 	justify-content: space-between;
 	justify-items: center;
 }
+
 .header-container {
 	padding: 1em;
 	gap: 2em;
@@ -108,7 +395,7 @@ header {
 
 .header-container.activeHeader {
 	border-radius: 1em;
-	background-color: var(--colored-background);
+	background-color: var(--background-100);
 	backdrop-filter: blur(80px);
 }
 
@@ -119,33 +406,45 @@ header {
 .header > .button-layout {
 	justify-self: end;
 }
-button {
-	border: none;
-	background-color: transparent;
-	cursor: pointer;
+
+/* MENU */
+#menu ul {
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+	list-style-type: none;
 }
-.login button {
-	padding: 0.8em 2em;
-	border: 0;
-	border-radius: 0.75rem;
-	background-color: var(--primary-color);
-	font-size: medium;
+
+#menu > ul > li > a {
+	text-decoration: none;
+	color: var(--text);
+	padding-top: 1em;
+	padding-bottom: 1em;
+	margin-top: -2em;
+	margin-bottom: -2em;
 }
+
+#menu > ul > li > a:hover {
+	text-decoration: underline;
+}
+
 #breadcrumb {
 	justify-self: center;
 	text-align: center;
-	background-color: var(--gray);
+	background-color: var(--neutral-50);
 	border-radius: 1em;
+	font-size: var(--font-sm);
 }
 
 #breadcrumb > p {
 	padding: 0.5em;
 	margin: 0 5em;
-	font-size: small;
 }
 
 #breadcrumb a {
-	color: black;
+	color: var(--text);
 }
 
 .bold {
@@ -159,11 +458,11 @@ button {
 
 .autore-libro {
 	font-style: italic;
-	font-size: 0.9em;
+	font-size: var(--font-sm);
 }
 
 footer {
-	background-color: var(--primary-color);
+	background-color: var(--background-200);
 	padding: 2em;
 }
 
@@ -227,7 +526,7 @@ main {
 }
 
 #piu-scambiati {
-	background-color: var(--primary-color);
+	background-color: var(--background-200);
 	padding: 2em;
 	gap: 2em;
 }
@@ -350,7 +649,7 @@ main {
 	min-width: 15em;
 	max-width: 20em;
 	gap: 1em;
-	border: 1px solid var(--light-gray);
+	border: 1px solid var(--neutral-100);
 	border-radius: 1em;
 	padding: 1.5em 2em;
 	margin-bottom: 20em;
@@ -360,7 +659,7 @@ main {
 .login,
 .signin input:focus {
 	/* border: 3px solid black; */
-	outline-color: var(--dark-gray);
+	outline-color: var(--neutral-50);
 }
 
 /* SIGNIN */
@@ -370,7 +669,7 @@ main {
 	flex-direction: column;
 	max-width: 30em;
 	gap: 1em;
-	border: 1px solid var(--light-gray);
+	border: 1px solid var(--neutral-100);
 	border-radius: 1em;
 	padding: 1.5em 2em;
 	margin-bottom: 20em;
@@ -395,16 +694,18 @@ fieldset {
 input[type='text'],
 input[type='password'],
 input[type='email'] {
-	background-color: var(--gray);
+	background-color: var(--neutral-50);
 	min-height: 3em;
 	border-radius: 0.5em;
 	border-style: none;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
+	color: var(--text)
 }
 
 select {
-	background-color: var(--gray);
+	background-color: var(--neutral-50);
+	color: var(--text);
 	min-height: 3em;
 	border-radius: 0.5em;
 	border-style: none;
@@ -413,7 +714,7 @@ select {
 }
 
 section > p > a {
-	color: black;
+	color: var(--text);
 }
 
 .doppio-input {
@@ -501,7 +802,7 @@ section > p > a {
 }
 
 #mostra-ancora {
-	color: black;
+	color: var(--text);
 }
 
 #mostra-ancora:hover {
@@ -547,7 +848,7 @@ li.activePage {
 }
 
 .input-error {
-	color: red;
+	color: var(--text-error);
 	font-size: small;
 }
 .input-hint {
@@ -560,13 +861,13 @@ li.activePage {
 	gap: 0.5em;
 }
 
-.scegli-generi{
+.scegli-generi {
 	max-width: 60em;
 	margin: auto;
 }
 .button-genere {
 	border: 2px solid var(--hover-color);
-	border-radius: 0.5em;
+	border-radius: 9999px;
 	padding: 0.5em 1em;
 	font-size: 1em;
 }

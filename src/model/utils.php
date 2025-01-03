@@ -89,7 +89,7 @@ function getNavBarLi($path): string
 	$navbarReferences = array(
 		array('href' => '/', 'text' => 'Home'),
 		array('href' => '/esplora', 'text' => 'Esplora'),
-		array('href' => '/chi-siamo', 'text' => 'Chi siamo'),
+		array('href' => '/come-funziona', 'text' => 'Come funziona'),
 		array('href' => '/profilo', 'text' => 'Profilo')
 	);
 

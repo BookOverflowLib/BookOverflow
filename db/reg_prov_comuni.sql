@@ -19,7 +19,7 @@ CREATE TABLE `comuni` (
   `codice_catastale` char(4) NOT NULL,
   `latitudine` decimal(9,6) NOT NULL,
   `longitudine` decimal(9,6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dump dei dati per la tabella `comuni`
@@ -8049,7 +8049,7 @@ CREATE TABLE `province` (
   `sigla` varchar(2) NOT NULL,
   `latitudine` decimal(9,6) NOT NULL,
   `longitudine` decimal(9,6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dump dei dati per la tabella `province`
@@ -8178,7 +8178,7 @@ CREATE TABLE `regioni` (
   `nome` varchar(100) NOT NULL,
   `latitudine` decimal(9,6) NOT NULL,
   `longitudine` decimal(9,6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dump dei dati per la tabella `regioni`

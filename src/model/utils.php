@@ -148,7 +148,7 @@ function getHeaderSection($path): string
 function getBreadcrumb($path): string
 {
 	//TODO: sistemare quando ci saranno più pagine
-	$url = $path;
+	$path = parse_url($path, PHP_URL_PATH);
 	$breadcrumb = '';
 	if ($path == '/') {
 		$breadcrumb = '<p>Ti trovi in : <span lang="en" class="bold">Home</span></p>';

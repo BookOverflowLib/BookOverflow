@@ -103,7 +103,7 @@ function getNavBarLi($path): string
 	return $li;
 }
 
-function getHeaderButtons(): string {
+function getHeaderButtons($path): string {
 	`<div class="header-buttons">
 		<a class="button-layout" href="/accedi">Accedi</a>
 		<button id="theme-toggle">
@@ -117,15 +117,33 @@ function getHeaderButtons(): string {
 	$scura = '<span class="active"><img class="theme-icon" src="/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità scura</span></span>';
 	$chiara = '<span><img class="theme-icon" src="/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità chiara</span></span>';
 	$themeToggleButton = '<button id="theme-toggle" aria-pressed="false">'.$chiara.$scura.'</button>';
-	
+
+
+	// Se la pagina corrente è /accedi, il pulsante deve portare a /registrati
+	$accediButton = '';
+	if($path != '/accedi'){
+		$accediButton = '<a class="button-layout" href="/accedi">Accedi</a>';
+	}else{
+		$accediButton = '<a class="button-layout" href="/registrati">Registrati</a>';
+	}
+
 	$ris ='';
 	if(isset($_SESSION['user'])) {
 		$ris = print_r($_SESSION, true);
 	}else{
-		$ris = '<div class="header-buttons"><a class="button-layout" href="/accedi">Accedi</a>'.$themeToggleButton.'</div>';
-	}
+		$ris = '<div class="header-buttons">'.$accediButton.$themeToggleButton.'</div>';
+	}	
 	return $ris;
 
+}
+
+//TODO: sta roba non ha niente di dinamico quindi forse non va qui??
+function getHamburgerButton(): string {
+	$chiuso = '<span class="active"><img class="hamburger-icon" src="/assets/imgs/hamburger.svg" alt=""><span class="visually-hidden">Apri l\'<span lang="en">hamburger</span> menù</span></span>';
+	$aperto = '<span><img class="hamburger-icon" src="/assets/imgs/cross.svg" alt=""><span class="visually-hidden">Chiudi l\'<span lang="en">hamburger</span> menù</span></span>';
+	$hamburgerIcon = '<button id="hamburger" aria-pressed="false">'.$chiuso.$aperto.'</button>';
+
+	return $hamburgerIcon;
 }
 
 /**
@@ -136,11 +154,11 @@ function getHeaderButtons(): string {
 function getHeaderSection($path): string
 {
 	$header = file_get_contents('../src/templates/header.html');
-	// Genera i link della navbar
-	$li = getNavBarLi($path);
-	$myHeader = str_replace('<!-- [navbar] -->', $li, $header);
-	$buttons = getHeaderButtons();
-	$myHeader = str_replace('<!-- [header-buttons] -->', $buttons, $myHeader);
+	
+	$myHeader = str_replace('<!-- [navbar] -->', getNavBarLi($path), $header);
+	$myHeader = str_replace('<!-- [header-buttons] -->', getHeaderButtons($path), $myHeader);
+	$myHeader = str_replace('<!-- [hamburger-button] -->', getHamburgerButton(), $myHeader);
+
 	return $myHeader;
 }
 

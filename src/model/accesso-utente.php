@@ -10,19 +10,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['email'], $_POST['password'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
-        
+
         try {
             $result = $db->login_user($email, $password);
             if ($result) {
-                $_SESSION['user'] = $email;
-                //FIXME: fetch username da db è temopraneo
-                $username = ($db->get_user_by_email($email))['username'];
+                $username = ($db->get_user_by_email($email))[0]['username'];
+                $_SESSION['user'] = $username;
                 header('Location: /profilo/' . $username);
                 exit();
             }
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
-            switch($errorMessage) {
+            switch ($errorMessage) {
                 case 'Wrong password':
                     header('Location: /accedi?error=wrong-password');
                     break;

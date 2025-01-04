@@ -1,4 +1,13 @@
 <?php
+if(!isset($_SESSION)) {
+    session_start();
+}
+
+if(isset($_SESSION['user'])) {
+    header('Location: /profilo/' . $_SESSION['user']);
+    exit();
+}
+
 require_once '../src/paths.php';
 require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';

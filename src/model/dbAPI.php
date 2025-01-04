@@ -65,10 +65,13 @@ class DBAccess
 
 	/**
 	 * Forse è troppo cursata :(
-	 * se è un SELECT ritorna un array,
-	 * se è un INSERT o qualsiasi altra cosa ritorna bool
+	 * se è un SELECT ritorna
+	 *  un array se la query ha successo
+	 *  false se la query non ha successo
+	 * se è un INSERT
+	 *  true se la query ha successo
+	 *  false se la query non ha successo
 	 */
-	// FIXME: null should not be a return type, remove result handling from this function
 	public function prepare_and_execute_query($query, $types = null, $params = null): array|bool
 	{
 		$this->ensure_connection();
@@ -97,10 +100,16 @@ class DBAccess
 
 		$results = "";
 		if (str_starts_with($query, "SELECT")) {
-			if(!$stmt->get_result()) {
-				throw new Exception("Error fetching results: " . $stmt->error);
+			try {
+				$tmpResults = $this->query_results_to_array($stmt->get_result());
+			} catch (Exception $e) {
+				throw $e;
+			}
+
+			if ($tmpResults) {
+				$results = $tmpResults;
 			} else {
-				$results = $this->query_results_to_array($stmt->get_result());
+				$results = false;
 			}
 		} else {
 			if (!$stmt->get_result() && !$stmt->errno) {
@@ -111,8 +120,6 @@ class DBAccess
 		}
 
 		$stmt->close();
-
-		$this->close_connection();
 
 		return $results;
 	}
@@ -135,8 +142,6 @@ class DBAccess
 		$this->ensure_connection();
 		$query = "SELECT id, nome FROM province ORDER BY nome";
 		$queryRes = mysqli_query($this->connection, $query);
-
-		$this->close_connection();
 
 		return $this->query_results_to_array($queryRes);
 	}
@@ -179,7 +184,7 @@ class DBAccess
 				return true;
 			}
 		} catch (Exception $e) {
-			echo $e->getMessage();
+			throw $e;
 		}
 		return false;
 	}
@@ -198,8 +203,7 @@ class DBAccess
 			} else {
 				throw new Exception("User not registered");
 			}
-		}
-		catch (Exception $e) {
+		} catch (Exception $e) {
 			//echo $e->getMessage();
 			//a meno che non si voglia una pagina completaemente bianca
 			//questo non è l'approccio giusto
@@ -243,22 +247,6 @@ class DBAccess
 		return null;
 	}
 
-	// //FIXME: workaround temporaneo perchè la /profilo vuole un username mentre il form login usa l'email
-	// // cambiare login_user in modo da richiedere un username o...boh
-	// public function get_username_by_email ($email): ?string
-	// {
-	// 	$query = "SELECT username FROM Utente WHERE email = ?";
-	// 	try {
-	// 		$res = $this->prepare_and_execute_query($query, "s", [$email]);
-	// 		if ($res) {
-	// 			return $res[0]['username'];
-	// 		}
-	// 	} catch (Exception $e) {
-	// 		echo $e->getMessage();
-	// 	}
-	// 	return null;
-	// }
-
 	public function get_provincia_comune_by_ids($idProvincia, $idComune): ?array
 	{
 		$queryProvincia = "SELECT nome FROM province WHERE id = ?";
@@ -285,5 +273,4 @@ class DBAccess
 			echo $e->getMessage();
 		}
 	}
-
 }

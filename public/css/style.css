@@ -811,7 +811,7 @@ li.activePage {
 	border-radius: 9999px;
 	padding: 0.5em 1em;
 	font-size: 1em;
-	color: var(--text)
+	color: var(--text);
 }
 .button-pressed {
 	background-color: var(--background-300);
@@ -828,74 +828,70 @@ li.activePage {
 /* come funziona */
 
 #come-funziona {
+	/* FASCIA */
 	background: var(--background-200);
 }
 #come-funziona > div {
+	/* CONTENUTO */
+	padding: 2em;
 	max-width: 60em;
 	margin-inline: auto;
 }
 
 #come-funziona > div > div {
-	grid-template-columns: 1.8fr 2fr;
+	grid-template-columns: 1fr 1fr;
 	display: grid;
-	margin: auto;
 	justify-items: center;
 	align-items: center;
 	justify-content: center;
 }
 
 #come-funziona > div > h1 {
-	font-size: 3em;
+	font-size: var(--font-xl);
 	font-family: 'Gentium Book Plus', serif;
 	font-style: italic;
+	text-align: center;
 }
 
 #come-funziona > div > div > p {
-	font-size: 1.3em;
-	font-family: 'Gentium Book Plus', serif;
-	margin-bottom: 1.5em;
-	padding-left: 3em;
-	padding-top: 1em;
+	font-size: var(--font-md);
+	/* font-family: 'Gentium Book Plus', serif; */
 	text-align: center;
 }
 
 #come-funziona > div > div > img {
-	border-radius: 1em;
-	width: 22vw;
+	width: 100%;
 	max-width: 23em;
 	overflow: hidden;
 	mask-image: url('/assets/imgs/blob-mask3.svg');
-	justify-self: end;
-	padding-bottom: 0;
-	margin-right: 2em;
 }
 
 #perche-farlo > div {
+	padding: 2em;
+	padding-bottom: 4em;
 	max-width: 60em;
 	margin-inline: auto;
 }
 
 #perche-farlo > div > h2 {
-	margin-top: 1em;
-	font-size: 2.5em;
+	font-size: var(--font-lg);
 	font-family: 'Gentium Book Plus', serif;
 	font-style: italic;
-	justify-self: center;
+	text-align: center;
 }
 
 #perche-farlo > div > div {
+	margin-top: 2em;
 	display: grid;
 	grid-template-columns: 2fr 2fr;
-	padding-left: 1em;
-	margin: 2em;
 	gap: 4em;
 }
 
 .motivo1,
 .motivo2 {
-	font-size: 1.7em;
+	font-size: var(--font-md);
 	font-family: 'Gentium Book Plus', serif;
-	justify-self: center;
+	text-align: center;
 }
 
 .motivo1::before,
@@ -913,76 +909,73 @@ li.activePage {
 }
 
 #perche-farlo p {
-	font-size: 1.2em;
-	margin-bottom: 1.5em;
+	font-size: var(--font-base);
 	justify-self: center;
-	font-family: 'Gentium Book Plus', serif;
-	padding-left: 2em;
-	padding-right: 2em;
+	/* font-family: 'Gentium Book Plus', serif; */
 	text-align: center;
 	margin-top: 1em;
 }
 
 #step {
-background: var(--background-200)
+	background: var(--background-200);
 }
 
 #step > div {
+	padding: 2em;
+	padding-bottom: 4em;
 	max-width: 60em;
 	margin-inline: auto;
 }
 
 #step > div > h2 {
-	padding-top: 1em;
-	font-size: 2.5em;
+	font-size: var(--font-lg);
 	font-family: 'Gentium Book Plus', serif;
 	font-style: italic;
-	justify-self: center;
+	text-align: center;
 }
 
 #step > div > div {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: 2em;
-	padding-left: 1em;
-	margin: 2em;
 }
 
 #step h3 {
-	font-size: 2em;
+	margin-top: 1em;
+	font-size: var(--font-md);
 	font-family: 'American Typewriter', serif;
-	justify-self: center;
+	text-align: center;
 	color: var(--text-700);
 }
 
 #step > div p {
-	font-size: 1.2em;
-	margin-bottom: 1.5em;
+	font-size: var(--font-base);
 	justify-self: center;
-	font-family: 'Gentium Book Plus', serif;
-	padding-left: 2em;
-	padding-right: 2em;
+	/* font-family: 'Gentium Book Plus', serif; */
 	text-align: center;
 	margin-top: 1em;
 }
-#inizia {
-	margin-bottom: 5em;
+#inizia > div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 4em;
+	max-width: 60em;
+	margin-inline: auto;
 }
 
-#inizia > h3 {
+#inizia > div > h3 {
 	text-align: center;
-	font-size: 2em;
+	font-size: var(--font-lg);
 	font-family: 'Gentium Book Plus', serif;
 	font-style: italic;
-	justify-self: center;
 	margin-bottom: 1em;
 }
 
-#inizia > a {
-	font-size: 1.3em;
-	font-family: 'Gentium Book Plus', serif;
-	justify-self: center;
-	display: flex;
-	justify-content: center;
+#inizia > div > a {
+	font-size: var(--font-base);
 	padding: 1em;
+	max-width: fit-content;
+	margin-inline: auto;
 }

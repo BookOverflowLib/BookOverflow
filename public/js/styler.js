@@ -1,5 +1,5 @@
 
-function calculateSettingAsThemeString({ localStorageTheme, systemSettingDark }) {
+function getThemeFromSettings({ localStorageTheme, systemSettingDark }) {
 	if (localStorageTheme !== null) {
 		return localStorageTheme;
 	}
@@ -12,21 +12,33 @@ function calculateSettingAsThemeString({ localStorageTheme, systemSettingDark })
 const html = document.querySelector("html");
 let localStorageTheme = localStorage.getItem("theme");
 const systemSettingDark = window.matchMedia("(prefers-color-scheme: dark)");
-html.setAttribute("data-theme", calculateSettingAsThemeString({ localStorageTheme, systemSettingDark }));
+const settingsTheme = getThemeFromSettings({ localStorageTheme, systemSettingDark });
+html.setAttribute("data-theme", settingsTheme);
 
 // when the page is loaded
 document.addEventListener('DOMContentLoaded', function () {
 
-	localStorageTheme = localStorage.getItem("theme");
-
-	let currentThemeSetting = calculateSettingAsThemeString({ localStorageTheme, systemSettingDark });
-
+	let currentThemeSetting = getThemeFromSettings({ localStorageTheme, systemSettingDark });
 	const themeToggleButton = document.getElementById('theme-toggle');
+	const toggleButtonIconChiaro = document.querySelectorAll('#theme-toggle > span')[0];
+	const toggleButtonIconScuro = document.querySelectorAll('#theme-toggle > span')[1];
+
+	if (settingsTheme === 'dark') {
+		toggleButtonIconChiaro.classList.add('active');
+		toggleButtonIconScuro.classList.remove('active');
+	} else {
+		toggleButtonIconScuro.classList.add('active');
+		toggleButtonIconChiaro.classList.remove('active');
+	}
 
 	themeToggleButton.addEventListener('click', function () {
 		const newTheme = currentThemeSetting === "dark" ? "light" : "dark";
 		document.querySelector("html").setAttribute("data-theme", newTheme);
 
+		toggleButtonIconChiaro.classList.toggle('active');
+		toggleButtonIconScuro.classList.toggle('active');
+
+		themeToggleButton.ariaPressed === "true" ? themeToggleButton.ariaPressed = "false" : themeToggleButton.ariaPressed = "true";
 		// update in local storage
 		localStorage.setItem("theme", newTheme);
 

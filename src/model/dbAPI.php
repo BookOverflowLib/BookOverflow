@@ -69,7 +69,7 @@ class DBAccess
 	 * se è un INSERT o qualsiasi altra cosa ritorna bool
 	 */
 	// FIXME: null should not be a return type, remove result handling from this function
-	public function prepare_and_execute_query($query, $types = null, $params = null): array|bool|null
+	public function prepare_and_execute_query($query, $types = null, $params = null): array|bool
 	{
 		$this->ensure_connection();
 
@@ -97,7 +97,11 @@ class DBAccess
 
 		$results = "";
 		if (str_starts_with($query, "SELECT")) {
-			$results = $this->query_results_to_array($stmt->get_result());
+			if(!$stmt->get_result()) {
+				throw new Exception("Error fetching results: " . $stmt->error);
+			} else {
+				$results = $this->query_results_to_array($stmt->get_result());
+			}
 		} else {
 			if (!$stmt->get_result() && !$stmt->errno) {
 				$results = true;
@@ -239,21 +243,21 @@ class DBAccess
 		return null;
 	}
 
-	//FIXME: workaround temporaneo perchè la /profilo vuole un username mentre il form login usa l'email
-	// cambiare login_user in modo da richiedere un username o...boh
-	public function get_username_by_email ($email): ?string
-	{
-		$query = "SELECT username FROM Utente WHERE email = ?";
-		try {
-			$res = $this->prepare_and_execute_query($query, "s", [$email]);
-			if ($res) {
-				return $res[0]['username'];
-			}
-		} catch (Exception $e) {
-			echo $e->getMessage();
-		}
-		return null;
-	}
+	// //FIXME: workaround temporaneo perchè la /profilo vuole un username mentre il form login usa l'email
+	// // cambiare login_user in modo da richiedere un username o...boh
+	// public function get_username_by_email ($email): ?string
+	// {
+	// 	$query = "SELECT username FROM Utente WHERE email = ?";
+	// 	try {
+	// 		$res = $this->prepare_and_execute_query($query, "s", [$email]);
+	// 		if ($res) {
+	// 			return $res[0]['username'];
+	// 		}
+	// 	} catch (Exception $e) {
+	// 		echo $e->getMessage();
+	// 	}
+	// 	return null;
+	// }
 
 	public function get_provincia_comune_by_ids($idProvincia, $idComune): ?array
 	{

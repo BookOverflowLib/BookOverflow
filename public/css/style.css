@@ -26,6 +26,8 @@
 }
 
 [data-theme='light'] {
+	--theme-icon: url('/assets/imgs/sun.svg');
+	---no-theme-icon: url('/assets/imgs/moon.svg');
 	--svg-invert: invert(0);
 	--text: #18140c;
 	--text-error: #ab4e68;
@@ -107,6 +109,8 @@
 }
 
 [data-theme='dark'] {
+	--theme-icon: url('/assets/imgs/moon.svg');
+	--no-theme-icon: url('/assets/imgs/sun.svg');
 	--svg-invert: invert(1);
 	--text: #f3efe6;
 	--text-error: #ab4e68;
@@ -277,6 +281,7 @@ button {
 }
 
 .button-layout {
+	font-size: var(--font-sm);
 	border: none;
 	border-radius: 1em;
 	padding: 1em;
@@ -338,12 +343,42 @@ header {
 	backdrop-filter: blur(80px);
 }
 
+.header-buttons {
+	display: flex;
+	justify-self: end;
+	align-items: center;
+	gap: 0.5em;
+}
 .header .logo {
 	justify-self: start;
 }
 
 .header > .button-layout {
 	justify-self: end;
+}
+#theme-toggle {
+	box-sizing: border-box;
+	font-size: var(--font-sm);
+	border: 2px solid var(--primary-200);
+	border-radius: 1em;
+	padding: 1em;
+	/* background: var(--primary-200); */
+	color: var(--text);
+	text-decoration: none;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+}
+
+#theme-toggle:hover {
+	background: var(--primary-200);
+}
+
+#theme-icon {
+	background-image: var(--theme-icon);
+	width: 1rem;
+	height: 1rem;
+	background-size: cover;
+	filter: var(--svg-invert);
 }
 
 /* MENU */
@@ -949,9 +984,9 @@ li.activePage {
 #step h3 {
 	margin-top: 1em;
 	font-size: var(--font-md);
-	font-family: 'American Typewriter', serif;
+	font-family: 'Gentium Book Plus', serif;
 	text-align: center;
-	color: var(--text-700);
+	color: var(--text-800);
 }
 
 #step > div p {

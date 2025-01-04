@@ -25,18 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	themeToggleButton.addEventListener('click', function () {
 		const newTheme = currentThemeSetting === "dark" ? "light" : "dark";
-		//TODO: icons no emoji
-		themeToggleButton.innerText = currentThemeSetting === "dark" ? "🌞" : "🌜";
-
-		// // update the button text
-		// const newCta = newTheme === "dark" ? "Change to light theme" : "Change to dark theme";
-		// themeToggleButton.innerText = newCta;
-
-		// use an aria-label if you are omitting text on the button
-		// and using sun/moon icons, for example
-		// themeToggleButton.setAttribute("aria-label", newCta);
-
-		// update theme attribute on HTML to switch theme in CSS
 		document.querySelector("html").setAttribute("data-theme", newTheme);
 
 		// update in local storage

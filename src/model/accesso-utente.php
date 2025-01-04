@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result) {
                 $_SESSION['user'] = $email;
                 //FIXME: fetch username da db è temopraneo
-                $username = $db->get_username_by_email($email);
+                $username = ($db->get_user_by_email($email))['username'];
                 header('Location: /profilo/' . $username);
                 exit();
             }

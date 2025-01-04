@@ -349,7 +349,7 @@ header {
 	transition: all 0.3s ease-in-out;
 }
 
-.header-container.activeHeader {
+.header-container.active {
 	border-radius: 1em;
 	background-color: var(--background-100);
 	backdrop-filter: blur(80px);
@@ -387,16 +387,14 @@ header {
 
 #theme-toggle > span {
 	display: none;
-	width: 0;
 }
 
 #theme-toggle > span.active {
-    display: inline-flex;
-    align-items: center;
-    height: 100%;
+	display: inline-flex;
+	align-items: center;
+	height: 100%;
 	width: 100%;
 }
-
 
 .theme-icon {
 	width: 1.5em;
@@ -404,6 +402,14 @@ header {
 	filter: var(--svg-invert);
 }
 
+#hamburger {
+	display: none;
+}
+
+#hamburger-menu {
+	display: none;
+	/* height: 0; */
+}
 /* MENU */
 #menu ul {
 	padding: 0;
@@ -835,14 +841,6 @@ li.activePage {
 
 .hidden {
 	display: none;
-}
-
-.hamburger {
-	display: none;
-}
-#hamburger-menu {
-	display: none;
-	height: 0;
 }
 
 .input-error {

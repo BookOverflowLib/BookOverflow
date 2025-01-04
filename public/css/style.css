@@ -270,6 +270,7 @@ body {
 }
 
 button {
+	font-family: 'Inter', sans-serif;
 	border: none;
 	background-color: transparent;
 	cursor: pointer;
@@ -304,7 +305,7 @@ button {
 }
 
 .logo > p {
-	font-size: var(--font-sm);
+	font-size: var(--font-base);
 }
 
 /* HEADER */
@@ -371,7 +372,7 @@ header {
 #breadcrumb {
 	justify-self: center;
 	text-align: center;
-	background-color: var(--neutral-50);
+	background-color: var(--neutral-100);
 	border-radius: 1em;
 	font-size: var(--font-sm);
 }
@@ -690,6 +691,7 @@ section > p > a {
 	z-index: 1000;
 	clip-path: auto;
 	margin: 0.5em;
+	box-sizing: border-box;
 	padding: 1em;
 	width: auto;
 	height: auto;
@@ -810,13 +812,15 @@ li.activePage {
 	margin: auto;
 }
 .button-genere {
-	border: 2px solid var(--hover-color);
+	font-family: 'Inter', sans-serif;
+	border: 2px solid var(--primary-200);
 	border-radius: 9999px;
 	padding: 0.5em 1em;
 	font-size: 1em;
+	color: var(--text)
 }
 .button-pressed {
-	background-color: var(--primary-color);
+	background-color: var(--background-300);
 }
 .lista-generi {
 	display: flex;
@@ -830,7 +834,7 @@ li.activePage {
 /* come funziona */
 
 #come-funziona {
-	background: var(--primary-color);
+	background: var(--background-200);
 }
 #come-funziona > div {
 	max-width: 60em;
@@ -926,7 +930,7 @@ li.activePage {
 }
 
 #step {
-background: var(--primary-color)
+background: var(--background-200)
 }
 
 #step > div {
@@ -954,7 +958,7 @@ background: var(--primary-color)
 	font-size: 2em;
 	font-family: 'American Typewriter', serif;
 	justify-self: center;
-	color: var(--dark-yellow-color);
+	color: var(--text-700);
 }
 
 #step > div p {

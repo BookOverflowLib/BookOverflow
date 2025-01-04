@@ -139,9 +139,10 @@ function getBreadcrumb($path): string
 		$currentUrl = '';
 		for ($i = 0; $i < $last; $i++) {
 			$currentUrl .= '/' . $path[$i];
-			$breadcrumb .= '<a href="' . $currentUrl . '">' . ucfirst($path[$i]) . '</a> > ';
+			$currentPath = str_replace('-', ' ', ucfirst($path[$i]));
+			$breadcrumb .= '<a href="' . $currentUrl . '">' . $currentPath . '</a> > ';
 		}
-		$breadcrumb .= '<span class="bold">' . ucfirst($path[$last]) . '</span></p>';
+		$breadcrumb .= '<span class="bold">' . str_replace('-', ' ', ucfirst($path[$i])) . '</span></p>';
 	}
 	return $breadcrumb;
 }

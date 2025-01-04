@@ -113,11 +113,16 @@ function getHeaderButtons(): string {
 	<button id="hamburger">
 		<div id="hamburger-icon"></div>
 	</button>`;
+
+	$scura = '<span class="active"><img class="theme-icon" src="/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità scura</span></span>';
+	$chiara = '<span><img class="theme-icon" src="/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità chiara</span></span>';
+	$themeToggleButton = '<button id="theme-toggle" aria-pressed="false">'.$chiara.$scura.'</button>';
+	
 	$ris ='';
 	if(isset($_SESSION['user'])) {
 		$ris = print_r($_SESSION, true);
 	}else{
-		$ris = 'non loggato';
+		$ris = '<div class="header-buttons"><a class="button-layout" href="/accedi">Accedi</a>'.$themeToggleButton.'</div>';
 	}
 	return $ris;
 

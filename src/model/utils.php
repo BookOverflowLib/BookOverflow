@@ -90,7 +90,6 @@ function getNavBarLi($path): string
 		array('href' => '/', 'text' => 'Home'),
 		array('href' => '/esplora', 'text' => 'Esplora'),
 		array('href' => '/come-funziona', 'text' => 'Come funziona'),
-		array('href' => '/profilo', 'text' => 'Profilo')
 	);
 
 	$li = '';
@@ -104,6 +103,26 @@ function getNavBarLi($path): string
 	return $li;
 }
 
+function getHeaderButtons(): string {
+	`<div class="header-buttons">
+		<a class="button-layout" href="/accedi">Accedi</a>
+		<button id="theme-toggle">
+			<div id="theme-icon"></div>
+		</button>
+	</div>
+	<button id="hamburger">
+		<div id="hamburger-icon"></div>
+	</button>`;
+	$ris ='';
+	if(isset($_SESSION['user'])) {
+		$ris = print_r($_SESSION, true);
+	}else{
+		$ris = 'non loggato';
+	}
+	return $ris;
+
+}
+
 /**
  * Restituisce l'header con la navbar aggiornata
  *
@@ -114,7 +133,10 @@ function getHeaderSection($path): string
 	$header = file_get_contents('../src/templates/header.html');
 	// Genera i link della navbar
 	$li = getNavBarLi($path);
-	return str_replace('<!-- [navbar] -->', $li, $header);
+	$myHeader = str_replace('<!-- [navbar] -->', $li, $header);
+	$buttons = getHeaderButtons();
+	$myHeader = str_replace('<!-- [header-buttons] -->', $buttons, $myHeader);
+	return $myHeader;
 }
 
 /**

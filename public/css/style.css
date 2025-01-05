@@ -312,7 +312,7 @@ button {
 .button-layout-light {
 	font-size: var(--font-sm);
 	box-sizing: border-box;
-	border: 2px solid var(--primary-200);
+	box-shadow: inset 0 0 0 2px var(--primary-200);
 	border-radius: 1em;
 	padding: 1em;
 	color: var(--text);
@@ -324,6 +324,12 @@ button {
 
 .button-layout-light:hover {
 	background: var(--primary-200);
+}
+
+.section-container {
+	max-width: 55em;
+	margin: auto;
+	padding: 2em;
 }
 
 .profile-button {
@@ -470,8 +476,9 @@ header {
 }
 
 #breadcrumb > p {
+	text-align: center;
 	padding: 0.5em;
-	margin: 0 5em;
+	margin-inline: 1em;
 }
 
 #breadcrumb a {
@@ -562,6 +569,11 @@ main {
 	gap: 2em;
 }
 
+#piu-scambiati > article {
+	max-width: 55em;
+	margin: auto;
+}
+
 .carosello-libri {
 	display: grid;
 	/* grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); */
@@ -572,7 +584,9 @@ main {
 	align-items: center;
 	justify-items: center;
 }
-
+.libro {
+	max-width: 10em;
+}
 .libro > img {
 	border-radius: 0.5em;
 	max-width: 11em;
@@ -672,6 +686,12 @@ main {
 	gap: 0.5em;
 }
 
+#storico-scambi {
+	max-width: 55em;
+	padding: 2em;
+	margin: auto;
+}
+
 /* LOGIN */
 .login {
 	display: flex;
@@ -724,13 +744,23 @@ fieldset {
 
 input[type='text'],
 input[type='password'],
-input[type='email'] {
+input[type='email']{
 	background-color: var(--neutral-50);
 	min-height: 3em;
 	border-radius: 0.5em;
 	border-style: none;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
+	color: var(--text);
+}
+
+input[type='search']{
+	background-color: var(--neutral-50);
+	border-radius: 9999px;
+	border-style: none;
+	padding-inline: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
 	color: var(--text);
 }
 
@@ -861,12 +891,6 @@ li.activePage {
 	margin-right: 0.5em;
 }
 
-#results {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 2em;
-}
-
 .hidden {
 	display: none;
 }
@@ -884,7 +908,6 @@ li.activePage {
 	flex-direction: column;
 	gap: 0.5em;
 }
-
 
 .button-pressed {
 	background-color: var(--background-300);
@@ -915,7 +938,7 @@ li.activePage {
 }
 .button-genere {
 	font-family: 'Inter', sans-serif;
-	border: 2px solid var(--primary-200);
+	box-shadow: inset 0 0 0 2px var(--primary-200);
 	border-radius: 9999px;
 	padding: 0.5em 1em;
 	font-size: 1em;
@@ -1075,4 +1098,109 @@ li.activePage {
 	padding: 1em;
 	max-width: fit-content;
 	margin-inline: auto;
+}
+
+/* LIBRI OFFERTI */
+.book-table {
+	margin-top: 2em;
+	margin-bottom: 2em;
+	display: grid;
+	box-shadow: inset 0 0 0 2px var(--primary-200);
+	border-radius: 1em;
+}
+
+.book-row {
+	padding: 1em;
+	display: grid;
+	grid-template-columns: 2fr 1fr auto;
+	gap: 1em;
+	align-items: center;
+}
+.book-row .book-info {
+	display: flex;
+	flex-direction: row;
+	gap: 1em;
+	align-items: center;
+}
+.book-row .book-info > div {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+}
+.book-row:not(:last-of-type) {
+	border-bottom: 2px solid var(--primary-200);
+}
+.book-buttons {
+	justify-self: end;
+}
+
+#aggiungi-libro-dialog {
+	border: none;
+	background-color: transparent;
+	margin-inline: auto;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+.dialog-window {
+	background-color: var(--background);
+	padding: 2em;
+	border-radius: 1em;
+	color: var(--text);
+	min-width: 40em;
+	max-width: 55em;
+	box-shadow: inset 0 0 0 2px var(--primary-200);
+}
+.dialog-window > h2 {
+	font-size: var(--font-lg);
+}
+.dialog-window > input {
+	margin-top: 1em;
+	width: 100%;
+}
+#book-results {
+	display: grid;
+	margin-top: 1em;
+	box-shadow: inset 0 0 0 2px var(--primary-200);
+	border-radius: 1em;
+}
+
+.search-results-row {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 1em;
+	align-items: center;
+	padding: 1em;
+}
+.search-results-row:not(:last-of-type) {
+	border-bottom: 2px solid var(--primary-200);
+}
+
+.search-results-row > label {
+	display: flex;
+	flex-direction: row;
+	gap: 1em;
+}
+.search-results-row:has(input[type='radio']:checked) {
+	background-color: var(--primary-200);
+}
+
+/* Add rounded corners for first and last selected items */
+.search-results-row:first-child:has(input[type='radio']:checked) {
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+}
+
+.search-results-row:last-child:has(input[type='radio']:checked) {
+	border-bottom-left-radius: 1em;
+	border-bottom-right-radius: 1em;
+}
+
+.libro-seleziona {
+	max-width: 7em;
+}
+.libro-seleziona > img {
+	border-radius: 0.5em;
+	max-width: 7em;
+	aspect-ratio: 1/1.5;
+	object-fit: cover;
 }

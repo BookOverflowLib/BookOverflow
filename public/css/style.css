@@ -302,10 +302,36 @@ button {
 	text-decoration: none;
 	cursor: pointer;
 	transition: all 0.3s ease-in-out;
+	user-select: none;
 }
 
 .button-layout:hover {
 	background: var(--primary-300);
+}
+
+.profile-button{
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	box-sizing: border-box;
+	border: 2px solid var(--primary-200);
+	border-radius: 1em;
+	padding-inline: 1em;
+	color: var(--text);
+	text-decoration: none;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	user-select: none;
+}
+
+.profile-button:hover {
+	background: var(--primary-200);
+}
+
+.profile-button > img {
+	width: 3em;
+	height: 3em;
+	border-radius: 50%;
 }
 
 /* LOGO */

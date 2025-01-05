@@ -309,14 +309,12 @@ button {
 	background: var(--primary-300);
 }
 
-.profile-button{
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5em;
+.button-layout-light {
+	font-size: var(--font-sm);
 	box-sizing: border-box;
 	border: 2px solid var(--primary-200);
 	border-radius: 1em;
-	padding-inline: 1em;
+	padding: 1em;
 	color: var(--text);
 	text-decoration: none;
 	cursor: pointer;
@@ -324,8 +322,24 @@ button {
 	user-select: none;
 }
 
-.profile-button:hover {
+.button-layout-light:hover {
 	background: var(--primary-200);
+}
+
+.profile-button {
+	display: inline-flex;
+	align-items: center;
+	border-radius: 9999px;
+	padding-left: 1em;
+	gap: 0.5em;
+	color: var(--text);
+	text-decoration: none;
+	transition: all 0.3s ease-in-out;
+}
+
+.profile-button:hover {
+	text-decoration: underline;
+	background-color: var(--primary-200);
 }
 
 .profile-button > img {
@@ -397,18 +411,6 @@ header {
 #theme-toggle {
 	display: inline-flex;
 	align-items: center;
-	box-sizing: border-box;
-	border: 2px solid var(--primary-200);
-	border-radius: 1em;
-	padding: 1em;
-	color: var(--text);
-	text-decoration: none;
-	cursor: pointer;
-	transition: all 0.3s ease-in-out;
-}
-
-#theme-toggle:hover {
-	background: var(--primary-200);
 }
 
 #theme-toggle > span {
@@ -883,18 +885,7 @@ li.activePage {
 	gap: 0.5em;
 }
 
-.scegli-generi {
-	max-width: 60em;
-	margin: auto;
-}
-.button-genere {
-	font-family: 'Inter', sans-serif;
-	border: 2px solid var(--primary-200);
-	border-radius: 9999px;
-	padding: 0.5em 1em;
-	font-size: 1em;
-	color: var(--text);
-}
+
 .button-pressed {
 	background-color: var(--background-300);
 }
@@ -904,9 +895,33 @@ li.activePage {
 	gap: 0.5em;
 	max-width: 40em;
 	justify-content: center;
-	margin-top: 2em;
 	margin-bottom: 2em;
 }
+.generi-buttons {
+	display: grid;
+	grid-auto-flow: column;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	gap: 0.5em;
+	justify-items: center;
+	align-items: center;
+	justify-content: center;
+}
+
+.scegli-generi {
+	max-width: 60em;
+	margin: auto;
+	margin-top: 1em;
+}
+.button-genere {
+	font-family: 'Inter', sans-serif;
+	border: 2px solid var(--primary-200);
+	border-radius: 9999px;
+	padding: 0.5em 1em;
+	font-size: 1em;
+	color: var(--text);
+}
+
 /* come funziona */
 
 #come-funziona {

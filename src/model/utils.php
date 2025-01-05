@@ -104,20 +104,9 @@ function getNavBarLi($path): string
 }
 
 function getHeaderButtons($path): string {
-	`<div class="header-buttons">
-		<a class="button-layout" href="/accedi">Accedi</a>
-		<button id="theme-toggle">
-			<div id="theme-icon"></div>
-		</button>
-	</div>
-	<button id="hamburger">
-		<div id="hamburger-icon"></div>
-	</button>`;
-
 	$scura = '<span class="active"><img class="theme-icon" src="/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità scura</span></span>';
 	$chiara = '<span><img class="theme-icon" src="/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità chiara</span></span>';
 	$themeToggleButton = '<button id="theme-toggle" aria-pressed="false">'.$chiara.$scura.'</button>';
-
 
 	// Se la pagina corrente è /accedi, il pulsante deve portare a /registrati
 	$accediButton = '';
@@ -128,6 +117,7 @@ function getHeaderButtons($path): string {
 	}
 
 	$ris ='';
+	print_r($_SESSION);
 	if(isset($_SESSION['user'])) {
 		$ris = print_r($_SESSION, true);
 	}else{

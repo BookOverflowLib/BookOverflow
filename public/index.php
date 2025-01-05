@@ -8,8 +8,14 @@ $path = parse_url($request, PHP_URL_PATH);
 // Controlla se il percorso è "/profilo/*"
 if (preg_match("#^/profilo/([^/]+)/seleziona-generi$#", $path, $matches)) {
 	$_GET['user'] = $matches[1];
-	$path = '/profilo/seleziona-generi'; // Nuovo path da gestire nello switch
-} else if (preg_match("#^/profilo/([^/]+)$#", $path, $matches)) {
+	$path = '/profilo/seleziona-generi';
+} elseif (preg_match('#^/profilo/([^/]+)/libri-offerti#', $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo/libri-offerti';
+} elseif (preg_match('#^/profilo/([^/]+)/libri-desiderati#', $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo/libri-desiderati';
+} elseif (preg_match("#^/profilo/([^/]+)$#", $path, $matches)) {
 	$_GET['user'] = $matches[1];
 	$path = '/profilo';
 }
@@ -42,7 +48,12 @@ switch ($path) {
 	case '/profilo/seleziona-generi':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'seleziona-generi.php';
 		break;
-
+	case '/profilo/libri-offerti':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'libri-offerti.php';
+		break;
+	case '/profilo/libri-desiderati':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'libri-desiderati.php';
+		break;
 	// API
 	case '/api/ottieni-comuni':
 		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'ottieni-comuni.php';

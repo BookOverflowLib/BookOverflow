@@ -44,8 +44,11 @@ main() {
         files+=("$file")
     done < <(find "$src_dir" -type f \( -iname "*.png" -o -iname "*.jpg" \) -print0)
 
+    # encodes pngs and jpgs
     find "$src_dir" -type f \( -iname "*.png" -o -iname "*.jpg" \) -print0 | \
         parallel -0 -j 2 encode_file {} "$src_dir" "$dest_dir"
+    # copy over remaining files (icos, svgs, ...)
+    rsync -av --exclude='*.png' --exclude='*.jpg' "$src_dir/" "$dest_dir/"
 }
 
 main "$@"

@@ -1,32 +1,36 @@
-<section id="accedi">
+<script src="./js/accediValidator.js" type="module"></script>
+<section id="login-section">
 	<div class="login center">
 		<h1 class="center">Accedi</h1>
 		<p class="center">
 			Non hai un <span lang="en">account</span>?
 			<a href="/registrati">Registrati</a>
 		</p>
-		<form action="/accedi.php" method="post">
+		<form id="accedi" action="" method="post" onsubmit="">
 			<fieldset class="login-data">
 				<legend class="sr-only">
 					Inserire i dati per il <span lang="en">login</span>
 				</legend>
-				<label class="" for="username" lang="en">Username</label>
-				<input
-					id="username"
-					maxlenght="25"
-					name="username"
-					required
-					type="text" />
+				<div>
+					<label class="" for="email" lang="en">Email</label>
+					<input
+						id="email"
+						maxlenght="25"
+						name="email"
+						required
+						type="email" />
+				</div>
+				<div>
+					<label class="" for="password" lang="en">Password</label>
+					<input
+						id="password"
+						maxlenght="25"
+						name="password"
+						required
+						type="password" />
 
-				<label class="" for="password" lang="en">Password</label>
-				<input
-					id="password"
-					maxlenght="25"
-					name="password"
-					required
-					type="password" />
-
-				<input type="submit" class="button-layout" value="Accedi" />
+					</div>
+					<input type="submit" class="button-layout" value="Accedi" />
 			</fieldset>
 		</form>
 	</div>

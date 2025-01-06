@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$image = getUserImageUrlByEmail($email);
 
 		$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
-
+		$_SESSION['user'] = $username;
 		header('Location: /profilo/' . $username);
 
 		exit();

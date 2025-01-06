@@ -26,7 +26,8 @@ CREATE TABLE
         cognome VARCHAR(50),
         provincia VARCHAR(50),
         comune VARCHAR(50),
-        path_immagine VARCHAR(255)
+        path_immagine VARCHAR(255),
+        generi_preferiti VARCHAR(255)
     );
 
 CREATE TABLE

@@ -1,0 +1,35 @@
+/* HEADER */
+#menu {
+    display: none;
+}  
+#hamburger-menu {
+    display: none;
+}
+.header-buttons {
+    display: none;
+}
+/* FOOTER */
+
+/* INDEX */
+#landing a {
+    text-decoration: underline;
+    color: var(--link-color);
+
+}
+#landing>div>h1 {
+    font-size: 3em;
+  
+}
+#landing>div>p {
+    font-size: 1.2em;
+
+}
+
+#piu-scambiati{
+    margin-top: 4em;
+    margin-bottom: 4em;
+}
+#citazione {
+    margin-top: 4em;
+    margin-bottom: 4em;
+}

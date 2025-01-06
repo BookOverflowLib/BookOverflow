@@ -101,7 +101,8 @@ export function checkForm(formId, redirect, formChecks) {
     var inputs = form.getElementsByTagName("input");
 
     for (var i = 0; i < inputs.length; i++) {
-        if (!formChecks[inputs[i].id][3]) {
+
+        if (inputs[i].hasAttribute("id") && !formChecks[inputs[i].id][3] && formChecks[inputs[i]]) {
             return false;
         }
     }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Genera una stringa HTML per visualizzare il rating sotto forma di stelle
  *
@@ -10,35 +9,39 @@
 function ratingStars($rating): string
 {
 	if ($rating > 5 || $rating < 0) {
-		throw new Exception("Rating non nei vincoli", 1);
+		throw new Exception('Rating non nei vincoli', 1);
 	}
 
 	$n_full_star = floor($rating); //PARTE INTERA
 	$n_partial_star = $rating - $n_full_star; //PARTE FRAZIONARIA
-	$star_svg = file_get_contents("../public/assets/imgs/star.svg");
+	$star_svg = file_get_contents('../public/assets/imgs/star.svg');
 
 	$total_star = 5;
-	$rating_stars = "";
+	$rating_stars = '';
 
 	// STELLE PIENE
 	for ($i = 0; $i < $n_full_star; $i++) {
-		$tmp_star = str_replace("{{star-offset}}", "100", $star_svg);
-		$tmp_star = str_replace("{{id}}", "1", $tmp_star);
+		$tmp_star = str_replace('{{star-offset}}', '100', $star_svg);
+		$tmp_star = str_replace('{{id}}', '1', $tmp_star);
 
 		$rating_stars .= $tmp_star;
 		$total_star--;
 	}
 
 	// STELLA PERCENTUALE
-	$par_star = str_replace("{{star-offset}}", strval($n_partial_star * 100), $star_svg);
-	$par_star = str_replace("{{id}}", "2", $par_star);
+	$par_star = str_replace(
+		'{{star-offset}}',
+		strval($n_partial_star * 100),
+		$star_svg
+	);
+	$par_star = str_replace('{{id}}', '2', $par_star);
 	$rating_stars .= $par_star;
 	$total_star--;
 
 	//STELLE VUOTE
 	while ($total_star > 0) {
-		$tmp_star = str_replace("{{star-offset}}", "0", $star_svg);
-		$tmp_star = str_replace("{{id}}", "3", $tmp_star);
+		$tmp_star = str_replace('{{star-offset}}', '0', $star_svg);
+		$tmp_star = str_replace('{{id}}', '3', $tmp_star);
 		$rating_stars .= $tmp_star;
 		$total_star--;
 	}
@@ -56,16 +59,18 @@ function ratingStars($rating): string
  */
 function getTemplatePage($title = null): string
 {
-	$template = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'templatePage.html');
+	$template = file_get_contents(
+		$GLOBALS['TEMPLATES_PATH'] . 'templatePage.html'
+	);
 	$header = getHeaderSection($_SERVER['REQUEST_URI']);
 	$breadcrumb = getBreadcrumb($_SERVER['REQUEST_URI']);
 	$footer = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'footer.html');
 
 	$PAGE_TITLE = '';
 	if ($title == null) {
-		$PAGE_TITLE = "BookOverflow";
+		$PAGE_TITLE = 'BookOverflow';
 	} else {
-		$PAGE_TITLE = ucfirst($title) . " - BookOverflow";
+		$PAGE_TITLE = ucfirst($title) . ' - BookOverflow';
 	}
 
 	$page = str_replace('<!-- [pageTitle] -->', $PAGE_TITLE, $template);
@@ -86,22 +91,92 @@ function getNavBarLi($path): string
 {
 	$currentPage = $path;
 
-	$navbarReferences = array(
-		array('href' => '/', 'text' => 'Home'),
-		array('href' => '/esplora', 'text' => 'Esplora'),
-		array('href' => '/chi-siamo', 'text' => 'Chi siamo'),
-		array('href' => '/profilo', 'text' => 'Profilo')
-	);
+	$navbarReferences = [
+		['href' => '/', 'text' => 'Home'],
+		['href' => '/esplora', 'text' => 'Esplora'],
+		['href' => '/come-funziona', 'text' => 'Come funziona'],
+	];
 
 	$li = '';
 	foreach ($navbarReferences as $ref) {
 		if ($currentPage != $ref['href']) {
-			$li .= '<li><a href="' . $ref['href'] . '">' . $ref['text'] . '</a></li>';
+			$li .=
+				'<li><a href="' .
+				$ref['href'] .
+				'">' .
+				$ref['text'] .
+				'</a></li>';
 		} else {
 			$li .= '<li class="activePage">' . $ref['text'] . '</li>';
 		}
 	}
 	return $li;
+}
+
+function getHeaderButtons($path): string
+{
+	$scura =
+		'<span class="active"><img class="theme-icon" src="/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità scura</span></span>';
+	$chiara =
+		'<span><img class="theme-icon" src="/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità chiara</span></span>';
+	$themeToggleButton =
+		'<button id="theme-toggle" class="button-layout-light" aria-pressed="false">' .
+		$chiara .
+		$scura .
+		'</button>';
+
+	// Se la pagina corrente è /accedi, il pulsante deve portare a /registrati
+	$accediButton = '';
+	if ($path != '/accedi') {
+		$accediButton = '<a class="button-layout" href="/accedi">Accedi</a>';
+	} else {
+		$accediButton =
+			'<a class="button-layout" href="/registrati">Registrati</a>';
+	}
+
+	$ris = '';
+	if(!isset($_SESSION)){
+		session_start();
+	}
+	
+	if (isset($_SESSION['user'])) {
+		$ris =
+			'<div class="header-buttons">' .
+			$themeToggleButton .
+			'<a class="profile-button" href="/profilo/' .
+			$_SESSION['user'] .
+			'">' .
+			$_SESSION['user'] .
+			'<img src="' .
+			$_SESSION['path_immagine'] .
+			'" alt="" width="40">' .
+			'</a>' .
+			'</div>';
+	} else {
+		$ris =
+			'<div class="header-buttons">' .
+			$themeToggleButton .
+			$accediButton .
+			'</div>';
+	}
+	
+	return $ris;
+}
+
+//TODO: sta roba non ha niente di dinamico quindi forse non va qui??
+function getHamburgerButton(): string
+{
+	$chiuso =
+		'<span class="active"><img class="hamburger-icon" src="/assets/imgs/hamburger.svg" alt=""><span class="visually-hidden">Apri l\'<span lang="en">hamburger</span> menù</span></span>';
+	$aperto =
+		'<span><img class="hamburger-icon" src="/assets/imgs/cross.svg" alt=""><span class="visually-hidden">Chiudi l\'<span lang="en">hamburger</span> menù</span></span>';
+	$hamburgerIcon =
+		'<button id="hamburger" aria-pressed="false">' .
+		$chiuso .
+		$aperto .
+		'</button>';
+
+	return $hamburgerIcon;
 }
 
 /**
@@ -112,9 +187,20 @@ function getNavBarLi($path): string
 function getHeaderSection($path): string
 {
 	$header = file_get_contents('../src/templates/header.html');
-	// Genera i link della navbar
-	$li = getNavBarLi($path);
-	return str_replace('<!-- [navbar] -->', $li, $header);
+
+	$myHeader = str_replace('<!-- [navbar] -->', getNavBarLi($path), $header);
+	$myHeader = str_replace(
+		'<!-- [header-buttons] -->',
+		getHeaderButtons($path),
+		$myHeader
+	);
+	$myHeader = str_replace(
+		'<!-- [hamburger-button] -->',
+		getHamburgerButton(),
+		$myHeader
+	);
+
+	return $myHeader;
 }
 
 /**
@@ -126,22 +212,29 @@ function getHeaderSection($path): string
 function getBreadcrumb($path): string
 {
 	//TODO: sistemare quando ci saranno più pagine
-	$url = $path;
+	$path = parse_url($path, PHP_URL_PATH);
 	$breadcrumb = '';
 	if ($path == '/') {
-		$breadcrumb = '<p>Ti trovi in : <span lang="en" class="bold">Home</span></p>';
+		$breadcrumb =
+			'<p>Ti trovi in : <span lang="en" class="bold">Home</span></p>';
 	} else {
 		$path = explode('/', $path);
 		$path = array_filter($path);
 		$path = array_values($path);
-		$breadcrumb = '<p>Ti trovi in : <span lang="en"><a href="/">Home</a></span> > ';
+		$breadcrumb =
+			'<p>Ti trovi in : <span lang="en"><a href="/">Home</a></span> > ';
 		$last = count($path) - 1;
 		$currentUrl = '';
 		for ($i = 0; $i < $last; $i++) {
 			$currentUrl .= '/' . $path[$i];
-			$breadcrumb .= '<a href="' . $currentUrl . '">' . ucfirst($path[$i]) . '</a> > ';
+			$currentPath = str_replace('-', ' ', ucfirst($path[$i]));
+			$breadcrumb .=
+				'<a href="' . $currentUrl . '">' . $currentPath . '</a> > ';
 		}
-		$breadcrumb .= '<span class="bold">' . ucfirst($path[$last]) . '</span></p>';
+		$breadcrumb .=
+			'<span class="bold">' .
+			str_replace('-', ' ', ucfirst($path[$i])) .
+			'</span></p>';
 	}
 	return $breadcrumb;
 }
@@ -169,3 +262,20 @@ function getUserImageUrlByEmail($email): string
 	return $finalUrl; // Voila
 }
 
+function isLoggedIn() {
+    return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
+}
+
+function requireLogin() {
+    if (!isLoggedIn()) {
+        header("Location: /accedi");
+        exit();
+    }
+}
+
+function logout() {
+    session_start();
+    session_destroy();
+    header("Location: /accedi");
+    exit();
+}

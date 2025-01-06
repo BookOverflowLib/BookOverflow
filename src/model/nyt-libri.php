@@ -125,7 +125,7 @@ function insert_NYT_books(){
  <div class="libro">
 				<img
 					alt=""
-					src="../assets/imgs/artedicorrere.png"
+					src="../assets/imgs/artedicorrere.avif"
 					width="150" />
 				<p class="titolo-libro">L'arte di correre</p>
 				<p class="autore-libro">Haruki Murakami</p>

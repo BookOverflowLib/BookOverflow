@@ -7,7 +7,7 @@ if (!isset($_SESSION['user'])) {
     session_start();
 }
 if ($_GET['user'] != $_SESSION['user']) {
-    header('Location: /profilo/' . $_GET['user']);
+    header('Location: /profilo/' . $_SESSION['user']);
     exit;
 }
 

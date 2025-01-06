@@ -1,0 +1,89 @@
+<section class="section-container">
+	<div class="intestazione">
+		<h1>Libri offerti</h1>
+		<button class="button-layout" id="aggiungi-libro-button">
+			Aggiungi un libro
+		</button>
+	</div>
+	<dialog id="aggiungi-libro-dialog">
+		<div class="dialog-window">
+			<h2>Cerca un libro</h2>
+			<label for="titolo" class="visually-hidden">Cerca un libro</label>
+			<input
+				type="search"
+				name="cerca"
+				id="cerca"
+				placeholder="Cerca un libro ..." />
+			<!-- <input type="submit" value="Cerca" id="cercaButton" /> -->
+			<div id="book-results"></div>
+		</div>
+	</dialog>
+	<div class="book-table">
+		<div class="book-row">
+			<div class="book-info">
+				<img
+					src="/assets/imgs/artedicorrere.avif"
+					alt="L'arte di correre"
+					width="50" />
+				<div>
+					<p>L'arte di correre</p>
+					<p class="italic">Haruki Murakami</p>
+				</div>
+			</div>
+			<div class="book-copy-info">
+				<p>Stato: Scambiato</p>
+				<p>Condizioni: Pessime</p>
+			</div>
+			<div class="book-buttons">
+				<button class="button-layout">Modifica</button>
+				<button class="button-layout">Elimina</button>
+			</div>
+		</div>
+		<div class="book-row">
+			<div class="book-info">
+				<img
+					src="/assets/imgs/artedicorrere.avif"
+					alt="L'arte di correre"
+					width="50" />
+				<div>
+					<p>L'arte di correre</p>
+					<p class="italic">Haruki Murakami</p>
+				</div>
+			</div>
+			<div class="book-copy-info">
+				<p>Stato: Disponibile</p>
+				<p>Condizioni: Ottime</p>
+			</div>
+			<div class="book-buttons">
+				<button class="button-layout">Modifica</button>
+				<button class="button-layout">Elimina</button>
+			</div>
+		</div>
+	</div>
+</section>
+<script src="/js/cercaLibri.js"></script>
+<script>
+	// Aggiungi un libro
+	const dialog = document.getElementById('aggiungi-libro-dialog')
+	const button = document.getElementById('aggiungi-libro-button')
+	button.addEventListener('click', () => {
+		dialog.showModal()
+	})
+	// dialog.querySelector('button').addEventListener('click', () => {
+	// 	dialog.close();
+	// });
+	// // Modifica un libro
+	// const modificaButtons = document.querySelectorAll('.book-buttons button:first-child');
+	// modificaButtons.forEach(button => {
+	// 	button.addEventListener('click', () => {
+	// 		dialog.showModal();
+	// 	});
+	// });
+	// // Elimina un libro
+	// const eliminaButtons = document.querySelectorAll('.book-buttons button:last-child');
+	// eliminaButtons.forEach(button => {
+	// 	button.addEventListener('click', () => {
+	// 		// Elimina il libro
+	// 	});
+	// });
+</script>

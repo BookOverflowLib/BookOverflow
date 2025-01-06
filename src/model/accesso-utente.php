@@ -14,9 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             $result = $db->login_user($email, $password);
             if ($result) {
-                $username = ($db->get_user_by_email($email))[0]['username'];
-                $_SESSION['user'] = $username;
-                header('Location: /profilo/' . $username);
+                $user = ($db->get_user_by_email($email))[0];
+                $_SESSION['user'] = $user['username'];
+                $_SESSION['path_immagine'] = $user['path_immagine'];
+                header('Location: /profilo/' . $user['username']);
                 exit();
             }
         } catch (Exception $e) {

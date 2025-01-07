@@ -120,7 +120,7 @@ function getHeaderButtons($path): string
 	$chiara =
 		'<span><img class="theme-icon" src="/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità chiara</span></span>';
 	$themeToggleButton =
-		'<button id="theme-toggle" class="button-layout-light" aria-pressed="false">' .
+		'<button class="theme-toggle button-layout-light" aria-pressed="false">' .
 		$chiara .
 		$scura .
 		'</button>';

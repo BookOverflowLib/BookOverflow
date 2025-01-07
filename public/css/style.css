@@ -415,16 +415,16 @@ header {
 .header > .button-layout {
 	justify-self: end;
 }
-#theme-toggle {
+.theme-toggle {
 	display: inline-flex;
 	align-items: center;
 }
 
-#theme-toggle > span {
+.theme-toggle > span {
 	display: none;
 }
 
-#theme-toggle > span.active {
+.theme-toggle > span.active {
 	display: inline-flex;
 	align-items: center;
 	height: 100%;
@@ -483,7 +483,7 @@ header {
 	padding: 0.5em;
 	margin-inline: 1em;
 }
-#breadcrumb > ol > li + li::before{
+#breadcrumb > ol > li + li::before {
 	content: '/';
 	margin-inline: 0.5em;
 }
@@ -904,10 +904,10 @@ li.activePage {
 
 .input-error {
 	color: var(--text-error);
-	font-size: small;
+	font-size: var(--font-sm);
 }
 .input-hint {
-	font-size: small;
+	font-size: var(--font-sm);
 }
 
 .login-data > div {

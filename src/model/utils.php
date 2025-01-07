@@ -135,10 +135,10 @@ function getHeaderButtons($path): string
 	}
 
 	$ris = '';
-	if(!isset($_SESSION)){
+	if (!isset($_SESSION)) {
 		session_start();
 	}
-	
+
 	if (isset($_SESSION['user'])) {
 		$ris =
 			'<div class="header-buttons">' .
@@ -159,7 +159,7 @@ function getHeaderButtons($path): string
 			$accediButton .
 			'</div>';
 	}
-	
+
 	return $ris;
 }
 
@@ -213,29 +213,26 @@ function getBreadcrumb($path): string
 {
 	//TODO: sistemare quando ci saranno più pagine
 	$path = parse_url($path, PHP_URL_PATH);
-	$breadcrumb = '';
+	$elements = '';
 	if ($path == '/') {
-		$breadcrumb =
-			'<p>Ti trovi in : <span lang="en" class="bold">Home</span></p>';
+		$elements = '<li><span lang="en" class="bold">Home</span></li>';
 	} else {
 		$path = explode('/', $path);
 		$path = array_filter($path);
 		$path = array_values($path);
-		$breadcrumb =
-			'<p>Ti trovi in : <span lang="en"><a href="/">Home</a></span> > ';
+		$elements = '<li><span lang="en" class="bold">Home</span></li>';
 		$last = count($path) - 1;
 		$currentUrl = '';
 		for ($i = 0; $i < $last; $i++) {
 			$currentUrl .= '/' . $path[$i];
-			$currentPath = str_replace('-', ' ', ucfirst($path[$i]));
-			$breadcrumb .=
-				'<a href="' . $currentUrl . '">' . $currentPath . '</a> > ';
+			$currentPath = str_replace('-', ' ', ucfirst($path[$i])); // remove - 
+			$elements .= '<li><a href="' . $currentUrl . '">' . $currentPath . '</a></li>';
 		}
-		$breadcrumb .=
-			'<span class="bold">' .
-			str_replace('-', ' ', ucfirst($path[$i])) .
-			'</span></p>';
+		$elements .= '<li aria-current="page">' . str_replace('-', ' ', ucfirst($path[$i])) . '</li>';
 	}
+
+	$breadcrumb = "<ol>$elements</ol>";
+
 	return $breadcrumb;
 }
 

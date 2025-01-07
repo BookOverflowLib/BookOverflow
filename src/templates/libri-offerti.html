@@ -5,19 +5,6 @@
 			Aggiungi un libro
 		</button>
 	</div>
-	<dialog id="aggiungi-libro-dialog">
-		<div class="dialog-window">
-			<h2>Cerca un libro</h2>
-			<label for="titolo" class="visually-hidden">Cerca un libro</label>
-			<input
-				type="search"
-				name="cerca"
-				id="cerca"
-				placeholder="Cerca un libro ..." />
-			<!-- <input type="submit" value="Cerca" id="cercaButton" /> -->
-			<div id="book-results"></div>
-		</div>
-	</dialog>
 	<div class="book-table">
 		<div class="book-row">
 			<div class="book-info">
@@ -61,6 +48,22 @@
 		</div>
 	</div>
 </section>
+<dialog id="aggiungi-libro-dialog">
+	<div class="dialog-window">
+		<h2>Cerca un libro</h2>
+		<label for="titolo" class="visually-hidden">Cerca un libro</label>
+		<input
+			type="search"
+			name="cerca"
+			id="cerca"
+			placeholder="Cerca un libro ..." />
+		<!-- <input type="submit" value="Cerca" id="cercaButton" /> -->
+		<div id="book-results"></div>
+	</div>
+	<div class="dialog-mask">
+
+	</div>
+</dialog>
 <script src="/js/cercaLibri.js"></script>
 <script>
 	// Aggiungi un libro

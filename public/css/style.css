@@ -476,10 +476,16 @@ header {
 	font-size: var(--font-sm);
 }
 
-#breadcrumb > p {
+#breadcrumb > ol {
+	list-style: none;
+	display: flex;
 	text-align: center;
 	padding: 0.5em;
 	margin-inline: 1em;
+}
+#breadcrumb > ol > li + li::before{
+	content: '/';
+	margin-inline: 0.5em;
 }
 
 #breadcrumb a {
@@ -745,7 +751,7 @@ fieldset {
 
 input[type='text'],
 input[type='password'],
-input[type='email']{
+input[type='email'] {
 	background-color: var(--neutral-50);
 	min-height: 3em;
 	border-radius: 0.5em;
@@ -755,7 +761,7 @@ input[type='email']{
 	color: var(--text);
 }
 
-input[type='search']{
+input[type='search'] {
 	background-color: var(--neutral-50);
 	border-radius: 9999px;
 	border-style: none;

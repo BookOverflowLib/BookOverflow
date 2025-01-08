@@ -1,6 +1,6 @@
 <?php
 require_once '../src/paths.php';
-require_once $GLOBALS['MODEL_PATH'] . 'user.php';
+require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
 

@@ -1,7 +1,8 @@
 <?php
-if(!isset($_SESSION)) {
-    session_start();
-}
+require_once '../src/paths.php';
+require_once $GLOBALS['MODEL_PATH'] . 'user.php';
+
+ensure_session();
 
 if(isset($_SESSION['user'])) {
     header('Location: /profilo/' . $_SESSION['user']);

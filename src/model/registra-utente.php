@@ -18,7 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$image = getUserImageUrlByEmail($email);
 
 		$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
+
+		if (!isset($_SESSION)) {
+			session_start();
+		}
+
 		$_SESSION['user'] = $username;
+		$_SESSION['path_immagine'] = $image;
+
 		header('Location: /profilo/' . $username);
 
 		exit();

@@ -64,6 +64,9 @@ switch ($path) {
 	case '/api/accesso-utente':
 		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'accesso-utente.php';
 		break;
+	case '/api/logout':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'logout.php';
+		break;
 
 	default:
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . '404.php';

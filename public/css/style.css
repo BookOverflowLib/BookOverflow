@@ -659,7 +659,7 @@ main {
 /* PROFILO */
 .dati-profilo {
 	display: grid;
-	grid-template-columns: auto 1fr;
+	grid-template-columns: auto 1fr auto;
 	justify-items: start;
 	align-items: center;
 	max-width: 55em;

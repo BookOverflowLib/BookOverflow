@@ -47,5 +47,23 @@ if (!$userRating) {
 $profilo = str_replace('<!-- [userRating] -->', $userRating, $profilo);
 $profilo = str_replace('<!-- [userRatingStars] -->', ratingStars($userRating), $profilo);
 
+// GENERI
+$generi = $db->get_generi_by_username($user['username']);
+$generiString = '';
+if ($generi && $generi != null && $generi[0]['generi_preferiti'] != null && $generi[0]['generi_preferiti'] != '[]') {
+	$fileGeneri = file_get_contents('../utils/bisac.json');
+	$fileGeneri = json_decode($fileGeneri, true);
+	$generiPreferiti = $generi[0]['generi_preferiti'];
+	$generiPreferiti = json_decode($generiPreferiti, true);
+	foreach ($generiPreferiti as $genereKey) {
+		$genere = $fileGeneri[$genereKey];
+		$generiString .= '<div class="button-genere"><span aria-hidden="true">' . $genere['emoji'] . "</span> " . $genere['name'] . '</div>';
+	}
+}else{
+	$generiString = '<p>Non c\'è ancora nessun genere preferito!</p>';
+}
+$profilo = str_replace('<!-- [userGeneri] -->', $generiString, $profilo);
+
+
 $page = str_replace('<!-- [content] -->', $profilo, $page);
 echo $page;

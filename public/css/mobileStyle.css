@@ -146,10 +146,11 @@ footer .logo p {
 }
 #hamburger-menu.active ul li {
 	text-align: center;
+	color: var(--text);
 }
 #hamburger-menu.active ul li a {
 	text-decoration: none;
-	color: var(--text-color);
+	color: var(--text);
 }
 #hamburger-menu.active ul li a:hover {
 	text-decoration: underline;

@@ -67,6 +67,9 @@ switch ($path) {
 	case '/api/logout':
 		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'logout.php';
 		break;
+	case '/api/aggiorna-generi':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiorna-generi.php';
+		break;
 
 	default:
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . '404.php';

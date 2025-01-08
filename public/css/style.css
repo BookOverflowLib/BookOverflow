@@ -1217,3 +1217,11 @@ li.activePage {
 	aspect-ratio: 1/1.5;
 	object-fit: cover;
 }
+
+.sezione-libri .generi{
+	margin-top: 1em;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em;
+	justify-content: start;
+}

@@ -21,8 +21,6 @@ function toggleTheme() {
 	const hamburgerToggleButtonIconChiaro = hamburgerThemeToggleButton.querySelectorAll('span')[0];
 	const hamburgerToggleButtonIconScuro = hamburgerThemeToggleButton.querySelectorAll('span')[2];
 
-	console.table(normalToggleButtonIconChiaro, normalToggleButtonIconScuro, hamburgerToggleButtonIconChiaro, hamburgerToggleButtonIconScuro);
-
 	if (currentThemeSetting === 'dark') {
 		normalToggleButtonIconChiaro.classList.add('active');
 		normalToggleButtonIconScuro.classList.remove('active');
@@ -42,11 +40,9 @@ function toggleTheme() {
 		normalToggleButtonIconChiaro.classList.toggle('active');
 		normalToggleButtonIconScuro.classList.toggle('active');
 
-
 		themeToggleButton.ariaPressed === "true" ? themeToggleButton.ariaPressed = "false" : themeToggleButton.ariaPressed = "true";
 		// update in local storage
 		localStorage.setItem("theme", newTheme);
-
 		// update the currentThemeSetting in memory
 		currentThemeSetting = newTheme;
 	})
@@ -74,15 +70,11 @@ function setCorrectThemeBeforeLoading() {
 	html.setAttribute("data-theme", settingsTheme);
 }
 
-
-
 setCorrectThemeBeforeLoading();
 
 // when the page is loaded
 document.addEventListener('DOMContentLoaded', function () {
-
 	toggleTheme();
-
 })
 
 document.addEventListener('scroll', function () {

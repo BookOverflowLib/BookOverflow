@@ -749,6 +749,12 @@ fieldset {
 	margin-left: 50%;
 }
 
+.input-error-regular {
+    color: var(--text-error);
+    text-align: center;
+	margin: 0.625em 0;
+}
+
 input[type='text'],
 input[type='password'],
 input[type='email'] {

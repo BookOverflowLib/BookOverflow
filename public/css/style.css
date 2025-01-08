@@ -988,7 +988,7 @@ li.activePage {
 
 #come-funziona > div > div > p {
 	font-size: var(--font-md);
-	/* font-family: 'Gentium Book Plus', serif; */
+	font-family: 'Gentium Book Plus', serif; 
 	text-align: center;
 }
 

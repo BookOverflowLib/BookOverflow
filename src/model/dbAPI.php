@@ -273,4 +273,43 @@ class DBAccess
 			echo $e->getMessage();
 		}
 	}
+
+	/**
+	 * Aggiora i generi preferiti dell'utenteù
+	 * @param string $user username dell'utente
+	 * @param string $generi generi preferiti dell'utente in formato JSON
+	 * 
+	 * @return bool true se l'aggiornamento è andato a buon fine, false altrimenti
+	 */
+	public function update_user_generi($user, $generi): bool
+	{
+		$query = "UPDATE Utente SET generi_preferiti = ? WHERE username = ?";
+		try {
+			$res = $this->prepare_and_execute_query($query, "ss", [$generi, $user]);
+			if ($res) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			// echo $e->getMessage();
+			return false;
+		}
+	}
+
+	/**
+	 * Ottiene i generi preferiti dell'utente
+	 * @param string $user username dell'utente
+	 * @return array|bool|null
+	 */
+	public function get_generi_by_username($user): ?array
+	{
+		$query = "SELECT generi_preferiti FROM Utente WHERE username = ?";
+		try {
+			return $this->prepare_and_execute_query($query, "s", [$user]);
+		} catch (Exception $e) {
+			// echo $e->getMessage();
+			return null;
+		}
+	}
 }

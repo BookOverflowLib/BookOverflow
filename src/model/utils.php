@@ -220,7 +220,7 @@ function getBreadcrumb($path): string
 		$path = explode('/', $path);
 		$path = array_filter($path);
 		$path = array_values($path);
-		$elements = '<li><span lang="en" class="bold">Home</span></li>';
+		$elements = '<li><a href="/"><span lang="en">Home</span></a></li>';
 		$last = count($path) - 1;
 		$currentUrl = '';
 		for ($i = 0; $i < $last; $i++) {
@@ -228,9 +228,8 @@ function getBreadcrumb($path): string
 			$currentPath = str_replace('-', ' ', ucfirst($path[$i])); // remove - 
 			$elements .= '<li><a href="' . $currentUrl . '">' . $currentPath . '</a></li>';
 		}
-		$elements .= '<li aria-current="page">' . str_replace('-', ' ', ucfirst($path[$i])) . '</li>';
+		$elements .= '<li aria-current="page" class="bold">' . str_replace('-', ' ', ucfirst($path[$i])) . '</li>';
 	}
-
 	$breadcrumb = "<ol>$elements</ol>";
 
 	return $breadcrumb;

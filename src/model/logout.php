@@ -1,7 +1,5 @@
 <?php
-if (!isset($_SESSION)) {
-    session_start();
-}
+ensure_session();
 session_destroy();
 header('Location: /accedi');
 exit();

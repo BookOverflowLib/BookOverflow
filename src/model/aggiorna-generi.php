@@ -1,10 +1,9 @@
 <?php
 require_once '../src/paths.php';
 require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
+require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
-if (!isset($_SESSION)) {
-    session_start();
-}
+ensure_session();
 $db = new DBAccess();
 
 if (isset($_POST["generi"]) && isset($_SESSION['user'])) {

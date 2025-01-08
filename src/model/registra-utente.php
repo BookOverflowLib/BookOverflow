@@ -19,9 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 		$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
 
-		if (!isset($_SESSION)) {
-			session_start();
-		}
+		ensure_session();
 
 		$_SESSION['user'] = $username;
 		$_SESSION['path_immagine'] = $image;

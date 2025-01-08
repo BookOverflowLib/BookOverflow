@@ -77,3 +77,25 @@ input#cognome, select#provincia.form-input,select#comune.form-input, input#usern
     margin-top: 1em;
     margin-bottom: 0em;
 }
+
+/* COME FUNZIONA */
+#come-funziona>div>div>img {
+    max-width: 10em;
+    border-radius: 5em;
+}
+#come-funziona {
+    /* FASCIA */
+    background: var(--light-gray);
+}
+#come-funziona>div>div>p {
+   font-size: 1em;
+}
+
+#perche-farlo>div {
+   margin-top: 0;
+   padding: 1em;
+}
+
+a.button-layout{
+    border: 1px solid black;
+}

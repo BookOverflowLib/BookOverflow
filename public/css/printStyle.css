@@ -33,3 +33,47 @@
     margin-top: 4em;
     margin-bottom: 4em;
 }
+
+/* LOGIN */
+input#email, input#password {
+border: 1px solid black;
+}
+.login{
+    margin-bottom: 6em;
+}
+
+/* REGISTRATI */
+.signin {
+    max-width: 25em;
+    gap: 0;
+    padding: 0.5em 1em;
+    margin-bottom: 5em;
+    margin-top: 0;
+}
+input#nome.form-input,
+input#cognome, select#provincia.form-input,select#comune.form-input, input#username, input#conferma {
+    border: 1px solid black;
+}
+
+/* ESPLORA */
+
+
+.sezione-libri {
+    padding: 0.5em;
+    margin-bottom: 0;
+}
+
+#piu-scambiati {
+    padding: 0.5em;
+    gap: 0.5em;
+}
+.libro>img {
+    border-radius: 0.5em;
+    max-width: 6em;
+}
+
+.titolo-libro {
+    font-weight: small;
+    margin-top: 1em;
+    margin-bottom: 0em;
+}

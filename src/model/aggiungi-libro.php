@@ -8,7 +8,7 @@ $db = new DBAccess();
 
 if (isset($_POST) && isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
-    $isbn = $_POST['isbn'];
+    $isbn = $_POST['ISBN'];
     $condizioni = $_POST['condizioni'];
     $titolo = $_POST['titolo'];
     $autore = $_POST['autore'];

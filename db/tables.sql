@@ -58,6 +58,7 @@ CREATE TABLE
             'usato',
             'danneggiato'
         ),
+        UNIQUE (ISBN, proprietario),
         FOREIGN KEY (ISBN) REFERENCES Libro (ISBN),
         FOREIGN KEY (proprietario) REFERENCES Utente (email)
     );

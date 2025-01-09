@@ -8,28 +8,50 @@ function getThemeFromSettings({ localStorageTheme, systemSettingDark }) {
 	return "light";
 }
 
+// TODO: pls fix me :( im too ugly
 function toggleTheme() {
 	let localStorageTheme = localStorage.getItem("theme");
 	const systemSettingDark = window.matchMedia("(prefers-color-scheme: dark)");
 	let currentThemeSetting = getThemeFromSettings({ localStorageTheme, systemSettingDark });
-	const themeToggleButton = document.getElementById('theme-toggle');
-	const toggleButtonIconChiaro = document.querySelectorAll('#theme-toggle > span')[0];
-	const toggleButtonIconScuro = document.querySelectorAll('#theme-toggle > span')[1];
+	const themeToggleButton = document.getElementsByClassName('theme-toggle');
+	const normalThemeToggleButton = themeToggleButton[0];
+	const hamburgerThemeToggleButton = themeToggleButton[1];
+	const normalToggleButtonIconChiaro = normalThemeToggleButton.querySelectorAll('span')[0];
+	const normalToggleButtonIconScuro = normalThemeToggleButton.querySelectorAll('span')[2];
+	const hamburgerToggleButtonIconChiaro = hamburgerThemeToggleButton.querySelectorAll('span')[0];
+	const hamburgerToggleButtonIconScuro = hamburgerThemeToggleButton.querySelectorAll('span')[2];
 
 	if (currentThemeSetting === 'dark') {
-		toggleButtonIconChiaro.classList.add('active');
-		toggleButtonIconScuro.classList.remove('active');
+		normalToggleButtonIconChiaro.classList.add('active');
+		normalToggleButtonIconScuro.classList.remove('active');
+		hamburgerToggleButtonIconChiaro.classList.add('active');
+		hamburgerToggleButtonIconScuro.classList.remove('active');
 	} else {
-		toggleButtonIconScuro.classList.add('active');
-		toggleButtonIconChiaro.classList.remove('active');
+		normalToggleButtonIconScuro.classList.add('active');
+		normalToggleButtonIconChiaro.classList.remove('active');
+		hamburgerToggleButtonIconScuro.classList.add('active');
+		hamburgerToggleButtonIconChiaro.classList.remove('active');
 	}
 
-	themeToggleButton.addEventListener('click', function () {
+	normalThemeToggleButton.addEventListener('click', function () {
 		const newTheme = currentThemeSetting === "dark" ? "light" : "dark";
 		document.querySelector("html").setAttribute("data-theme", newTheme);
 
-		toggleButtonIconChiaro.classList.toggle('active');
-		toggleButtonIconScuro.classList.toggle('active');
+		normalToggleButtonIconChiaro.classList.toggle('active');
+		normalToggleButtonIconScuro.classList.toggle('active');
+
+		themeToggleButton.ariaPressed === "true" ? themeToggleButton.ariaPressed = "false" : themeToggleButton.ariaPressed = "true";
+		// update in local storage
+		localStorage.setItem("theme", newTheme);
+		// update the currentThemeSetting in memory
+		currentThemeSetting = newTheme;
+	})
+	hamburgerThemeToggleButton.addEventListener('click', function () {
+		const newTheme = currentThemeSetting === "dark" ? "light" : "dark";
+		document.querySelector("html").setAttribute("data-theme", newTheme);
+
+		hamburgerToggleButtonIconChiaro.classList.toggle('active');
+		hamburgerToggleButtonIconScuro.classList.toggle('active');
 
 		themeToggleButton.ariaPressed === "true" ? themeToggleButton.ariaPressed = "false" : themeToggleButton.ariaPressed = "true";
 		// update in local storage
@@ -48,15 +70,11 @@ function setCorrectThemeBeforeLoading() {
 	html.setAttribute("data-theme", settingsTheme);
 }
 
-
-
 setCorrectThemeBeforeLoading();
 
 // when the page is loaded
 document.addEventListener('DOMContentLoaded', function () {
-
 	toggleTheme();
-
 })
 
 document.addEventListener('scroll', function () {

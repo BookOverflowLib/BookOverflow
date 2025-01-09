@@ -235,19 +235,15 @@ function getBreadcrumb($path): string
 		for ($i = 0; $i < $last; $i++) {
 			$currentUrl .= '/' . $path[$i];
 			$currentPath = str_replace('-', ' ', ucfirst($path[$i])); // remove - 
-			if ($i > 0 && $path[$i - 1] == 'profilo') {
-				if ($path[$i] == $_SESSION['user']) {
-					$currentPath = 'Il mio profilo';
-				}
+			if (isset($_SESSION['user']) && $i > 0 && $path[$i - 1] == 'profilo' && $path[$i] == $_SESSION['user']) {
+				$currentPath = 'Il mio profilo';
 			}
 			$elements .= '<li><a href="' . $currentUrl . '">' . $currentPath . '</a></li>';
 		}
 		$currentPath = str_replace('-', ' ', ucfirst($path[$i]));
 
-		if ($i > 0 && $path[$i - 1] == 'profilo') {
-			if ($path[$i] == $_SESSION['user']) {
-				$currentPath = 'Il mio profilo';
-			}
+		if (isset($_SESSION['user']) && $i > 0 && $path[$i - 1] == 'profilo' && $path[$i] == $_SESSION['user']) {
+			$currentPath = 'Il mio profilo';
 		}
 		$elements .= '<li aria-current="page" class="bold">' . $currentPath . '</li>';
 	}

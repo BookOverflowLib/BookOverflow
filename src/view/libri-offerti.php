@@ -111,7 +111,7 @@ if (check_ownership()) {
     <!-- <button class="button-layout">Modifica</button> -->
     <!-- <form action="/api/rimuovi-libro" method="post"> -->
         <!-- <input type="hidden" name="isbn" value=""> -->
-        <input type="submit" class="button-layout" value="Elimina">
+        <input type="submit" class="button-layout danger bold" value="Elimina">
     <!-- </form> -->
     HTML;
     $libri_offerti = str_replace('<!-- [bookButtons] -->', $modificaEliminaButtons, $libri_offerti);

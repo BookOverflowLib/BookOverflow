@@ -31,7 +31,7 @@ if (isset($_GET['error'])) {
             break;
     }
     // Insert error message after the h1
-    $accedi = str_replace(
+    $accedi = str_replace(    
         '</h1>',
         '</h1>' . $errorMessage,
         $accedi

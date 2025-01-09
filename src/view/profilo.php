@@ -4,11 +4,11 @@ require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 //se non è stato passato un id utente, reindirizza alla home
-if (!isset($_GET['user'])) {
+if (!isset($_SESSION['user'])) {
 	header('Location: /accedi');
 	exit();
 }
-$profileId = $_GET['user'];
+$profileId = $_SESSION['user'];
 
 $db = new DBAccess();
 $dbOK = $db->open_connection();

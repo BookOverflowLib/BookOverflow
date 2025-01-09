@@ -29,8 +29,8 @@ if (isset($_GET['error'])) {
             $errorMessage = '<p class="input-error-regular">Utente non registrato</p>';
             break;
     }
-    // Insert error message after the h1
-    $accedi = str_replace(
+    $accedi = str_replace(    // Insert error message after the h1
+
         '</h1>',
         '</h1>' . $errorMessage,
         $accedi

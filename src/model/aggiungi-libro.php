@@ -1,0 +1,43 @@
+<?php
+require_once '../src/paths.php';
+require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
+require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
+
+ensure_session();
+$db = new DBAccess();
+
+if (isset($_POST) && isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+    $isbn = $_POST['isbn'];
+    $condizioni = $_POST['condizioni'];
+    $titolo = $_POST['titolo'];
+    $autore = $_POST['autore'];
+    $editore = $_POST['editore'];
+    $anno = $_POST['anno'];
+    // TODO: fix me pls
+    if (strlen($anno) > 4) {
+        $anno = substr($anno, 0, 4);
+    }
+
+    $genere = $_POST['genere'];
+    $descrizione = $_POST['descrizione'];
+    $lingua = $_POST['lingua'];
+    $path_copertina = $_POST['path_copertina'];
+
+    
+    $ris = $db->insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina);
+    if (!$ris) {
+        $_SESSION['error'] = 'Errore: libro non aggiunto';
+    }
+    $ris = $db->insert_libri_offerti_by_username($user, $isbn, $condizioni);
+    if (!$ris) {
+        $_SESSION['error'] = 'Errore: libro non aggiunto';
+    }
+} else {
+    throw new Exception(message: "Errore: Libro non aggiunto");
+}
+
+$previousUrl = $_SERVER['HTTP_REFERER'] ?? '/profilo/' . $_SESSION['user'];
+$previousUrl = parse_url($previousUrl, PHP_URL_PATH);
+header('Location: ' . $previousUrl);
+exit();

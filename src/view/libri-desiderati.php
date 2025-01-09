@@ -4,12 +4,9 @@ require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 //check if user is logged in
-if (!isset($_SESSION['user'])) {
-    session_start();
-}
-if ($_GET['user'] != $_SESSION['user']) {
-    header('Location: /profilo/' . $_GET['user']);
-    exit();
+ensure_session();
+if ($_GET['user'] === $_SESSION['user']) {
+    
 }
 
 $page = getTemplatePage("Lista dei desideri");

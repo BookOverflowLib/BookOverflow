@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * Assicura che la sessione sia attiva
+ * @return void
+ */
+function ensure_session()
+{
+	if (!isset($_SESSION)) {
+		session_start();
+	}
+}
 /**
  * Genera una stringa HTML per visualizzare il rating sotto forma di stelle
  *
@@ -120,7 +131,7 @@ function getHeaderButtons($path): string
 	$chiara =
 		'<span><img class="theme-icon" src="/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità chiara</span></span>';
 	$themeToggleButton =
-		'<button id="theme-toggle" class="button-layout-light" aria-pressed="false">' .
+		'<button class="theme-toggle button-layout-light" aria-pressed="false">' .
 		$chiara .
 		$scura .
 		'</button>';
@@ -135,10 +146,8 @@ function getHeaderButtons($path): string
 	}
 
 	$ris = '';
-	if(!isset($_SESSION)){
-		session_start();
-	}
-	
+	ensure_session();
+
 	if (isset($_SESSION['user'])) {
 		$ris =
 			'<div class="header-buttons">' .
@@ -159,7 +168,7 @@ function getHeaderButtons($path): string
 			$accediButton .
 			'</div>';
 	}
-	
+
 	return $ris;
 }
 
@@ -211,31 +220,40 @@ function getHeaderSection($path): string
  */
 function getBreadcrumb($path): string
 {
-	//TODO: sistemare quando ci saranno più pagine
+	ensure_session();
 	$path = parse_url($path, PHP_URL_PATH);
-	$breadcrumb = '';
+	$elements = '';
 	if ($path == '/') {
-		$breadcrumb =
-			'<p>Ti trovi in : <span lang="en" class="bold">Home</span></p>';
+		$elements = '<li><span lang="en" class="bold">Home</span></li>';
 	} else {
 		$path = explode('/', $path);
 		$path = array_filter($path);
 		$path = array_values($path);
-		$breadcrumb =
-			'<p>Ti trovi in : <span lang="en"><a href="/">Home</a></span> > ';
+		$elements = '<li><a href="/"><span lang="en">Home</span></a></li>';
 		$last = count($path) - 1;
 		$currentUrl = '';
 		for ($i = 0; $i < $last; $i++) {
 			$currentUrl .= '/' . $path[$i];
-			$currentPath = str_replace('-', ' ', ucfirst($path[$i]));
-			$breadcrumb .=
-				'<a href="' . $currentUrl . '">' . $currentPath . '</a> > ';
+			$currentPath = str_replace('-', ' ', ucfirst($path[$i])); // remove - 
+			if (isset($_SESSION['user']) && $i > 0 && $path[$i - 1] == 'profilo' && $path[$i] == $_SESSION['user']) {
+				$currentPath = 'Il mio profilo';
+			}
+			if ($currentPath !== 'Profilo') {
+				$elements .= '<li><a href="' . $currentUrl . '">' . $currentPath . '</a></li>';
+			}
 		}
-		$breadcrumb .=
-			'<span class="bold">' .
-			str_replace('-', ' ', ucfirst($path[$i])) .
-			'</span></p>';
+		$currentPath = str_replace('-', ' ', ucfirst($path[$i]));
+
+		if (isset($_SESSION['user']) && $i > 0 && $path[$i - 1] == 'profilo' && $path[$i] == $_SESSION['user']) {
+			$currentPath = 'Il mio profilo';
+		}
+
+		if ($currentPath !== 'Profilo') {
+			$elements .= '<li aria-current="page" class="bold">' . $currentPath . '</li>';
+		}
 	}
+	$breadcrumb = "<ol>$elements</ol>";
+
 	return $breadcrumb;
 }
 
@@ -262,20 +280,46 @@ function getUserImageUrlByEmail($email): string
 	return $finalUrl; // Voila
 }
 
-function isLoggedIn() {
-    return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
+function isLoggedIn()
+{
+	return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
 }
 
-function requireLogin() {
-    if (!isLoggedIn()) {
-        header("Location: /accedi");
-        exit();
-    }
+function requireLogin()
+{
+	if (!isLoggedIn()) {
+		header("Location: /accedi");
+		exit();
+	}
 }
 
-function logout() {
-    session_start();
-    session_destroy();
-    header("Location: /accedi");
-    exit();
+/**
+ * Restituisce una stringa HTML con i generi preferiti dell'utente
+ * @param array $generi Array con i generi preferiti dell'utente
+ * @return string Stringa HTML con i generi preferiti
+ */
+function getGeneriPreferiti($generi)
+{
+	if (
+		!$generi || $generi == null ||
+		$generi[0]['generi_preferiti'] == null ||
+		$generi[0]['generi_preferiti'] == '[]'
+	) {
+		return '<p>Non c\'è ancora nessun genere preferito!</p>';
+	}
+
+	$fileGeneri = json_decode(file_get_contents('../utils/bisac.json'), true);
+	$generiPreferiti = json_decode($generi[0]['generi_preferiti'], true);
+
+	$output = '';
+	foreach ($generiPreferiti as $genereKey) {
+		$genere = $fileGeneri[$genereKey];
+		$output .= sprintf(
+			'<div class="button-genere"><span aria-hidden="true">%s</span> %s</div>',
+			$genere['emoji'],
+			$genere['name']
+		);
+	}
+	return $output;
 }
+

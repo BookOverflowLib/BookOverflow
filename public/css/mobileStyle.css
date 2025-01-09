@@ -1,3 +1,39 @@
+/* For browsers that support clamp  */
+@supports (font-size: clamp(1rem, 1vi, 1rem)) {
+	:root {
+		--font-sm: clamp(0.8rem, 0.17vi + 0.76rem, 0.89rem);
+		--font-base: clamp(1rem, 0.34vi + 0.91rem, 1.19rem);
+		--font-md: clamp(1.25rem, 0.61vi + 1.1rem, 1.58rem);
+		--font-lg: clamp(1.56rem, 1vi + 1.31rem, 2.11rem);
+		--font-xl: clamp(1.95rem, 1.56vi + 1.56rem, 2.81rem);
+		--font-xxl: clamp(2.44rem, 2.38vi + 1.85rem, 3.75rem);
+		--font-xxxl: clamp(3.05rem, 3.54vi + 2.17rem, 5rem);
+	}
+}
+/* For browsers that don't support clamp */
+@supports not (font-size: clamp(1rem, 1vi, 1rem)) {
+	:root {
+		--font-sm: 0.8rem;
+		--font-base: 1rem;
+		--font-md: 1.25rem;
+		--font-lg: 1.56rem;
+		--font-xl: 1.95rem;
+		--font-xxl: 2.44rem;
+		--font-xxxl: 3.05rem;
+	}
+	@media screen and (min-width: 1280px) {
+		:root {
+			--font-sm: 0.89rem;
+			--font-base: 1.19rem;
+			--font-md: 1.58rem;
+			--font-lg: 2.11rem;
+			--font-xl: 2.81rem;
+			--font-xxl: 3.75rem;
+			--font-xxxl: 5rem;
+		}
+	}
+}
+
 #menu {
 	display: none;
 }
@@ -19,10 +55,10 @@
 	width: 80vw;
 }
 #landing > div > h1 {
-	font-size: 3em;
+	font-size: var(--font-xxl);
 }
 #landing > div > p {
-	font-size: 1.3em;
+	font-size: var(--font-md);
 }
 
 .carosello-libri {
@@ -38,21 +74,22 @@
 	padding: 3em;
 }
 #citazione > blockquote {
-	font-size: 1.5em;
+	font-size: var(--font-md);
 }
 
 #citazione > p {
-	font-size: 1.3em;
+	font-size: var(--font-md);
 }
+
 footer {
 	padding: 2em;
 }
 footer .logo p {
-	font-size: 1.5em;
+	font-size: var(--font-md);
 }
 #unipd,
 #nomi {
-	font-size: 1em;
+	font-size: var(--font-base);
 }
 /* ACCEDI */
 #accedi {
@@ -75,8 +112,8 @@ footer .logo p {
 
 #hamburger > span.active {
 	display: inline-flex;
-    align-items: center;
-    height: 100%;
+	align-items: center;
+	height: 100%;
 	width: 100%;
 }
 
@@ -85,7 +122,6 @@ footer .logo p {
 	height: 2em;
 	filter: var(--svg-invert);
 }
-
 
 #hamburger-menu {
 	display: none;
@@ -110,10 +146,11 @@ footer .logo p {
 }
 #hamburger-menu.active ul li {
 	text-align: center;
+	color: var(--text);
 }
 #hamburger-menu.active ul li a {
 	text-decoration: none;
-	color: var(--text-color);
+	color: var(--text);
 }
 #hamburger-menu.active ul li a:hover {
 	text-decoration: underline;
@@ -122,26 +159,26 @@ footer .logo p {
 	margin-top: 1em;
 }
 
-
 /* come funziona */
 #come-funziona > div > div {
 	display: flex;
 	flex-direction: column;
 }
-#come-funziona>div>h1 {
-	font-size: 2em;
+#come-funziona > div > h1 {
+	font-size: var(--font-xl);
 }
 
-#come-funziona h1, #come-funziona p {
-justify-self: center;
+#come-funziona h1,
+#come-funziona p {
+	justify-self: center;
 }
-#come-funziona>div>div>p{
-	margin:0;
-	padding:1.5em;
-	font-size: 1.2em;
+#come-funziona > div > div > p {
+	margin: 0;
+	padding: 1.5em;
+	font-size: var(--font-base);
 }
 
-#come-funziona>div>div>img {
+#come-funziona > div > div > img {
 	border-radius: 1em;
 	width: 22vw;
 	max-width: 23em;
@@ -151,42 +188,25 @@ justify-self: center;
 	padding-bottom: 0;
 	margin-right: 2em;
 }
-#perche-farlo>div>div {
-	display: grid;
-	grid-template-columns: 1fr;
-	gap:2em;
-		padding: 0em;
-}
-#perche-farlo>div>h2 {
-	font-size: 1.8em;
-	
-}
-#step>div>div {
+#perche-farlo > div > div {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 2em;
-	padding:0em;
+	padding: 0em;
+}
+#perche-farlo > div > h2 {
+	font-size: var(--font-xl);
+}
+#step > div > div {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 2em;
+	padding: 0em;
 	margin: 2em;
 }
-#step>div>h2 {
-	font-size: 1.8em;
+#step > div > h2 {
+	font-size: var(--font-xl);
 }
-#inizia>h3 {
-	font-size: 1.5em;
-
+#inizia > h3 {
+	font-size: var(--font-lg);
 }
-/* 
-@keyframes slide-in-top {
-	0% {
-		transform: translateY(-10px);
-		opacity: 0;
-	}
-	100% {
-		transform: translateY(0);
-		opacity: 1;
-	}
-}
-.slide-in-top {
-	animation: slide-in-top 0.5s ease-in-out both;
-} 
-*/

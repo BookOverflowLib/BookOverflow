@@ -3,7 +3,7 @@ require_once '../src/model/dbAPI.php';
 require_once '../src/model/utils.php';
 require_once '../src/model/registration-select.php';
 
-session_start();
+ensure_session();
 $db = new DBAccess();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

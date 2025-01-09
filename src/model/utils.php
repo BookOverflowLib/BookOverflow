@@ -280,16 +280,26 @@ function getUserImageUrlByEmail($email): string
 	return $finalUrl; // Voila
 }
 
-function isLoggedIn()
+/**
+ * Rimanda l'utente alla pagina di login se non è loggato
+ */
+function require_login()
 {
-	return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
+	ensure_session();
+	if (!isset($_SESSION['user'])) {
+		header('Location: /accedi');
+		exit();
+	}
 }
 
-function requireLogin()
-{
-	if (!isLoggedIn()) {
-		header("Location: /accedi");
-		exit();
+function check_ownership(): bool {
+	if (!isset($_SESSION['user'])) {
+		return false;
+	}
+	if ($_GET['user'] === $_SESSION['user']) {
+		return true;
+	} else {
+		return false;
 	}
 }
 

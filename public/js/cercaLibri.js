@@ -10,7 +10,7 @@ let cerca = document.getElementById('cerca');
 var timeout;
 cerca.onkeyup = function () {
     clearTimeout(timeout);
-    timeout = setTimeout(fetch_books_API, 1000);
+    timeout = setTimeout(fetch_books_API, 600);
 };
 
 let booksResults = [];

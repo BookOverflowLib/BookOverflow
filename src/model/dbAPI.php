@@ -275,7 +275,7 @@ class DBAccess
 	}
 
 	/**
-	 * Aggiora i generi preferiti dell'utenteù
+	 * Aggiorna i generi preferiti dell'utente
 	 * @param string $user username dell'utente
 	 * @param string $generi generi preferiti dell'utente in formato JSON
 	 * 

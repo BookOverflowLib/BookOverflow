@@ -189,11 +189,12 @@ class DBAccess
 		return false;
 	}
 
-	public function login_user($email, $password): ?array
+	public function login_user($identifier, $password): ?array
 	{
-		$query = "SELECT * FROM Utente WHERE email = ?";
+		$queryUsername = "SELECT * FROM Utente WHERE username = ?"; 
+		$queryEmail = "SELECT * FROM Utente WHERE email = ?";
 		try {
-			$res = $this->prepare_and_execute_query($query, "s", [$email]);
+			$res = $this->prepare_and_execute_query($queryUsername, "s", [$identifier]);
 			if ($res) {
 				if (password_verify($password, $res[0]['password_hash'])) {
 					return $res;
@@ -201,16 +202,22 @@ class DBAccess
 					throw new Exception("Wrong password");
 				}
 			} else {
-				throw new Exception("User not registered");
+				$res = $this->prepare_and_execute_query($queryEmail, "s", [$identifier]);
+				if ($res) {
+					if (password_verify($password, $res[0]['password_hash'])) {
+						return $res;
+					} else {
+						throw new Exception("Wrong password");
+					}
+				} else {
+					throw new Exception("User not registered");
+				}
 			}
 		} catch (Exception $e) {
-			//echo $e->getMessage();
-			//a meno che non si voglia una pagina completaemente bianca
-			//questo non è l'approccio giusto
 			throw $e;
 		}
-		return null;
 	}
+
 
 	public function get_user_rating_by_email($email): ?array
 	{

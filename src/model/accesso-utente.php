@@ -7,8 +7,8 @@ ensure_session();
 $db = new DBAccess();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['email'], $_POST['password'])) {
-        $email = $_POST['email'];
+    if (isset($_POST['login'], $_POST['password'])) {
+        $email = $_POST['login'];
         $password = $_POST['password'];
 
         try {

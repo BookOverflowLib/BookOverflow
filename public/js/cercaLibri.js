@@ -79,7 +79,7 @@ function fetch_books_API() {
 let selectedBook = {};
 document.getElementById('book-results').addEventListener('change', function (e) {
     selectedBook = booksResults.find(book => book.isbn === e.target.id);
-    document.getElementsByName('isbn')[0].value = selectedBook.isbn; 
+    document.getElementsByName('ISBN')[0].value = selectedBook.isbn; 
     document.getElementsByName('titolo')[0].value = selectedBook.titolo;
     document.getElementsByName('autore')[0].value = selectedBook.autore;
     document.getElementsByName('path_copertina')[0].value = selectedBook.immagine;

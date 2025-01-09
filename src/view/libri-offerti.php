@@ -86,7 +86,7 @@ if ($_GET['user'] === $_SESSION['user']) {
                     <option value="usato">Usato</option>
                     <option value="danneggiato">Danneggiato</option>
                 </select>
-                <input type="hidden" name="isbn" id="isbn">
+                <input type="hidden" name="ISBN" value="">
                 <input type="hidden" name="titolo" value="">
                 <input type="hidden" name="autore" value="">
                 <input type="hidden" name="editore" value="">
@@ -97,7 +97,7 @@ if ($_GET['user'] === $_SESSION['user']) {
                 <input type="hidden" name="path_copertina" value="">
                 <div class="dialog-buttons">
                     <button id="close-dialog" class="button-layout-light">Annulla</button>
-                    <input type="submit" id="aggiungi-libro" class="button-layout" value="Aggiungi">
+                    <input type="submit" id="aggiungi-libro" class="button-layout" value="Aggiungi libro">
                 </div>
             </form>
         </div>

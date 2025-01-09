@@ -929,9 +929,10 @@ li.activePage {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.5em;
-	max-width: 40em;
+	max-width: 60em;
 	justify-content: center;
 	margin-bottom: 2em;
+	padding:1em;
 }
 .generi-buttons {
 	display: grid;

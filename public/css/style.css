@@ -415,16 +415,16 @@ header {
 .header > .button-layout {
 	justify-self: end;
 }
-#theme-toggle {
+.theme-toggle {
 	display: inline-flex;
 	align-items: center;
 }
 
-#theme-toggle > span {
+.theme-toggle > span {
 	display: none;
 }
 
-#theme-toggle > span.active {
+.theme-toggle > span.active {
 	display: inline-flex;
 	align-items: center;
 	height: 100%;
@@ -483,7 +483,7 @@ header {
 	padding: 0.5em;
 	margin-inline: 1em;
 }
-#breadcrumb > ol > li + li::before{
+#breadcrumb > ol > li + li::before {
 	content: '/';
 	margin-inline: 0.5em;
 }
@@ -659,7 +659,7 @@ main {
 /* PROFILO */
 .dati-profilo {
 	display: grid;
-	grid-template-columns: auto 1fr;
+	grid-template-columns: auto 1fr auto;
 	justify-items: start;
 	align-items: center;
 	max-width: 55em;
@@ -910,10 +910,10 @@ li.activePage {
 
 .input-error {
 	color: var(--text-error);
-	font-size: small;
+	font-size: var(--font-sm);
 }
 .input-hint {
-	font-size: small;
+	font-size: var(--font-sm);
 }
 
 .login-data > div {
@@ -1166,15 +1166,28 @@ li.activePage {
 .dialog-window > h2 {
 	font-size: var(--font-lg);
 }
-.dialog-window > input {
+.dialog-window > form > input[type='search']{
 	margin-top: 1em;
 	width: 100%;
 }
 #book-results {
 	display: grid;
 	margin-top: 1em;
+	margin-bottom:1em;
 	box-shadow: inset 0 0 0 2px var(--primary-200);
 	border-radius: 1em;
+}
+#book-results > p {
+	padding: 1em;
+	padding-top: 3em;
+	padding-bottom: 3em;
+	text-align: center;
+}
+
+.dialog-buttons{
+	display: flex;
+	justify-content: center;
+	gap: 0.5em;
 }
 
 .search-results-row {
@@ -1216,4 +1229,12 @@ li.activePage {
 	max-width: 7em;
 	aspect-ratio: 1/1.5;
 	object-fit: cover;
+}
+
+.sezione-libri .generi{
+	margin-top: 1em;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em;
+	justify-content: start;
 }

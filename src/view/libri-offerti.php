@@ -60,7 +60,8 @@ $libri_offerti = str_replace('<!-- [libriOfferti] -->', $libri_offerti_html, $li
 
 
 // aggiungi bottoni solo se è il suo profilo
-if ($_GET['user'] === $_SESSION['user']) {
+
+if (check_ownership()) {
     $aggiungiLibro = '<button class="button-layout" id="aggiungi-libro-button">Aggiungi un libro</button>';
     $libri_offerti = str_replace('<!-- [aggiungiLibroButton] -->', $aggiungiLibro, $libri_offerti);
 

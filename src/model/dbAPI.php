@@ -263,7 +263,7 @@ class DBAccess
 
 	public function insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina)
 	{
-		$query = "INSERT INTO Libro (ISBN, titolo, autore, editore, anno, genere, descrizione, lingua, path_copertina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		$query = "INSERT IGNORE INTO Libro (ISBN, titolo, autore, editore, anno, genere, descrizione, lingua, path_copertina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			$res = $this->prepare_and_execute_query($query, "sssssssss", [$isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina]);
 			if ($res) {
@@ -312,4 +312,67 @@ class DBAccess
 			return null;
 		}
 	}
+
+	private function get_user_email_by_username($username): ?string
+	{
+		$query = "SELECT email FROM Utente WHERE username = ?";
+		try {
+			$email = $this->prepare_and_execute_query($query, "s", [$username]);
+			return $email ? $email[0]['email'] : null;
+		} catch (Exception $e) {
+			return null;
+		}
+	}
+
+	public function get_libri_offerti_by_username($user): ?array
+	{
+		$userEmail = $this->get_user_email_by_username($user);
+
+		$query = <<<SQL
+		SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina, C.condizioni, C.disponibile
+		FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
+		WHERE C.proprietario = ?
+		SQL;
+
+		try {
+			$ris = $this->prepare_and_execute_query($query, "s", [$userEmail]);
+			return $ris ? $ris : null;
+		} catch (Exception $e) {
+			echo $e->getMessage();
+			return null;
+		}
+	}
+
+	public function insert_libri_offerti_by_username($user, $isbn, $condizione): bool|null
+	{
+		$userEmail = $this->get_user_email_by_username($user);
+		$query = <<<SQL
+		INSERT INTO Copia (ISBN, proprietario, condizioni)
+		VALUES (?, ?, ?)
+		SQL;
+
+		try {
+			return $this->prepare_and_execute_query($query, "sss", [$isbn, $userEmail, $condizione]);
+		} catch (Exception $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+
+	public function delete_libro_offerto($user, $isbn): bool
+	{
+		$userEmail = $this->get_user_email_by_username($user);
+		$query = <<<SQL
+		DELETE FROM Copia
+		WHERE ISBN = ? AND proprietario = ?
+		SQL;
+
+		try {
+			return $this->prepare_and_execute_query($query, "ss", [$isbn, $userEmail]);
+		} catch (Exception $e) {
+			echo $e->getMessage();
+			return false;
+		}
+	}
+
 }

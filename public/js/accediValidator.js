@@ -7,14 +7,14 @@ import { fillSuggestion, checkForm } from './formValidator.js';
 var formChecks = {
     email: [
         "Ex: mariorossi@gmail.com",
-        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        "Inserire un'email valida",
+        /.*/,
+        "",
         false
     ],
     password: [
         "Ex: Password123",
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+=])[A-Za-z\d!@#$%^&*()\-+=]{12,50}$/,
-        "La password deve essere lunga tra 12 e 50 caratteri, contenere almeno una lettera maiuscola (A-Z), una lettera minuscola (a-z), un numero (0-9) e un carattere speciale tra i seguenti: !@#$%^&*()-+=.",
+        /.*/,
+        "",
         false
     ]
 };

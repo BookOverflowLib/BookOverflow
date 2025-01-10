@@ -146,13 +146,13 @@ VALUES
         NULL
     ),
     (
-        'ciao@ciao.com',
-        '$2y$10$yQZ9L01v3VG9zx9MBy1AAuINU3/7fmE51ces3ur5JAo2WYmyvzyhq',
-        'ciao',
-        'sddas',
-        'fsfsdf',
-        '65',
-        '65113',
-        'https://fastly.picsum.photos/id/1038/500/500.jpg?hmac=_DTXehSaqnPMQnDQmVv1aW82ZomX7YYymYT5OE4r4To',
+        'utente@utente.com',
+        '$2y$10$aRce7HCaDy64pKPJLHs97OOFxmC.ihHZVV9wWGptF5lM5NZYvKvWm',
+        'utente',
+        'utente',
+        'utente',
+        '28',
+        '28060',
+        'https://fastly.picsum.photos/id/277/500/500.jpg?hmac=4iX99jja_8ORqd4fP4h3Zk8VjakiUFEs16c76GP6GhE',
         NULL
     );

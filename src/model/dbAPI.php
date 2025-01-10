@@ -1,23 +1,37 @@
 <?php
-
 // TODO: maybe exception could be handled using best practices but i don´t think it's a requirement
 class DBAccess
 {
-	private const HOST_DB = "db";
-	private const DATABASE_NAME = "bookoverflow";
-	private const USERNAME = "test";
-	private const PASSWORD = "test";
-
 	private $connection;
 
 	public function __construct()
 	{
+		$this->load_env();
 		$this->open_connection();
 	}
 
 	public function __destruct()
 	{
 		$this->close_connection();
+	}
+
+	private function load_env()
+	{
+		$env_path = __DIR__ . '/../../.env';
+		if (!file_exists($env_path)) {
+			throw new Exception('.env file not found');
+		}
+
+		$env = parse_ini_file($env_path);
+		if ($env === false) {
+			throw new Exception('Error parsing .env file');
+		}
+
+		foreach ($env as $key => $value) {
+			if (!array_key_exists($key, $_ENV)) {
+				$_ENV[$key] = $value;
+			}
+		}
 	}
 
 	public function open_connection()
@@ -27,18 +41,15 @@ class DBAccess
 
 		try {
 			$this->connection = new mysqli(
-				DBAccess::HOST_DB,
-				DBAccess::USERNAME,
-				DBAccess::PASSWORD,
-				DBAccess::DATABASE_NAME
+				$_ENV['DB_HOST'],
+				$_ENV['DB_USERNAME'],
+				$_ENV['DB_PASSWORD'],
+				$_ENV['DB_DATABASE']
 			);
 		} catch (mysqli_sql_exception $e) {
 			throw new Exception("Connection error: " . $e->getMessage());
 		}
-
-		// errors check in debug; returns the error message from the last connection attempt
-		// return mysqli_connect_error();
-
+		
 		// errors check in production
 		if (mysqli_connect_errno()) {
 			return false;

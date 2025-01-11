@@ -240,9 +240,6 @@ class DBAccess
 	 */
 	private function query_results_to_array($queryRes): ?array
 	{
-		if (mysqli_num_rows($queryRes) == 0) {
-			return null;
-		}
 		$res = array();
 		while ($row = mysqli_fetch_assoc($queryRes)) {
 			array_push($res, $row);

@@ -9,8 +9,9 @@ $db = new DBAccess();
 if (isset($_POST["generi"]) && isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
     $generi = $_POST['generi'];
-    $ris = $db->update_user_generi($user, $generi);
-    if (!$ris) {
+    try {
+        $db->update_user_generi($user, $generi);
+    } catch (Exception $e) {
         $_SESSION['error'] = 'Errore: generi non aggiornati';
     }
 } else {

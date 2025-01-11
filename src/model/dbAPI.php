@@ -382,7 +382,7 @@ class DBAccess
 	 * 
 	 * @return bool true se l'aggiornamento è andato a buon fine, false altrimenti
 	 */
-	public function update_user_generi($user, $generi): bool
+	public function update_user_generi($user, $generi)
 	{
 		$query = "UPDATE Utente SET generi_preferiti = ? WHERE username = ?";
 		try {

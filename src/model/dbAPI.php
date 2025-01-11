@@ -405,7 +405,7 @@ class DBAccess
 			return $this->query_to_array($query, "s", [$user]);
 		} catch (Exception $e) {
 			error_log("get_generi_by_username: " . $e->getMessage());
-			throw $e;
+			//throw $e;
 		}
 	}
 
@@ -423,96 +423,98 @@ class DBAccess
 
 	public function get_libri_offerti_by_username($user): ?array
 	{
-		$userEmail = $this->get_user_email_by_username($user);
-
-		$query = <<<SQL
-		SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina, C.condizioni, C.disponibile
-		FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
-		WHERE C.proprietario = ? 
-		SQL;
-
 		try {
+			$userEmail = $this->get_user_email_by_username($user);
+
+			$query = <<<SQL
+			SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina, C.condizioni, C.disponibile
+			FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
+			WHERE C.proprietario = ? 
+			SQL;
+
 			return $this->query_to_array($query, "s", [$userEmail]);
 		} catch (Exception $e) {
 			error_log("get_libri_offerti_by_username: " . $e->getMessage());
-			throw $e;
+			//throw $e;
 		}
 	}
 
-	public function insert_libri_offerti_by_username($user, $isbn, $condizione): bool|null
+	public function insert_libri_offerti_by_username($user, $isbn, $condizione)
 	{
-		$userEmail = $this->get_user_email_by_username($user);
-		$query = <<<SQL
-		INSERT INTO Copia (ISBN, proprietario, condizioni)
-		VALUES (?, ?, ?)
-		SQL;
-
 		try {
+			$userEmail = $this->get_user_email_by_username($user);
+			$query = <<<SQL
+			INSERT INTO Copia (ISBN, proprietario, condizioni)
+			VALUES (?, ?, ?)
+			SQL;
+
 			return $this->query_to_array($query, "sss", [$isbn, $userEmail, $condizione]);
 		} catch (Exception $e) {
-			// echo $e->getMessage();
-			return false;
+			error_log("insert_libri_offerti_by_username: " . $e->getMessage());
+			//throw $e;
 		}
 	}
 
-	public function delete_libro_offerto($user, $isbn): bool
+	public function delete_libro_offerto($user, $isbn)
 	{
-		$userEmail = $this->get_user_email_by_username($user);
-		$query = <<<SQL
-		DELETE FROM Copia
-		WHERE ISBN = ? AND proprietario = ?
-		SQL;
-
 		try {
+			$userEmail = $this->get_user_email_by_username($user);
+			$query = <<<SQL
+			DELETE FROM Copia
+			WHERE ISBN = ? AND proprietario = ?
+			SQL;
+
 			return $this->query_to_array($query, "ss", [$isbn, $userEmail]);
 		} catch (Exception $e) {
-			// echo $e->getMessage();
-			return false;
+			error_log("delete_libro_offerto: " . $e->getMessage());
+			throw $e;
 		}
 	}
 
 	public function get_libri_desiderati_by_username($user): ?array
 	{
-		$userEmail = $this->get_user_email_by_username($user);
-
-		$query = <<<SQL
-		SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina
-		FROM Desiderio D JOIN Libro L ON D.ISBN = L.ISBN
-		WHERE D.email = ?
-		SQL;
-
 		try {
+			$userEmail = $this->get_user_email_by_username($user);
+
+			$query = <<<SQL
+			SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina
+			FROM Desiderio D JOIN Libro L ON D.ISBN = L.ISBN
+			WHERE D.email = ?
+			SQL;
+
 			$ris = $this->query_to_array($query, "s", [$userEmail]);
 			return $ris ? $ris : null;
 		} catch (Exception $e) {
-			// echo $e->getMessage();
+			error_log("get_libri_desiderati_by_username: " . $e->getMessage());
 			return null;
 		}
 	}
 
-	public function insert_libri_desiderati_by_username($user, $isbn): bool
+	public function insert_libri_desiderati_by_username($user, $isbn)
 	{
-		$userEmail = $this->get_user_email_by_username($user);
-		$query = <<<SQL
-		INSERT INTO Desiderio (email, ISBN)
-		VALUES (?, ?)
-		SQL;
-
 		try {
+			$userEmail = $this->get_user_email_by_username($user);
+			$query = <<<SQL
+			INSERT INTO Desiderio (email, ISBN)
+			VALUES (?, ?)
+			SQL;
+
 			return $this->query_to_array($query, "ss", [$userEmail, $isbn]);
 		} catch (Exception $e) {
-			return false;
+			error_log("insert_libri_desiderati_by_username: " . $e->getMessage());
+			throw $e;
 		}
 	}
 
 	public function delete_libro_desiderato($user, $isbn)
 	{
-		$userEmail = $this->get_user_email_by_username($user);
-		$query = <<<SQL
-		DELETE FROM Desiderio
-		WHERE ISBN = ? AND email = ?
-		SQL;
 		try {
+			$userEmail = $this->get_user_email_by_username($user);
+			$query = <<<SQL
+			DELETE FROM Desiderio
+			WHERE ISBN = ? AND email = ?
+			SQL;
+
 			return $this->void_query($query, "ss", [$isbn, $userEmail]);
 		} catch (Exception $e) {
 			error_log ("delete_libro_desiderato: " . $e->getMessage());

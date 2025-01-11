@@ -29,7 +29,7 @@ if (isset($_POST) && isset($_SESSION['user'])) {
 
     try {
         $db->insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina);
-        $db->insert_libri_desiderati_by_username($user, $isbn);
+        $db->insert_libri_offerti_by_username($user, $isbn, $condizioni);
 
     } catch (Exception $e) {
         $_SESSION['error'] = 'Errore: libro non aggiunto';

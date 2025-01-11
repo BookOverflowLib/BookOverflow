@@ -292,7 +292,8 @@ function require_login()
 	}
 }
 
-function check_ownership(): bool {
+function check_ownership(): bool
+{
 	if (!isset($_SESSION['user'])) {
 		return false;
 	}
@@ -333,3 +334,28 @@ function getGeneriPreferiti($generi)
 	return $output;
 }
 
+/**
+ * Restituisce una stringa HTML con i libri in formato carosello con copertina grande
+ * @param array $libri Array con i libri da visualizzare dal database
+ * @param int $max_risultati Numero massimo di risultati da visualizzare
+ * @return string
+ */
+function getLibriCopertinaGrande($libri, $max_risultati): string
+{
+	$output = '';
+	if (!$libri || $libri == null) {
+		return '<p>Non ci sono ancora libri in questa lista!</p>';
+	}
+	$num_libri = count(value: $libri) > $max_risultati ? $max_risultati : count(value: $libri);
+	for ($i = 0; $i < $num_libri; $i++) {
+		$libroTemplate = <<<HTML
+		<div class="libro">
+			<img alt="" src="{$libri[$i]['path_copertina']}" width="150" />
+			<p class="titolo-libro">{$libri[$i]["titolo"]}</p>
+			<p class="autore-libro">{$libri[$i]["autore"]}</p>
+		</div>
+		HTML;
+		$output .= $libroTemplate;
+	}
+	return $output;
+}

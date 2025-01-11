@@ -292,7 +292,8 @@ function require_login()
 	}
 }
 
-function check_ownership(): bool {
+function check_ownership(): bool
+{
 	if (!isset($_SESSION['user'])) {
 		return false;
 	}
@@ -333,3 +334,175 @@ function getGeneriPreferiti($generi)
 	return $output;
 }
 
+/**
+ * Restituisce una stringa HTML con i libri in formato carosello con copertina grande
+ * @param array $libri Array con i libri da visualizzare dal database
+ * @param int $max_risultati Numero massimo di risultati da visualizzare
+ * @return string
+ */
+function getLibriCopertinaGrande($libri, $max_risultati): string
+{
+	$output = '';
+	if (!$libri || $libri == null) {
+		return '<p>Non ci sono ancora libri in questa lista!</p>';
+	}
+	$num_libri = count(value: $libri) > $max_risultati ? $max_risultati : count(value: $libri);
+	for ($i = 0; $i < $num_libri; $i++) {
+		$libroTemplate = <<<HTML
+		<div class="libro">
+			<img alt="" src="{$libri[$i]['path_copertina']}" width="150" />
+			<p class="titolo-libro">{$libri[$i]["titolo"]}</p>
+			<p class="autore-libro">{$libri[$i]["autore"]}</p>
+		</div>
+		HTML;
+		$output .= $libroTemplate;
+	}
+	return $output;
+}
+
+/**
+ * Restituisce una stringa HTML con i libri in formato lista
+ * @param mixed $libri_utente
+ * @param mixed $list_name
+ * @return string
+ */
+function getLibriList($libri_utente, $list_name): string
+{
+	if ($list_name != 'libri-offerti' && $list_name != 'libri-desiderati') {
+		throw new TypeError("list_name deve essere 'libri-desiderati' o 'libri-offerti'");
+	}
+
+
+	$libri_html = '';
+	if (!$libri_utente) {
+		$libri_html = '<p>Non ci sono ancora libri qui!</p>';
+	} else {
+		foreach ($libri_utente as $libro) {
+			$isbn = $libro['ISBN'];
+			$titolo = $libro['titolo'];
+			$autore = $libro['autore'];
+			$path_copertina = $libro['path_copertina'];
+
+			$book_copy_info = '';
+			if ($list_name === 'libri-offerti') {
+				$condizioni = ucfirst($libro['condizioni']);
+				$disponibileClass = $libro['disponibile'] ? 'disponibile' : 'non-disponibile';
+				$disponibileLabel = $libro['disponibile'] ? 'Disponibile' : 'Non disponibile';
+				$book_copy_info = <<<HTML
+				<div>
+					<div class="libro-stato-{$disponibileClass}" aria-hidden="true"></div>
+					<span class="sr-only">Stato</span> {$disponibileLabel}
+				</div>
+				<p>Condizioni: {$condizioni}</p>
+				HTML;
+			}
+
+			$libroRowTemplate = <<<HTML
+			<div class="book-row">
+				<div class="book-info">
+					<img
+						src="{$path_copertina}"
+						alt=""
+						width="50" />
+					<div>
+						<p>{$titolo}</p>
+						<p class="italic">{$autore}</p>
+					</div>
+				</div>
+				<div class="book-copy-info">
+					{$book_copy_info}
+				</div>
+				<div class="book-buttons">
+					<form action="/api/rimuovi-libro" method="post">
+						<input type="hidden" name="isbn" value="{$isbn}">
+						<!-- [bookButtons] -->
+					</form>
+				</div>
+			</div>
+			HTML;
+			$libri_html .= $libroRowTemplate;
+		}
+	}
+	return $libri_html;
+}
+
+
+/**
+ * Aggiunge i bottoni per aggiungere un libro e per cercare un libro, 
+ * aggiunge anche il dialog per la ricerca
+ * @param string $libri_page Pagina HTML template con i libri
+ * @param string $list_name "libri-desiderati" o "libri-offerti"
+ * @return string
+ */
+function addButtonsLibriList($libri_page, $list_name): string
+{
+	if ($list_name != 'libri-offerti' && $list_name != 'libri-desiderati') {
+		throw new TypeError("list_name deve essere 'libri-desiderati' o 'libri-offerti'");
+	}
+
+	$form_action = $list_name === 'libri-offerti' ? '/api/aggiungi-libro-offerto' : '/api/aggiungi-libro-desiderato';
+
+	$libri_utente = $libri_page;
+	$aggiungiLibro = '<button class="button-layout" id="aggiungi-libro-button">Aggiungi un libro</button>';
+	$libri_utente = str_replace('<!-- [aggiungiLibroButton] -->', $aggiungiLibro, $libri_utente);
+
+	$select_condizioni = '';
+	if ($list_name === 'libri-offerti') {
+		$select_condizioni = <<<HTML
+		<select name="condizioni" id="condizioni" required>
+			<option value="" disabled selected>Seleziona le condizioni</option>
+			<hr>
+			<option value="nuovo">Nuovo</option>
+			<option value="come nuovo">Come nuovo</option>
+			<option value="usato ma ben conservato">Usato ma ben conservato</option>
+			<option value="usato">Usato</option>
+			<option value="danneggiato">Danneggiato</option>
+		</select>
+		HTML;
+	}
+
+	$cercaLibriDialog = <<<HTML
+	<dialog id="aggiungi-libro-dialog">
+		<div class="dialog-window">
+			<h2>Cerca un libro</h2>
+			<form action={$form_action} method="post">
+				<label for="titolo" class="visually-hidden">Cerca un libro</label>
+				<input type="search"
+					name="cerca"
+					id="cerca"
+					placeholder="Cerca un libro ..." />
+				<div id="book-results">
+					<p>Nessun risultato</p>
+				</div>
+				{$select_condizioni}
+				<input type="hidden" name="ISBN" value="">
+				<input type="hidden" name="titolo" value="">
+				<input type="hidden" name="autore" value="">
+				<input type="hidden" name="editore" value="">
+				<input type="hidden" name="anno" value="">
+				<input type="hidden" name="genere" value="">
+				<input type="hidden" name="descrizione" value="">
+				<input type="hidden" name="lingua" value="">
+				<input type="hidden" name="path_copertina" value="">
+				<div class="dialog-buttons">
+					<button id="close-dialog" class="button-layout-light">Annulla</button>
+					<input type="submit" id="aggiungi-libro" class="button-layout" value="Aggiungi libro">
+				</div>
+			</form>
+		</div>
+	</dialog>
+	HTML;
+
+	$libri_utente = str_replace('<!-- [cercaLibriDialog] -->', $cercaLibriDialog, $libri_utente);
+
+	$modificaEliminaButtons = <<<HTML
+	<!-- <button class="button-layout">Modifica</button> -->
+	<!-- <form action="/api/rimuovi-libro" method="post"> -->
+		<!-- <input type="hidden" name="isbn" value=""> -->
+		<input type="submit" class="button-layout danger bold" value="Elimina">
+	<!-- </form> -->
+	HTML;
+	$libri_utente = str_replace('<!-- [bookButtons] -->', $modificaEliminaButtons, $libri_utente);
+
+	return $libri_utente;
+}

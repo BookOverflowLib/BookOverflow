@@ -372,10 +372,6 @@ function getLibriList($libri_utente, $list_name): string
 		throw new TypeError("list_name deve essere 'libri-desiderati' o 'libri-offerti'");
 	}
 
-	$book_copy_info = '';
-	if($list_name === 'libri-offerti') {
-		$book_copy_info = '<p>Stato: {$disponibile}</p><p>Condizioni: {$condizioni}</p>';
-	} 
 
 	$libri_html = '';
 	if (!$libri_utente) {
@@ -386,11 +382,21 @@ function getLibriList($libri_utente, $list_name): string
 			$titolo = $libro['titolo'];
 			$autore = $libro['autore'];
 			$path_copertina = $libro['path_copertina'];
-			if($list_name === 'libri-offerti') {
-				$condizioni = $libro['condizioni'];
-				$disponibile = $libro['disponibile'] ? 'Disponibile' : 'Non disponibile';
+
+			$book_copy_info = '';
+			if ($list_name === 'libri-offerti') {
+				$condizioni = ucfirst($libro['condizioni']);
+				$disponibileClass = $libro['disponibile'] ? 'disponibile' : 'non-disponibile';
+				$disponibileLabel = $libro['disponibile'] ? 'Disponibile' : 'Non disponibile';
+				$book_copy_info = <<<HTML
+				<div>
+					<div class="libro-stato-{$disponibileClass}" aria-hidden="true"></div>
+					<span class="sr-only">Stato</span> {$disponibileLabel}
+				</div>
+				<p>Condizioni: {$condizioni}</p>
+				HTML;
 			}
-			
+
 			$libroRowTemplate = <<<HTML
 			<div class="book-row">
 				<div class="book-info">

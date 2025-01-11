@@ -448,7 +448,7 @@ class DBAccess
 			VALUES (?, ?, ?)
 			SQL;
 
-			return $this->query_to_array($query, "sss", [$isbn, $userEmail, $condizione]);
+			return $this->void_query($query, "sss", [$isbn, $userEmail, $condizione]);
 		} catch (Exception $e) {
 			error_log("insert_libri_offerti_by_username: " . $e->getMessage());
 			//throw $e;
@@ -499,7 +499,7 @@ class DBAccess
 			VALUES (?, ?)
 			SQL;
 
-			return $this->query_to_array($query, "ss", [$userEmail, $isbn]);
+			return $this->void_query($query, "ss", [$userEmail, $isbn]);
 		} catch (Exception $e) {
 			error_log("insert_libri_desiderati_by_username: " . $e->getMessage());
 			throw $e;

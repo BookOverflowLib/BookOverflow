@@ -270,7 +270,7 @@ class DBAccess
                     ORDER BY numero_vendite DESC
                     LIMIT ?";
 
-		return $this->prepare_and_execute_query($query, "i", [$limit]);
+		return $this->query_to_array($query, "i", [$limit]);
 	}
 
 	public function get_comune_by_provincia($idProvincia): ?array
@@ -284,20 +284,16 @@ class DBAccess
 		return null;
 	}
 
-	public function register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $profileImg = null): bool
+	public function register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $profileImg = null): void
 	{
 		$passwordHashed = password_hash($password, PASSWORD_BCRYPT);
 
 		$query = "INSERT INTO Utente (email, password_hash, username, nome, cognome, provincia, comune, path_immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
-			$res = $this->prepare_and_execute_query($query, "ssssssss", [$email, $passwordHashed, $username, $nome, $cognome, $provincia, $comune, $profileImg]);
-			if ($res) {
-				return true;
-			}
+			$this->void_query($query, "ssssssss", [$email, $passwordHashed, $username, $nome, $cognome, $provincia, $comune, $profileImg]);
 		} catch (Exception $e) {
 			throw $e;
 		}
-		return false;
 	}
 
 	public function login_user($email, $password): ?array
@@ -331,7 +327,7 @@ class DBAccess
 		try {
 			return $this->query_to_array($query, "ss", [$email, $email]);
 		} catch (Exception $e) {
-			echo $e->getMessage();
+			error_log("get_user_rating_by_email: " . $e->getMessage());
 		}
 		return null;
 	}
@@ -342,7 +338,7 @@ class DBAccess
 		try {
 			return $this->query_to_array($query, "s", [$username]);
 		} catch (Exception $e) {
-			echo $e->getMessage();
+			error_log("get_user_by_username: " . $e->getMessage());
 		}
 		return null;
 	}
@@ -353,7 +349,7 @@ class DBAccess
 		try {
 			return $this->query_to_array($query, "s", [$email]);
 		} catch (Exception $e) {
-			echo $e->getMessage();
+			error_log("get_user_by_email: " . $e->getMessage());
 		}
 		return null;
 	}
@@ -367,7 +363,7 @@ class DBAccess
 			$comu = $this->query_to_array($queryComune, "i", [$idComune]);
 			return array("provincia" => $prov[0]['nome'], "comune" => $comu[0]['nome']);
 		} catch (Exception $e) {
-			echo $e->getMessage();
+			error_log("get_provincia_comune_by_ids: " . $e->getMessage());
 		}
 		return null;
 	}
@@ -376,12 +372,9 @@ class DBAccess
 	{
 		$query = "INSERT IGNORE INTO Libro (ISBN, titolo, autore, editore, anno, genere, descrizione, lingua, path_copertina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
-			$res = $this->prepare_and_execute_query($query, "sssssssss", [$isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina]);
-			if ($res) {
-				return true;
-			}
+			$res = $this->void_query($query, "sssssssss", [$isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina]);
 		} catch (Exception $e) {
-			echo $e->getMessage();
+			error_log("insert_new_book: " . $e->getMessage());
 		}
 	}
 
@@ -396,15 +389,10 @@ class DBAccess
 	{
 		$query = "UPDATE Utente SET generi_preferiti = ? WHERE username = ?";
 		try {
-			$res = $this->prepare_and_execute_query($query, "ss", [$generi, $user]);
-			if ($res) {
-				return true;
-			} else {
-				return false;
-			}
+			$this->void_query($query, "ss", [$generi, $user]);
 		} catch (Exception $e) {
-			// echo $e->getMessage();
-			return false;
+			error_log("update_user_generi: " . $e->getMessage());
+			throw $e;
 		}
 	}
 
@@ -419,8 +407,8 @@ class DBAccess
 		try {
 			return $this->query_to_array($query, "s", [$user]);
 		} catch (Exception $e) {
-			// echo $e->getMessage();
-			return null;
+			error_log("get_generi_by_username: " . $e->getMessage());
+			throw $e;
 		}
 	}
 
@@ -431,7 +419,8 @@ class DBAccess
 			$email = $this->query_to_array($query, "s", [$username]);
 			return $email ? $email[0]['email'] : null;
 		} catch (Exception $e) {
-			return null;
+			error_log("get_user_email_by_username: " . $e->getMessage());
+			throw $e;
 		}
 	}
 
@@ -446,11 +435,10 @@ class DBAccess
 		SQL;
 
 		try {
-			$ris = $this->prepare_and_execute_query($query, "s", [$userEmail]);
-			return $ris ? $ris : null;
+			return $this->query_to_array($query, "s", [$userEmail]);
 		} catch (Exception $e) {
-			// echo $e->getMessage();
-			return null;
+			error_log("get_libri_offerti_by_username: " . $e->getMessage());
+			throw $e;
 		}
 	}
 
@@ -520,7 +508,7 @@ class DBAccess
 		}
 	}
 
-	public function delete_libro_desiderato($user, $isbn): bool
+	public function delete_libro_desiderato($user, $isbn)
 	{
 		$userEmail = $this->get_user_email_by_username($user);
 		$query = <<<SQL
@@ -528,9 +516,10 @@ class DBAccess
 		WHERE ISBN = ? AND email = ?
 		SQL;
 		try {
-			return $this->prepare_and_execute_query($query, "ss", [$isbn, $userEmail]);
+			return $this->void_query($query, "ss", [$isbn, $userEmail]);
 		} catch (Exception $e) {
-			return false;
+			error_log ("delete_libro_desiderato: " . $e->getMessage());
+			throw $e;
 		}
 	}
 }

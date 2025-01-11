@@ -1285,3 +1285,22 @@ li.activePage {
 	gap: 0.5em;
 	justify-content: start;
 }
+
+.libro-stato-disponibile{
+	background-color: var(--secondary-500);
+	width: 1em;
+	height: 1em;
+	border-radius: 9999px;
+}
+.libro-stato-non-disponibile{
+	background-color: var(--accent-500);
+	width: 1em;
+	height: 1em;
+	border-radius: 9999px;
+}
+
+.book-copy-info > div {
+	display: inline-flex;
+	gap: 0.5em;
+	align-items: center
+}

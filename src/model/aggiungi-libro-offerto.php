@@ -27,12 +27,11 @@ if (isset($_POST) && isset($_SESSION['user'])) {
     $path_copertina = $_POST['path_copertina'];
 
 
-    $ris = $db->insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina);
-    if (!$ris) {
-        $_SESSION['error'] = 'Errore: libro non aggiunto';
-    }
-    $ris = $db->insert_libri_offerti_by_username($user, $isbn, $condizioni);
-    if (!$ris) {
+    try {
+        $db->insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina);
+        $db->insert_libri_desiderati_by_username($user, $isbn);
+
+    } catch (Exception $e) {
         $_SESSION['error'] = 'Errore: libro non aggiunto';
     }
 } else {

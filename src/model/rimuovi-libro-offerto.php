@@ -9,8 +9,9 @@ $db = new DBAccess();
 if (isset($_POST) && isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
     $isbn = $_POST['isbn'];
-    $ris = $db->delete_libro_offerto($user, $isbn); 
-    if (!$ris) {
+    try {
+        $db->delete_libro_offerto($user, $isbn);
+    } catch (Exception $e) {
         $_SESSION['error'] = 'Errore: libro non rimosso';
     }
 } else {

@@ -21,17 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             }
         } catch (Exception $e) {
-            $errorMessage = $e->getMessage();
-            switch ($errorMessage) {
-                case 'Wrong password':
-                    header('Location: /accedi?error=wrong-password');
-                    break;
-                case 'User not registered':
-                    header('Location: /accedi?error=user-not-found');
-                    break;
-                default:
-                    header('Location: /accedi?error=unknown');
-            }
+            header('Location: /accedi?error=invalid');
             exit();
         }
     }

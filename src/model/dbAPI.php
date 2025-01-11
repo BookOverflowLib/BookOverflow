@@ -277,7 +277,7 @@ class DBAccess
 	{
 		$query = "SELECT * FROM comuni WHERE id_provincia = ?";
 		try {
-			return $this->prepare_and_execute_query($query, "s", [$idProvincia]);
+			return $this->query_to_array($query, "s", [$idProvincia]);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -329,7 +329,7 @@ class DBAccess
                     FROM Recensione R JOIN Scambio S ON R.idScambio = S.ID 
                     WHERE S.emailAccettatore = ? OR S.emailProponente = ?';
 		try {
-			return $this->prepare_and_execute_query($query, "ss", [$email, $email]);
+			return $this->query_to_array($query, "ss", [$email, $email]);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -340,7 +340,7 @@ class DBAccess
 	{
 		$query = "SELECT * FROM Utente WHERE username = ?";
 		try {
-			return $this->prepare_and_execute_query($query, "s", [$username]);
+			return $this->query_to_array($query, "s", [$username]);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -351,7 +351,7 @@ class DBAccess
 	{
 		$query = "SELECT * FROM Utente WHERE email = ?";
 		try {
-			return $this->prepare_and_execute_query($query, "s", [$email]);
+			return $this->query_to_array($query, "s", [$email]);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -363,8 +363,8 @@ class DBAccess
 		$queryProvincia = "SELECT nome FROM province WHERE id = ?";
 		$queryComune = "SELECT nome FROM comuni WHERE id = ?";
 		try {
-			$prov = $this->prepare_and_execute_query($queryProvincia, "i", [$idProvincia]);
-			$comu = $this->prepare_and_execute_query($queryComune, "i", [$idComune]);
+			$prov = $this->query_to_array($queryProvincia, "i", [$idProvincia]);
+			$comu = $this->query_to_array($queryComune, "i", [$idComune]);
 			return array("provincia" => $prov[0]['nome'], "comune" => $comu[0]['nome']);
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -417,7 +417,7 @@ class DBAccess
 	{
 		$query = "SELECT generi_preferiti FROM Utente WHERE username = ?";
 		try {
-			return $this->prepare_and_execute_query($query, "s", [$user]);
+			return $this->query_to_array($query, "s", [$user]);
 		} catch (Exception $e) {
 			// echo $e->getMessage();
 			return null;
@@ -428,7 +428,7 @@ class DBAccess
 	{
 		$query = "SELECT email FROM Utente WHERE username = ?";
 		try {
-			$email = $this->prepare_and_execute_query($query, "s", [$username]);
+			$email = $this->query_to_array($query, "s", [$username]);
 			return $email ? $email[0]['email'] : null;
 		} catch (Exception $e) {
 			return null;
@@ -463,7 +463,7 @@ class DBAccess
 		SQL;
 
 		try {
-			return $this->prepare_and_execute_query($query, "sss", [$isbn, $userEmail, $condizione]);
+			return $this->query_to_array($query, "sss", [$isbn, $userEmail, $condizione]);
 		} catch (Exception $e) {
 			// echo $e->getMessage();
 			return false;
@@ -479,7 +479,7 @@ class DBAccess
 		SQL;
 
 		try {
-			return $this->prepare_and_execute_query($query, "ss", [$isbn, $userEmail]);
+			return $this->query_to_array($query, "ss", [$isbn, $userEmail]);
 		} catch (Exception $e) {
 			// echo $e->getMessage();
 			return false;
@@ -497,7 +497,7 @@ class DBAccess
 		SQL;
 
 		try {
-			$ris = $this->prepare_and_execute_query($query, "s", [$userEmail]);
+			$ris = $this->query_to_array($query, "s", [$userEmail]);
 			return $ris ? $ris : null;
 		} catch (Exception $e) {
 			// echo $e->getMessage();
@@ -514,7 +514,7 @@ class DBAccess
 		SQL;
 
 		try {
-			return $this->prepare_and_execute_query($query, "ss", [$userEmail, $isbn]);
+			return $this->query_to_array($query, "ss", [$userEmail, $isbn]);
 		} catch (Exception $e) {
 			return false;
 		}

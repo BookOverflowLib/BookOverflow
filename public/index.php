@@ -70,12 +70,16 @@ switch ($path) {
 	case '/api/aggiorna-generi':
 		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiorna-generi.php';
 		break;
-	case '/api/aggiungi-libro':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiungi-libro.php';
-	case '/api/rimuovi-libro':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-libro.php';
+	case '/api/aggiungi-libro-offerto':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiungi-libro-offerto.php';
+	case '/api/aggiungi-libro-desiderato':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiungi-libro-desiderato.php';
+	case '/api/rimuovi-libro-offerto':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-libro-offerto.php';
+	case '/api/rimuovi-libro-desiderato':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-libro-desiderato.php';
 		break;
-		
+
 	default:
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . '404.php';
 		break;

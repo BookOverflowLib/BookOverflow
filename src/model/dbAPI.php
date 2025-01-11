@@ -49,7 +49,7 @@ class DBAccess
 		} catch (mysqli_sql_exception $e) {
 			throw new Exception("Connection error: " . $e->getMessage());
 		}
-		
+
 		// errors check in production
 		if (mysqli_connect_errno()) {
 			return false;
@@ -365,7 +365,7 @@ class DBAccess
 		try {
 			return $this->prepare_and_execute_query($query, "sss", [$isbn, $userEmail, $condizione]);
 		} catch (Exception $e) {
-			echo $e->getMessage();
+			// echo $e->getMessage();
 			return false;
 		}
 	}
@@ -381,9 +381,56 @@ class DBAccess
 		try {
 			return $this->prepare_and_execute_query($query, "ss", [$isbn, $userEmail]);
 		} catch (Exception $e) {
-			echo $e->getMessage();
+			// echo $e->getMessage();
 			return false;
 		}
 	}
 
+	public function get_libri_desiderati_by_username($user): ?array
+	{
+		$userEmail = $this->get_user_email_by_username($user);
+
+		$query = <<<SQL
+		SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina
+		FROM Desiderio D JOIN Libro L ON D.ISBN = L.ISBN
+		WHERE D.email = ?
+		SQL;
+
+		try {
+			$ris = $this->prepare_and_execute_query($query, "s", [$userEmail]);
+			return $ris ? $ris : null;
+		} catch (Exception $e) {
+			// echo $e->getMessage();
+			return null;
+		}
+	}
+
+	public function insert_libri_desiderati_by_username($user, $isbn): bool
+	{
+		$userEmail = $this->get_user_email_by_username($user);
+		$query = <<<SQL
+		INSERT INTO Desiderio (email, ISBN)
+		VALUES (?, ?)
+		SQL;
+
+		try {
+			return $this->prepare_and_execute_query($query, "ss", [$userEmail, $isbn]);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+
+	public function delete_libro_desiderato($user, $isbn): bool
+	{
+		$userEmail = $this->get_user_email_by_username($user);
+		$query = <<<SQL
+		DELETE FROM Desiderio
+		WHERE ISBN = ? AND email = ?
+		SQL;
+		try {
+			return $this->prepare_and_execute_query($query, "ss", [$isbn, $userEmail]);
+		} catch (Exception $e) {
+			return false;
+		}
+	}
 }

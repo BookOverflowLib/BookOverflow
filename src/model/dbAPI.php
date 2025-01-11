@@ -135,6 +135,109 @@ class DBAccess
 		return $results;
 	}
 
+	/**
+	 * Prepares an SQL statement for execution.
+	 *
+	 * This function ensures that a connection to the database is established,
+	 * prepares the SQL query, and binds the parameters if provided.
+	 *
+	 * @param string $query The SQL query to be prepared.
+	 * @param string|null $types A string that contains one or more characters which specify the types for the corresponding bind variables: 
+	 *                           'i' for integer, 'd' for double, 's' for string, and 'b' for blob. Default is null.
+	 * @param array|null $params An array of variables to bind to the SQL statement. Default is null.
+	 * 
+	 * @return mysqli_stmt The prepared statement.
+	 * 
+	 * @throws Exception If the statement preparation or parameter binding fails.
+	 */
+	private function prepare_sql_statement($query, $types = null, $params = null): mysqli_stmt
+	{
+		$this->ensure_connection();
+
+		$stmt = $this->connection->prepare($query);
+		if (!$stmt) {
+			throw new Exception("Prepare failed: " . $this->connection->error);
+		}
+
+		if ($types && $params) {
+			// there must be the same number of types and parameters
+			// e.g types = "iss", params = [1, "hello", 3.14]
+			if (strlen($types) !== count($params)) {
+				error_log("prepare_sql_statement: Number of types does not match number of parameters");
+				throw new Exception("Error preparing query");
+			}
+
+			// Bind parameters dynamically
+			if (!$stmt->bind_param($types, ...$params)) {
+				error_log("prepare_sql_statement: Parameter binding failed: " . $stmt->error);
+				throw new Exception("Error preparing query");
+			}
+		}
+
+		return $stmt;
+	}
+
+	/**
+	 * Executes a SQL query and returns the results as an associative array.
+	 *
+	 * @param string $query The SQL query to be executed.
+	 * @param string|null $types Optional. A string that contains one or more characters which specify the types for the corresponding bind variables.
+	 * @param array|null $params Optional. An array of variables to bind to the SQL statement.
+	 * 
+	 * @return array|null The results of the query as an associative array, or null if the query fails.
+	 * 
+	 * @throws Exception If the query execution fails.
+	 */
+	public function query_to_array($query, $types = null, $params = null): ?array
+	{
+		try {
+			$stmt = $this->prepare_sql_statement($query, $types, $params);
+			if (!$stmt->execute()) {
+				throw new Exception("Query execution failed");
+			}
+
+			$results = $this->query_results_to_array($stmt->get_result());
+			$stmt->close();
+			return $results;
+		} catch (Exception $e) {
+			error_log("execute_select_query: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+
+	/**
+	 * Executes a SQL query that does not return a result set.
+	 *
+	 * @param string $query The SQL query to be executed.
+	 * @param string|null $types (Optional) A string that contains one or more characters which specify the types for the corresponding bind variables.
+	 * @param array|null $params (Optional) An array of variables to bind to the query.
+	 *
+	 * @throws Exception If the query execution fails.
+	 *
+	 * This method prepares and executes a SQL statement. If the execution fails, it logs the error and rethrows the exception.
+	 */
+	public function void_query($query, $types = null, $params = null): void
+	{
+		try {
+			$stmt = $this->prepare_sql_statement($query, $types, $params);
+			if (!$stmt->execute()) {
+				throw new Exception("Query execution failed");
+			}
+			$stmt->close();
+		} catch (Exception $e) {
+			error_log("void_query: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+
+	/**
+	 * Converts the result of a MySQL query to an associative array.
+	 *
+	 * @param mysqli_result $queryRes The result set from a MySQL query.
+	 * @return array An associative array of the query results
+	 */
 	private function query_results_to_array($queryRes): ?array
 	{
 		if (mysqli_num_rows($queryRes) == 0) {

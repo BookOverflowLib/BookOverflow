@@ -342,7 +342,7 @@ class DBAccess
 		$query = <<<SQL
 		SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina, C.condizioni, C.disponibile
 		FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
-		WHERE C.proprietario = ? AND C.disponibile = TRUE
+		WHERE C.proprietario = ? 
 		SQL;
 
 		try {

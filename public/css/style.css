@@ -622,8 +622,8 @@ main {
 	gap: 2.5em;
 	margin-top: 1em;
 	justify-content: space-between;
-	align-items: center;
-	justify-items: center;
+	align-items: start;
+	justify-items: start;
 }
 .libro {
 	max-width: 10em;
@@ -633,6 +633,11 @@ main {
 	max-width: 11em;
 	aspect-ratio: 1/1.5;
 	object-fit: cover;
+}
+.libro > p{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .titolo-libro {
@@ -851,6 +856,7 @@ section > p > a {
 }
 
 .salta-al-contenuto:focus {
+	color: var(--text);
 	z-index: 1000;
 	clip-path: auto;
 	margin: 0.5em;

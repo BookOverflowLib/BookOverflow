@@ -63,6 +63,8 @@ $profilo = str_replace('<!-- [userRatingStars] -->', ratingStars($ratingValue), 
 $generi = $db->get_generi_by_username($user['username']);
 $profilo = str_replace('<!-- [userGeneri] -->', getGeneriPreferiti($generi), $profilo);
 
+$libri_offerti_db = $db->get_libri_offerti_by_username($user['username']);
+$profilo = str_replace('<!-- [libriOffertiLista] -->', getLibriCopertinaGrande($libri_offerti_db,4), $profilo);
 // Se è il proprio profilo
 // aggiungi pulsanti per modifica profilo e generi
 if ($isTuoProfilo) {

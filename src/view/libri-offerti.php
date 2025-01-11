@@ -8,7 +8,7 @@ ensure_session();
 
 $page = getTemplatePage("Libri offerti");
 
-$libri_offerti = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'libri-offerti.html');
+$libri_offerti = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'libri-offerti-desiderati.html');
 
 $db = new DBAccess();
 

@@ -178,7 +178,7 @@ class DBAccess
 	}
 
 	/**
-	 * Executes a SQL query and returns the results as an associative array.
+	 * Executes an SQL query and returns the results as an associative array.
 	 *
 	 * @param string $query The SQL query to be executed.
 	 * @param string|null $types Optional. A string that contains one or more characters which specify the types for the corresponding bind variables.
@@ -207,7 +207,7 @@ class DBAccess
 
 
 	/**
-	 * Executes a SQL query that does not return a result set.
+	 * Executes an SQL query that does not return a result set.
 	 *
 	 * @param string $query The SQL query to be executed.
 	 * @param string|null $types (Optional) A string that contains one or more characters which specify the types for the corresponding bind variables.

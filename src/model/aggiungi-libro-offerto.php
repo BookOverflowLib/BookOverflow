@@ -1,4 +1,6 @@
 <?php
+//TODO: MAYBE NOT THE BEST WAY TO DO THIS
+
 require_once '../src/paths.php';
 require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
@@ -24,7 +26,7 @@ if (isset($_POST) && isset($_SESSION['user'])) {
     $lingua = $_POST['lingua'];
     $path_copertina = $_POST['path_copertina'];
 
-    
+
     $ris = $db->insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina);
     if (!$ris) {
         $_SESSION['error'] = 'Errore: libro non aggiunto';

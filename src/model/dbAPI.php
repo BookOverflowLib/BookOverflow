@@ -296,24 +296,21 @@ class DBAccess
 		}
 	}
 
-	public function login_user($email, $password): ?array
+	public function login_user($identifier, $password): ?array
 	{
-		$query = "SELECT * FROM Utente WHERE email = ?";
+		$query = "SELECT * FROM Utente WHERE email = ? OR username = ?";
 		try {
-			$res = $this->prepare_and_execute_query($query, "s", [$email]);
+			$res = $this->query_to_array($query, "ss", [$identifier, $identifier]);
 			if ($res) {
 				if (password_verify($password, $res[0]['password_hash'])) {
 					return $res;
 				} else {
-					throw new Exception("Wrong password");
+					throw new Exception("Invalid Credentials");
 				}
 			} else {
-				throw new Exception("User not registered");
+				throw new Exception("Invalid Credentials");
 			}
 		} catch (Exception $e) {
-			//echo $e->getMessage();
-			//a meno che non si voglia una pagina completaemente bianca
-			//questo non è l'approccio giusto
 			throw $e;
 		}
 		return null;

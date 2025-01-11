@@ -342,14 +342,14 @@ class DBAccess
 		$query = <<<SQL
 		SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina, C.condizioni, C.disponibile
 		FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
-		WHERE C.proprietario = ?
+		WHERE C.proprietario = ? AND C.disponibile = TRUE
 		SQL;
 
 		try {
 			$ris = $this->prepare_and_execute_query($query, "s", [$userEmail]);
 			return $ris ? $ris : null;
 		} catch (Exception $e) {
-			echo $e->getMessage();
+			// echo $e->getMessage();
 			return null;
 		}
 	}

@@ -17,8 +17,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$password2 = $_POST['conferma-password'];
 		$image = getUserImageUrlByEmail($email);
 
-		$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
-
+		if ($password !== $password2) {
+			header('Location: /registrati?error=password-mismatch');
+			exit();
+		}
+		try {
+			$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
+		} catch (Exception $e) {
+			header('Location: /registrati?error=generic');
+			// TODO
+			exit();
+		}
+	
 		ensure_session();
 
 		$_SESSION['user'] = $username;

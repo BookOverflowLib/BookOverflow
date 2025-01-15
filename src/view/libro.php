@@ -73,8 +73,8 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 		        <a href="/libro/{$libro['ISBN']}">
 			        <img alt="" src="{$libro['path_copertina']}" width="100"/>
 			        <div>
-			            <p>{$libro['titolo']}</p>
-			            <p>{$libro['autore']}</p>
+			            <p class="bold">{$libro['titolo']}</p>
+			            <p class="italic">{$libro['autore']}</p>
 			        </div>
 			    </a>
 		    </div>
@@ -88,6 +88,13 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 $scambi_html = "";
 if (is_logged_in()) {
 	$utentiInteressati = $db->get_users_with_book_and_interested_in_my_books($_SESSION['user'], $_GET['ISBN']);
+	$numUtentiInteressati = count($utentiInteressati);
+	$libro_page = str_replace('<!-- [numUtentiInteressati] -->', $numUtentiInteressati . ' utenti lo scambiano', $libro_page);
+
+	if ($numUtentiInteressati == 0) {
+		$scambi_html = "<p>Nessuno scambia ancora questo libro!</p>";
+	}
+
 	foreach ($utentiInteressati as $utente) {
 		try {
 			$libriDesiderati = $db->get_desiderati_che_offro($_SESSION['user'], $utente['username']);
@@ -100,8 +107,6 @@ if (is_logged_in()) {
 		$libroDesiderato = $libriDesiderati[0];
 		$scambi_html .= viewScambioDisponibileDiUtente($utente, $libroDesiderato);
 	}
-	$numUtentiInteressati = count($utentiInteressati);
-	$libro_page = str_replace('<!-- [numUtentiInteressati] -->', $numUtentiInteressati . ' utenti lo scambiano', $libro_page);
 } else {
 	$scambi_html = "<p>Per vedere gli scambi disponibili devi fare accesso. <a href='/accedi'>Accedi</a></p>";
 }

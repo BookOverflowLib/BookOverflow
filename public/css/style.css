@@ -889,6 +889,10 @@ section > p > a {
     justify-items: start;
 }
 
+.libro-panoramica > div > h1, h2 {
+    margin-top: 0.5em;
+}
+
 .sezione-scambi {
     max-width: 55em;
     margin: auto;
@@ -898,6 +902,12 @@ section > p > a {
 .sezione-scambi > h2 {
     font-size: var(--font-lg);
     margin-bottom: 1em;
+}
+
+.sezione-scambi > h2::before {
+    content: '📚';
+    margin-right: 0.5em;
+
 }
 
 .sezione-scambi > .scambi {
@@ -919,6 +929,15 @@ section > p > a {
     display: flex;
     align-items: center;
     gap: 1em;
+    text-decoration: none;
+    color: var(--text);
+    padding: 1em;
+    border-radius: 1em;
+    transition: all 0.3s ease-in-out;
+}
+
+.scambio-utente > a:hover {
+    background-color: var(--background-200);
 }
 
 .scambio-utente > a > img {
@@ -949,6 +968,16 @@ section > p > a {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1em;
+    padding: 1em;
+    border-radius: 1em;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    color: var(--text);
+}
+
+.scambio-libro > a:hover {
+    background-color: var(--background-200);
 }
 
 /* MATCH PER TE */
@@ -1393,5 +1422,5 @@ li.activePage {
 .book-copy-info > div {
     display: inline-flex;
     gap: 0.5em;
-    align-items: center
+    align-items: center;
 }

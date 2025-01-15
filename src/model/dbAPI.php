@@ -395,7 +395,7 @@ class DBAccess
 	/**
 	 * Ottiene i generi preferiti dell'utente
 	 * @param string $user username dell'utente
-	 * @return array|bool|null
+	 * @return array|null
 	 */
 	public function get_generi_by_username($user): ?array
 	{
@@ -404,7 +404,7 @@ class DBAccess
 			return $this->query_to_array($query, "s", [$user]);
 		} catch (Exception $e) {
 			error_log("get_generi_by_username: " . $e->getMessage());
-			//throw $e;
+			throw $e;
 		}
 	}
 

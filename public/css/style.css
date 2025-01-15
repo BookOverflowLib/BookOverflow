@@ -1252,6 +1252,7 @@ li.activePage {
 	display: flex;
 	flex-direction: row;
 	gap: 1em;
+	cursor: pointer;
 }
 .search-results-row:has(input[type='radio']:checked) {
 	background-color: var(--primary-200);

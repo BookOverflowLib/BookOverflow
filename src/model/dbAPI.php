@@ -1,4 +1,5 @@
 <?php
+
 // TODO: maybe exception could be handled using best practices but i don´t think it's a requirement
 class DBAccess
 {
@@ -66,7 +67,6 @@ class DBAccess
 			$this->connection = null;
 		}
 	}
-
 
 	public function ensure_connection(): void
 	{
@@ -143,12 +143,12 @@ class DBAccess
 	 * prepares the SQL query, and binds the parameters if provided.
 	 *
 	 * @param string $query The SQL query to be prepared.
-	 * @param string|null $types A string that contains one or more characters which specify the types for the corresponding bind variables: 
+	 * @param string|null $types A string that contains one or more characters which specify the types for the corresponding bind variables:
 	 *                           'i' for integer, 'd' for double, 's' for string, and 'b' for blob. Default is null.
 	 * @param array|null $params An array of variables to bind to the SQL statement. Default is null.
-	 * 
+	 *
 	 * @return mysqli_stmt The prepared statement.
-	 * 
+	 *
 	 * @throws Exception If the statement preparation or parameter binding fails.
 	 */
 	private function prepare_sql_statement($query, $types = null, $params = null): mysqli_stmt
@@ -184,9 +184,9 @@ class DBAccess
 	 * @param string $query The SQL query to be executed.
 	 * @param string|null $types Optional. A string that contains one or more characters which specify the types for the corresponding bind variables.
 	 * @param array|null $params Optional. An array of variables to bind to the SQL statement.
-	 * 
+	 *
 	 * @return array|null The results of the query as an associative array, or null if the query fails.
-	 * 
+	 *
 	 * @throws Exception If the query execution fails.
 	 */
 	public function query_to_array($query, $types = null, $params = null): ?array
@@ -205,7 +205,6 @@ class DBAccess
 			throw $e;
 		}
 	}
-
 
 	/**
 	 * Executes an SQL query that does not return a result set.
@@ -314,7 +313,6 @@ class DBAccess
 		} catch (Exception $e) {
 			throw $e;
 		}
-		return null;
 	}
 
 	public function get_user_rating_by_email($email): ?array
@@ -366,11 +364,11 @@ class DBAccess
 		return null;
 	}
 
-	public function insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina)
+	public function insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina): void
 	{
 		$query = "INSERT IGNORE INTO Libro (ISBN, titolo, autore, editore, anno, genere, descrizione, lingua, path_copertina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
-			$res = $this->void_query($query, "sssssssss", [$isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina]);
+			$this->void_query($query, "sssssssss", [$isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina]);
 		} catch (Exception $e) {
 			error_log("insert_new_book: " . $e->getMessage());
 		}
@@ -380,10 +378,10 @@ class DBAccess
 	 * Aggiorna i generi preferiti dell'utente
 	 * @param string $user username dell'utente
 	 * @param string $generi generi preferiti dell'utente in formato JSON
-	 * 
+	 *
 	 * @return bool true se l'aggiornamento è andato a buon fine, false altrimenti
 	 */
-	public function update_user_generi($user, $generi)
+	public function update_user_generi($user, $generi): void
 	{
 		$query = "UPDATE Utente SET generi_preferiti = ? WHERE username = ?";
 		try {
@@ -438,9 +436,10 @@ class DBAccess
 			error_log("get_libri_offerti_by_username: " . $e->getMessage());
 			//throw $e;
 		}
+		return null;
 	}
 
-	public function insert_libri_offerti_by_username($user, $isbn, $condizione)
+	public function insert_libri_offerti_by_username($user, $isbn, $condizione): void
 	{
 		try {
 			$userEmail = $this->get_user_email_by_username($user);
@@ -449,14 +448,14 @@ class DBAccess
 			VALUES (?, ?, ?)
 			SQL;
 
-			return $this->void_query($query, "sss", [$isbn, $userEmail, $condizione]);
+			$this->void_query($query, "sss", [$isbn, $userEmail, $condizione]);
 		} catch (Exception $e) {
 			error_log("insert_libri_offerti_by_username: " . $e->getMessage());
 			//throw $e;
 		}
 	}
 
-	public function delete_libro_offerto($user, $isbn)
+	public function delete_libro_offerto($user, $isbn): void
 	{
 		try {
 			$userEmail = $this->get_user_email_by_username($user);
@@ -465,7 +464,7 @@ class DBAccess
 			WHERE ISBN = ? AND proprietario = ?
 			SQL;
 
-			return $this->query_to_array($query, "ss", [$isbn, $userEmail]);
+			$this->void_query($query, "ss", [$isbn, $userEmail]);
 		} catch (Exception $e) {
 			error_log("delete_libro_offerto: " . $e->getMessage());
 			throw $e;
@@ -483,15 +482,14 @@ class DBAccess
 			WHERE D.email = ?
 			SQL;
 
-			$ris = $this->query_to_array($query, "s", [$userEmail]);
-			return $ris ? $ris : null;
+			return $this->query_to_array($query, "s", [$userEmail]);
 		} catch (Exception $e) {
 			error_log("get_libri_desiderati_by_username: " . $e->getMessage());
 			return null;
 		}
 	}
 
-	public function insert_libri_desiderati_by_username($user, $isbn)
+	public function insert_libri_desiderati_by_username($user, $isbn): void
 	{
 		try {
 			$userEmail = $this->get_user_email_by_username($user);
@@ -500,14 +498,14 @@ class DBAccess
 			VALUES (?, ?)
 			SQL;
 
-			return $this->void_query($query, "ss", [$userEmail, $isbn]);
+			$this->void_query($query, "ss", [$userEmail, $isbn]);
 		} catch (Exception $e) {
 			error_log("insert_libri_desiderati_by_username: " . $e->getMessage());
 			throw $e;
 		}
 	}
 
-	public function delete_libro_desiderato($user, $isbn)
+	public function delete_libro_desiderato($user, $isbn): void
 	{
 		try {
 			$userEmail = $this->get_user_email_by_username($user);
@@ -516,9 +514,9 @@ class DBAccess
 			WHERE ISBN = ? AND email = ?
 			SQL;
 
-			return $this->void_query($query, "ss", [$isbn, $userEmail]);
+			$this->void_query($query, "ss", [$isbn, $userEmail]);
 		} catch (Exception $e) {
-			error_log ("delete_libro_desiderato: " . $e->getMessage());
+			error_log("delete_libro_desiderato: " . $e->getMessage());
 			throw $e;
 		}
 	}

@@ -6,7 +6,7 @@ export function fillSuggestion(formChecks) {
             checkRegex(this, formChecks);
         };
 
-        if (id == "conferma") {
+        if (id === "conferma") {
             input.onblur = function () {
                 checkPassword("password", "conferma", formChecks);
             };
@@ -62,7 +62,7 @@ function checkRegex(input, formChecks) {
         setSuggestion(input, 2, formChecks);
         input.focus();
         input.select();
-    } else if (text.search(regex) != 0) {
+    } else if (text.search(regex) !== 0) {
         formChecks[input.id][3] = false;
         if (suggestionElement) {
             suggestionElement.remove();
@@ -82,7 +82,7 @@ function checkPassword(passwordId, passwordConfId, formChecks) {
     var password = document.getElementById(passwordId);
     var conferma = document.getElementById(passwordConfId);
 
-    if (password.value != conferma.value) {
+    if (password.value !== conferma.value) {
         if (document.getElementById("conferma-sugg")) {
             document.getElementById("conferma-sugg").remove();
         }

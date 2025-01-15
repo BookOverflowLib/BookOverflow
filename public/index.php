@@ -20,6 +20,12 @@ if (preg_match("#^/profilo/([^/]+)/seleziona-generi$#", $path, $matches)) {
 	$path = '/profilo';
 }
 
+// Controlla se il percorso è "/libro/*"
+if (preg_match("#^/libro/([^/]+)$#", $path, $matches)) {
+	$_GET['ISBN'] = $matches[1];
+	$path = '/libro';
+}
+
 switch ($path) {
 	case '/':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'index.php';
@@ -53,6 +59,9 @@ switch ($path) {
 		break;
 	case '/profilo/libri-desiderati':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'libri-desiderati.php';
+		break;
+	case '/libro':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'libro.php';
 		break;
 	// API
 	case '/api/ottieni-comuni':

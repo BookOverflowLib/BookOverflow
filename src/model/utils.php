@@ -10,6 +10,7 @@ function ensure_session()
 		session_start();
 	}
 }
+
 /**
  * Genera una stringa HTML per visualizzare il rating sotto forma di stelle
  *
@@ -304,6 +305,12 @@ function check_ownership(): bool
 	}
 }
 
+function is_logged_in(): bool
+{
+	ensure_session();
+	return isset($_SESSION['user']);
+}
+
 /**
  * Restituisce una stringa HTML con i generi preferiti dell'utente
  * @param array $generi Array con i generi preferiti dell'utente
@@ -350,9 +357,11 @@ function getLibriCopertinaGrande($libri, $max_risultati): string
 	for ($i = 0; $i < $num_libri; $i++) {
 		$libroTemplate = <<<HTML
 		<div class="libro">
-			<img alt="" src="{$libri[$i]['path_copertina']}" width="150" />
-			<p class="titolo-libro">{$libri[$i]["titolo"]}</p>
-			<p class="autore-libro">{$libri[$i]["autore"]}</p>
+			<a href="/libro/{$libri[$i]['ISBN']}">
+				<img alt="" src="{$libri[$i]['path_copertina']}" width="150" />
+				<p class="titolo-libro">{$libri[$i]["titolo"]}</p>
+				<p class="autore-libro">{$libri[$i]["autore"]}</p>
+			</a>
 		</div>
 		HTML;
 		$output .= $libroTemplate;
@@ -428,7 +437,7 @@ function getLibriList($libri_utente, $list_name): string
 
 
 /**
- * Aggiunge i bottoni per aggiungere un libro e per cercare un libro, 
+ * Aggiunge i bottoni per aggiungere un libro e per cercare un libro,
  * aggiunge anche il dialog per la ricerca
  * @param string $libri_page Pagina HTML template con i libri
  * @param string $list_name "libri-desiderati" o "libri-offerti"
@@ -505,4 +514,18 @@ function addButtonsLibriList($libri_page, $list_name): string
 	$libri_utente = str_replace('<!-- [bookButtons] -->', $modificaEliminaButtons, $libri_utente);
 
 	return $libri_utente;
+}
+
+function getItaGenere($genere): string
+{
+	$fileGeneri = json_decode(file_get_contents('../utils/bisac.json'), true);
+	$genere = strtolower($genere);
+	return $fileGeneri[$genere]['name'];
+}
+
+function getLocationName($provincia, $comune): string
+{
+	$db = new DBAccess();
+	$location = $db->get_provincia_comune_by_ids($provincia, $comune);
+	return $location['comune'] . ', ' . $location['provincia'];
 }

@@ -84,15 +84,107 @@ if ($isTuoProfilo) {
 	$logoutButton = '<form action="/api/logout" method="POST"><input type="submit" class="button-layout" value="Esci" /></form>';
 	$profilo = str_replace('<!-- [logoutButton] -->', $logoutButton, $profilo);
 	//modifica generi
-	$modificaGeneriButton = '<a href="/profilo/' . $user['username'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';
+	$modificaGeneriButton = '<a href="/profilo/' . $_SESSION['user'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';
 	$profilo = str_replace('<!-- [generiPreferitiButton] -->', $modificaGeneriButton, $profilo);
 	//libri offerti
-	$libriOffertiButton = '<a href="/profilo/' . $user['username'] . '/libri-offerti" class="button-layout">Modifica la lista</a>';
+	$libriOffertiButton = '<a href="/profilo/' . $_SESSION['user'] . '/libri-offerti" class="button-layout">Modifica la lista</a>';
 	$profilo = str_replace('<!-- [libriOffertiButton] -->', $libriOffertiButton, $profilo);
 
-	$libriDesideratiButton = '<a href="/profilo/' . $user['username'] . '/libri-desiderati" class="button-layout">Modifica la lista</a>';
+	$libriDesideratiButton = '<a href="/profilo/' . $_SESSION['user'] . '/libri-desiderati" class="button-layout">Modifica la lista</a>';
 	$profilo = str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
 
+	$sezioneScambi = <<<HTML
+	<section id="storico-scambi">
+	    <div class="intestazione">
+	        <h2>I miei scambi</h2>
+	    </div>
+	    <div class="storico-table">
+	        <!-- [storicoScambi] --> 
+		</div>
+	</section>
+	HTML;
+	$profilo = str_replace('<!-- [sezioneScambi] -->', $sezioneScambi, $profilo);
+
+	$storicoScambi = $db->get_scambi_by_user($_SESSION['user']);
+	$storicoScambiHTML = "";
+	foreach ($storicoScambi as $scambio) {
+		$libroProp = $db->get_copia_by_id($scambio['idCopiaProp'])[0];
+		$libroAcc = $db->get_copia_by_id($scambio['idCopiaAcc'])[0];
+		$utenteAccettatore = $db->get_user_by_email($scambio['emailAccettatore'])[0];
+		$utenteProponente = $db->get_user_by_email($scambio['emailProponente'])[0];
+
+		$isScambioRicevuto = $utenteAccettatore['username'] === $_SESSION['user'];
+
+		$scambio_buttons = "";
+		if ($isScambioRicevuto) {
+			$scambio_buttons = <<<HTML
+			<div class="storico-buttons accetta">
+				<form action="/api/accetta-scambio" method="POST">
+					<input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
+					<input type="submit" class="button-layout" value="Accetta" />
+				</form>
+				<form action="/api/rifiuta-scambio" method="POST">
+					<input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
+					<input type="submit" class="button-layout secondary" value="Rifiuta" />
+				</form>
+			</div>
+			HTML;
+		} else {
+			if ($scambio['dataConclusione'] === null) {
+				$scambio_buttons = <<<HTML
+				<div class="storico-buttons">
+					<p>In attesa di risposta</p>
+					<form action="/api/rimuovi-scambio" method="POST">
+						<input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
+						<input type="submit" class="button-layout secondary" value="Annulla scambio" />
+					</form>
+				</div>
+				HTML;
+			}
+		}
+
+		$scambio_row = <<<HTML
+		<div class="storico-row">	
+			<div class="storico-dai">
+				<p>Dai:</p>
+				<div>
+					<img src="{$libroProp['path_copertina']}" alt="" width="50">
+					<div>
+						<p>{$libroProp['titolo']}</p>
+						<p class="italic">{$libroProp['autore']}</p>
+					</div>
+				</div>
+			</div>
+			<img src="/assets/imgs/scambio-arrows.svg" alt="" id="scambio-arrows">
+			<div class="storico-ricevi">
+				<p>Ricevi:</p>
+				<div>
+					<img src="{$libroAcc['path_copertina']}" alt="" width="50">
+					<div>
+						<p>{$libroAcc['titolo']}</p>
+						<p class="italic">{$libroAcc['autore']}</p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="storico-utente-scambio">
+				<p>Scambio con:</p>
+				<div>
+					<img src="{$utenteAccettatore['path_immagine']}" alt="" width="50">
+					<div>
+						<p>{$utenteAccettatore['nome']} {$utenteAccettatore['cognome']}</p>
+						<p class="italic">@{$utenteAccettatore['username']}</p>
+					</div>
+				</div>
+			</div>
+			{$scambio_buttons}
+		</div>
+		HTML;
+
+
+		$storicoScambiHTML .= $scambio_row;
+	}
+	$profilo = str_replace('<!-- [storicoScambi] -->', $storicoScambiHTML, $profilo);
 } else {
 	$profilo = str_replace('<!-- [logoutButton] -->', '', $profilo);
 	$profilo = str_replace('<!-- [generiPreferitiButton] -->', '', $profilo);

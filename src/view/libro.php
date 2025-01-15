@@ -5,6 +5,12 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
 
+if (!isset($_GET['ISBN'])) {
+	$_SESSION['error'] = "Nessun libro specificato";
+	header('Location: /404');
+	exit();
+}
+
 $db = new DBAccess();
 try {
 	$dbOK = $db->open_connection();
@@ -61,9 +67,9 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 	    	<a href="/profilo/{$utente['username']}">
 		        <img alt="" src="{$utente['path_immagine']}" width="100"/>
 		        <div>
-		            <p>{$utente['nome']} {$utente['cognome']}</p>
+		            <p class="bold">{$utente['nome']} {$utente['cognome']}</p>
 		            <p>@{$utente['username']}</p>
-		            <p class="bold">{$location}</p>
+		            <p class="small">{$location}</p>
 		        </div>
 	        </a>	
 	    </div>
@@ -71,7 +77,7 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 		    <p>Vorrebbe in cambio: </p>
 		    <div class="scambio-libro">
 		        <a href="/libro/{$libro['ISBN']}">
-			        <img alt="" src="{$libro['path_copertina']}" width="100"/>
+			        <img alt="" src="{$libro['path_copertina']}" width="70"/>
 			        <div>
 			            <p class="bold">{$libro['titolo']}</p>
 			            <p class="italic">{$libro['autore']}</p>
@@ -79,6 +85,15 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 			    </a>
 		    </div>
 		    <a href="/profilo/{$utente['username']}/libri-desiderati">Oppure altri libri</a>
+		</div>
+		<div class="scambio-button">
+			<form action="/api/proponi-scambio" method="post">
+				<input type="hidden" name="utente_proponente" value="{$_SESSION['user']}" />
+				<input type="hidden" name="utente_accettatore" value="{$utente['username']}" />
+				<input type="hidden" name="ISBN_proponente" value="{$libro['ISBN']}" />
+				<input type="hidden" name="ISBN_accettatore" value="{$_GET['ISBN']}" />
+				<input type="submit" class="button-layout danger bold" value="Proponi scambio" />
+			</form>
 		</div>
 	</div>
 	HTML;

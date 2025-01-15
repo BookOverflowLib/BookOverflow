@@ -422,7 +422,7 @@ function getLibriList($libri_utente, $list_name): string
 					{$book_copy_info}
 				</div>
 				<div class="book-buttons">
-					<form action="/api/rimuovi-libro" method="post">
+					<form action="/api/rimuovi-{$list_name}" method="post">
 						<input type="hidden" name="isbn" value="{$isbn}">
 						<!-- [bookButtons] -->
 					</form>
@@ -458,6 +458,7 @@ function addButtonsLibriList($libri_page, $list_name): string
 	$select_condizioni = '';
 	if ($list_name === 'libri-offerti') {
 		$select_condizioni = <<<HTML
+		<label for="condizioni">Seleziona le condizioni</label>
 		<select name="condizioni" id="condizioni" required>
 			<option value="" disabled selected>Seleziona le condizioni</option>
 			<hr>

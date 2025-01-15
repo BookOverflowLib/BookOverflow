@@ -607,5 +607,77 @@ class DBAccess
 			throw $e;
 		}
 	}
+
+	public function get_id_copia_by_user_libro($user, $isbn): ?array
+	{
+		$query = <<<SQL
+		SELECT C.ID
+		FROM Copia C
+		WHERE C.proprietario = ? AND C.ISBN = ?
+		SQL;
+
+		try {
+			$user_email = $this->get_user_email_by_username($user);
+			return $this->query_to_array($query, "ss", [$user_email, $isbn]);
+		} catch (Exception $e) {
+			error_log("get_id_copia_by_user_libro: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function insert_scambio($user_prop, $user_acc, $isbn_prop, $isbn_acc): void
+	{
+		$query = "INSERT INTO Scambio (emailProponente, emailAccettatore, idCopiaProp, idCopiaAcc) VALUES (?, ?, ?, ?)";
+		try {
+			$user_email_prop = $this->get_user_email_by_username($user_prop);
+			$user_email_acc = $this->get_user_email_by_username($user_acc);
+			$id_copia_prop = $this->get_id_copia_by_user_libro($user_prop, $isbn_prop)[0]['ID'];
+			$id_copia_acc = $this->get_id_copia_by_user_libro($user_acc, $isbn_acc)[0]['ID'];
+
+			$this->void_query($query, "ssii", [$user_email_prop, $user_email_acc, $id_copia_prop, $id_copia_acc]);
+		} catch (Exception $e) {
+			error_log("insert_scambio: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function get_scambi_by_user($user): ?array
+	{
+		$query = <<<SQL
+		SELECT * FROM Scambio S
+		WHERE S.emailProponente = ? OR S.emailAccettatore = ?
+		SQL;
+
+		try {
+			$user_email = $this->get_user_email_by_username($user);
+			return $this->query_to_array($query, "ss", [$user_email, $user_email]);
+		} catch (Exception $e) {
+			error_log("get_scambi_by_user: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function get_copia_by_id($id): ?array
+	{
+		$query = "SELECT * FROM Copia c JOIN Libro l ON c.ISBN = l.ISBN WHERE c.ID = ?";
+		try {
+			return $this->query_to_array($query, "i", [$id]);
+		} catch (Exception $e) {
+			error_log("get_copia_by_id: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function remove_scambio_by_id($id): void
+	{
+		$query = "DELETE FROM Scambio WHERE ID = ?";
+		try {
+			$this->void_query($query, "i", [$id]);
+		} catch (Exception $e) {
+			error_log("remove_scambio_by_id: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
 }
 

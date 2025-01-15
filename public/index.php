@@ -83,10 +83,22 @@ switch ($path) {
 		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiungi-libro-offerto.php';
 	case '/api/aggiungi-libro-desiderato':
 		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiungi-libro-desiderato.php';
-	case '/api/rimuovi-libro-offerto':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-libro-offerto.php';
-	case '/api/rimuovi-libro-desiderato':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-libro-desiderato.php';
+	case '/api/rimuovi-libri-offerti':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-libri-offerti.php';
+	case '/api/rimuovi-libri-desiderati':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-libri-desiderati.php';
+		break;
+	case '/api/proponi-scambio':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'proponi-scambio.php';
+		break;
+	case '/api/accetta-scambio':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'accetta-scambio.php';
+		break;
+	case '/api/rifiuta-scambio':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rifiuta-scambio.php';
+		break;
+	case '/api/rimuovi-scambio':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-scambio.php';
 		break;
 
 	default:

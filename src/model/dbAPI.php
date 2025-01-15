@@ -7,8 +7,12 @@ class DBAccess
 
 	public function __construct()
 	{
-		$this->load_env();
-		$this->open_connection();
+		try {
+			$this->load_env();
+			$this->open_connection();
+		} catch (Exception $e) {
+			$_SESSION['error'] = "Errore durante la connessione al database";
+		}
 	}
 
 	public function __destruct()
@@ -16,7 +20,7 @@ class DBAccess
 		$this->close_connection();
 	}
 
-	private function load_env()
+	private function load_env(): void
 	{
 		$env_path = __DIR__ . '/../../.env';
 		if (!file_exists($env_path)) {
@@ -35,7 +39,7 @@ class DBAccess
 		}
 	}
 
-	public function open_connection()
+	public function open_connection(): bool
 	{
 		// turn on the errors | convert those errors into exceptions
 		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
@@ -60,7 +64,7 @@ class DBAccess
 		}
 	}
 
-	public function close_connection()
+	public function close_connection(): void
 	{
 		if ($this->connection) {
 			mysqli_close($this->connection);
@@ -366,6 +370,7 @@ class DBAccess
 
 	public function insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina): void
 	{
+		$path_copertina = str_replace("&edge=curl", "", $path_copertina);
 		$query = "INSERT IGNORE INTO Libro (ISBN, titolo, autore, editore, anno, genere, descrizione, lingua, path_copertina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			$this->void_query($query, "sssssssss", [$isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina]);
@@ -520,4 +525,87 @@ class DBAccess
 			throw $e;
 		}
 	}
+
+	/**
+	 * Ottiene i libri con quel ISBN
+	 * @param string $ISBN isbn del libro
+	 * @return array|null
+	 */
+	public function get_book_by_ISBN(string $ISBN): ?array
+	{
+		$query = "SELECT * FROM Libro WHERE ISBN = ?";
+		try {
+			return $this->query_to_array($query, "s", [$ISBN]);
+		} catch (Exception $e) {
+			error_log("get_book_by_ISBN: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function get_users_interested_in_user_books($user)
+	{
+		$query = <<<SQL
+		SELECT DISTINCT U.email, U.nome, U.cognome, U.username, U.path_immagine, U.provincia, U.comune
+		FROM Desiderio D JOIN Utente U ON D.email = U.email
+		WHERE D.ISBN IN (
+			SELECT C.ISBN
+			FROM Copia C
+			WHERE C.proprietario = ?
+		)
+		SQL;
+
+		try {
+			return $this->query_to_array($query, "s", [$user]);
+		} catch (Exception $e) {
+			error_log("get_users_desirous_your_books_by_user: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function get_users_with_book_and_interested_in_my_books($username, $isbnLibro): ?array
+	{
+		$query = <<<SQL
+		SELECT DISTINCT U.email, U.nome, U.cognome, U.username, U.path_immagine, U.provincia, U.comune
+		FROM Utente U
+		JOIN Copia C ON U.email = C.proprietario
+		JOIN Desiderio D ON U.email = D.email
+		WHERE C.ISBN = ? AND C.disponibile = TRUE
+		AND D.ISBN IN (
+		    SELECT C2.ISBN
+		    FROM Copia C2
+		    WHERE C2.proprietario = ?
+		);
+		SQL;
+
+		try {
+			$user_email = $this->get_user_email_by_username($username);
+			return $this->query_to_array($query, "ss", [$isbnLibro, $user_email]);
+		} catch (Exception $e) {
+			error_log("get_users_with_book_and_interested_in_my_books: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function get_desiderati_che_offro($userOfferente, $userDesiderante): ?array
+	{
+		$query = <<<SQL
+		SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina	
+		FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
+		WHERE C.proprietario = ? AND C.ISBN IN (
+			SELECT D.ISBN
+			FROM Desiderio D
+			WHERE D.email = ?
+		)
+		SQL;
+
+		try {
+			$user_email_off = $this->get_user_email_by_username($userOfferente);
+			$user_email_des = $this->get_user_email_by_username($userDesiderante);
+			return $this->query_to_array($query, "ss", [$user_email_off, $user_email_des]);
+		} catch (Exception $e) {
+			error_log("get_desiderati_che_offro: " . $e->getMessage());
+			throw $e;
+		}
+	}
 }
+

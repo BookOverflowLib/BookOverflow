@@ -293,6 +293,17 @@ class DBAccess
 		return null;
 	}
 
+	public function get_user_by_identifier($identifier): ?array
+	{
+		$query = "SELECT * FROM Utente WHERE email = ? OR username = ?";
+		try {
+			return $this->query_to_array($query, "ss", [$identifier, $identifier]);
+		} catch (Exception $e) {
+			error_log("get_user_by_identifier: " . $e->getMessage());
+		}
+		return null;
+	}
+
 	public function get_provincia_comune_by_ids($idProvincia, $idComune): ?array
 	{
 		$queryProvincia = "SELECT nome FROM province WHERE id = ?";

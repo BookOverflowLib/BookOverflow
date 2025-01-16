@@ -80,67 +80,6 @@ class DBAccess
 	}
 
 	/**
-	 * Forse è troppo cursata :(
-	 * se è un SELECT ritorna
-	 *  un array se la query ha successo
-	 *  false se la query non ha successo
-	 * se è un INSERT
-	 *  true se la query ha successo
-	 *  false se la query non ha successo
-	 */
-	public function prepare_and_execute_query($query, $types = null, $params = null): array|bool
-	{
-		$this->ensure_connection();
-
-		$stmt = $this->connection->prepare($query);
-		if (!$stmt) {
-			throw new Exception("Prepare failed: " . $this->connection->error);
-		}
-
-		if ($types && $params) {
-			// there must be the same number of types and parameters
-			// e.g types = "iss", params = [1, "hello", 3.14]
-			if (strlen($types) !== count($params)) {
-				throw new Exception("Number of types does not match number of parameters");
-			}
-
-			// Bind parameters dynamically
-			if (!$stmt->bind_param($types, ...$params)) {
-				throw new Exception("Parameter binding failed: " . $stmt->error);
-			}
-		}
-
-		if (!$stmt->execute()) {
-			throw new Exception("Execute failed: " . $stmt->error);
-		}
-
-		$results = "";
-		if (str_starts_with($query, "SELECT")) {
-			try {
-				$tmpResults = $this->query_results_to_array($stmt->get_result());
-			} catch (Exception $e) {
-				throw $e;
-			}
-
-			if ($tmpResults) {
-				$results = $tmpResults;
-			} else {
-				$results = false;
-			}
-		} else {
-			if (!$stmt->get_result() && !$stmt->errno) {
-				$results = true;
-			} else {
-				$results = false;
-			}
-		}
-
-		$stmt->close();
-
-		return $results;
-	}
-
-	/**
 	 * Prepares an SQL statement for execution.
 	 *
 	 * This function ensures that a connection to the database is established,

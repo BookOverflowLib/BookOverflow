@@ -13,7 +13,7 @@ var formChecks = {
         false
     ],
     password: [
-        "Ex: Password123",
+        "Ex: Password123!",
         /.*/,
         "",
         false

@@ -7,13 +7,13 @@ import {checkForm, fillSuggestion} from './formValidator.js';
 var formChecks = {
     nome: [
         "Ex: Mario",
-        /^[A-Za-z]{2,50}$/,
+        /^[A-Za-z\s']{2,50}$/,
         "Inserire un nome di lunghezza almeno 2 e massimo 50, non sono ammessi numeri o caratteri speciali",
         false
     ],
     cognome: [
         "Ex: Rossi",
-        /^[A-Za-z' ]{2,50}$/,
+        /^[A-Za-z\s']{2,50}$/,
         "Inserire un cognome di lunghezza almeno 2 e massimo 50, non sono ammessi numeri o caratteri speciali",
         false
     ],

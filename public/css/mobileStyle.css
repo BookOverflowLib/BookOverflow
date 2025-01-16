@@ -210,3 +210,31 @@ footer .logo p {
 #inizia > h3 {
 	font-size: var(--font-lg);
 }
+
+/* LIBRI OFFERTI */
+.dialog-window{
+	min-width: 15em;
+	max-width: 20em;
+	max-height: 50em;
+}
+
+.search-results-row {
+	
+	gap: 0.5em;
+	padding: 0.5em;
+	overflow: hidden;
+}
+ .book-row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	
+} 
+.book-copy-info>p {
+	max-width:10em ;
+	
+}
+ .book-row > .book-info{
+ padding-left:1em;
+ }

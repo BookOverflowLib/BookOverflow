@@ -1381,6 +1381,7 @@ li.activePage {
     display: flex;
     justify-content: center;
     gap: 0.5em;
+    margin-top: 1em;
 }
 
 .search-results-row {

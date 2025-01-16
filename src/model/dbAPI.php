@@ -271,28 +271,6 @@ class DBAccess
 		return null;
 	}
 
-	public function get_user_by_username($username): ?array
-	{
-		$query = "SELECT * FROM Utente WHERE username = ?";
-		try {
-			return $this->query_to_array($query, "s", [$username]);
-		} catch (Exception $e) {
-			error_log("get_user_by_username: " . $e->getMessage());
-		}
-		return null;
-	}
-
-	public function get_user_by_email($email): ?array
-	{
-		$query = "SELECT * FROM Utente WHERE email = ?";
-		try {
-			return $this->query_to_array($query, "s", [$email]);
-		} catch (Exception $e) {
-			error_log("get_user_by_email: " . $e->getMessage());
-		}
-		return null;
-	}
-
 	public function get_user_by_identifier($identifier): ?array
 	{
 		$query = "SELECT * FROM Utente WHERE email = ? OR username = ?";

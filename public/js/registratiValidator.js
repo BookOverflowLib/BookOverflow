@@ -31,13 +31,13 @@ var formChecks = {
         false
     ],
     password: [
-        "Ex: Password123",
+        "Ex: Password123!",
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+=])[A-Za-z\d!@#$%^&*()\-+=]{8,50}$/,
         "La password deve essere lunga tra 8 e 50 caratteri, contenere almeno una lettera maiuscola (A-Z), una lettera minuscola (a-z), un numero (0-9) e un carattere speciale tra i seguenti: !@#$%^&*()-+=.",
         false
     ],
     conferma: [
-        "Ex: Password123",
+        "Ex: Password123!",
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+=])[A-Za-z\d!@#$%^&*()\-+=]{8,50}$/,
         "La password deve essere lunga tra 8 e 50 caratteri, contenere almeno una lettera maiuscola (A-Z), una lettera minuscola (a-z), un numero (0-9) e un carattere speciale tra i seguenti: !@#$%^&*()-+=.",
         false

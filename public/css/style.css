@@ -1009,6 +1009,7 @@ section > p > a {
     white-space: nowrap;
     text-overflow: ellipsis;
     margin-bottom: 0.5em;
+    max-width: 8em;
 }
 
 /* MATCH PER TE */

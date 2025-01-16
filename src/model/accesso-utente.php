@@ -22,10 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } catch (Exception $e) {
             header('Location: /accedi?error=invalid');
+            $_SESSION['error'] = "invalid-credentials";
             exit();
         }
     }
 }
 
+$_SESSION['error'] = "missing-fields";
 header('Location: /accedi?error=missing');
 exit();

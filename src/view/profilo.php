@@ -249,7 +249,7 @@ function generateScambioButtons($scambio, $isScambioRicevuto)
 
 function generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utenteProponente)
 {
-	if ($isScambioRicevuto) {
+	if (!$isScambioRicevuto) {
 		return <<<HTML
         <div class="storico-utente-scambio">
             <p>Scambio con:</p>

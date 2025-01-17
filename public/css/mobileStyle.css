@@ -64,6 +64,7 @@
 .carosello-libri {
 	grid-template-columns: 1fr 1fr;
 	margin-top: 2em;
+	gap: 2em;
 }
 
 .libro img {
@@ -215,7 +216,7 @@ footer .logo p {
 .dialog-window{
 	min-width: 15em;
 	max-width: 20em;
-	max-height: 50em;
+	max-height: 80em;
 }
 
 .search-results-row {
@@ -238,3 +239,57 @@ footer .logo p {
  .book-row > .book-info{
  padding-left:1em;
  }
+
+ /* PRFILO */
+ .dati-profilo {
+ 	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	gap:1em;
+ }
+ .dati-profilo > div > h2, .dati-profilo > div > p {
+ 
+	text-align: center;
+ }
+ .dati-profilo>img {
+ 	width: 100%;
+ 	max-width: 7em;
+ 	border-radius: 50%;
+ 	aspect-ratio: 1/1;
+ 	object-fit: cover;
+ }
+ .user-rating {
+ 	align-self: center;
+ 	gap: 0.5em;
+ }
+
+ /* LIBRO */
+
+ .libro-panoramica {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	gap:2em;
+	align-items: center; 
+}
+
+
+ .libro-panoramica>div {
+ text-align: center;
+ }
+ .storico-row {
+ 	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-self: center;
+ }
+
+
+ .storico-dai>div,
+ .storico-ricevi>div,
+ .storico-utente-scambio>div, .storico-buttons {
+
+ 	align-items: center;
+ 	justify-items: center;
+ }
+

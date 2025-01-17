@@ -492,7 +492,7 @@ class DBAccess
 		}
 	}
 
-	public function get_users_interested_in_user_books($user)
+	public function get_users_interested_in_user_books($user): ?array
 	{
 		$query = <<<SQL
 		SELECT DISTINCT U.email, U.nome, U.cognome, U.username, U.path_immagine, U.provincia, U.comune
@@ -512,7 +512,7 @@ class DBAccess
 		}
 	}
 
-	public function get_users_with_book_and_interested_in_my_books($username, $isbnLibro): ?array
+	public function get_users_with_that_book_and_interested_in_my_books($username, $isbnLibro): ?array
 	{
 		$query = <<<SQL
 		SELECT DISTINCT U.email, U.nome, U.cognome, U.username, U.path_immagine, U.provincia, U.comune
@@ -625,6 +625,65 @@ class DBAccess
 			$this->void_query($query, "i", [$id]);
 		} catch (Exception $e) {
 			error_log("remove_scambio_by_id: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function get_match_per_te_by_user($username): ?array
+	{
+		$query = <<<SQL
+		SELECT DISTINCT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina
+		FROM Utente U
+		JOIN Copia C ON U.email = C.proprietario
+		JOIN Desiderio D ON U.email = D.email
+		JOIN Libro L ON C.ISBN = L.ISBN
+		WHERE C.disponibile = TRUE
+		AND D.ISBN IN (
+		    SELECT C2.ISBN
+		    FROM Copia C2
+		    WHERE C2.proprietario = ?
+		) AND C.ISBN IN (
+		    SELECT D2.ISBN
+		    FROM Desiderio D2
+		    WHERE D2.email = ?
+		)
+		SQL;
+
+		try {
+			$user_email = $this->get_user_email_by_username($username);
+			return $this->query_to_array($query, "ss", [$user_email, $user_email]);
+		} catch (Exception $e) {
+			error_log("get_match_per_te_by_user: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function get_potrebbe_piacerti_by_user($username): ?array
+	{
+		$query = <<<SQL
+		SELECT DISTINCT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina
+		FROM Utente U
+		JOIN Copia C ON U.email = C.proprietario
+		JOIN Desiderio D ON U.email = D.email
+		JOIN Libro L ON C.ISBN = L.ISBN
+		JOIN Libro L2 ON D.ISBN = L2.ISBN
+		WHERE C.disponibile = TRUE
+		AND D.ISBN IN (
+		    SELECT C2.ISBN
+		    FROM Copia C2
+		    WHERE C2.proprietario = ?
+		) AND C.ISBN NOT IN (
+		    SELECT D2.ISBN
+		    FROM Desiderio D2
+		    WHERE D2.email = ?
+		)
+		SQL;
+
+		try {
+			$user_email = $this->get_user_email_by_username($username);
+			return $this->query_to_array($query, "ss", [$user_email, $user_email]);
+		} catch (Exception $e) {
+			error_log("get_match_per_te_by_user: " . $e->getMessage());
 			throw $e;
 		}
 	}

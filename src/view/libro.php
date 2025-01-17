@@ -102,7 +102,7 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 
 $scambi_html = "";
 if (is_logged_in()) {
-	$utentiInteressati = $db->get_users_with_book_and_interested_in_my_books($_SESSION['user'], $_GET['ISBN']);
+	$utentiInteressati = $db->get_users_with_that_book_and_interested_in_my_books($_SESSION['user'], $_GET['ISBN']);
 	$numUtentiInteressati = count($utentiInteressati);
 	$libro_page = str_replace('<!-- [numUtentiInteressati] -->', $numUtentiInteressati . ' utenti lo scambiano', $libro_page);
 

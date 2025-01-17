@@ -629,6 +629,28 @@ class DBAccess
 		}
 	}
 
+	public function accetta_scambio_by_id($id): void
+	{
+		$query = "UPDATE Scambio SET stato = 'accettato' WHERE ID = ?";
+		try {
+			$this->void_query($query, "i", [$id]);
+		} catch (Exception $e) {
+			error_log("accetta_scambio_by_id: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function rifiuta_scambio_by_id($id): void
+	{
+		$query = "UPDATE Scambio SET stato = 'rifiutato' WHERE ID = ?";
+		try {
+			$this->void_query($query, "i", [$id]);
+		} catch (Exception $e) {
+			error_log("rifiuta_scambio_by_id: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
 	public function get_match_per_te_by_user($username): ?array
 	{
 		$query = <<<SQL

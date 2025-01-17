@@ -530,3 +530,12 @@ function getLocationName($provincia, $comune): string
 	$location = $db->get_provincia_comune_by_ids($provincia, $comune);
 	return $location['comune'] . ', ' . $location['provincia'];
 }
+
+function ensure_login(): void
+{
+	ensure_session();
+	if (!isset($_SESSION['user'])) {
+		header('Location: /accedi');
+		exit();
+	}
+}

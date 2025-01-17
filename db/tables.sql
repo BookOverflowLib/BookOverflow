@@ -85,9 +85,8 @@ CREATE TABLE
         stato ENUM (
             'in attesa',
             'accettato',
-            'rifiutato',
-            'concluso'
-        ) DEFAULT 'in attesa',
+            'rifiutato'
+            ) DEFAULT 'in attesa',
         FOREIGN KEY (emailProponente) REFERENCES Utente (email),
         FOREIGN KEY (emailAccettatore) REFERENCES Utente (email),
         FOREIGN KEY (idCopiaProp) REFERENCES Copia (ID),

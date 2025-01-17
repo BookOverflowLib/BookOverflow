@@ -46,7 +46,7 @@ function handleError($message)
 
 function getUser($db, $profileId)
 {
-	$user = $db->get_user_by_username($profileId);
+	$user = $db->get_user_by_identifier($profileId);
 	if ($user == null) {
 		handleError("Utente non trovato");
 	}
@@ -163,8 +163,8 @@ function generateScambioRow($scambio, $db)
 {
 	$libroProp = $db->get_copia_by_id($scambio['idCopiaProp'])[0];
 	$libroAcc = $db->get_copia_by_id($scambio['idCopiaAcc'])[0];
-	$utenteAccettatore = $db->get_user_by_email($scambio['emailAccettatore'])[0];
-	$utenteProponente = $db->get_user_by_email($scambio['emailProponente'])[0];
+	$utenteAccettatore = $db->get_user_by_identifier($scambio['emailAccettatore'])[0];
+	$utenteProponente = $db->get_user_by_identifier($scambio['emailProponente'])[0];
 
 	$isScambioRicevuto = $utenteAccettatore['username'] === $_SESSION['user'];
 

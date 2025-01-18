@@ -174,13 +174,14 @@ function generateScambioRow($scambio, $db)
 	$other_libro = $isScambioRicevuto ? $libroProp : $libroAcc;
 
 	return <<<HTML
-    <div class="storico-row">    
+    <div class="storico-row">   
+    	<div class="storico-books">
         <div class="storico-dai">
             <p>Dai:</p>
             <div>
                 <img src="{$user_libro['path_copertina']}" alt="" width="50">
                 <div>
-                    <p>{$user_libro['titolo']}</p>
+                    <p class="bold">{$user_libro['titolo']}</p>
                     <p class="italic">{$user_libro['autore']}</p>
                 </div>
             </div>
@@ -191,12 +192,13 @@ function generateScambioRow($scambio, $db)
             <div>
                 <img src="{$other_libro['path_copertina']}" alt="" width="50">
                 <div>
-                    <p>{$other_libro['titolo']}</p>
+                    <p class="bold">{$other_libro['titolo']}</p>
                     <p class="italic">{$other_libro['autore']}</p>
                 </div>
             </div>
         </div>
-        
+        </div> 
+
         {$scambio_utente}
         {$scambio_buttons}
     </div>

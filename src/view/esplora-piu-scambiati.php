@@ -7,16 +7,15 @@ require_once $GLOBALS['MODEL_PATH'] . 'nyt-libri.php';
 // $pp = showBooksInfo();
 //insert_NYT_books();
 ensure_session();
-ensure_login();
 
-$page = getTemplatePage("Per Te");
+$page = getTemplatePage("Più scambiati");
 $esplora = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'esplora-tutti.html');
-$esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Match per te', $esplora);
+$esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Più scambiati', $esplora);
 
 $db = new DBAccess();
-$match_per_te = $db->get_match_per_te_by_user($_SESSION['user']);
+$piu_scambiati = $db->get_piu_scambiati();
 
-$esplora = str_replace('<!-- [caroselloTuttiLibri] -->', getLibriCopertinaGrande($match_per_te, 999), $esplora);
+$esplora = str_replace('<!-- [caroselloTuttiLibri] -->', getLibriCopertinaGrande($piu_scambiati, 999), $esplora);
 
 $page = str_replace('<!-- [content] -->', $esplora, $page);
 echo $page;

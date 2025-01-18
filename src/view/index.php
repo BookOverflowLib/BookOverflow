@@ -8,7 +8,6 @@ $dbOK = $db->open_connection();
 ensure_session();
 
 $piu_scambiati = $db->get_piu_scambiati();
-print_r($piu_scambiati);
 $mostTradedCoversHTML = getLibriCopertinaGrande($piu_scambiati, 4);
 
 $page = getTemplatePage();

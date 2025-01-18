@@ -36,6 +36,12 @@ switch ($path) {
 	case '/esplora/per-te':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'esplora-per-te.php';
 		break;
+	case '/esplora/potrebbe-piacerti':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'esplora-potrebbe-piacerti.php';
+		break;
+	case '/piu-scambiati':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'esplora-piu-scambiati.php';
+		break;
 	case '/accedi':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'accedi.php';
 		break;

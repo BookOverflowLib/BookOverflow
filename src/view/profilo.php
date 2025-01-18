@@ -170,16 +170,18 @@ function generateScambioRow($scambio, $db)
 
 	$scambio_buttons = generateScambioButtons($scambio, $isScambioRicevuto);
 	$scambio_utente = generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utenteProponente);
+	$user_libro = $isScambioRicevuto ? $libroAcc : $libroProp;
+	$other_libro = $isScambioRicevuto ? $libroProp : $libroAcc;
 
 	return <<<HTML
     <div class="storico-row">    
         <div class="storico-dai">
             <p>Dai:</p>
             <div>
-                <img src="{$libroProp['path_copertina']}" alt="" width="50">
+                <img src="{$user_libro['path_copertina']}" alt="" width="50">
                 <div>
-                    <p>{$libroProp['titolo']}</p>
-                    <p class="italic">{$libroProp['autore']}</p>
+                    <p>{$user_libro['titolo']}</p>
+                    <p class="italic">{$user_libro['autore']}</p>
                 </div>
             </div>
         </div>
@@ -187,10 +189,10 @@ function generateScambioRow($scambio, $db)
         <div class="storico-ricevi">
             <p>Ricevi:</p>
             <div>
-                <img src="{$libroAcc['path_copertina']}" alt="" width="50">
+                <img src="{$other_libro['path_copertina']}" alt="" width="50">
                 <div>
-                    <p>{$libroAcc['titolo']}</p>
-                    <p class="italic">{$libroAcc['autore']}</p>
+                    <p>{$other_libro['titolo']}</p>
+                    <p class="italic">{$other_libro['autore']}</p>
                 </div>
             </div>
         </div>
@@ -249,33 +251,19 @@ function generateScambioButtons($scambio, $isScambioRicevuto)
 
 function generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utenteProponente)
 {
-	if (!$isScambioRicevuto) {
-		return <<<HTML
-        <div class="storico-utente-scambio">
-            <p>Scambio con:</p>
+	$utente = $isScambioRicevuto ? $utenteProponente : $utenteAccettatore;
+	return <<<HTML
+    <div class="storico-utente-scambio">
+        <p>Scambio con:</p>
+        <div>
+            <img src="{$utente['path_immagine']}" alt="" width="50">
             <div>
-                <img src="{$utenteAccettatore['path_immagine']}" alt="" width="50">
-                <div>
-                    <p>{$utenteAccettatore['nome']} {$utenteAccettatore['cognome']}</p>
-                    <p class="italic">@{$utenteAccettatore['username']}</p>
-                </div>
+                <p>{$utente['nome']} {$utente['cognome']}</p>
+                <p class="italic">@{$utente['username']}</p>
             </div>
         </div>
-        HTML;
-	} else {
-		return <<<HTML
-        <div class="storico-utente-scambio">
-            <p>Scambio con:</p>
-            <div>
-                <img src="{$utenteProponente['path_immagine']}" alt="" width="50">
-                <div>
-                    <p>{$utenteProponente['nome']} {$utenteProponente['cognome']}</p>
-                    <p class="italic">@{$utenteProponente['username']}</p>
-                </div>
-            </div>
-        </div>
-        HTML;
-	}
+    </div>
+    HTML;
 }
 
 function addOtherProfiloButtons($profilo, $user)

@@ -798,9 +798,13 @@ main {
     gap: 1em;
     border: 1px solid var(--neutral-100);
     border-radius: 1em;
-    padding: 1.5em 2em;
+    padding: 2em;
     margin-bottom: 20em;
-    margin-top: 3em;
+    margin-top: 2em;
+}
+
+#login-section {
+    padding: 1em
 }
 
 .login,

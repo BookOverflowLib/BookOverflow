@@ -688,5 +688,36 @@ class DBAccess
 		}
 	}
 
+	function get_piu_scambiati(): ?array
+	{
+		$query = <<<SQL
+		SELECT L.ISBN, L.titolo, L.autore, L.path_copertina, COUNT(*) AS numero_scambi		
+		FROM (		    
+			SELECT l.ISBN, l.titolo, l.autore, l.path_copertina
+			FROM Scambio s 
+			JOIN Copia c ON s.idCopiaProp = c.ID
+			JOIN Libro l ON c.ISBN = l.ISBN
+			WHERE s.stato = 'accettato'
+			
+			UNION ALL 
+			
+			SELECT l.ISBN, l.titolo, l.autore, l.path_copertina
+			FROM Scambio s
+			JOIN Copia c ON s.idCopiaAcc = c.ID
+			JOIN Libro l ON c.ISBN = l.ISBN
+			WHERE s.stato = 'accettato'
+		) AS L
+		GROUP BY L.ISBN
+		ORDER BY numero_scambi DESC
+		SQL;
+
+		try {
+			return $this->query_to_array($query);
+		} catch (Exception $e) {
+			error_log("get_piu_scambiati: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
 }
 

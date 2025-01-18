@@ -351,7 +351,7 @@ function getLibriCopertinaGrande($libri, $max_risultati): string
 {
 	$output = '';
 	if (!$libri || $libri == null) {
-		return '<p>Non ci sono ancora libri in questa lista!</p>';
+		return '<p class="carosello-libri-vuoto">Non ci sono ancora libri in questa lista!</p>';
 	}
 	$num_libri = count(value: $libri) > $max_risultati ? $max_risultati : count(value: $libri);
 	for ($i = 0; $i < $num_libri; $i++) {

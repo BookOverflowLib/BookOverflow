@@ -646,6 +646,10 @@ main {
     justify-items: center;
 }
 
+.carosello-libri-vuoto {
+    grid-column-start: span 4;
+}
+
 .libro {
     max-width: 10em;
     max-height: 20em;

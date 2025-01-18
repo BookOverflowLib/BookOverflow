@@ -45,7 +45,7 @@ function setSuggestion(input, mode, formChecks) {
         default:
             break;
     }
-
+    //parent.insertBefore(newNode, parent.lastChild); //TODO: maybe after is better?
     parent.insertBefore(newNode, parent.lastChild.previousSibling);
 }
 

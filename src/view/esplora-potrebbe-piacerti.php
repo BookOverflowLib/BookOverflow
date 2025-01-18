@@ -1,4 +1,5 @@
 <?php
+
 require_once '../src/paths.php';
 require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
@@ -9,14 +10,14 @@ require_once $GLOBALS['MODEL_PATH'] . 'nyt-libri.php';
 ensure_session();
 ensure_login();
 
-$page = getTemplatePage("Per Te");
+$page = getTemplatePage("Potrebbe piacerti");
 $esplora = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'esplora-tutti.html');
-$esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Match per te', $esplora);
+$esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Potrebbe piacerti', $esplora);
 
 $db = new DBAccess();
-$match_per_te = $db->get_match_per_te_by_user($_SESSION['user']);
+$match_potrebbe_piacerti = $db->get_potrebbe_piacerti_by_user($_SESSION['user']);
 
-$esplora = str_replace('<!-- [caroselloTuttiLibri] -->', getLibriCopertinaGrande($match_per_te, 999), $esplora);
+$esplora = str_replace('<!-- [caroselloTuttiLibri] -->', getLibriCopertinaGrande($match_potrebbe_piacerti, 999), $esplora);
 
 $page = str_replace('<!-- [content] -->', $esplora, $page);
 echo $page;

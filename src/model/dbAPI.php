@@ -690,6 +690,7 @@ class DBAccess
 
 	function get_piu_scambiati(): ?array
 	{
+		//commento quella parte perchè ci sarebbero troppi pochi risultati per il momento
 		$query = <<<SQL
 		SELECT L.ISBN, L.titolo, L.autore, L.path_copertina, COUNT(*) AS numero_scambi		
 		FROM (		    
@@ -697,7 +698,7 @@ class DBAccess
 			FROM Scambio s 
 			JOIN Copia c ON s.idCopiaProp = c.ID
 			JOIN Libro l ON c.ISBN = l.ISBN
-			WHERE s.stato = 'accettato'
+			-- WHERE s.stato = 'accettato'
 			
 			UNION ALL 
 			
@@ -705,7 +706,7 @@ class DBAccess
 			FROM Scambio s
 			JOIN Copia c ON s.idCopiaAcc = c.ID
 			JOIN Libro l ON c.ISBN = l.ISBN
-			WHERE s.stato = 'accettato'
+			-- WHERE s.stato = 'accettato'
 		) AS L
 		GROUP BY L.ISBN
 		ORDER BY numero_scambi DESC

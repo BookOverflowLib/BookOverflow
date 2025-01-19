@@ -32,11 +32,6 @@ function getProfileId()
 	return $_GET['user'];
 }
 
-function isTuoProfilo($profileId)
-{
-	return isset($_SESSION['user']) && $profileId == $_SESSION['user'];
-}
-
 function handleError($message)
 {
 	$_SESSION['error'] = $message;
@@ -122,16 +117,16 @@ function replaceLibri($profilo, $user, $db)
 
 function addTuoProfiloButtons($profilo)
 {
-	$logoutButton = '<form action="/api/logout" method="POST"><input type="submit" class="button-layout" value="Esci" /></form>';
+	$logoutButton = '<form action="/api/logout" method="POST"><input type="submit" class="button-layout" value="Esci" aria-label="Esci dal tuo profilo"/></form>';
 	$profilo = str_replace('<!-- [logoutButton] -->', $logoutButton, $profilo);
 
 	$modificaGeneriButton = '<a href="/profilo/' . $_SESSION['user'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';
 	$profilo = str_replace('<!-- [generiPreferitiButton] -->', $modificaGeneriButton, $profilo);
 
-	$libriOffertiButton = '<a href="/profilo/' . $_SESSION['user'] . '/libri-offerti" class="button-layout">Modifica la lista</a>';
+	$libriOffertiButton = '<a href="/profilo/' . $_SESSION['user'] . '/libri-offerti" class="button-layout" aria-label="MOdifica la lista dei libri offerti">Modifica la lista</a>';
 	$profilo = str_replace('<!-- [libriOffertiButton] -->', $libriOffertiButton, $profilo);
 
-	$libriDesideratiButton = '<a href="/profilo/' . $_SESSION['user'] . '/libri-desiderati" class="button-layout">Modifica la lista</a>';
+	$libriDesideratiButton = '<a href="/profilo/' . $_SESSION['user'] . '/libri-desiderati" class="button-layout" aria-label="Modifica la lista dei desideri">Modifica la lista</a>';
 	$profilo = str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
 
 	$sezioneScambi = <<<HTML
@@ -273,9 +268,9 @@ function addOtherProfiloButtons($profilo, $user)
 	$profilo = str_replace('<!-- [logoutButton] -->', '', $profilo);
 	$profilo = str_replace('<!-- [generiPreferitiButton] -->', '', $profilo);
 
-	$libriOffertiButton = '<a href="/profilo/' . $user['username'] . '/libri-offerti" class="button-layout">Mostra tutti</a>';
+	$libriOffertiButton = '<a href="/profilo/' . $user['username'] . '/libri-offerti" class="button-layout" aria-label="Mostra tutti i libri offerti">Mostra tutti</a>';
 	$profilo = str_replace('<!-- [libriOffertiButton] -->', $libriOffertiButton, $profilo);
 
-	$libriDesideratiButton = '<a href="/profilo/' . $user['username'] . '/libri-desiderati" class="button-layout">Mostra tutti</a>';
+	$libriDesideratiButton = '<a href="/profilo/' . $user['username'] . '/libri-desiderati" class="button-layout" aria-label="Mostra tutta la lista dei desideri">Mostra tutti</a>';
 	return str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
 }

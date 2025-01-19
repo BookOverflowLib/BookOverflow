@@ -150,18 +150,14 @@ function getHeaderButtons($path): string
 	ensure_session();
 
 	if (isset($_SESSION['user'])) {
-		$ris =
-			'<div class="header-buttons">' .
-			$themeToggleButton .
-			'<a class="profile-button" href="/profilo/' .
-			$_SESSION['user'] .
-			'">' .
-			$_SESSION['user'] .
-			'<img src="' .
-			$_SESSION['path_immagine'] .
-			'" alt="" width="40">' .
-			'</a>' .
-			'</div>';
+		$ris = <<<HTML
+			<div class="header-buttons">
+				{$themeToggleButton}
+				<a class="profile-button" href="/profilo/{$_SESSION['user']}" aria-label="Vai al tuo profilo">
+					{$_SESSION['user']}<img src="{$_SESSION['path_immagine']}" alt="" width="40">
+				</a>
+			</div>
+			HTML;
 	} else {
 		$ris =
 			'<div class="header-buttons">' .
@@ -367,7 +363,7 @@ function getLibriCopertinaGrande($libri, $max_risultati): string
 	for ($i = 0; $i < $num_libri; $i++) {
 		$libroTemplate = <<<HTML
 		<div class="libro">
-			<a href="/libro/{$libri[$i]['ISBN']}">
+			<a href="/libro/{$libri[$i]['ISBN']}" aria-label="Libro {$libri[$i]["titolo"]} di {$libri[$i]["autore"]}" ">
 				<img alt="" src="{$libri[$i]['path_copertina']}" width="150" />
 				<p class="titolo-libro">{$libri[$i]["titolo"]}</p>
 				<p class="autore-libro">{$libri[$i]["autore"]}</p>
@@ -416,26 +412,31 @@ function getLibriList($libri_utente, $list_name): string
 				HTML;
 			}
 
+			if (isTuoProfilo($_GET['user'])) {
+				$bookButtons = getLibriListBookButtons($list_name, $isbn, $titolo);
+			} else {
+				$bookButtons = '';
+			}
+
 			$libroRowTemplate = <<<HTML
 			<div class="book-row">
 				<div class="book-info">
-					<img
-						src="{$path_copertina}"
-						alt=""
-						width="50" />
-					<div>
-						<p>{$titolo}</p>
-						<p class="italic">{$autore}</p>
-					</div>
+					<a href="/libro/{$isbn}" aria-label="Libro {$titolo} di {$autore}" ">
+						<img
+							src="{$path_copertina}"
+							alt=""
+							width="50" />
+						<div>
+							<p><span class="sr-only">Titolo </span>{$titolo}</p>
+							<p class="italic"><span class="sr-only">Autore </span>{$autore}</p>
+						</div>
+					</a>
 				</div>
 				<div class="book-copy-info">
 					{$book_copy_info}
 				</div>
 				<div class="book-buttons">
-					<form action="/api/rimuovi-{$list_name}" method="post">
-						<input type="hidden" name="isbn" value="{$isbn}">
-						<!-- [bookButtons] -->
-					</form>
+					{$bookButtons}
 				</div>
 			</div>
 			HTML;
@@ -445,6 +446,23 @@ function getLibriList($libri_utente, $list_name): string
 	return $libri_html;
 }
 
+function isTuoProfilo($profileId)
+{
+	return isset($_SESSION['user']) && $profileId == $_SESSION['user'];
+}
+
+function getLibriListBookButtons($list_name, $isbn, $titolo)
+{
+
+	$api = $list_name === 'libri-offerti' ? '/api/rimuovi-libro-offerto' : '/api/rimuovi-libro-desiderato';
+	$bookButtons = <<<HTML
+	<form action="{$api}" method="post">
+		<input type="hidden" name="isbn" value="{$isbn}">
+		<input type="submit" class="button-layout danger bold" value="Elimina" aria-label="Elimina {$titolo} dalla lista">
+	</form>
+	HTML;
+	return $bookButtons;
+}
 
 /**
  * Aggiunge i bottoni per aggiungere un libro e per cercare un libro,
@@ -462,13 +480,14 @@ function addButtonsLibriList($libri_page, $list_name): string
 	$form_action = $list_name === 'libri-offerti' ? '/api/aggiungi-libro-offerto' : '/api/aggiungi-libro-desiderato';
 
 	$libri_utente = $libri_page;
-	$aggiungiLibro = '<button class="button-layout" id="aggiungi-libro-button">Aggiungi un libro</button>';
+	$aggiungiLibro = '<button class="button-layout" id="aggiungi-libro-button" aria-label="Aggiungi un libro ai libri offerti">Aggiungi un libro</button>';
 	$libri_utente = str_replace('<!-- [aggiungiLibroButton] -->', $aggiungiLibro, $libri_utente);
 
 	$select_condizioni = '';
 	if ($list_name === 'libri-offerti') {
 		$select_condizioni = <<<HTML
-		<label for="condizioni">Seleziona le condizioni</label>
+		<div class="select-wrapper">
+		<label for="condizioni">Seleziona le condizioni del libro</label>
 		<select name="condizioni" id="condizioni" required>
 			<option value="" disabled selected>Seleziona le condizioni</option>
 			<hr>
@@ -478,6 +497,7 @@ function addButtonsLibriList($libri_page, $list_name): string
 			<option value="usato">Usato</option>
 			<option value="danneggiato">Danneggiato</option>
 		</select>
+		</div>
 		HTML;
 	}
 
@@ -490,7 +510,10 @@ function addButtonsLibriList($libri_page, $list_name): string
 				<input type="search"
 					name="cerca"
 					id="cerca"
-					placeholder="Cerca un libro ..." />
+					placeholder="Cerca un libro ..." 
+					autocomplete="off"
+					/>
+				<span class="sr-only" role="alert" aria-atomic="false" id="sr-risultati"></span>
 				<div id="book-results">
 					<p>Nessun risultato</p>
 				</div>
@@ -505,26 +528,14 @@ function addButtonsLibriList($libri_page, $list_name): string
 				<input type="hidden" name="lingua" value="">
 				<input type="hidden" name="path_copertina" value="">
 				<div class="dialog-buttons">
-					<button id="close-dialog" class="button-layout-light">Annulla</button>
+					<button id="close-dialog" class="button-layout-light" type="reset" formnovalidate>Annulla</button>
 					<input type="submit" id="aggiungi-libro" class="button-layout" value="Aggiungi libro">
 				</div>
 			</form>
 		</div>
 	</dialog>
 	HTML;
-
-	$libri_utente = str_replace('<!-- [cercaLibriDialog] -->', $cercaLibriDialog, $libri_utente);
-
-	$modificaEliminaButtons = <<<HTML
-	<!-- <button class="button-layout">Modifica</button> -->
-	<!-- <form action="/api/rimuovi-libro" method="post"> -->
-		<!-- <input type="hidden" name="isbn" value=""> -->
-		<input type="submit" class="button-layout danger bold" value="Elimina">
-	<!-- </form> -->
-	HTML;
-	$libri_utente = str_replace('<!-- [bookButtons] -->', $modificaEliminaButtons, $libri_utente);
-
-	return $libri_utente;
+	return str_replace('<!-- [cercaLibriDialog] -->', $cercaLibriDialog, $libri_utente);
 }
 
 function getItaGenere($genere): string

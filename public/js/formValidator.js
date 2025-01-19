@@ -96,6 +96,56 @@ function checkPassword(passwordId, passwordConfId, formChecks) {
     }
 }
 
+function saveInputValueSessionStorage(input) {
+    sessionStorage.setItem(input.name, input.value);
+}
+
+function restoreInputValueSessionStorage(input) {
+    var value = sessionStorage.getItem(input.name);
+    if (value) {
+        input.value = value;
+    }
+}
+
+export function saveAllInputValues() {
+    console.log("saving all input values");
+    var inputs = [
+        document.getElementById('nome'),
+        document.getElementById('cognome'),
+        document.getElementById('provincia'),
+        document.getElementById('comune'),
+        document.getElementById('username'),
+        document.getElementById('email')
+    ];
+
+    for (var i = 0; i < inputs.length; i++) {
+        saveInputValueSessionStorage(inputs[i]);
+    }
+}
+
+export function restoreAllInputValues() {
+    var inputs = [
+        document.getElementById('nome'),
+        document.getElementById('cognome'),
+        document.getElementById('provincia'),
+        document.getElementById('comune'),
+        document.getElementById('username'),
+        document.getElementById('email')
+    ];
+
+    for (var i = 0; i < inputs.length; i++) {
+        restoreInputValueSessionStorage(inputs[i]);
+    }
+}
+
+function clearInputValueSessionStorage() {
+    var inputs = ['nome', 'cognome', 'provincia', 'comune', 'username', 'email'];
+
+    inputs.forEach(function (input) {
+        sessionStorage.removeItem(input);
+    });
+}
+
 export function checkForm(formId, redirect, formChecks) {
     var form = document.getElementById(formId);
     var inputs = form.getElementsByTagName("input");
@@ -106,6 +156,7 @@ export function checkForm(formId, redirect, formChecks) {
         }
     }
 
+    clearInputValueSessionStorage();
     form.setAttribute("action", redirect);
     return true;
 }

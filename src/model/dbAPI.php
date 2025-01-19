@@ -298,12 +298,16 @@ class DBAccess
 
 	public function insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina): void
 	{
+		if (empty(trim($isbn))){
+			throw new Exception("Errore: ISBN non valido");
+		}
 		$path_copertina = str_replace("&edge=curl", "", $path_copertina);
 		$query = "INSERT IGNORE INTO Libro (ISBN, titolo, autore, editore, anno, genere, descrizione, lingua, path_copertina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			$this->void_query($query, "sssssssss", [$isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina]);
 		} catch (Exception $e) {
 			error_log("insert_new_book: " . $e->getMessage());
+			throw new Exception("Errore: libro non aggiunto");
 		}
 	}
 

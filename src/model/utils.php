@@ -235,18 +235,28 @@ function getBreadcrumb($path): string
 		$currentUrl = '';
 		for ($i = 0; $i < $last; $i++) {
 			$currentUrl .= '/' . $path[$i];
-			$currentPath = str_replace('-', ' ', ucfirst($path[$i])); // remove - 
+			$currentPath = str_replace('-', ' ', ucfirst($path[$i])); // remove -
 			if (isset($_SESSION['user']) && $i > 0 && $path[$i - 1] == 'profilo' && $path[$i] == $_SESSION['user']) {
 				$currentPath = 'Il mio profilo';
 			}
-			if ($currentPath !== 'Profilo') {
+			if ($currentPath !== 'Profilo' && $currentPath !== 'Libro') {
 				$elements .= '<li><a href="' . $currentUrl . '">' . $currentPath . '</a></li>';
 			}
+
 		}
 		$currentPath = str_replace('-', ' ', ucfirst($path[$i]));
 
 		if (isset($_SESSION['user']) && $i > 0 && $path[$i - 1] == 'profilo' && $path[$i] == $_SESSION['user']) {
 			$currentPath = 'Il mio profilo';
+		}
+
+		// Check if the URL is /libro/{isbn} and replace it with /{titolo-libro}
+		if ($i > 0 && $path[$i - 1] == 'libro') {
+			$isbn = $path[$i];
+			$db = new DBAccess();
+			$bookTitle = $db->get_book_title_by_ISBN($isbn);
+			$bookTitle = $bookTitle[0]['titolo'];
+			$currentPath = ucfirst($bookTitle);
 		}
 
 		if ($currentPath !== 'Profilo') {

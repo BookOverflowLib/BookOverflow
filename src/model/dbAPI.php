@@ -720,5 +720,16 @@ class DBAccess
 		}
 	}
 
+	function get_book_title_by_ISBN($isbn): ?array
+	{
+		$query = "SELECT titolo FROM Libro WHERE ISBN = ?";
+		try {
+			return $this->query_to_array($query, "s", [$isbn]);
+		} catch (Exception $e) {
+			error_log("get_book_title_by_ISBN: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
 }
 

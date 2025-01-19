@@ -14,16 +14,22 @@ cerca.onkeyup = function () {
 };
 
 let booksResults = [];
+
 // sarebbe bello renderla più generica passando value come parametro ma poi non verrebbe applicato il delay da setTimeout; mettendo un parametro diventerebbe una chiamata diretta a fetch_books_API e quindi istantanea, infatti setTimeout richiede come parametro una funzione che verrà eseguita da lui
 function fetch_books_API() {
+    if (cerca.value === '') {
+        return;
+    }
     let url = 'https://www.googleapis.com/books/v1/volumes?q=' + cerca.value + '&maxResults=5';
 
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
+            if (data === undefined) return;
             let libri = data.items;
-            let output = '';
+            document.getElementById('sr-risultati').innerHTML = libri.length + ' Risultati trovati';
 
+            let output = '';
             libri.forEach(function (libro) {
                 let isbn = '';
                 if (libro.volumeInfo.industryIdentifiers === undefined) return;
@@ -52,8 +58,9 @@ function fetch_books_API() {
                         <label for="${isbn}">
                             <img src="${immagine}" width="50"/>
                             <div>
-                                <p class="bold titolo">${titolo}</p>
-                                <p class="italic autore">${autore}</p>
+                                
+                                <p class="bold titolo"><span class="sr-only">Titolo </span>${titolo}</p>
+                                <p class="italic autore"><span class="sr-only">Autore </span>${autore}</p>
                             </div>
                         </label>
                     </div>
@@ -69,7 +76,7 @@ function fetch_books_API() {
                     lingua: lingua,
                     editore: editore
                 });
-           });
+            });
 
             document.getElementById('book-results').innerHTML = output;
         });
@@ -79,7 +86,7 @@ function fetch_books_API() {
 let selectedBook = {};
 document.getElementById('book-results').addEventListener('change', function (e) {
     selectedBook = booksResults.find(book => book.isbn === e.target.id);
-    document.getElementsByName('ISBN')[0].value = selectedBook.isbn; 
+    document.getElementsByName('ISBN')[0].value = selectedBook.isbn;
     document.getElementsByName('titolo')[0].value = selectedBook.titolo;
     document.getElementsByName('autore')[0].value = selectedBook.autore;
     document.getElementsByName('path_copertina')[0].value = selectedBook.immagine;
@@ -101,22 +108,23 @@ showDialogButton.addEventListener('click', () => {
 
 const closeDialog = document.getElementById('close-dialog')
 closeDialog.addEventListener('click', () => {
+    resetSearchResults()
     dialog.close()
 })
-// dialog.querySelector('button').addEventListener('click', () => {
-// 	dialog.close();
-// });
-// // Modifica un libro
-// const modificaButtons = document.querySelectorAll('.book-buttons button:first-child');
-// modificaButtons.forEach(button => {
-// 	button.addEventListener('click', () => {
-// 		dialog.showModal();
-// 	});
-// });
-// // Elimina un libro
-// const eliminaButtons = document.querySelectorAll('.book-buttons button:last-child');
-// eliminaButtons.forEach(button => {
-// 	button.addEventListener('click', () => {
-// 		// Elimina il libro
-// 	});
-// });
+
+function resetSearchResults() {
+    document.getElementById('book-results').innerHTML = '<p>Nessun risultato</p>';
+    document.getElementById('sr-risultati').innerHTML = '';
+    booksResults = [];
+    cerca.value = '';
+    document.getElementsByName('ISBN')[0].value = '';
+    document.getElementsByName('titolo')[0].value = '';
+    document.getElementsByName('autore')[0].value = '';
+    document.getElementsByName('path_copertina')[0].value = '';
+    document.getElementsByName('descrizione')[0].value = '';
+    document.getElementsByName('anno')[0].value = '';
+    document.getElementsByName('genere')[0].value = '';
+    document.getElementsByName('lingua')[0].value = '';
+    document.getElementsByName('editore')[0].value = '';
+
+}

@@ -235,11 +235,15 @@ footer .logo p {
     font-size: var(--font-lg);
 }
 
+#aggiungi-libro-dialog {
+    margin-inline: 1em;
+    width: auto;
+}
+
 /* LIBRI OFFERTI */
 .dialog-window {
-    min-width: 15em;
-    max-width: 20em;
-    max-height: 80em;
+    width: auto;
+    min-width: 80%;
 }
 
 .search-results-row {
@@ -249,14 +253,26 @@ footer .logo p {
 }
 
 .book-row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+}
+
+.book-info {
+    grid-column-start: span 2;
+    justify-self: center;
+}
+
+.book-buttons, .book-copy-info {
+    justify-self: center;
 }
 
 .book-copy-info > p {
     max-width: 10em;
+}
+
+.section-container {
+    padding: 2em;
 }
 
 .book-row > .book-info {

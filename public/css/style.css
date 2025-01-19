@@ -609,7 +609,7 @@ main {
     margin-bottom: 1.5em;
 }
 
-#landing > img {
+#landing > picture > img {
     border-radius: 1em;
     /* min-width: 10em; */
     width: 35vw;
@@ -1198,7 +1198,7 @@ li.activePage {
     text-align: center;
 }
 
-#come-funziona > div > div > img {
+#come-funziona > div > div > picture > img {
     width: 100%;
     max-width: 23em;
     overflow: hidden;

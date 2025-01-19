@@ -490,6 +490,10 @@ class DBAccess
 		}
 	}
 
+	// U è l'utente "destinazione" della richiesta
+	// C è la sua copia, da scambiare con la nostra
+	// D sono i desideri dell'utente destnatario, 
+	// il sub-select controlla che tra i suoi desiderati ci siano libri miei
 	public function get_users_with_that_book_and_interested_in_my_books($username, $isbnLibro): ?array
 	{
 		$query = <<<SQL
@@ -497,7 +501,7 @@ class DBAccess
 		FROM Utente U
 		JOIN Copia C ON U.email = C.proprietario
 		JOIN Desiderio D ON U.email = D.email
-		WHERE C.ISBN = ? AND C.disponibile = TRUE
+		WHERE C.ISBN = ? AND C.disponibile = TRUE AND C.proprietario != ?
 		AND D.ISBN IN (
 		    SELECT C2.ISBN
 		    FROM Copia C2
@@ -507,7 +511,7 @@ class DBAccess
 
 		try {
 			$user_email = $this->get_user_email_by_username($username);
-			return $this->query_to_array($query, "ss", [$isbnLibro, $user_email]);
+			return $this->query_to_array($query, "sss", [$isbnLibro, $user_email, $user_email]);
 		} catch (Exception $e) {
 			error_log("get_users_with_book_and_interested_in_my_books: " . $e->getMessage());
 			throw $e;
@@ -553,8 +557,43 @@ class DBAccess
 		}
 	}
 
+	/* 
+	* Controlla che non ci sia un'altro scambio in attesa con gli stessi libri
+	*/
+	public function check_scambio_proposto($user_prop, $user_acc, $isbn_prop, $isbn_acc): bool
+	{
+		$query = <<<SQL
+		SELECT * FROM Scambio S
+		WHERE S.emailProponente = ? AND S.emailAccettatore = ? AND S.idCopiaProp = ? AND S.idCopiaAcc = ? AND S.stato = 'in attesa'
+		SQL;
+
+		try {
+			$user_email_prop = $this->get_user_email_by_username($user_prop);
+			$user_email_acc = $this->get_user_email_by_username($user_acc);
+			$id_copia_prop = $this->get_id_copia_by_user_libro($user_prop, $isbn_prop)[0]['ID'];
+			$id_copia_acc = $this->get_id_copia_by_user_libro($user_acc, $isbn_acc)[0]['ID'];
+
+			$res = $this->query_to_array($query, "ssii", [$user_email_prop, $user_email_acc, $id_copia_prop, $id_copia_acc]);
+			return count($res) > 0;
+		} catch (Exception $e) {
+			error_log("check_scambio_proposto: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	/*
+	* Casi da escludere: 
+	* - Scambi con se stessi
+	* - Scambi già proposti -> stato: in attesa
+	*/
 	public function insert_scambio($user_prop, $user_acc, $isbn_prop, $isbn_acc): void
 	{
+		if ($user_prop === $user_acc) {
+			throw new Exception("Errore: non è consentito proporre uno scambio con se stessi");
+		}
+		if ($this->check_scambio_proposto($user_prop, $user_acc, $isbn_prop, $isbn_acc)) {
+			throw new Exception("Errore: scambio già proposto");
+		}
 		$query = "INSERT INTO Scambio (emailProponente, emailAccettatore, idCopiaProp, idCopiaAcc) VALUES (?, ?, ?, ?)";
 		try {
 			$user_email_prop = $this->get_user_email_by_username($user_prop);
@@ -565,7 +604,7 @@ class DBAccess
 			$this->void_query($query, "ssii", [$user_email_prop, $user_email_acc, $id_copia_prop, $id_copia_acc]);
 		} catch (Exception $e) {
 			error_log("insert_scambio: " . $e->getMessage());
-			throw $e;
+			throw new Exception("Errore: scambio non proposto");
 		}
 	}
 
@@ -607,15 +646,33 @@ class DBAccess
 		}
 	}
 
+	public function set_books_unavailable_by_idscambio($id): void
+	{
+		$query = <<<SQL
+		UPDATE Copia C
+		JOIN Scambio S ON C.ID = S.idCopiaProp OR C.ID = S.idCopiaAcc
+		SET C.disponibile = FALSE
+		WHERE S.ID = ?
+		SQL;
+
+		try {
+			$this->void_query($query, "i", [$id]);
+		} catch (Exception $e) {
+			error_log("set_books_unavailable_by_idscambio: " . $e->getMessage());
+			throw new Exception("Errore: scambio non accettato");
+		}
+	}
+
 	public function accetta_scambio_by_id($id): void
 	{
 		$query = "UPDATE Scambio SET stato = 'accettato' WHERE ID = ?";
 		try {
 			$this->void_query($query, "i", [$id]);
+			$this->set_books_unavailable_by_idscambio($id);
 		} catch (Exception $e) {
 			error_log("accetta_scambio_by_id: " . $e->getMessage());
-			throw $e;
-		}
+			throw new Exception("Errore: scambio non accettato");
+		}	
 	}
 
 	public function rifiuta_scambio_by_id($id): void

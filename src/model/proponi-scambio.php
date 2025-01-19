@@ -16,12 +16,12 @@ if (isset($_POST) && isset($_SESSION['user'])) {
 	try {
 		$db->insert_scambio($user_prop, $user_acc, $isbn_prop, $isbn_acc);
 	} catch (Exception $e) {
-		$_SESSION['error'] = 'Errore: scambio non proposto';
+		$_SESSION['error'] = $e->getMessage();
 	}
 } else {
 	throw new Exception(message: "Errore: scambio non proposto");
 }
-//
+
 $previousUrl = $_SERVER['HTTP_REFERER'];
 $previousUrl = parse_url($previousUrl, PHP_URL_PATH);
 header('Location: ' . $previousUrl);

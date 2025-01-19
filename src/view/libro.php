@@ -64,27 +64,27 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 	$scambio = <<<HTML
 	<div class="scambio"> <!-- uno scambio -->
 	    <div class="scambio-utente"> <!-- info utente -->
-	    	<a href="/profilo/{$utente['username']}">
-		        <img alt="" src="{$utente['path_immagine']}" width="100"/>
-		        <div>
-		            <p class="bold">{$utente['nome']} {$utente['cognome']}</p>
-		            <p>@{$utente['username']}</p>
-		            <p class="small">{$location}</p>
-		        </div>
-	        </a>	
-	    </div>
-	    <div class="scambio-info">
-		    <p>Vorrebbe in cambio: </p>
-		    <div class="scambio-libro">
-		        <a href="/libro/{$libro['ISBN']}">
-			        <img alt="" src="{$libro['path_copertina']}" width="70"/>
-			        <div>
-			            <p class="bold">{$libro['titolo']}</p>
-			            <p class="italic">{$libro['autore']}</p>
-			        </div>
-			    </a>
-		    </div>
-		    <a href="/profilo/{$utente['username']}/libri-desiderati">Oppure altri libri</a>
+			<a href="/profilo/{$utente['username']}">
+				<img alt="" src="{$utente['path_immagine']}" width="100"/>
+				<div>
+					<p class="bold">{$utente['nome']} {$utente['cognome']}</p>
+					<p>@{$utente['username']}</p>
+					<p class="small">{$location}</p>
+				</div>
+			</a>    
+		</div>
+		<div class="scambio-info">
+			<p>Vorrebbe in cambio: </p>
+			<div class="scambio-libro">
+				<a href="/libro/{$libro['ISBN']}">
+					<img alt="" src="{$libro['path_copertina']}" width="70"/>
+					<div>
+						<p class="bold">{$libro['titolo']}</p>
+						<p class="italic">{$libro['autore']}</p>
+					</div>
+				</a>
+			</div>
+			<a href="/profilo/{$utente['username']}/libri-desiderati">Oppure altri libri</a>
 		</div>
 		<div class="scambio-button">
 			<form action="/api/proponi-scambio" method="post">

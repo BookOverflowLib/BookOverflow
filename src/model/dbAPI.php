@@ -490,6 +490,10 @@ class DBAccess
 		}
 	}
 
+	// U è l'utente "destinazione" della richiesta
+	// C è la sua copia, da scambiare con la nostra
+	// D sono i desideri dell'utente destnatario, 
+	// il sub-select controlla che tra i suoi desiderati ci siano libri miei
 	public function get_users_with_that_book_and_interested_in_my_books($username, $isbnLibro): ?array
 	{
 		$query = <<<SQL
@@ -497,7 +501,7 @@ class DBAccess
 		FROM Utente U
 		JOIN Copia C ON U.email = C.proprietario
 		JOIN Desiderio D ON U.email = D.email
-		WHERE C.ISBN = ? AND C.disponibile = TRUE
+		WHERE C.ISBN = ? AND C.disponibile = TRUE AND C.proprietario != ?
 		AND D.ISBN IN (
 		    SELECT C2.ISBN
 		    FROM Copia C2
@@ -507,7 +511,7 @@ class DBAccess
 
 		try {
 			$user_email = $this->get_user_email_by_username($username);
-			return $this->query_to_array($query, "ss", [$isbnLibro, $user_email]);
+			return $this->query_to_array($query, "sss", [$isbnLibro, $user_email, $user_email]);
 		} catch (Exception $e) {
 			error_log("get_users_with_book_and_interested_in_my_books: " . $e->getMessage());
 			throw $e;

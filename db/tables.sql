@@ -50,7 +50,7 @@ CREATE TABLE
 CREATE TABLE
     Copia (
         ID INT PRIMARY KEY AUTO_INCREMENT,
-        ISBN CHAR(50) NOT NULL,
+        ISBN VARCHAR(50) NOT NULL,
         proprietario VARCHAR(255) NOT NULL,
         -- utile se un utente vuole mettere tutta la lista dei suoi libri nella piattaforma perché gli altri possano vedere che libri ha, senza però che risultino disponibili per essere scambiati
         disponibile BOOLEAN DEFAULT TRUE,
@@ -69,7 +69,7 @@ CREATE TABLE
 CREATE TABLE
     Desiderio (
         email VARCHAR(255),
-        ISBN CHAR(50),
+        ISBN VARCHAR(50),
         PRIMARY KEY (email, ISBN),
         FOREIGN KEY (email) REFERENCES Utente (email),
         FOREIGN KEY (ISBN) REFERENCES Libro (ISBN)

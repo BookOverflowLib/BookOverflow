@@ -553,8 +553,43 @@ class DBAccess
 		}
 	}
 
+	/* 
+	* Controlla che non ci sia un'altro scambio in attesa con gli stessi libri
+	*/
+	public function check_scambio_proposto($user_prop, $user_acc, $isbn_prop, $isbn_acc): bool
+	{
+		$query = <<<SQL
+		SELECT * FROM Scambio S
+		WHERE S.emailProponente = ? AND S.emailAccettatore = ? AND S.idCopiaProp = ? AND S.idCopiaAcc = ? AND S.stato = 'in attesa'
+		SQL;
+
+		try {
+			$user_email_prop = $this->get_user_email_by_username($user_prop);
+			$user_email_acc = $this->get_user_email_by_username($user_acc);
+			$id_copia_prop = $this->get_id_copia_by_user_libro($user_prop, $isbn_prop)[0]['ID'];
+			$id_copia_acc = $this->get_id_copia_by_user_libro($user_acc, $isbn_acc)[0]['ID'];
+
+			$res = $this->query_to_array($query, "ssii", [$user_email_prop, $user_email_acc, $id_copia_prop, $id_copia_acc]);
+			return count($res) > 0;
+		} catch (Exception $e) {
+			error_log("check_scambio_proposto: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	/*
+	* Casi da escludere: 
+	* - Scambi con se stessi
+	* - Scambi già proposti -> stato: in attesa
+	*/
 	public function insert_scambio($user_prop, $user_acc, $isbn_prop, $isbn_acc): void
 	{
+		if ($user_prop === $user_acc) {
+			throw new Exception("Errore: non è consentito proporre uno scambio con se stessi");
+		}
+		if ($this->check_scambio_proposto($user_prop, $user_acc, $isbn_prop, $isbn_acc)) {
+			throw new Exception("Errore: scambio già proposto");
+		}
 		$query = "INSERT INTO Scambio (emailProponente, emailAccettatore, idCopiaProp, idCopiaAcc) VALUES (?, ?, ?, ?)";
 		try {
 			$user_email_prop = $this->get_user_email_by_username($user_prop);
@@ -565,7 +600,7 @@ class DBAccess
 			$this->void_query($query, "ssii", [$user_email_prop, $user_email_acc, $id_copia_prop, $id_copia_acc]);
 		} catch (Exception $e) {
 			error_log("insert_scambio: " . $e->getMessage());
-			throw $e;
+			throw new Exception("Errore: scambio non proposto");
 		}
 	}
 

@@ -646,15 +646,33 @@ class DBAccess
 		}
 	}
 
+	public function set_books_unavailable_by_idscambio($id): void
+	{
+		$query = <<<SQL
+		UPDATE Copia C
+		JOIN Scambio S ON C.ID = S.idCopiaProp OR C.ID = S.idCopiaAcc
+		SET C.disponibile = FALSE
+		WHERE S.ID = ?
+		SQL;
+
+		try {
+			$this->void_query($query, "i", [$id]);
+		} catch (Exception $e) {
+			error_log("set_books_unavailable_by_idscambio: " . $e->getMessage());
+			throw new Exception("Errore: scambio non accettato");
+		}
+	}
+
 	public function accetta_scambio_by_id($id): void
 	{
 		$query = "UPDATE Scambio SET stato = 'accettato' WHERE ID = ?";
 		try {
 			$this->void_query($query, "i", [$id]);
+			$this->set_books_unavailable_by_idscambio($id);
 		} catch (Exception $e) {
 			error_log("accetta_scambio_by_id: " . $e->getMessage());
-			throw $e;
-		}
+			throw new Exception("Errore: scambio non accettato");
+		}	
 	}
 
 	public function rifiuta_scambio_by_id($id): void

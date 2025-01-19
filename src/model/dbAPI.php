@@ -145,6 +145,7 @@ class DBAccess
 			return $results;
 		} catch (Exception $e) {
 			error_log("execute_select_query: " . $e->getMessage());
+			error_log("execure_select_query: QUERY=" . $query . "; TYPES= " . $types . "; PARAMS=" . implode(", ", $params));
 			throw $e;
 		}
 	}
@@ -170,6 +171,7 @@ class DBAccess
 			$stmt->close();
 		} catch (Exception $e) {
 			error_log("void_query: " . $e->getMessage());
+			error_log("void_query: QUERY=" . $query . "; TYPES= " . $types . "; PARAMS=" . implode(", ", $params));
 			throw $e;
 		}
 	}

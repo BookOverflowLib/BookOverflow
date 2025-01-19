@@ -1,4 +1,4 @@
-import {checkForm, fillSuggestion} from './formValidator.js';
+import {checkForm, fillSuggestion, restoreAllInputValues, saveAllInputValues} from './formValidator.js';
 
 // [0]: hint
 // [1]: regex
@@ -45,10 +45,18 @@ var formChecks = {
 };
 
 window.onload = function () {
-    fillSuggestion(formChecks);
-
     const form = document.getElementById('registrati');
+
+    fillSuggestion(formChecks);
+    if (sessionStorage.getItem("nome")) {
+        restoreAllInputValues();
+        let provinciaSelect = document.querySelector('select[name="provincia"]')
+        provinciaSelect.dispatchEvent(new Event('change'));
+    }
+
     form.addEventListener('submit', function () {
+        saveAllInputValues();
         return checkForm("registrati", "/api/registra-utente", formChecks);
     });
+
 };

@@ -33,7 +33,10 @@ CREATE TABLE
 CREATE TABLE
     Libro (
         -- la lunghezza dell'ISBN può essere 10 o 13 
-        ISBN VARCHAR(13) PRIMARY KEY,
+        -- ISBN CHAR(13) PRIMARY KEY, 
+        -- Google Books API spesso restituisce ISBN malformati, come "PARAMS=MINN:319510008464605"
+        -- Motivo per cui abbiamo modificato l'SQL per accettare ISBN più lunghi ed a lunghezza variabile, piuttosto di far fallire gli inserimenti
+        ISBN VARCHAR(50) PRIMARY KEY,
         titolo VARCHAR(255) NOT NULL,
         autore VARCHAR(255),
         editore VARCHAR(255),
@@ -47,7 +50,7 @@ CREATE TABLE
 CREATE TABLE
     Copia (
         ID INT PRIMARY KEY AUTO_INCREMENT,
-        ISBN CHAR(13) NOT NULL,
+        ISBN CHAR(50) NOT NULL,
         proprietario VARCHAR(255) NOT NULL,
         -- utile se un utente vuole mettere tutta la lista dei suoi libri nella piattaforma perché gli altri possano vedere che libri ha, senza però che risultino disponibili per essere scambiati
         disponibile BOOLEAN DEFAULT TRUE,
@@ -66,7 +69,7 @@ CREATE TABLE
 CREATE TABLE
     Desiderio (
         email VARCHAR(255),
-        ISBN CHAR(13),
+        ISBN CHAR(50),
         PRIMARY KEY (email, ISBN),
         FOREIGN KEY (email) REFERENCES Utente (email),
         FOREIGN KEY (ISBN) REFERENCES Libro (ISBN)

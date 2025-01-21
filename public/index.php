@@ -20,6 +20,12 @@ if (preg_match("#^/profilo/([^/]+)/seleziona-generi$#", $path, $matches)) {
 	$path = '/profilo';
 }
 
+// Controlla se il percorso è "/libro/*"
+if (preg_match("#^/libro/([^/]+)$#", $path, $matches)) {
+	$_GET['ISBN'] = $matches[1];
+	$path = '/libro';
+}
+
 switch ($path) {
 	case '/':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'index.php';
@@ -29,6 +35,12 @@ switch ($path) {
 		break;
 	case '/esplora/per-te':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'esplora-per-te.php';
+		break;
+	case '/esplora/potrebbe-piacerti':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'esplora-potrebbe-piacerti.php';
+		break;
+	case '/piu-scambiati':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'esplora-piu-scambiati.php';
 		break;
 	case '/accedi':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'accedi.php';
@@ -54,6 +66,9 @@ switch ($path) {
 	case '/profilo/libri-desiderati':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'libri-desiderati.php';
 		break;
+	case '/libro':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'libro.php';
+		break;
 	// API
 	case '/api/ottieni-comuni':
 		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'ottieni-comuni.php';
@@ -70,12 +85,28 @@ switch ($path) {
 	case '/api/aggiorna-generi':
 		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiorna-generi.php';
 		break;
-	case '/api/aggiungi-libro':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiungi-libro.php';
-	case '/api/rimuovi-libro':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-libro.php';
+	case '/api/aggiungi-libro-offerto':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiungi-libro-offerto.php';
+	case '/api/aggiungi-libro-desiderato':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiungi-libro-desiderato.php';
+	case '/api/rimuovi-libri-offerti':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-libri-offerti.php';
+	case '/api/rimuovi-libri-desiderati':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-libri-desiderati.php';
 		break;
-		
+	case '/api/proponi-scambio':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'proponi-scambio.php';
+		break;
+	case '/api/accetta-scambio':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'accetta-scambio.php';
+		break;
+	case '/api/rifiuta-scambio':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rifiuta-scambio.php';
+		break;
+	case '/api/rimuovi-scambio':
+		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-scambio.php';
+		break;
+
 	default:
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . '404.php';
 		break;

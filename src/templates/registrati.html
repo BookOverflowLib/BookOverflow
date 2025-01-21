@@ -6,39 +6,39 @@
 		Hai già un <span lang="en">account</span>? <a href="/accedi">Accedi</a>
 	</p>
 	<!-- nome cognome username email città(provincia e città)-->
-	<form id="registrati" action="" method="post" onsubmit="">
+	<form action="" autocomplete="on" id="registrati" method="post" onsubmit="">
 		<fieldset class="login-data">
 			<legend class="sr-only">Inserire i dati per registrarsi</legend>
 			<div>
 				<label for="nome">Nome</label>
 				<input
-					class="form-input"
-					id="nome"
-					maxlenght="50"
-					name="nome"
-					required
-					type="text" />
+						class="form-input"
+						id="nome"
+						maxlenght="50"
+						name="nome"
+						required
+						type="text"/>
 			</div>
 			<div>
 				<label for="cognome">Cognome</label>
 				<input
-					id="cognome"
-					maxlenght="50"
-					name="cognome"
-					required
-					type="text" />
+						id="cognome"
+						maxlenght="50"
+						name="cognome"
+						required
+						type="text"/>
 			</div>
 
 			<!-- provincia e citta -->
 			<div>
 				<label for="provincia">Provincia</label>
 				<select
-					class="form-input"
-					id="provincia"
-					name="provincia"
-					required>
+						class="form-input"
+						id="provincia"
+						name="provincia"
+						required>
 					<option value="">Seleziona una provincia</option>
-					<hr />
+					<hr/>
 					<!-- [province] -->
 				</select>
 			</div>
@@ -46,7 +46,7 @@
 				<label for="comune">Comune</label>
 				<select class="form-input" id="comune" name="comune" required>
 					<option value="">Seleziona un comune</option>
-					<hr />
+					<hr/>
 				</select>
 			</div>
 
@@ -55,48 +55,48 @@
 			<div>
 				<label for="username" lang="en">Username</label>
 				<input
-					class="form-input"
-					id="username"
-					maxlenght="50"
-					name="username"
-					required
-					type="text" />
+						class="form-input"
+						id="username"
+						maxlenght="50"
+						name="username"
+						required
+						type="text"/>
 			</div>
 			<!-- email -->
 			<div>
 				<label for="email">Indirizzo Mail</label>
 				<input
-					class="form-input"
-					id="email"
-					name="email"
-					required
-					type="email" />
+						class="form-input"
+						id="email"
+						name="email"
+						required
+						type="email"/>
 			</div>
 			<!-- password -->
 			<div>
 				<label for="password" lang="en">Password</label>
 				<input
-					class="form-input"
-					id="password"
-					maxlenght="50"
-					name="password"
-					required
-					type="password" />
+						class="form-input"
+						id="password"
+						maxlenght="50"
+						name="password"
+						required
+						type="password"/>
 			</div>
 			<!-- conferma password -->
 			<div>
 				<label for="conferma-password"
-					>Conferma <span lang="en">Password</span></label
+				>Conferma <span lang="en">Password</span></label
 				>
 				<input
-					class="form-input"
-					id="conferma"
-					maxlenght="50"
-					name="conferma-password"
-					required
-					type="password" />
+						class="form-input"
+						id="conferma"
+						maxlenght="50"
+						name="conferma-password"
+						required
+						type="password"/>
 			</div>
-			<input type="submit" value="Registrati" class="button-layout" />
+			<input class="button-layout" type="submit" value="Registrati"/>
 		</fieldset>
 	</form>
 </section>

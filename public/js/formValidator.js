@@ -6,7 +6,7 @@ export function fillSuggestion(formChecks) {
             checkRegex(this, formChecks);
         };
 
-        if (id == "conferma") {
+        if (id === "conferma") {
             input.onblur = function () {
                 checkPassword("password", "conferma", formChecks);
             };
@@ -45,7 +45,7 @@ function setSuggestion(input, mode, formChecks) {
         default:
             break;
     }
-
+    //parent.insertBefore(newNode, parent.lastChild); //TODO: maybe after is better?
     parent.insertBefore(newNode, parent.lastChild.previousSibling);
 }
 
@@ -62,7 +62,7 @@ function checkRegex(input, formChecks) {
         setSuggestion(input, 2, formChecks);
         input.focus();
         input.select();
-    } else if (text.search(regex) != 0) {
+    } else if (text.search(regex) !== 0) {
         formChecks[input.id][3] = false;
         if (suggestionElement) {
             suggestionElement.remove();
@@ -82,7 +82,7 @@ function checkPassword(passwordId, passwordConfId, formChecks) {
     var password = document.getElementById(passwordId);
     var conferma = document.getElementById(passwordConfId);
 
-    if (password.value != conferma.value) {
+    if (password.value !== conferma.value) {
         if (document.getElementById("conferma-sugg")) {
             document.getElementById("conferma-sugg").remove();
         }
@@ -96,17 +96,67 @@ function checkPassword(passwordId, passwordConfId, formChecks) {
     }
 }
 
+function saveInputValueSessionStorage(input) {
+    sessionStorage.setItem(input.name, input.value);
+}
+
+function restoreInputValueSessionStorage(input) {
+    var value = sessionStorage.getItem(input.name);
+    if (value) {
+        input.value = value;
+    }
+}
+
+export function saveAllInputValues() {
+    console.log("saving all input values");
+    var inputs = [
+        document.getElementById('nome'),
+        document.getElementById('cognome'),
+        document.getElementById('provincia'),
+        document.getElementById('comune'),
+        document.getElementById('username'),
+        document.getElementById('email')
+    ];
+
+    for (var i = 0; i < inputs.length; i++) {
+        saveInputValueSessionStorage(inputs[i]);
+    }
+}
+
+export function restoreAllInputValues() {
+    var inputs = [
+        document.getElementById('nome'),
+        document.getElementById('cognome'),
+        document.getElementById('provincia'),
+        document.getElementById('comune'),
+        document.getElementById('username'),
+        document.getElementById('email')
+    ];
+
+    for (var i = 0; i < inputs.length; i++) {
+        restoreInputValueSessionStorage(inputs[i]);
+    }
+}
+
+function clearInputValueSessionStorage() {
+    var inputs = ['nome', 'cognome', 'provincia', 'comune', 'username', 'email'];
+
+    inputs.forEach(function (input) {
+        sessionStorage.removeItem(input);
+    });
+}
+
 export function checkForm(formId, redirect, formChecks) {
     var form = document.getElementById(formId);
     var inputs = form.getElementsByTagName("input");
 
     for (var i = 0; i < inputs.length; i++) {
-
         if (inputs[i].hasAttribute("id") && !formChecks[inputs[i].id][3] && formChecks[inputs[i]]) {
             return false;
         }
     }
 
+    clearInputValueSessionStorage();
     form.setAttribute("action", redirect);
     return true;
 }

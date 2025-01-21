@@ -50,7 +50,7 @@ function getGoogleBooksInfo($isbn)
 			$bookData['editore'] = 'N/A';
 		}
 		$bookData['anno'] = $response['items'][0]['volumeInfo']['publishedDate'];
-		if(str_contains($bookData['anno'], '-')){
+		if (str_contains($bookData['anno'], '-')) {
 			$bookData['anno'] = explode('-', $bookData['anno'])[0];
 		}
 		$bookData['genere'] = $response['items'][0]['volumeInfo']['categories'][0]; //solo il primo genere
@@ -66,9 +66,9 @@ function showBooksInfo()
 	$isbn = getIsbnPopularBooksNYT();
 	$string = '';
 	foreach ($isbn as $key => $value) {
-		if($value == null){
+		if ($value == null) {
 			continue;
-		}else{
+		} else {
 			$bookData = getGoogleBooksInfo($value);
 		}
 		$string .= '<pre>' . print_r($bookData, true) . '</pre>';
@@ -76,16 +76,14 @@ function showBooksInfo()
 	return $string;
 }
 
-function insert_NYT_books(){
+function insert_NYT_books()
+{
 	$isbn = getIsbnPopularBooksNYT();
 	$db = new DBAccess();
 	foreach ($isbn as $key => $value) {
-		if($value){
+		if ($value) {
 			$bookData = getGoogleBooksInfo($value);
-			$res = $db->insert_new_book(isbn: $bookData['isbn'], titolo: $bookData['titolo'], autore: $bookData['autore'], editore: $bookData['editore'], anno: $bookData['anno'], genere: $bookData['genere'], descrizione: $bookData['descrizione'], lingua: $bookData['lingua'], path_copertina: $bookData['path_copertina']);
-			if ($res === false) {
-				echo "Errore nell'inserimento del libro: " . $bookData['titolo'];
-			}
+			$db->insert_new_book(isbn: $bookData['isbn'], titolo: $bookData['titolo'], autore: $bookData['autore'], editore: $bookData['editore'], anno: $bookData['anno'], genere: $bookData['genere'], descrizione: $bookData['descrizione'], lingua: $bookData['lingua'], path_copertina: $bookData['path_copertina']);
 		}
 	}
 }

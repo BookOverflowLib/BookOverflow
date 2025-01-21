@@ -10,6 +10,7 @@ function ensure_session()
 		session_start();
 	}
 }
+
 /**
  * Genera una stringa HTML per visualizzare il rating sotto forma di stelle
  *
@@ -131,7 +132,7 @@ function getHeaderButtons($path): string
 	$chiara =
 		'<span><img class="theme-icon" src="/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità chiara</span></span>';
 	$themeToggleButton =
-		'<button class="theme-toggle button-layout-light" aria-pressed="false">' .
+		'<button class="theme-toggle" aria-pressed="false">' .
 		$chiara .
 		$scura .
 		'</button>';
@@ -149,18 +150,14 @@ function getHeaderButtons($path): string
 	ensure_session();
 
 	if (isset($_SESSION['user'])) {
-		$ris =
-			'<div class="header-buttons">' .
-			$themeToggleButton .
-			'<a class="profile-button" href="/profilo/' .
-			$_SESSION['user'] .
-			'">' .
-			$_SESSION['user'] .
-			'<img src="' .
-			$_SESSION['path_immagine'] .
-			'" alt="" width="40">' .
-			'</a>' .
-			'</div>';
+		$ris = <<<HTML
+			<div class="header-buttons">
+				{$themeToggleButton}
+				<a class="profile-button" href="/profilo/{$_SESSION['user']}" aria-label="Vai al tuo profilo">
+					{$_SESSION['user']}<img src="{$_SESSION['path_immagine']}" alt="" width="40">
+				</a>
+			</div>
+			HTML;
 	} else {
 		$ris =
 			'<div class="header-buttons">' .
@@ -234,18 +231,28 @@ function getBreadcrumb($path): string
 		$currentUrl = '';
 		for ($i = 0; $i < $last; $i++) {
 			$currentUrl .= '/' . $path[$i];
-			$currentPath = str_replace('-', ' ', ucfirst($path[$i])); // remove - 
+			$currentPath = str_replace('-', ' ', ucfirst($path[$i])); // remove -
 			if (isset($_SESSION['user']) && $i > 0 && $path[$i - 1] == 'profilo' && $path[$i] == $_SESSION['user']) {
 				$currentPath = 'Il mio profilo';
 			}
-			if ($currentPath !== 'Profilo') {
+			if ($currentPath !== 'Profilo' && $currentPath !== 'Libro') {
 				$elements .= '<li><a href="' . $currentUrl . '">' . $currentPath . '</a></li>';
 			}
+
 		}
 		$currentPath = str_replace('-', ' ', ucfirst($path[$i]));
 
 		if (isset($_SESSION['user']) && $i > 0 && $path[$i - 1] == 'profilo' && $path[$i] == $_SESSION['user']) {
 			$currentPath = 'Il mio profilo';
+		}
+
+		// Check if the URL is /libro/{isbn} and replace it with /{titolo-libro}
+		if ($i > 0 && $path[$i - 1] == 'libro') {
+			$isbn = $path[$i];
+			$db = new DBAccess();
+			$bookTitle = $db->get_book_title_by_ISBN($isbn);
+			$bookTitle = $bookTitle[0]['titolo'];
+			$currentPath = ucfirst($bookTitle);
 		}
 
 		if ($currentPath !== 'Profilo') {
@@ -280,17 +287,34 @@ function getUserImageUrlByEmail($email): string
 	return $finalUrl; // Voila
 }
 
-function isLoggedIn()
+/**
+ * Rimanda l'utente alla pagina di login se non è loggato
+ */
+function require_login()
 {
-	return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
-}
-
-function requireLogin()
-{
-	if (!isLoggedIn()) {
-		header("Location: /accedi");
+	ensure_session();
+	if (!isset($_SESSION['user'])) {
+		header('Location: /accedi');
 		exit();
 	}
+}
+
+function check_ownership(): bool
+{
+	if (!isset($_SESSION['user'])) {
+		return false;
+	}
+	if ($_GET['user'] === $_SESSION['user']) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function is_logged_in(): bool
+{
+	ensure_session();
+	return isset($_SESSION['user']);
 }
 
 /**
@@ -323,3 +347,216 @@ function getGeneriPreferiti($generi)
 	return $output;
 }
 
+/**
+ * Restituisce una stringa HTML con i libri in formato carosello con copertina grande
+ * @param array $libri Array con i libri da visualizzare dal database
+ * @param int $max_risultati Numero massimo di risultati da visualizzare
+ * @return string
+ */
+function getLibriCopertinaGrande($libri, $max_risultati): string
+{
+	$output = '';
+	if (!$libri || $libri == null) {
+		return '<p class="carosello-libri-vuoto">Non ci sono ancora libri in questa lista!</p>';
+	}
+	$num_libri = count(value: $libri) > $max_risultati ? $max_risultati : count(value: $libri);
+	for ($i = 0; $i < $num_libri; $i++) {
+		$libroTemplate = <<<HTML
+		<div class="libro">
+			<a href="/libro/{$libri[$i]['ISBN']}" aria-label="Libro {$libri[$i]["titolo"]} di {$libri[$i]["autore"]}" ">
+				<img alt="" src="{$libri[$i]['path_copertina']}" width="150" />
+				<p class="titolo-libro">{$libri[$i]["titolo"]}</p>
+				<p class="autore-libro">{$libri[$i]["autore"]}</p>
+			</a>
+		</div>
+		HTML;
+		$output .= $libroTemplate;
+	}
+	return $output;
+}
+
+/**
+ * Restituisce una stringa HTML con i libri in formato lista
+ * @param mixed $libri_utente
+ * @param mixed $list_name
+ * @return string
+ */
+function getLibriList($libri_utente, $list_name): string
+{
+	if ($list_name != 'libri-offerti' && $list_name != 'libri-desiderati') {
+		throw new TypeError("list_name deve essere 'libri-desiderati' o 'libri-offerti'");
+	}
+
+
+	$libri_html = '';
+	if (!$libri_utente) {
+		$libri_html = '<p>Non ci sono ancora libri qui!</p>';
+	} else {
+		foreach ($libri_utente as $libro) {
+			$isbn = $libro['ISBN'];
+			$titolo = $libro['titolo'];
+			$autore = $libro['autore'];
+			$path_copertina = $libro['path_copertina'];
+
+			$book_copy_info = '';
+			if ($list_name === 'libri-offerti') {
+				$condizioni = ucfirst($libro['condizioni']);
+				$disponibileClass = $libro['disponibile'] ? 'disponibile' : 'non-disponibile';
+				$disponibileLabel = $libro['disponibile'] ? 'Disponibile' : 'Non disponibile';
+				$book_copy_info = <<<HTML
+				<div>
+					<div class="libro-stato-{$disponibileClass}" aria-hidden="true"></div>
+					<span class="sr-only">Stato</span> {$disponibileLabel}
+				</div>
+				<p>Condizioni: {$condizioni}</p>
+				HTML;
+			}
+
+			if (isTuoProfilo($_GET['user'])) {
+				$bookButtons = getLibriListBookButtons($list_name, $isbn, $titolo);
+			} else {
+				$bookButtons = '';
+			}
+
+			$libroRowTemplate = <<<HTML
+			<div class="book-row">
+				<div class="book-info">
+					<a href="/libro/{$isbn}" aria-label="Libro {$titolo} di {$autore}" ">
+						<img
+							src="{$path_copertina}"
+							alt=""
+							width="50" />
+						<div>
+							<p><span class="sr-only">Titolo </span>{$titolo}</p>
+							<p class="italic"><span class="sr-only">Autore </span>{$autore}</p>
+						</div>
+					</a>
+				</div>
+				<div class="book-copy-info">
+					{$book_copy_info}
+				</div>
+				<div class="book-buttons">
+					{$bookButtons}
+				</div>
+			</div>
+			HTML;
+			$libri_html .= $libroRowTemplate;
+		}
+	}
+	return $libri_html;
+}
+
+function isTuoProfilo($profileId)
+{
+	return isset($_SESSION['user']) && $profileId == $_SESSION['user'];
+}
+
+function getLibriListBookButtons($list_name, $isbn, $titolo)
+{
+
+	$api = $list_name === 'libri-offerti' ? '/api/rimuovi-libro-offerto' : '/api/rimuovi-libro-desiderato';
+	$bookButtons = <<<HTML
+	<form action="{$api}" method="post">
+		<input type="hidden" name="isbn" value="{$isbn}">
+		<input type="submit" class="button-layout danger bold" value="Elimina" aria-label="Elimina {$titolo} dalla lista">
+	</form>
+	HTML;
+	return $bookButtons;
+}
+
+/**
+ * Aggiunge i bottoni per aggiungere un libro e per cercare un libro,
+ * aggiunge anche il dialog per la ricerca
+ * @param string $libri_page Pagina HTML template con i libri
+ * @param string $list_name "libri-desiderati" o "libri-offerti"
+ * @return string
+ */
+function addButtonsLibriList($libri_page, $list_name): string
+{
+	if ($list_name != 'libri-offerti' && $list_name != 'libri-desiderati') {
+		throw new TypeError("list_name deve essere 'libri-desiderati' o 'libri-offerti'");
+	}
+
+	$form_action = $list_name === 'libri-offerti' ? '/api/aggiungi-libro-offerto' : '/api/aggiungi-libro-desiderato';
+
+	$libri_utente = $libri_page;
+	$aggiungiLibro = '<button class="button-layout" id="aggiungi-libro-button" aria-label="Aggiungi un libro ai libri offerti">Aggiungi un libro</button>';
+	$libri_utente = str_replace('<!-- [aggiungiLibroButton] -->', $aggiungiLibro, $libri_utente);
+
+	$select_condizioni = '';
+	if ($list_name === 'libri-offerti') {
+		$select_condizioni = <<<HTML
+		<div class="select-wrapper">
+		<label for="condizioni">Seleziona le condizioni del libro</label>
+		<select name="condizioni" id="condizioni" required>
+			<option value="" disabled selected>Seleziona le condizioni</option>
+			<hr>
+			<option value="nuovo">Nuovo</option>
+			<option value="come nuovo">Come nuovo</option>
+			<option value="usato ma ben conservato">Usato ma ben conservato</option>
+			<option value="usato">Usato</option>
+			<option value="danneggiato">Danneggiato</option>
+		</select>
+		</div>
+		HTML;
+	}
+
+	$cercaLibriDialog = <<<HTML
+	<dialog id="aggiungi-libro-dialog">
+		<div class="dialog-window">
+			<h2>Cerca un libro</h2>
+			<form action={$form_action} method="post">
+				<label for="titolo" class="visually-hidden">Cerca un libro</label>
+				<input type="search"
+					name="cerca"
+					id="cerca"
+					placeholder="Cerca un libro ..." 
+					autocomplete="off"
+					/>
+				<span class="sr-only" role="alert" aria-atomic="false" id="sr-risultati"></span>
+				<div id="book-results">
+					<p>Nessun risultato</p>
+				</div>
+				{$select_condizioni}
+				<input type="hidden" name="ISBN" value="">
+				<input type="hidden" name="titolo" value="">
+				<input type="hidden" name="autore" value="">
+				<input type="hidden" name="editore" value="">
+				<input type="hidden" name="anno" value="">
+				<input type="hidden" name="genere" value="">
+				<input type="hidden" name="descrizione" value="">
+				<input type="hidden" name="lingua" value="">
+				<input type="hidden" name="path_copertina" value="">
+				<div class="dialog-buttons">
+					<button id="close-dialog" class="button-layout-light" type="reset" formnovalidate>Annulla</button>
+					<input type="submit" id="aggiungi-libro" class="button-layout" value="Aggiungi libro">
+				</div>
+			</form>
+		</div>
+	</dialog>
+	HTML;
+	return str_replace('<!-- [cercaLibriDialog] -->', $cercaLibriDialog, $libri_utente);
+}
+
+function getItaGenere($genere): string
+{
+	$fileGeneri = json_decode(file_get_contents('../utils/bisac.json'), true);
+	$genere = strtolower($genere);
+	return $fileGeneri[$genere]['name'];
+}
+
+function getLocationName($provincia, $comune): string
+{
+	$db = new DBAccess();
+	$location = $db->get_provincia_comune_by_ids($provincia, $comune);
+	return $location['comune'] . ', ' . $location['provincia'];
+}
+
+function ensure_login(): void
+{
+	ensure_session();
+	if (!isset($_SESSION['user'])) {
+		header('Location: /accedi');
+		exit();
+	}
+}

@@ -7,35 +7,27 @@ ensure_session();
 $db = new DBAccess();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['email'], $_POST['password'])) {
-        $email = $_POST['email'];
+    if (isset($_POST['identifier'], $_POST['password'])) {
+        $identifier = $_POST['identifier'];
         $password = $_POST['password'];
 
         try {
-            $result = $db->login_user($email, $password);
+            $result = $db->login_user($identifier, $password);
             if ($result) {
-                $user = ($db->get_user_by_email($email))[0];
+                $user = ($db->get_user_by_identifier($identifier))[0];
                 $_SESSION['user'] = $user['username'];
                 $_SESSION['path_immagine'] = $user['path_immagine'];
                 header('Location: /profilo/' . $user['username']);
                 exit();
             }
         } catch (Exception $e) {
-            $errorMessage = $e->getMessage();
-            switch ($errorMessage) {
-                case 'Wrong password':
-                    header('Location: /accedi?error=wrong-password');
-                    break;
-                case 'User not registered':
-                    header('Location: /accedi?error=user-not-found');
-                    break;
-                default:
-                    header('Location: /accedi?error=unknown');
-            }
+            header('Location: /accedi?error=invalid');
+            $_SESSION['error'] = "invalid-credentials";
             exit();
         }
     }
 }
 
+$_SESSION['error'] = "missing-fields";
 header('Location: /accedi?error=missing');
 exit();

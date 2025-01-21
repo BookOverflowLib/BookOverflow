@@ -1,4 +1,4 @@
-import { fillSuggestion, checkForm } from './formValidator.js';
+import {checkForm, fillSuggestion, restoreAllInputValues, saveAllInputValues} from './formValidator.js';
 
 // [0]: hint
 // [1]: regex
@@ -6,38 +6,38 @@ import { fillSuggestion, checkForm } from './formValidator.js';
 // [3]: isValid
 var formChecks = {
     nome: [
-        "Ex: Mario",
-        /^[A-Za-z]{2,50}$/,
+        "Es: Mario",
+        /^[A-Za-z\s']{2,50}$/,
         "Inserire un nome di lunghezza almeno 2 e massimo 50, non sono ammessi numeri o caratteri speciali",
         false
     ],
     cognome: [
-        "Ex: Rossi",
-        /^[A-Za-z' ]{2,50}$/,
+        "Es: Rossi",
+        /^[A-Za-z\s']{2,50}$/,
         "Inserire un cognome di lunghezza almeno 2 e massimo 50, non sono ammessi numeri o caratteri speciali",
         false
     ],
     // all characters are allowed
     username: [
-        "Ex: MarioRossi",
+        "Es: MarioRossi",
         /^[^\s\r\n]{2,50}$/,
         "Inserire un username di lunghezza almeno 2 e massimo 50, sono ammessi caratteri speciali e numeri",
         false
     ],
     email: [
-        "Ex: mariorossi@gmail.com",
+        "Es: mariorossi@gmail.com",
         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
         "Inserire un'email valida",
         false
     ],
     password: [
-        "Ex: Password123",
+        "Es: Password123!",
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+=])[A-Za-z\d!@#$%^&*()\-+=]{8,50}$/,
         "La password deve essere lunga tra 8 e 50 caratteri, contenere almeno una lettera maiuscola (A-Z), una lettera minuscola (a-z), un numero (0-9) e un carattere speciale tra i seguenti: !@#$%^&*()-+=.",
         false
     ],
     conferma: [
-        "Ex: Password123",
+        "Es: Password123!",
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+=])[A-Za-z\d!@#$%^&*()\-+=]{8,50}$/,
         "La password deve essere lunga tra 8 e 50 caratteri, contenere almeno una lettera maiuscola (A-Z), una lettera minuscola (a-z), un numero (0-9) e un carattere speciale tra i seguenti: !@#$%^&*()-+=.",
         false
@@ -45,10 +45,18 @@ var formChecks = {
 };
 
 window.onload = function () {
-    fillSuggestion(formChecks);
-
     const form = document.getElementById('registrati');
-    form.addEventListener('submit', function (event) {
+
+    fillSuggestion(formChecks);
+    if (sessionStorage.getItem("nome")) {
+        restoreAllInputValues();
+        let provinciaSelect = document.querySelector('select[name="provincia"]')
+        provinciaSelect.dispatchEvent(new Event('change'));
+    }
+
+    form.addEventListener('submit', function () {
+        saveAllInputValues();
         return checkForm("registrati", "/api/registra-utente", formChecks);
     });
+
 };

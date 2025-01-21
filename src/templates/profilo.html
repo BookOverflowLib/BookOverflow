@@ -1,28 +1,28 @@
 <section class="dati-profilo">
 	<img
-		alt="User Avatar"
-		class=""
-		src="<!-- [userAvatarPath] -->"
-		width="90" />
+			alt=""
+			class=""
+			src="<!-- [userAvatarPath] -->"
+			width="90"/>
 	<div>
 		<h2>
 			<!-- [userNome] -->
 			<!-- [userCognome] -->
 		</h2>
-		<p>@<!-- [userUsername] --></p>
-		<p class="bold luogo"><!-- [userLuogo] --></p>
+		<p><span class="sr-only" lang="en">Username</span><span aria-hidden="true">@</span><!-- [userUsername] --></p>
+		<p class="bold luogo"><span class="sr-only">Residenza</span><!-- [userLuogo] --></p>
 		<div class="user-rating">
 			<div class="stars">
 				<!-- [userRatingStars] -->
 			</div>
-			<p>(<!-- [userRating] -->)</p>
+			<p><span class="sr-only">Valutazione</span>( <!-- [userRating] --> )</p>
 		</div>
 	</div>
 	<div class="buttons-profilo">
 		<!-- [logoutButton] -->
 	</div>
 </section>
-<section class="sezione-libri">
+<section class="sezione-libri" id="generi">
 	<div class="intestazione">
 		<h2>Generi preferiti</h2>
 		<!-- [generiPreferitiButton] -->
@@ -31,29 +31,22 @@
 		<!-- [userGeneri] -->
 	</div>
 </section>
-<section class="sezione-libri">
+<section class="sezione-libri" id="libri-offerti">
 	<div class="intestazione">
-		<h2>Libri che offre</h2>
+		<h2>Libri offerti</h2>
 		<!-- [libriOffertiButton] -->
 	</div>
 	<div class="carosello-libri">
-		<div class="libro">
-			<img alt="" src="/assets/imgs/artedicorrere.avif" width="150" />
-			<p class="titolo-libro">L'arte di correre</p>
-			<p class="autore-libro">Haruki Murakami</p>
-		</div>
+		<!-- [libriOffertiLista] -->
 	</div>
 </section>
-<section class="sezione-libri">
+<section class="sezione-libri" id="lista-desideri">
 	<div class="intestazione">
 		<h2>Lista dei desideri</h2>
 		<!-- [libriDesideratiButton] -->
 	</div>
-	<!-- <p>Non ci sono ancora libri qui!</p>
-	<a href="">Aggiungi subito un libro alla lista dei desideri</a> -->
-</section>
-<section id="storico-scambi">
-	<div class="intestazione">
-		<h2>Storico degli scambi</h2>
+	<div class="carosello-libri">
+		<!-- [libriDesideratiLista] -->
 	</div>
 </section>
+<!-- [sezioneScambi] -->

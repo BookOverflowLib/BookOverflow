@@ -5,7 +5,6 @@ function hamburgerMenu() {
 
 
     let menu = document.getElementById('hamburger-menu')
-    let button = document.getElementById('hamburger')
     let header = document.getElementsByClassName('header-container')[0]
 
     hamburger.addEventListener('click', function () {

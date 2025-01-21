@@ -1,18 +1,19 @@
-import { fillSuggestion, checkForm } from './formValidator.js';
+import {checkForm, fillSuggestion} from './formValidator.js';
 
 // [0]: hint
 // [1]: regex
 // [2]: error
 // [3]: isValid
 var formChecks = {
-    email: [
-        "Ex: mariorossi@gmail.com",
-        /.*/,
+    //todo: move to dedicated JS function
+    identifier: [
+        "Es: mariorossi o mariorossi@gmail.com",
+        "*",
         "",
         false
     ],
     password: [
-        "Ex: Password123",
+        "",
         /.*/,
         "",
         false
@@ -23,7 +24,7 @@ window.onload = function () {
     fillSuggestion(formChecks);
 
     const form = document.getElementById('accedi');
-    form.addEventListener('submit', function (event) {
+    form.addEventListener('submit', function () {
         return checkForm("accedi", "/api/accesso-utente", formChecks);
     });
 };

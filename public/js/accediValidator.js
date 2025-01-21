@@ -7,13 +7,13 @@ import {checkForm, fillSuggestion} from './formValidator.js';
 var formChecks = {
     //todo: move to dedicated JS function
     identifier: [
-        "Es: mariorossi@gmail.com o mariorossi",
+        "Es: mariorossi o mariorossi@gmail.com",
         "*",
         "",
         false
     ],
     password: [
-        "Es: Password123!",
+        "",
         /.*/,
         "",
         false

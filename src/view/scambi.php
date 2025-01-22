@@ -26,11 +26,11 @@ function addScambiSection($profilo, $db)
 {
 	$storicoScambi = $db->get_scambi_by_user($_SESSION['user']);
 	$storicoScambiHTML = "";
-
+	
 	foreach ($storicoScambi as $scambio) {
 		$storicoScambiHTML .= generateScambioRow($scambio, $db);
 	}
-
+	
 	if ($storicoScambiHTML == '') {
 		$storicoScambiHTML = <<<HTML
 		<div class="empty-list">	
@@ -38,7 +38,7 @@ function addScambiSection($profilo, $db)
 			<a href="/esplora">Inzia subito ad esplorare</a>
 		</div>
 		HTML;
-
+		
 	}
 	return str_replace('<!-- [storicoScambi] -->', $storicoScambiHTML, $profilo);
 }
@@ -49,14 +49,14 @@ function generateScambioRow($scambio, $db)
 	$libroAcc = $db->get_copia_by_id($scambio['idCopiaAcc'])[0];
 	$utenteAccettatore = $db->get_user_by_identifier($scambio['emailAccettatore'])[0];
 	$utenteProponente = $db->get_user_by_identifier($scambio['emailProponente'])[0];
-
+	
 	$isScambioRicevuto = $utenteAccettatore['username'] === $_SESSION['user'];
-
+	
 	$scambio_buttons = generateScambioButtons($scambio, $isScambioRicevuto);
 	$scambio_utente = generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utenteProponente);
 	$user_libro = $isScambioRicevuto ? $libroAcc : $libroProp;
 	$other_libro = $isScambioRicevuto ? $libroProp : $libroAcc;
-
+	
 	return <<<HTML
     <div class="storico-row">   
     	<div class="storico-books">
@@ -142,11 +142,13 @@ function generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utentePr
     <div class="storico-utente-scambio">
         <p>Scambio con:</p>
         <div>
+            <a href="/profilo/{$utente['username']}">
             <img src="{$utente['path_immagine']}" alt="" width="50">
             <div>
-                <p>{$utente['nome']} {$utente['cognome']}</p>
-                <p class="italic">@{$utente['username']}</p>
+                <p class="bold">{$utente['nome']} {$utente['cognome']}</p>
+                <p>@{$utente['username']}</p>
             </div>
+            </a>
         </div>
     </div>
     HTML;

@@ -1,3 +1,7 @@
+/* ==========================================================================
+   FONT FACES
+   ========================================================================== */
+
 @font-face {
     font-family: 'Gentium Book Plus';
     src: url("/assets/fonts/GentiumBookPlus-Regular.ttf") format("woff2");
@@ -6,7 +10,7 @@
 
 @font-face {
     font-family: 'Gentium Book Plus';
-    src: url("/assets/fonts/GentiumBookPlus-Bold.ttf") format("woff2");
+    src: url("/assets/fonts/GentiumBookPlus-Bold.ttf") format("woff2"); 
     font-weight: bold;
 }
 
@@ -29,17 +33,6 @@
 }
 
 :root {
-    --background: #fff;
-    --text-color: #000;
-    --colored-background: rgba(255, 236, 194, 0.8);
-    --primary-color: #f7e4c0;
-    --hover-color: #f0d18f;
-    --dark-yellow-color: #74520a;
-    --gray: hsl(0, 0%, 93%);
-    /* --dark-gray: hsl(0, 0%, 70%); */
-    --light-gray: hsl(0, 0%, 94%);
-    --link-color: #551a8b;
-
     /* PALETTE */
     --light-yellow: #fefae0ff;
     --light-green: #ccd5aeff;
@@ -58,7 +51,7 @@
 
 [data-theme='light'] {
     --theme-icon: url('/assets/imgs/sun.svg');
-    ---no-theme-icon: url('/assets/imgs/moon.svg');
+    --no-theme-icon: url('/assets/imgs/moon.svg');
     --svg-invert: invert(0);
     --text: #18140c;
     --text-opposite: #f3efe6;
@@ -68,8 +61,6 @@
     --secondary: #ccd5ae;
     --accent: #d4a373;
 
-    /* --neutral-50: #fafaf9;
-        --neutral-100: #f5f5f4; */
     --neutral-50: #e7e5e4;
     --neutral-100: #d6d3d1;
     --neutral-200: #a8a29e;

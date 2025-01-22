@@ -548,8 +548,10 @@ function getItaGenere($genere): string
 function getLocationName($provincia, $comune): string
 {
 	$db = new DBAccess();
-	$location = $db->get_provincia_comune_by_ids($provincia, $comune);
-	return $location['comune'] . ', ' . $location['provincia'];
+	$location = $db->get_comune_provincia_sigla_by_ids($comune, $provincia);
+	return <<<HTML
+		{$location['comune']}, <abbr title="{$location['provincia']}">{$location['provincia_sigla']}</abbr>
+		HTML;
 }
 
 function ensure_login(): void

@@ -368,6 +368,7 @@ class DBAccess
 			SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina, C.condizioni, C.disponibile
 			FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
 			WHERE C.proprietario = ? 
+			ORDER BY C.disponibile DESC;
 			SQL;
 
 			return $this->query_to_array($query, "s", [$userEmail]);
@@ -619,6 +620,7 @@ class DBAccess
 		$query = <<<SQL
 		SELECT * FROM Scambio S
 		WHERE S.emailProponente = ? OR S.emailAccettatore = ?
+		ORDER BY S.dataProposta DESC;
 		SQL;
 
 		try {

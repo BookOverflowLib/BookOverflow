@@ -1547,11 +1547,22 @@ li.activePage {
 
 .storico-dai > div,
 .storico-ricevi > div,
-.storico-utente-scambio > div {
+.storico-utente-scambio > div > a {
     display: flex;
     flex-direction: row;
     gap: 0.5em;
     align-items: flex-start;
+}
+
+.storico-utente-scambio > div > a {
+    text-decoration: none;
+    padding: 0.5em;
+    border-radius: 1em;
+    transition: all 0.3s ease-in-out;
+}
+
+.storico-utente-scambio > div > a:hover {
+    background-color: var(--background-100);
 }
 
 .storico-dai > div > div,
@@ -1607,6 +1618,18 @@ li.activePage {
     padding: 2em;
     padding-bottom: 5em;
     padding-top: 5em;
+}
+
+.external-link::after {
+    margin-left: 0.5em;
+    display: inline-block;
+    content: "";
+    width: 1em;
+    height: 1em;
+    filter: var(--svg-invert);
+    background-image: url("/assets/imgs/external-link.svg");
+    background-size: 1em 1em;
+
 }
 
 /*.book-row .book-info {*/

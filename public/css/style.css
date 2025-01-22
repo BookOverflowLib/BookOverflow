@@ -1632,6 +1632,13 @@ li.activePage {
 
 }
 
+#button-read-more {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    text-decoration: underline;
+    font-size: var(--font-sm);
+}
+
 /*.book-row .book-info {*/
 /*    display: flex;*/
 /*    flex-direction: row;*/

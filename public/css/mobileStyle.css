@@ -364,3 +364,8 @@ footer .logo p {
 .buttons-profilo {
     align-items: center;
 }
+
+#description-text {
+    padding: 1em;
+    text-align: justify;
+}

@@ -10,7 +10,7 @@
 
 @font-face {
     font-family: 'Gentium Book Plus';
-    src: url("/assets/fonts/GentiumBookPlus-Bold.ttf") format("woff2"); 
+    src: url("/assets/fonts/GentiumBookPlus-Bold.ttf") format("woff2");
     font-weight: bold;
 }
 
@@ -682,14 +682,6 @@ main {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
-
-/*TODO: ha senso tenere??*/
-.libro > a > p:hover {
-    overflow: visible;
-    white-space: normal;
-    position: relative;
-    border-radius: 1em;
 }
 
 .titolo-libro {

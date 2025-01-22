@@ -61,7 +61,6 @@ function generatePage($user, $isTuoProfilo, $db)
 
 	if ($isTuoProfilo) {
 		$profilo = addTuoProfiloButtons($profilo);
-		$profilo = addScambiSection($profilo, $db);
 	} else {
 		$profilo = addOtherProfiloButtons($profilo, $user);
 	}
@@ -117,6 +116,9 @@ function replaceLibri($profilo, $user, $db)
 
 function addTuoProfiloButtons($profilo)
 {
+	$scambiButton = '<a href="/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout secondary">I tuoi scambi</a>';
+	$profilo = str_replace('<!-- [scambiButton] -->', $scambiButton, $profilo);
+
 	$logoutButton = '<form action="/api/logout" method="POST"><input type="submit" class="button-layout" value="Esci" aria-label="Esci dal tuo profilo"/></form>';
 	$profilo = str_replace('<!-- [logoutButton] -->', $logoutButton, $profilo);
 
@@ -127,140 +129,9 @@ function addTuoProfiloButtons($profilo)
 	$profilo = str_replace('<!-- [libriOffertiButton] -->', $libriOffertiButton, $profilo);
 
 	$libriDesideratiButton = '<a href="/profilo/' . $_SESSION['user'] . '/libri-desiderati" class="button-layout" aria-label="Modifica la lista dei desideri">Modifica la lista</a>';
-	$profilo = str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
+	return str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
 
-	$sezioneScambi = <<<HTML
-    <section id="storico-scambi">
-        <div class="intestazione">
-            <h2>I miei scambi</h2>
-        </div>
-        <div class="storico-table">
-            <!-- [storicoScambi] --> 
-        </div>
-    </section>
-    HTML;
-	return str_replace('<!-- [sezioneScambi] -->', $sezioneScambi, $profilo);
-}
 
-function addScambiSection($profilo, $db)
-{
-	$storicoScambi = $db->get_scambi_by_user($_SESSION['user']);
-	$storicoScambiHTML = "";
-
-	foreach ($storicoScambi as $scambio) {
-		$storicoScambiHTML .= generateScambioRow($scambio, $db);
-	}
-
-	return str_replace('<!-- [storicoScambi] -->', $storicoScambiHTML, $profilo);
-}
-
-function generateScambioRow($scambio, $db)
-{
-	$libroProp = $db->get_copia_by_id($scambio['idCopiaProp'])[0];
-	$libroAcc = $db->get_copia_by_id($scambio['idCopiaAcc'])[0];
-	$utenteAccettatore = $db->get_user_by_identifier($scambio['emailAccettatore'])[0];
-	$utenteProponente = $db->get_user_by_identifier($scambio['emailProponente'])[0];
-
-	$isScambioRicevuto = $utenteAccettatore['username'] === $_SESSION['user'];
-
-	$scambio_buttons = generateScambioButtons($scambio, $isScambioRicevuto);
-	$scambio_utente = generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utenteProponente);
-	$user_libro = $isScambioRicevuto ? $libroAcc : $libroProp;
-	$other_libro = $isScambioRicevuto ? $libroProp : $libroAcc;
-
-	return <<<HTML
-    <div class="storico-row">   
-    	<div class="storico-books">
-        <div class="storico-dai">
-            <p>Dai:</p>
-            <div>
-                <img src="{$user_libro['path_copertina']}" alt="" width="50">
-                <div>
-                    <p class="bold">{$user_libro['titolo']}</p>
-                    <p class="italic">{$user_libro['autore']}</p>
-                </div>
-            </div>
-        </div>
-        <img src="/assets/imgs/scambio-arrows.svg" alt="" id="scambio-arrows">
-        <div class="storico-ricevi">
-            <p>Ricevi:</p>
-            <div>
-                <img src="{$other_libro['path_copertina']}" alt="" width="50">
-                <div>
-                    <p class="bold">{$other_libro['titolo']}</p>
-                    <p class="italic">{$other_libro['autore']}</p>
-                </div>
-            </div>
-        </div>
-        </div> 
-
-        {$scambio_utente}
-        {$scambio_buttons}
-    </div>
-    HTML;
-}
-
-function generateScambioButtons($scambio, $isScambioRicevuto)
-{
-	if ($isScambioRicevuto) {
-		if ($scambio['stato'] === 'in attesa') {
-			return <<<HTML
-			<div class="storico-buttons accetta">
-				<form action="/api/accetta-scambio" method="POST">
-					<input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
-					<input type="submit" class="button-layout" value="Accetta" />
-				</form>
-				<form action="/api/rifiuta-scambio" method="POST">
-					<input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
-					<input type="submit" class="button-layout secondary" value="Rifiuta" />
-				</form>
-			</div>
-			HTML;
-		}
-	} else {
-		if ($scambio['stato'] === 'in attesa') {
-			return <<<HTML
-            <div class="storico-buttons">
-                <p>In attesa di risposta</p>
-                <form action="/api/rimuovi-scambio" method="POST">
-                    <input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
-                    <input type="submit" class="button-layout secondary" value="Annulla scambio" />
-                </form>
-            </div>
-            HTML;
-		}
-	}
-	if ($scambio['stato'] === 'rifiutato') {
-		return <<<HTML
-            <div class="storico-buttons">
-                <p>Scambio rifiutato</p>
-            </div>
-            HTML;
-	} elseif ($scambio['stato'] === 'accettato') {
-		return <<<HTML
-            <div class="storico-buttons">
-                <p>Scambio accettato</p>
-            </div>
-            HTML;
-	}
-	return '';
-}
-
-function generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utenteProponente)
-{
-	$utente = $isScambioRicevuto ? $utenteProponente : $utenteAccettatore;
-	return <<<HTML
-    <div class="storico-utente-scambio">
-        <p>Scambio con:</p>
-        <div>
-            <img src="{$utente['path_immagine']}" alt="" width="50">
-            <div>
-                <p>{$utente['nome']} {$utente['cognome']}</p>
-                <p class="italic">@{$utente['username']}</p>
-            </div>
-        </div>
-    </div>
-    HTML;
 }
 
 function addOtherProfiloButtons($profilo, $user)

@@ -15,6 +15,9 @@ if (preg_match("#^/profilo/([^/]+)/seleziona-generi$#", $path, $matches)) {
 } elseif (preg_match('#^/profilo/([^/]+)/libri-desiderati#', $path, $matches)) {
 	$_GET['user'] = $matches[1];
 	$path = '/profilo/libri-desiderati';
+} elseif (preg_match('#^/profilo/([^/]+)/scambi#', $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo/scambi';
 } elseif (preg_match("#^/profilo/([^/]+)$#", $path, $matches)) {
 	$_GET['user'] = $matches[1];
 	$path = '/profilo';
@@ -65,6 +68,9 @@ switch ($path) {
 		break;
 	case '/profilo/libri-desiderati':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'libri-desiderati.php';
+		break;
+	case '/profilo/scambi':
+		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'scambi.php';
 		break;
 	case '/libro':
 		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'libro.php';

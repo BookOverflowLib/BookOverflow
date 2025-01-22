@@ -384,6 +384,10 @@ a {
     transition: all 0.3s ease-in-out;
 }
 
+.buttons-profilo {
+    align-items: end;
+}
+
 .profile-button:hover {
     background-color: var(--secondary-100);
 }
@@ -508,6 +512,7 @@ header {
     align-items: center;
     gap: 1em;
     list-style-type: none;
+    font-size: var(--font-base);
 }
 
 #menu > ul > li > a {
@@ -1595,6 +1600,13 @@ li.activePage {
     height: 2em;
     filter: var(--svg-invert);
     align-self: center;
+}
+
+.empty-list {
+    text-align: center;
+    padding: 2em;
+    padding-bottom: 5em;
+    padding-top: 5em;
 }
 
 /*.book-row .book-info {*/

@@ -284,14 +284,14 @@ class DBAccess
 		return null;
 	}
 
-	public function get_provincia_comune_by_ids($idProvincia, $idComune): ?array
+	public function get_comune_provincia_sigla_by_ids($idComune, $idProvincia): ?array
 	{
-		$queryProvincia = "SELECT nome FROM province WHERE id = ?";
+		$queryProvincia = "SELECT nome, sigla FROM province WHERE id = ?";
 		$queryComune = "SELECT nome FROM comuni WHERE id = ?";
 		try {
 			$prov = $this->query_to_array($queryProvincia, "i", [$idProvincia]);
 			$comu = $this->query_to_array($queryComune, "i", [$idComune]);
-			return array("provincia" => $prov[0]['nome'], "comune" => $comu[0]['nome']);
+			return array("provincia" => $prov[0]['nome'], "provincia_sigla" => $prov[0]['sigla'], "comune" => $comu[0]['nome']);
 		} catch (Exception $e) {
 			error_log("get_provincia_comune_by_ids: " . $e->getMessage());
 		}
@@ -300,7 +300,7 @@ class DBAccess
 
 	public function insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina): void
 	{
-		if (empty(trim($isbn))){
+		if (empty(trim($isbn))) {
 			throw new Exception("Errore: ISBN non valido");
 		}
 		$path_copertina = str_replace("&edge=curl", "", $path_copertina);
@@ -678,7 +678,7 @@ class DBAccess
 		} catch (Exception $e) {
 			error_log("accetta_scambio_by_id: " . $e->getMessage());
 			throw new Exception("Errore: scambio non accettato");
-		}	
+		}
 	}
 
 	public function rifiuta_scambio_by_id($id): void

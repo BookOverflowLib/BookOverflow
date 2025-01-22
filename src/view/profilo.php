@@ -116,10 +116,10 @@ function replaceLibri($profilo, $user, $db)
 
 function addTuoProfiloButtons($profilo)
 {
-	$scambiButton = '<a href="/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout secondary">I tuoi scambi</a>';
+	$scambiButton = '<a href="/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout ">I tuoi scambi</a>';
 	$profilo = str_replace('<!-- [scambiButton] -->', $scambiButton, $profilo);
 	
-	$logoutButton = '<form action="/api/logout" method="POST"><input type="submit" class="button-layout" value="Esci" aria-label="Esci dal tuo profilo"/></form>';
+	$logoutButton = '<form action="/api/logout" method="POST"><input type="submit" class="button-layout secondary" value="Esci" aria-label="Esci dal tuo profilo"/></form>';
 	$profilo = str_replace('<!-- [logoutButton] -->', $logoutButton, $profilo);
 	
 	$modificaGeneriButton = '<a href="/profilo/' . $_SESSION['user'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';

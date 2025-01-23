@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/' . '../model/dbAPI.php';
-require_once __DIR__ . '/' . '../src/model/utils.php';
-require_once __DIR__ . '/' . '../src/model/registration-select.php';
+require_once __DIR__ . '/' . '../model/utils.php';
+require_once __DIR__ . '/' . '../model/registration-select.php';
 
 $db = new DBAccess();
 

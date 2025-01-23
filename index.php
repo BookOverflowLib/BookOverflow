@@ -107,40 +107,40 @@ switch ($path) {
 		break;
 	// API
 	case '/api/ottieni-comuni':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'ottieni-comuni.php';
+		require $GLOBALS['MODEL_PATH'] . 'ottieni-comuni.php';
 		break;
 	case '/api/registra-utente':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'registra-utente.php';
+		require $GLOBALS['MODEL_PATH'] . 'registra-utente.php';
 		break;
 	case '/api/accesso-utente':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'accesso-utente.php';
+		require $GLOBALS['MODEL_PATH'] . 'accesso-utente.php';
 		break;
 	case '/api/logout':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'logout.php';
+		require $GLOBALS['MODEL_PATH'] . 'logout.php';
 		break;
 	case '/api/aggiorna-generi':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiorna-generi.php';
+		require $GLOBALS['MODEL_PATH'] . 'aggiorna-generi.php';
 		break;
 	case '/api/aggiungi-libro-offerto':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiungi-libro-offerto.php';
+		require $GLOBALS['MODEL_PATH'] . 'aggiungi-libro-offerto.php';
 	case '/api/aggiungi-libro-desiderato':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'aggiungi-libro-desiderato.php';
+		require $GLOBALS['MODEL_PATH'] . 'aggiungi-libro-desiderato.php';
 	case '/api/rimuovi-libri-offerti':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-libri-offerti.php';
+		require $GLOBALS['MODEL_PATH'] . 'rimuovi-libri-offerti.php';
 	case '/api/rimuovi-libri-desiderati':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-libri-desiderati.php';
+		require $GLOBALS['MODEL_PATH'] . 'rimuovi-libri-desiderati.php';
 		break;
 	case '/api/proponi-scambio':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'proponi-scambio.php';
+		require $GLOBALS['MODEL_PATH'] . 'proponi-scambio.php';
 		break;
 	case '/api/accetta-scambio':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'accetta-scambio.php';
+		require $GLOBALS['MODEL_PATH'] . 'accetta-scambio.php';
 		break;
 	case '/api/rifiuta-scambio':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rifiuta-scambio.php';
+		require $GLOBALS['MODEL_PATH'] . 'rifiuta-scambio.php';
 		break;
 	case '/api/rimuovi-scambio':
-		require __DIR__ . $GLOBALS['MODEL_PATH'] . 'rimuovi-scambio.php';
+		require $GLOBALS['MODEL_PATH'] . 'rimuovi-scambio.php';
 		break;
 
 	default:

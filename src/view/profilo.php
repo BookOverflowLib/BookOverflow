@@ -145,7 +145,7 @@ function addOtherProfiloButtons($profilo, $user)
 	$libriOffertiButton = '<a href="/profilo/' . $user['username'] . '/libri-offerti" class="button-layout" aria-label="Mostra tutti i libri offerti">Mostra tutti</a>';
 	$profilo = str_replace('<!-- [libriOffertiButton] -->', $libriOffertiButton, $profilo);
 	
-	$libriDesideratiButton = '<a href="/profilo/' . $user['username'] . '/libri-desiderati" class="button-layout" aria-label="Mostra tutta la lista dei desideri">Mostra tutti</a>';
+	$libriDesideratiButton = '<a href="/profilo/' . $user['username'] . '/libri-desiderati" class="button-layout" aria-label="Mostra tutti i libri desiderati">Mostra tutti</a>';
 	return str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
 }
 

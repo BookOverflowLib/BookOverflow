@@ -363,7 +363,7 @@ function getLibriCopertinaGrande($libri, $max_risultati): string
 	for ($i = 0; $i < $num_libri; $i++) {
 		$libroTemplate = <<<HTML
 		<div class="libro">
-			<a href="/libro/{$libri[$i]['ISBN']}" aria-label="Libro {$libri[$i]["titolo"]} di {$libri[$i]["autore"]}">
+			<a href="/libro/{$libri[$i]['ISBN']}" aria-label="{$libri[$i]["titolo"]} {$libri[$i]["autore"]}">
 				<img alt="" src="{$libri[$i]['path_copertina']}" width="150" />
 				<p class="titolo-libro">{$libri[$i]["titolo"]}</p>
 				<p class="autore-libro">{$libri[$i]["autore"]}</p>

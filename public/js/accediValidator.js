@@ -5,7 +5,6 @@ import {checkForm, fillSuggestion} from './formValidator.js';
 // [2]: error
 // [3]: isValid
 var formChecks = {
-    //todo: move to dedicated JS function
     identifier: [
         "Es: mariorossi o mariorossi@gmail.com",
         "*",

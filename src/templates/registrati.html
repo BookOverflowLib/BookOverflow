@@ -8,6 +8,7 @@
 	<!-- nome cognome username email città(provincia e città)-->
 	<form action="" autocomplete="on" id="registrati" method="post" onsubmit="">
 		<fieldset class="login-data">
+			<!-- [error] -->
 			<legend class="sr-only">Inserire i dati per registrarsi</legend>
 			<div>
 				<label for="nome">Nome</label>
@@ -37,13 +38,13 @@
 						id="provincia"
 						name="provincia"
 						required>
-					<option value="">Seleziona una provincia</option>
-					<hr/>
-					<!-- [province] -->
-				</select>
-			</div>
-			<div>
-				<label for="comune">Comune</label>
+						<option value="">Seleziona una provincia</option>
+						<hr/>
+						<!-- [province] -->
+					</select>
+				</div>
+				<div>
+					<label for="comune">Comune</label>
 				<select class="form-input" id="comune" name="comune" required>
 					<option value="">Seleziona un comune</option>
 					<hr/>
@@ -96,7 +97,6 @@
 						required
 						type="password"/>
 			</div>
-			<!-- [error] -->
 			<input class="button-layout" type="submit" value="Registrati"/>
 		</fieldset>
 	</form>

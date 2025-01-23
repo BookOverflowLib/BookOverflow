@@ -202,7 +202,7 @@ footer .logo p {
     width: 22vw;
     max-width: 23em;
     overflow: hidden;
-    mask-image: url('/assets/imgs/blob-mask3.svg');
+    mask-image: url('./assets/imgs/blob-mask3.svg');
     justify-self: center;
     padding-bottom: 0;
     margin-right: 2em;

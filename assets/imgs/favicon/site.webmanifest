@@ -3,13 +3,13 @@
   "short_name": "BookOverflow",
   "icons": [
     {
-      "src": "/assets/imgs/favicon/web-app-manifest-192x192.avif",
+      "src": "./assets/imgs/favicon/web-app-manifest-192x192.avif",
       "sizes": "192x192",
       "type": "image/avif",
       "purpose": "maskable"
     },
     {
-      "src": "/assets/imgs/favicon/web-app-manifest-512x512.avif",
+      "src": "./assets/imgs/favicon/web-app-manifest-512x512.avif",
       "sizes": "512x512",
       "type": "image/avif",
       "purpose": "maskable"

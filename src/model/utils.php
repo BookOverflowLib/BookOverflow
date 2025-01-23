@@ -46,7 +46,7 @@ function ratingStars($rating): string
 	
 	$n_full_star = floor($rating); //PARTE INTERA
 	$n_partial_star = $rating - $n_full_star; //PARTE FRAZIONARIA
-	$star_svg = file_get_contents('../public/assets/imgs/star.svg');
+	$star_svg = file_get_contents('../public./assets/imgs/star.svg');
 	
 	$total_star = 5;
 	$rating_stars = '';
@@ -148,9 +148,9 @@ function getNavBarLi($path): string
 function getHeaderButtons($path): string
 {
 	$scura =
-		'<span class="active"><img class="theme-icon" src="/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità scura</span></span>';
+		'<span class="active"><img class="theme-icon" src="./assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità scura</span></span>';
 	$chiara =
-		'<span><img class="theme-icon" src="/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità chiara</span></span>';
+		'<span><img class="theme-icon" src="./assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità chiara</span></span>';
 	$themeToggleButton =
 		'<button class="theme-toggle" aria-pressed="false">' .
 		$chiara .
@@ -193,9 +193,9 @@ function getHeaderButtons($path): string
 function getHamburgerButton(): string
 {
 	$chiuso =
-		'<span class="active"><img class="hamburger-icon" src="/assets/imgs/hamburger.svg" alt=""><span class="visually-hidden">Apri l\'<span lang="en">hamburger</span> menù</span></span>';
+		'<span class="active"><img class="hamburger-icon" src="./assets/imgs/hamburger.svg" alt=""><span class="visually-hidden">Apri l\'<span lang="en">hamburger</span> menù</span></span>';
 	$aperto =
-		'<span><img class="hamburger-icon" src="/assets/imgs/cross.svg" alt=""><span class="visually-hidden">Chiudi l\'<span lang="en">hamburger</span> menù</span></span>';
+		'<span><img class="hamburger-icon" src="./assets/imgs/cross.svg" alt=""><span class="visually-hidden">Chiudi l\'<span lang="en">hamburger</span> menù</span></span>';
 	$hamburgerIcon =
 		'<button id="hamburger" aria-pressed="false">' .
 		$chiuso .

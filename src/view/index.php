@@ -1,5 +1,6 @@
 <?php
-require_once '../src/paths.php';
+echo __DIR__ . "<br>";
+require_once __DIR__ . '/' . '../paths.php';
 require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 

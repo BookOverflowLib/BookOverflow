@@ -1,5 +1,5 @@
 <?php
-require_once '../src/paths.php';
+require_once 'src/paths.php';
 $request = $_SERVER['REQUEST_URI'];
 
 // Rimuovi eventuali query string dal percorso principale
@@ -29,51 +29,81 @@ if (preg_match("#^/libro/([^/]+)$#", $path, $matches)) {
 	$path = '/libro';
 }
 
+// parse prefix from .env file
+// DB_HOST is likely to always be present, even if the website has no prefix
+if (! isset($_ENV['DB_HOST']))
+{
+	$env_path = __DIR__ . '/.env';
+	if (!file_exists($env_path)) {
+		throw new Exception('.env file not found');
+	}
+
+	$env = parse_ini_file($env_path);
+	if ($env === false) {
+		throw new Exception('Error parsing .env file');
+	}
+
+	foreach ($env as $key => $value) {
+		if (!array_key_exists($key, $_ENV)) {
+			$_ENV[$key] = $value;
+		}
+	}
+}
+isset($_ENV['PREFIX']) ? $prefix = $_ENV['PREFIX'] : $prefix = '';
+
+
+#echo $path . "<br>";
+// Remove the prefix from the path
+if (strpos($path, $prefix) === 0) {
+    $path = substr($path, strlen($prefix));
+}
+#echo $path . "<br>";
+
 switch ($path) {
 	case '/':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'index.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'index.php';
 		break;
 	case '/esplora':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'esplora.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'esplora.php';
 		break;
 	case '/esplora/per-te':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'esplora-per-te.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'esplora-per-te.php';
 		break;
 	case '/esplora/potrebbe-piacerti':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'esplora-potrebbe-piacerti.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'esplora-potrebbe-piacerti.php';
 		break;
 	case '/piu-scambiati':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'esplora-piu-scambiati.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'esplora-piu-scambiati.php';
 		break;
 	case '/accedi':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'accedi.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'accedi.php';
 		break;
 	case '/registrati':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'registrati.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'registrati.php';
 		break;
 	case '/profilo':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'profilo.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'profilo.php';
 		break;
 	case '/cerca':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'cerca.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'cerca.php';
 		break;
 	case '/come-funziona':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'come-funziona.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'come-funziona.php';
 		break;
 	case '/profilo/seleziona-generi':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'seleziona-generi.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'seleziona-generi.php';
 		break;
 	case '/profilo/libri-offerti':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'libri-offerti.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'libri-offerti.php';
 		break;
 	case '/profilo/libri-desiderati':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'libri-desiderati.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'libri-desiderati.php';
 		break;
 	case '/profilo/scambi':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'scambi.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'scambi.php';
 		break;
 	case '/libro':
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . 'libro.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'libro.php';
 		break;
 	// API
 	case '/api/ottieni-comuni':
@@ -114,6 +144,6 @@ switch ($path) {
 		break;
 
 	default:
-		require __DIR__ . $GLOBALS['PAGES_PATH'] . '404.php';
+		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . '404.php';
 		break;
 }

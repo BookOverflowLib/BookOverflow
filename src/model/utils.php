@@ -122,11 +122,12 @@ function getTemplatePage($title = null): string
 function getNavBarLi($path): string
 {
 	$currentPage = $path;
-	
+	$prefix = isset($_ENV['PREFIX']) ? $_ENV['PREFIX'] : '';
+	$prefix = rtrim($prefix, '/');
 	$navbarReferences = [
-		['href' => '/', 'text' => 'Home'],
-		['href' => '/esplora', 'text' => 'Esplora'],
-		['href' => '/come-funziona', 'text' => 'Come funziona'],
+		['href' => $prefix . '/', 'text' => 'Home'],
+		['href' => $prefix . '/esplora', 'text' => 'Esplora'],
+		['href' => $prefix . '/come-funziona', 'text' => 'Come funziona'],
 	];
 	
 	$li = '';
@@ -157,13 +158,15 @@ function getHeaderButtons($path): string
 		$scura .
 		'</button>';
 	
+	$prefix = isset($_ENV['PREFIX']) ? $_ENV['PREFIX'] : '';
+	$prefix = rtrim($prefix, '/');
 	// Se la pagina corrente è /accedi, il pulsante deve portare a /registrati
 	$accediButton = '';
 	if ($path != '/accedi') {
-		$accediButton = '<a class="button-layout" href="/accedi">Accedi</a>';
+		$accediButton = '<a class="button-layout" href="'. $prefix . '/accedi">Accedi</a>';
 	} else {
 		$accediButton =
-			'<a class="button-layout" href="/registrati">Registrati</a>';
+			'<a class="button-layout" href="' . $prefix . '/registrati">Registrati</a>';
 	}
 	
 	$ris = '';

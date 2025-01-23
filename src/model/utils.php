@@ -11,6 +11,26 @@ function ensure_session()
 	}
 }
 
+function load_env(): void
+{
+	$env_path = __DIR__ . '/../../.env';
+	if (!file_exists($env_path)) {
+		throw new Exception('.env file not found');
+	}
+
+	$env = parse_ini_file($env_path);
+	if ($env === false) {
+		throw new Exception('Error parsing .env file');
+	}
+
+	foreach ($env as $key => $value) {
+		if (!array_key_exists($key, $_ENV)) {
+			$_ENV[$key] = $value;
+		}
+	}
+}
+
+
 /**
  * Genera una stringa HTML per visualizzare il rating sotto forma di stelle
  *

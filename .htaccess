@@ -1,5 +1,7 @@
 RewriteEngine On
-#RewriteCond %{REQUEST_URI} !\.(css|jpg|jpeg|png|gif|avif|js|css)$ [NC]
+RewriteCond %{REQUEST_URI} !\.(css|jpg|jpeg|png|gif|avif|js|ttf|svg)$ [NC]
 RewriteCond %{REQUEST_FILENAME} !-f 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php [L]
+
+RewriteRule ^\.env$ index.php [L]

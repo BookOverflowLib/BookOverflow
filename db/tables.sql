@@ -638,11 +638,11 @@ VALUES
     (
         6,
         '9788804646846',
-        'utente@utente.com',
+        'user@user.com',
         1,
         'nuovo'
     ),
-    (7, '8852220828', 'utente@utente.com', 1, 'nuovo'),
+    (7, '8852220828', 'user@user.com', 1, 'nuovo'),
     (
         9,
         '8858407148',
@@ -788,10 +788,10 @@ VALUES
     ('noah95@pucci.com', '8854505935'),
     ('noah95@pucci.com', '8873395007'),
     ('pinetto@pino.com', '8858407148'),
-    ('utente@utente.com', '3319672207'),
-    ('utente@utente.com', '885205720X'),
-    ('utente@utente.com', '8852220828'),
-    ('utente@utente.com', '8893679833');
+    ('user@user.com', '3319672207'),
+    ('user@user.com', '885205720X'),
+    ('user@user.com', '8852220828'),
+    ('user@user.com', '8893679833');
 
 --
 -- Dump dei dati per la tabella `Scambio`

@@ -158,6 +158,8 @@ function getHeaderButtons($path): string
 		$scura .
 		'</button>';
 	
+	$prefix = isset($_ENV['PREFIX']) ? $_ENV['PREFIX'] : '';
+	$prefix = rtrim($prefix, '/');
 	// Se la pagina corrente è /accedi, il pulsante deve portare a /registrati
 	$accediButton = '';
 	if ($path != '/accedi') {

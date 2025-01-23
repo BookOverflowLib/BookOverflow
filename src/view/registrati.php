@@ -32,6 +32,8 @@ if (isset($_GET['error'])) {
             $errorMessage = '<p class="input-error-regular">Errore generico</p>';
             break;
     }
+
+    $page = str_replace('<!-- [error] -->', $errorMessage, $page);
 }
 
 echo $page;

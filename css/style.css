@@ -55,7 +55,7 @@
     --svg-invert: invert(0);
     --text: #18140c;
     --text-opposite: #f3efe6;
-    --text-error: #ab4e68;
+    --text-error: #ff525f;
     --background: #f8f6f1;
     --primary: #655024;
     --secondary: #ccd5ae;
@@ -1200,7 +1200,9 @@ li.activePage {
     width: 100%;
     max-width: 23em;
     overflow: hidden;
-    mask-image: url('./../assets/imgs/blob-mask3.svg');
+    mask-repeat: no-repeat;
+    background-repeat: no-repeat;
+    mask-image: url('./..//assets/imgs/blob-mask3.svg');
 }
 
 #perche-farlo > div {

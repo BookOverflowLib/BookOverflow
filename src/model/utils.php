@@ -212,7 +212,7 @@ function getHamburgerButton(): string
  */
 function getHeaderSection($path): string
 {
-	$header = file_get_contents('../src/templates/header.html');
+	$header = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'header.html');
 	
 	$myHeader = str_replace('<!-- [navbar] -->', getNavBarLi($path), $header);
 	$myHeader = str_replace(

@@ -1200,6 +1200,8 @@ li.activePage {
     width: 100%;
     max-width: 23em;
     overflow: hidden;
+    mask-repeat: no-repeat;
+    background-repeat: no-repeat;
     mask-image: url('/assets/imgs/blob-mask3.svg');
 }
 

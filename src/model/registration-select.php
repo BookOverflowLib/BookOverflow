@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/' . '../src/model/dbAPI.php';
+require_once __DIR__ . '/' . '../model/dbAPI.php';
 
 function optionProvince(): string
 {

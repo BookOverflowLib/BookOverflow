@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$password2 = $_POST['conferma-password'];
 		$image = getUserImageUrlByEmail($email);
 
+		// TODO: errore se username già esistente
 		if ($password !== $password2) {
 			header('Location: /registrati?error=password-mismatch');
 			exit();

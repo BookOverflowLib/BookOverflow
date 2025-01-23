@@ -1,5 +1,4 @@
 <?php
-
 // TODO: maybe exception could be handled using best practices but i don´t think it's a requirement
 class DBAccess
 {

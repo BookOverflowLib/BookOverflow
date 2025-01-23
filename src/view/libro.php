@@ -4,10 +4,11 @@ require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
+$prefix = getPrefix();
 
 if (!isset($_GET['ISBN'])) {
 	$_SESSION['error'] = "Nessun libro specificato";
-	header('Location: /404');
+	header('Location: ' . $prefix . '/404');
 	exit();
 }
 
@@ -22,7 +23,7 @@ try {
 	$libro = $libro[0];
 } catch (Exception $e) {
 	$_SESSION['error'] = "Errore nessun libro trovato";
-	header('Location: /404');
+	header('Location: ' . $prefix . '/404');
 	exit();
 }
 
@@ -116,14 +117,15 @@ if (is_logged_in()) {
 
 		} catch (Exception $e) {
 			$_SESSION['error'] = "Errore durante la connessione al database";
-			header('Location: /404');
+			header('Location: ' . $prefix . '/404');
 			exit();
 		}
 		$libroDesiderato = $libriDesiderati[0];
 		$scambi_html .= viewScambioDisponibileDiUtente($utente, $libroDesiderato);
 	}
 } else {
-	$scambi_html = "<p>Per vedere gli scambi disponibili devi fare accesso. <a href='/accedi'>Accedi</a></p>";
+	$prefix = getPrefix();
+	$scambi_html = "<p>Per vedere gli scambi disponibili devi fare accesso. <a href='" . $prefix . "/accedi'>Accedi</a></p>";
 }
 
 $libro_page = str_replace('<!-- [scambiPossibili] -->', $scambi_html, $libro_page);

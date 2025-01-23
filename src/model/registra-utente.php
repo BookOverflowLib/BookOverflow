@@ -17,15 +17,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$password2 = $_POST['conferma-password'];
 		$image = getUserImageUrlByEmail($email);
 
+		$prefix = getPrefix();
 		// TODO: errore se username già esistente
 		if ($password !== $password2) {
-			header('Location: /registrati?error=password-mismatch');
+			header('Location: ' . $prefix . '/registrati?error=password-mismatch');
 			exit();
 		}
 		try {
 			$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
 		} catch (Exception $e) {
-			header('Location: /registrati?error=generic');
+			header('Location: ' . $prefix . '/registrati?error=generic');
 			// TODO
 			exit();
 		}
@@ -35,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$_SESSION['user'] = $username;
 		$_SESSION['path_immagine'] = $image;
 
-		header('Location: /profilo/' . $username);
+		header('Location: ' . $prefix . '/profilo/' . $username);
 
 		exit();
 	}

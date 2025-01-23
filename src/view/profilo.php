@@ -23,7 +23,8 @@ function getProfileId()
 {
 	if (!isset($_GET['user'])) {
 		if (!isset($_SESSION['user'])) {
-			header('Location: /accedi');
+			$prefix = getPrefix();
+			header('Location: ' . $prefix . '/accedi');
 			exit();
 		} else {
 			$_GET['user'] = $_SESSION['user'];
@@ -35,7 +36,8 @@ function getProfileId()
 function handleError($message)
 {
 	$_SESSION['error'] = $message;
-	header('Location: /404');
+	$prefix = getPrefix();
+	header('Location: ' . $prefix . '/404');
 	exit();
 }
 

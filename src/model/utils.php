@@ -114,6 +114,12 @@ function getTemplatePage($title = null): string
 	return $page;
 }
 
+function getPrefix(): string
+{
+	$prefix = isset($_ENV['PREFIX']) ? $_ENV['PREFIX'] : '';
+	return rtrim($prefix, '/');
+}
+
 /**
  * Genera gli elementi \<li\> della navbar rimuovendo il link dalla pagina corrente (circolari!)
  *
@@ -122,8 +128,7 @@ function getTemplatePage($title = null): string
 function getNavBarLi($path): string
 {
 	$currentPage = $path;
-	$prefix = isset($_ENV['PREFIX']) ? $_ENV['PREFIX'] : '';
-	$prefix = rtrim($prefix, '/');
+	$prefix = getPrefix();
 	$navbarReferences = [
 		['href' => $prefix . '/', 'text' => 'Home'],
 		['href' => $prefix . '/esplora', 'text' => 'Esplora'],
@@ -158,8 +163,7 @@ function getHeaderButtons($path): string
 		$scura .
 		'</button>';
 	
-	$prefix = isset($_ENV['PREFIX']) ? $_ENV['PREFIX'] : '';
-	$prefix = rtrim($prefix, '/');
+	$prefix = getPrefix();
 	// Se la pagina corrente è /accedi, il pulsante deve portare a /registrati
 	$accediButton = '';
 	if ($path != '/accedi') {
@@ -317,7 +321,8 @@ function require_login()
 {
 	ensure_session();
 	if (!isset($_SESSION['user'])) {
-		header('Location: /accedi');
+		$prefix = getPrefix();
+		header('Location: ' . $prefix . '/accedi');
 		exit();
 	}
 }
@@ -581,7 +586,8 @@ function ensure_login(): void
 {
 	ensure_session();
 	if (!isset($_SESSION['user'])) {
-		header('Location: /accedi');
+		$prefix = getPrefix();
+		header('Location: ' . $prefix . '/accedi');
 		exit();
 	}
 }

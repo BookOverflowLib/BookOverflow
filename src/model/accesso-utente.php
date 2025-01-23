@@ -6,6 +6,7 @@ require_once __DIR__ . '/' . '../src/model/registration-select.php';
 ensure_session();
 $db = new DBAccess();
 
+$prefix=getPrefix();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['identifier'], $_POST['password'])) {
         $identifier = $_POST['identifier'];
@@ -17,11 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $user = ($db->get_user_by_identifier($identifier))[0];
                 $_SESSION['user'] = $user['username'];
                 $_SESSION['path_immagine'] = $user['path_immagine'];
-                header('Location: /profilo/' . $user['username']);
+                header('Location: ' . $prefix . '/profilo/' . $user['username']);
                 exit();
             }
         } catch (Exception $e) {
-            header('Location: /accedi?error=invalid');
+            header('Location: ' . $prefix . '/accedi?error=invalid');
             $_SESSION['error'] = "invalid-credentials";
             exit();
         }
@@ -29,5 +30,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $_SESSION['error'] = "missing-fields";
-header('Location: /accedi?error=missing');
+header('Location: ' . $prefix . '/accedi?error=missing');
 exit();

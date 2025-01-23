@@ -24,5 +24,6 @@ if (isset($_POST) && isset($_SESSION['user'])) {
 
 //$previousUrl = $_SERVER['HTTP_REFERER'];
 //$previousUrl = parse_url($previousUrl, PHP_URL_PATH);
-header('Location: /profilo/' . $_SESSION['user'] . '/scambi');
+$prefix = getPrefix();
+header('Location: ' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi');
 exit();

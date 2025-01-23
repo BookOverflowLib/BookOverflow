@@ -1,5 +1,5 @@
 <?php
-require_once '../src/model/dbAPI.php';
+require_once __DIR__ . '/' . '../src/model/dbAPI.php';
 
 function getIsbnPopularBooksNYT($limit = 10): array
 {

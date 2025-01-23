@@ -1,5 +1,5 @@
 <?php
-require_once '../src/paths.php';
+require_once __DIR__ . '/' . '../src/paths.php';
 require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 require_once $GLOBALS['MODEL_PATH'] . 'registration-select.php';

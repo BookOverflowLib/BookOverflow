@@ -61,49 +61,49 @@ if (strpos($path, $prefix) === 0) {
 
 switch ($path) {
 	case '/':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'index.php';
+		require $GLOBALS['PAGES_PATH'] . 'index.php';
 		break;
 	case '/esplora':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'esplora.php';
+		require $GLOBALS['PAGES_PATH'] . 'esplora.php';
 		break;
 	case '/esplora/per-te':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'esplora-per-te.php';
+		require $GLOBALS['PAGES_PATH'] . 'esplora-per-te.php';
 		break;
 	case '/esplora/potrebbe-piacerti':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'esplora-potrebbe-piacerti.php';
+		require $GLOBALS['PAGES_PATH'] . 'esplora-potrebbe-piacerti.php';
 		break;
 	case '/piu-scambiati':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'esplora-piu-scambiati.php';
+		require $GLOBALS['PAGES_PATH'] . 'esplora-piu-scambiati.php';
 		break;
 	case '/accedi':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'accedi.php';
+		require $GLOBALS['PAGES_PATH'] . 'accedi.php';
 		break;
 	case '/registrati':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'registrati.php';
+		require $GLOBALS['PAGES_PATH'] . 'registrati.php';
 		break;
 	case '/profilo':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'profilo.php';
+		require $GLOBALS['PAGES_PATH'] . 'profilo.php';
 		break;
 	case '/cerca':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'cerca.php';
+		require $GLOBALS['PAGES_PATH'] . 'cerca.php';
 		break;
 	case '/come-funziona':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'come-funziona.php';
+		require $GLOBALS['PAGES_PATH'] . 'come-funziona.php';
 		break;
 	case '/profilo/seleziona-generi':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'seleziona-generi.php';
+		require $GLOBALS['PAGES_PATH'] . 'seleziona-generi.php';
 		break;
 	case '/profilo/libri-offerti':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'libri-offerti.php';
+		require $GLOBALS['PAGES_PATH'] . 'libri-offerti.php';
 		break;
 	case '/profilo/libri-desiderati':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'libri-desiderati.php';
+		require $GLOBALS['PAGES_PATH'] . 'libri-desiderati.php';
 		break;
 	case '/profilo/scambi':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'scambi.php';
+		require $GLOBALS['PAGES_PATH'] . 'scambi.php';
 		break;
 	case '/libro':
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . 'libro.php';
+		require $GLOBALS['PAGES_PATH'] . 'libro.php';
 		break;
 	// API
 	case '/api/ottieni-comuni':
@@ -144,6 +144,6 @@ switch ($path) {
 		break;
 
 	default:
-		require __DIR__ . '/' . $GLOBALS['PAGES_PATH'] . '404.php';
+		require $GLOBALS['PAGES_PATH'] . '404.php';
 		break;
 }

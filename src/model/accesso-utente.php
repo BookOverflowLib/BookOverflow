@@ -1,7 +1,7 @@
 <?php
-require_once '../src/model/dbAPI.php';
-require_once '../src/model/utils.php';
-require_once '../src/model/registration-select.php';
+require_once __DIR__ . '/' . '../src/model/dbAPI.php';
+require_once __DIR__ . '/' . '../src/model/utils.php';
+require_once __DIR__ . '/' . '../src/model/registration-select.php';
 
 ensure_session();
 $db = new DBAccess();

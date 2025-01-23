@@ -17,7 +17,6 @@ var formChecks = {
         "Inserire un cognome di lunghezza almeno 2 e massimo 50, non sono ammessi numeri o caratteri speciali",
         false
     ],
-    // all characters are allowed
     username: [
         "Es: MarioRossi",
         /^[^\s\r\n]{2,50}$/,

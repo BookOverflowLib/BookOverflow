@@ -17,6 +17,6 @@ if (isset($_POST["generi"]) && isset($_SESSION['user'])) {
 } else {
 	throw new Exception(message: "Errore: generi non impostati");
 }
-
-header('Location: /profilo/' . $_SESSION['user'] . '#generi');
+$prefix = getPrefix();
+header('Location: ' . $prefix . '/profilo/' . $_SESSION['user'] . '#generi');
 exit();

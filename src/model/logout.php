@@ -5,5 +5,6 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
 session_destroy();
-header('Location: /accedi');
+$prefix = getPrefix();
+header('Location: ' . $prefix . '/accedi');
 exit();

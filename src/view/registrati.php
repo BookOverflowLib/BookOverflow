@@ -13,25 +13,26 @@ $registrati = str_replace('<!-- [province] -->', $provinceList, $registrati);
 $page = str_replace('<!-- [content] -->', $registrati, $page);
 
 if (isset($_GET['error'])) {
-    // TODO
-    $errorMessage = '';
+    // TODO: cambiare GET in SESSION
+    $errorMessage = '<p class="input-error-regular role="alert">';
     switch ($_GET['error']) {
         case 'missing':
-            $errorMessage = '<p class="input-error-regular">Inserire tutti i campi richiesti</p>';
+            $errorMessage .= 'Inserire tutti i campi richiesti';
             break;
         case 'password-mismatch':
-            $errorMessage = '<p class="input-error-regular">Le password non corrispondono</p>';
+            $errorMessage .= 'Le password non corrispondono';
             break;
         case 'username-taken':
-            $errorMessage = '<p class="input-error-regular">Username già in uso</p>';
+            $errorMessage .= 'Username già in uso';
             break;
         case 'email-taken':
-            $errorMessage = '<p class="input-error-regular">Email già in uso</p>';
+            $errorMessage .= 'Email già in uso';
             break;
         case 'generic':
-            $errorMessage = '<p class="input-error-regular">Errore generico</p>';
+            $errorMessage .= 'Errore generico';
             break;
     }
+    $errorMessage .= '</p>';
 
     $page = str_replace('<!-- [error] -->', $errorMessage, $page);
 }

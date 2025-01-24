@@ -125,10 +125,10 @@ switch ($path) {
 		require $GLOBALS['MODEL_PATH'] . 'aggiungi-libro-offerto.php';
 	case '/api/aggiungi-libro-desiderato':
 		require $GLOBALS['MODEL_PATH'] . 'aggiungi-libro-desiderato.php';
-	case '/api/rimuovi-libri-offerti':
-		require $GLOBALS['MODEL_PATH'] . 'rimuovi-libri-offerti.php';
-	case '/api/rimuovi-libri-desiderati':
-		require $GLOBALS['MODEL_PATH'] . 'rimuovi-libri-desiderati.php';
+	case '/api/rimuovi-libro-offerto':
+		require $GLOBALS['MODEL_PATH'] . 'rimuovi-libro-offerto.php';
+	case '/api/rimuovi-libro-desiderato':
+		require $GLOBALS['MODEL_PATH'] . 'rimuovi-libro-desiderato.php';
 		break;
 	case '/api/proponi-scambio':
 		require $GLOBALS['MODEL_PATH'] . 'proponi-scambio.php';

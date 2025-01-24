@@ -14,7 +14,7 @@ function optionProvince(): string
             }
         }
     } catch (Exception $e) {
-        echo $e->getMessage();
+        $_SESSION['error'] = exceptionToError($e, "caricamento delle province non riuscito");
     }
     return $html_output;
 }
@@ -32,7 +32,7 @@ function optionComuni($province_id): string
             }
         }
     } catch (Exception $e) {
-        echo $e->getMessage();
+        $_SESSION['error'] = exceptionToError($e, "caricamento dei comuni non riuscito");
     }
     return $html_output;
 }

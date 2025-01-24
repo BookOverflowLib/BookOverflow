@@ -13,7 +13,7 @@ if (isset($_POST) && isset($_SESSION['user'])) {
 	try {
 		$db->remove_scambio_by_id($id);
 	} catch (Exception $e) {
-		$_SESSION['error'] = 'Errore: scambio non rimosso';
+		$_SESSION['error'] = exceptionToError($e, "scambio non rimosso");
 	}
 } else {
 	throw new Exception(message: "Errore: scambio non rimosso");

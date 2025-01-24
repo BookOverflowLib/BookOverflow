@@ -32,7 +32,7 @@ if (isset($_POST) && isset($_SESSION['user'])) {
         $db->insert_libri_offerti_by_username($user, $isbn, $condizioni);
 
     } catch (Exception $e) {
-        $_SESSION['error'] = 'Errore: libro non aggiunto';
+        $_SESSION['error'] = exceptionToError($e, "libro non aggiunto");
     }
 } else {
     throw new Exception(message: "Errore: Libro non aggiunto");

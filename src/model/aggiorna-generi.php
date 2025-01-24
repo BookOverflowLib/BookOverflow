@@ -12,7 +12,7 @@ if (isset($_POST["generi"]) && isset($_SESSION['user'])) {
 	try {
 		$db->update_user_generi($user, $generi);
 	} catch (Exception $e) {
-		$_SESSION['error'] = 'Errore: generi non aggiornati';
+		$_SESSION['error'] = exceptionToError($e, "generi non aggiornati");
 	}
 } else {
 	throw new Exception(message: "Errore: generi non impostati");

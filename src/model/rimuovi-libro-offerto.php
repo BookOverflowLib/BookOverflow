@@ -12,7 +12,7 @@ if (isset($_POST) && isset($_SESSION['user'])) {
     try {
         $db->delete_libro_offerto($user, $isbn);
     } catch (Exception $e) {
-        $_SESSION['error'] = 'Errore: libro non rimosso';
+        $_SESSION['error'] = exceptionToError($e, 'libro non rimosso');
     }
 } else {
     $_SESSION['error'] = 'Errore: libro non rimosso';

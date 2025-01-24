@@ -156,7 +156,8 @@ class DBAccess
 			return $results;
 		} catch (Exception $e) {
 			error_log("execute_select_query: " . $e->getMessage());
-			error_log("execure_select_query: QUERY=" . $query . "; TYPES= " . $types . "; PARAMS=" . implode(", ", $params));
+			error_log("execute_select_query: QUERY=" . $query . "; TYPES= " . $types . "; PARAMS=" . 
+			(is_array($params) ? implode(", ", $params) : (string)$params));
 			throw $e;
 		}
 	}

@@ -1,15 +1,12 @@
 <?php
 
 require __DIR__ . '/exceptions.php';
-use CustomExceptions\{
-	UsernameAlreadyExistsException,
-	EmailAlreadyExistsException,
-	IncorrectCredentialsException,
-	GenericRegistrationException,
+
+use CustomExceptions\{EmailAlreadyExistsException,
 	GenericCustomException,
-	GenericCustomException_Alt,
-	CustomException, 
-};
+	GenericRegistrationException,
+	IncorrectCredentialsException,
+	UsernameAlreadyExistsException,};
 
 // TODO: maybe exception could be handled using best practices but i don´t think it's a requirement
 class DBAccess
@@ -156,8 +153,8 @@ class DBAccess
 			return $results;
 		} catch (Exception $e) {
 			error_log("execute_select_query: " . $e->getMessage());
-			error_log("execute_select_query: QUERY=" . $query . "; TYPES= " . $types . "; PARAMS=" . 
-			(is_array($params) ? implode(", ", $params) : (string)$params));
+			error_log("execute_select_query: QUERY=" . $query . "; TYPES= " . $types . "; PARAMS=" .
+				(is_array($params) ? implode(", ", $params) : (string)$params));
 			throw $e;
 		}
 	}
@@ -240,7 +237,7 @@ class DBAccess
 		}
 		return null;
 	}
-
+	
 	private function check_exists_finalize($query, $identifier): bool
 	{
 		try {
@@ -259,19 +256,19 @@ class DBAccess
 		}
 		return false;
 	}
-
+	
 	private function check_username_exists($username): bool
 	{
 		$query = "SELECT COUNT(*) FROM Utente WHERE username = ? LIMIT 1";
 		return $this->check_exists_finalize($query, $username);
 	}
-
+	
 	private function check_email_exists($email): bool
 	{
 		$query = "SELECT COUNT(*) FROM Utente WHERE email = ? LIMIT 1";
 		return $this->check_exists_finalize($query, $email);
 	}
-
+	
 	public function register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $profileImg = null): void
 	{
 		try {
@@ -283,7 +280,7 @@ class DBAccess
 			}
 			$passwordHashed = password_hash($password, PASSWORD_BCRYPT);
 			$query = "INSERT INTO Utente (email, password_hash, username, nome, cognome, provincia, comune, path_immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-		
+			
 			$this->void_query($query, "ssssssss", [$email, $passwordHashed, $username, $nome, $cognome, $provincia, $comune, $profileImg]);
 		} catch (Exception $e) {
 			throw $e;
@@ -847,14 +844,55 @@ class DBAccess
 		}
 	}
 	
-	function check_if_user_can_add_review($emailRecensito, $emailRecensore): bool
+	/**
+	 * Controlla se l'utente può aggiungere una recensione
+	 * @param $userRecensito string utente recensito
+	 * @param $userRecensore string utente recensore
+	 * @param $id int id scambio
+	 * @return bool true se l'utente può aggiungere una recensione, false altrimenti
+	 * @throws Exception se si verifica un errore
+	 */
+	function check_if_user_can_add_review($userRecensito, $userRecensore, $id): bool
 	{
-		$query = "SELECT * FROM Recensione WHERE emailRecensito = ? AND emailRecensore = ?";
+		$query_scambio = "SELECT * FROM Scambio WHERE emailProponente = ? AND emailAccettatore = ?";
+		$query_recensione = "SELECT * FROM Recensione WHERE emailRecensito = ? AND idScambio = ?";
+		
 		try {
-			$res = $this->query_to_array($query, "ss", [$emailRecensito, $emailRecensore]);
-			return count($res) === 0;
+			$emailRecensito = $this->get_user_email_by_username($userRecensito);
+			$emailRecensore = $this->get_user_email_by_username($userRecensore);
+			// controllo se c'è uno scambio tra i due utenti
+			$res1 = $this->query_to_array($query_scambio, "ss", [$emailRecensito, $emailRecensore]);
+			$res2 = $this->query_to_array($query_scambio, "ss", [$emailRecensore, $emailRecensito]);
+			
+			if (count($res1) > 0 || count($res2) > 0) {
+				// controllo se l'utente ha già recensito l'altro
+				$res3 = $this->query_to_array($query_recensione, "si", [$emailRecensito, $id]);
+				return count($res3) === 0;
+			} else {
+				return false;
+			}
 		} catch (Exception $e) {
 			error_log("check_if_user_can_add_review: " . $e->getMessage());
+			throw $e;
+		}
+	}
+	
+	/**
+	 * Inserisce una recensione
+	 * @param $userRecensito string utente recensito
+	 * @param $idScambio int id scambio
+	 * @param $valutazione int valutazione
+	 * @param $contenuto string contenuto
+	 * @throws Exception se si verifica un errore
+	 */
+	function insert_review($userRecensito, $idScambio, $valutazione, $contenuto)
+	{
+		$query = "INSERT INTO Recensione (emailRecensito, idScambio, valutazione, contenuto) VALUES (?, ?, ?, ?)";
+		try {
+			$emailRecensito = $this->get_user_email_by_username($userRecensito);
+			$this->void_query($query, "siis", [$emailRecensito, $idScambio, $valutazione, $contenuto]);
+		} catch (Exception $e) {
+			error_log("insert_review: " . $e->getMessage());
 			throw $e;
 		}
 	}

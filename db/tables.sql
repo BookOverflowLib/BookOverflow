@@ -96,7 +96,6 @@ CREATE TABLE
         emailRecensore VARCHAR(255),
         idScambio INT,
         dataPubblicazione DATE DEFAULT CURRENT_DATE,
-        titolo VARCHAR(255) NOT NULL,
         valutazione TINYINT UNSIGNED CHECK (
             valutazione >= 1
             AND valutazione <= 5

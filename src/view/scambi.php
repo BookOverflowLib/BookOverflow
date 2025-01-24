@@ -73,7 +73,7 @@ function generateScambioRow($scambio, $db)
                 </div>
             </div>
         </div>
-        <img src="./assets/imgs/scambio-arrows.svg" alt="" id="scambio-arrows">
+        <img src="{$GLOBALS['prefix']}/assets/imgs/scambio-arrows.svg" alt="" id="scambio-arrows">
         <div class="storico-ricevi">
             <p>Ricevi:</p>
             <div>

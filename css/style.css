@@ -4,25 +4,29 @@
 
 @font-face {
     font-family: 'Gentium Book Plus';
-    src: url("./../assets/fonts/GentiumBookPlus-Regular.ttf") format("woff2");
+    src: url("./../assets/fonts/GentiumBookPlus-Regular.woff2") format("woff2"),
+    url("./../assets/fonts/GentiumBookPlus-Regular.ttf") format("truetype");
     font-weight: normal;
 }
 
 @font-face {
     font-family: 'Gentium Book Plus';
-    src: url("./../assets/fonts/GentiumBookPlus-Bold.ttf") format("woff2");
+    src: url("./../assets/fonts/GentiumBookPlus-Bold.woff2") format("woff2"),
+    url("./../assets/fonts/GentiumBookPlus-Bold.ttf") format("truetype");
     font-weight: bold;
 }
 
 @font-face {
     font-family: 'Gentium Book Plus';
-    src: url("./../assets/fonts/GentiumBookPlus-Italic.ttf") format("woff2");
+    src: url("./../assets/fonts/GentiumBookPlus-Italic.woff2") format("woff2"),
+    url("./../assets/fonts/GentiumBookPlus-Italic.ttf") format("truetype");
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Gentium Book Plus';
-    src: url("./../assets/fonts/GentiumBookPlus-BoldItalic.ttf") format("woff2");
+    src: url("./../assets/fonts/GentiumBookPlus-BoldItalic.woff2") format("woff2"),
+    url("./../assets/fonts/GentiumBookPlus-BoldItalic.ttf") format("truetype");
     font-style: italic;
     font-weight: bold;
 }
@@ -72,6 +76,7 @@
 
     --background-50: #fbf4ea;
     --background-100: #f7ead4;
+    --background-100-alpha: #f7ead4cc;
     --background-200: #efd4a9;
     --background-300: #e7bf7e;
     --background-400: #dea954;
@@ -180,6 +185,7 @@
 
     --background-50: #110e08;
     --background-100: #231c10;
+    --background-100-alpha: #231c10cc;
     --background-200: #453821;
     --background-300: #685431;
     --background-400: #8b7041;
@@ -441,8 +447,8 @@ header {
 
 .header-container.active {
     border-radius: 1em;
-    background-color: var(--background-100);
-    backdrop-filter: blur(80px);
+    background-color: var(--background-100-alpha);
+    backdrop-filter: blur(40px);
 }
 
 .header-buttons {
@@ -1635,6 +1641,7 @@ li.activePage {
 }
 
 #button-read-more {
+    color: var(--text);
     margin-top: 1em;
     margin-bottom: 1em;
     text-decoration: underline;

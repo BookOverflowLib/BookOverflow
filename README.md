@@ -15,7 +15,7 @@ Connect to the server at `http://localhost:8080/public/index.php`.
 
 To use phpmyadmin go to `http://localhost:8081/`.
 ***
-To setup ssh keys for uploading the website to paoltti's server:
+To setup ssh keys for uploading the website to Paolotti's server:
 ```bash
 ssh-copy-id USERNAME@paolotti.studenti.math.unipd.it    
 ssh paolotti.studenti.math.unipd.it -l USERNAME -L8080:tecweb:80 -L8443:tecweb:443 -L8022:tecweb:22
@@ -25,7 +25,7 @@ then in a new terminal
 ssh-copy-id -p 8022 USERNAME@127.0.0.1
 ```
 
-Then to upload changes to the server:
+To upload changes to the server (keys need to have been set up first):
 - open tunnel:
     ```bash
     ssh paolotti.studenti.math.unipd.it -l USERNAME -L8080:tecweb:80 -L8443:tecweb:443 -L8022:tecweb:22

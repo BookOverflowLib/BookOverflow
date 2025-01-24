@@ -18,19 +18,38 @@ if (!isset($_POST['testo']) || !isset($_POST['valutazione']) || !isset($_POST['i
 }
 
 $testo = htmlspecialchars($_POST['testo']);
-$userRicevente = htmlspecialchars($_POST['user-ricevente']);
+$userRecensito = htmlspecialchars($_POST['user-ricevente']);
 
 $valutazione = filter_input(INPUT_POST, 'valutazione', FILTER_VALIDATE_INT, [
 	'options' => ['min_range' => 1, 'max_range' => 5]
 ]);
 $idScambio = filter_input(INPUT_POST, 'id-scambio', FILTER_VALIDATE_INT);
 
+try {
+	$canAdd = $db->check_if_user_can_add_review($userRecensito, $_SESSION['user'], $idScambio);
+} catch (Exception $e) {
+	$_SESSION['error'] = 'Errore: recensione non aggiunta';
+	throw new Exception(message: "Errore: recensione non aggiunta");
+}
+if (!$canAdd) {
+	$_SESSION['error'] = 'Errore: recensione già aggiunta';
+	throw new Exception(message: "Errore: recensione già aggiunta");
+}
+
 if ($valutazione === false || $idScambio === false) {
 	$_SESSION['error'] = 'Errore: dati non validi';
 	throw new Exception(message: "Errore: dati non validi");
 }
 
-$previousUrl = $_SERVER['HTTP_REFERER'] ?? '/profilo/' . $_SESSION['user'];
+
+try {
+	$db->insert_review($userRecensito, $idScambio, $valutazione, $testo);
+} catch (Exception $e) {
+	$_SESSION['error'] = 'Errore: recensione non aggiunta';
+	throw new Exception(message: "Errore: recensione non aggiunta");
+}
+
+$previousUrl = $_SERVER['HTTP_REFERER'] ?? $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user'] . '/scambi';
 $previousUrl = parse_url($previousUrl, PHP_URL_PATH);
 header('Location: ' . $previousUrl);
 exit();

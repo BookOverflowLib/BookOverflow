@@ -35,5 +35,5 @@ if (isset($_GET['error'])) {
 
     $page = str_replace('<!-- [error] -->', $errorMessage, $page);
 }
-
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;

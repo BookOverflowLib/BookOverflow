@@ -110,7 +110,7 @@ function getTemplatePage($title = null): string
 	$page = str_replace('<!-- [header] -->', $header, $page);
 	$page = str_replace('<!-- [breadcrumb] -->', $breadcrumb, $page);
 	$page = str_replace('<!-- [footer] -->', $footer, $page);
-	
+	$page = populateWebdirPrefixPlaceholders($page);
 	return $page;
 }
 

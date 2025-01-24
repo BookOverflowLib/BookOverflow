@@ -20,4 +20,5 @@ $match_potrebbe_piacerti = $db->get_potrebbe_piacerti_by_user($_SESSION['user'])
 $esplora = str_replace('<!-- [matchPotrebbePiacerti] -->', getLibriCopertinaGrande($match_potrebbe_piacerti, 4), $esplora);
 
 $page = str_replace('<!-- [content] -->', $esplora, $page);
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;

@@ -15,4 +15,5 @@ $index = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'index.html');
 
 $page = str_replace('<!-- [content] -->', $index, $page);
 $page = str_replace('<!-- [piuScambiati] -->', $mostTradedCoversHTML, $page);
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;

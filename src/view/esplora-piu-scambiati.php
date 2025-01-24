@@ -18,4 +18,5 @@ $piu_scambiati = $db->get_piu_scambiati();
 $esplora = str_replace('<!-- [caroselloTuttiLibri] -->', getLibriCopertinaGrande($piu_scambiati, 999), $esplora);
 
 $page = str_replace('<!-- [content] -->', $esplora, $page);
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;

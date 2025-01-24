@@ -33,4 +33,5 @@ if (isset($_GET['error'])) {
 }
 
 $page = str_replace('<!-- [content] -->', $accedi, $page);
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;

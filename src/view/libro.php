@@ -133,4 +133,5 @@ $libro_page = str_replace('<!-- [scambiPossibili] -->', $scambi_html, $libro_pag
 //TODO: se l'utente non è loggato non mostra un avviso che bisogna loggare per vedere gli scambi
 
 $page = str_replace('<!-- [content] -->', $libro_page, $page);
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;

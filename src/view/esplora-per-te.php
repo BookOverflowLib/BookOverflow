@@ -19,4 +19,5 @@ $match_per_te = $db->get_match_per_te_by_user($_SESSION['user']);
 $esplora = str_replace('<!-- [caroselloTuttiLibri] -->', getLibriCopertinaGrande($match_per_te, 999), $esplora);
 
 $page = str_replace('<!-- [content] -->', $esplora, $page);
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;

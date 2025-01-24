@@ -25,4 +25,5 @@ if(check_ownership()) {
 }
 
 $page = str_replace('<!-- [content] -->', $libri_desiderati, $page);
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;

@@ -5,30 +5,6 @@ $request = $_SERVER['REQUEST_URI'];
 // Rimuovi eventuali query string dal percorso principale
 $path = parse_url($request, PHP_URL_PATH);
 
-// Controlla se il percorso è "/profilo/*"
-if (preg_match("#^/profilo/([^/]+)/seleziona-generi$#", $path, $matches)) {
-	$_GET['user'] = $matches[1];
-	$path = '/profilo/seleziona-generi';
-} elseif (preg_match('#^/profilo/([^/]+)/libri-offerti#', $path, $matches)) {
-	$_GET['user'] = $matches[1];
-	$path = '/profilo/libri-offerti';
-} elseif (preg_match('#^/profilo/([^/]+)/libri-desiderati#', $path, $matches)) {
-	$_GET['user'] = $matches[1];
-	$path = '/profilo/libri-desiderati';
-} elseif (preg_match('#^/profilo/([^/]+)/scambi#', $path, $matches)) {
-	$_GET['user'] = $matches[1];
-	$path = '/profilo/scambi';
-} elseif (preg_match("#^/profilo/([^/]+)$#", $path, $matches)) {
-	$_GET['user'] = $matches[1];
-	$path = '/profilo';
-}
-
-// Controlla se il percorso è "/libro/*"
-if (preg_match("#^/libro/([^/]+)$#", $path, $matches)) {
-	$_GET['ISBN'] = $matches[1];
-	$path = '/libro';
-}
-
 // parse prefix from .env file
 // DB_HOST is likely to always be present, even if the website has no prefix
 if (! isset($_ENV['DB_HOST']))
@@ -58,6 +34,30 @@ if (strpos($path, $prefix) === 0) {
     $path = substr($path, strlen($prefix));
 }
 #echo $path . "<br>";
+
+// Controlla se il percorso è "/profilo/*"
+if (preg_match("#^/profilo/([^/]+)/seleziona-generi$#", $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo/seleziona-generi';
+} elseif (preg_match('#^/profilo/([^/]+)/libri-offerti#', $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo/libri-offerti';
+} elseif (preg_match('#^/profilo/([^/]+)/libri-desiderati#', $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo/libri-desiderati';
+} elseif (preg_match('#^/profilo/([^/]+)/scambi#', $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo/scambi';
+} elseif (preg_match("#^/profilo/([^/]+)$#", $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo';
+}
+
+// Controlla se il percorso è "/libro/*"
+if (preg_match("#^/libro/([^/]+)$#", $path, $matches)) {
+	$_GET['ISBN'] = $matches[1];
+	$path = '/libro';
+}
 
 switch ($path) {
 	case '/':

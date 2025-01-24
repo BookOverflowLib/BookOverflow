@@ -645,7 +645,7 @@ function addErrorsToPage($page): string
  */
 function exceptionToError(Exception $e, string  $genericError): string
 {
-	require_once 'exceptions.php';
+	require_once __DIR__ . '/exceptions.php';
 	if ($e instanceof CustomExceptions\CustomException) {
 		return $e->getMessage();
 	} else {

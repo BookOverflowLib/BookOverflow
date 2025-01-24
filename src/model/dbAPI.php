@@ -1,6 +1,6 @@
 <?php
 
-require './exceptions.php';
+require __DIR__ . '/exceptions.php';
 use CustomExceptions\{
 	UsernameAlreadyExistsException,
 	EmailAlreadyExistsException,

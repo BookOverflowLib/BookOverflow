@@ -7,7 +7,7 @@ $path = parse_url($request, PHP_URL_PATH);
 
 // parse prefix from .env file
 // DB_HOST is likely to always be present, even if the website has no prefix
-if (! isset($_ENV['DB_HOST']))
+if (!isset($_ENV['DB_HOST']))
 {
 	$env_path = __DIR__ . '/.env';
 	if (!file_exists($env_path)) {

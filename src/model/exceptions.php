@@ -18,14 +18,14 @@ class UsernameAlreadyExistsException extends CustomException {
 }
 
 class EmailAlreadyExistsException extends CustomException {
-    public function __construct($email) {
-        parent::__construct("L'email $email è già associata ad un account");
+    public function __construct() {
+        parent::__construct("Errore: Questa email è già registrata");
     }
 }
 
 class IncorrectCredentialsException extends CustomException {
     public function __construct() {
-        parent::__construct("Le credenziali inserite non sono corrette");
+        parent::__construct("Errore: credenziali non corrette");
     }
 }
 

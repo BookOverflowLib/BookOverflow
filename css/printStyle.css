@@ -61,7 +61,7 @@ input#cognome,
 select#provincia.form-input,
 select#comune.form-input,
 input#username,
-input#conferma-password {
+input#conferma_password {
 	border: 1px solid black;
 }
 

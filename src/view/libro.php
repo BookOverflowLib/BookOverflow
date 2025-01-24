@@ -61,6 +61,7 @@ foreach ($sostituzioni as $placeholder => $value) {
 // Aggiungi scambi disponibili
 function viewScambioDisponibileDiUtente($utente, $libro): string
 {
+	$prefix = getPrefix();
 	$location = getLocationName($utente['provincia'], $utente['comune']);
 	$scambio = <<<HTML
 	<div class="scambio"> <!-- uno scambio -->
@@ -88,7 +89,7 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 			<a href="/profilo/{$utente['username']}/libri-desiderati">Oppure altri libri</a>
 		</div>
 		<div class="scambio-button">
-			<form action="/api/proponi-scambio" method="post">
+			<form action="{$prefix}/api/proponi-scambio" method="post">
 				<input type="hidden" name="utente_proponente" value="{$_SESSION['user']}" />
 				<input type="hidden" name="utente_accettatore" value="{$utente['username']}" />
 				<input type="hidden" name="ISBN_proponente" value="{$libro['ISBN']}" />

@@ -159,8 +159,11 @@ function getHeaderButtons($path): string
 		'</button>';
 	
 	// Se la pagina corrente è /accedi, il pulsante deve portare a /registrati
+	// Vengono rimossi eventuali parametri GET e controllata solo la parte finale del path per gestire 
+	// il caso in cui il sito venga hostato in una sottocartella
+	$path = parse_url($path, PHP_URL_PATH);
 	$accediButton = '';
-	if ($path != '/accedi') {
+	if (substr($path, -7) != '/accedi') {
 		$accediButton = '<a class="button-layout" href="' . $prefix . '/accedi">Accedi</a>';
 	} else {
 		$accediButton =
@@ -240,7 +243,12 @@ function getHeaderSection($path): string
 function getBreadcrumb($path): string
 {
 	ensure_session();
+	
+	// remove prefixes and get parameters
 	$path = parse_url($path, PHP_URL_PATH);
+	$prefix = getPrefix();
+	$path = str_replace($prefix, '', $path);
+
 	$elements = '';
 	if ($path == '/') {
 		$elements = '<li><span lang="en" class="bold">Home</span></li>';
@@ -248,12 +256,12 @@ function getBreadcrumb($path): string
 		$path = explode('/', $path);
 		$path = array_filter($path);
 		$path = array_values($path);
-		$elements = '<li><a href="/"><span lang="en">Home</span></a></li>';
+		$elements = '<li><a href="' . $prefix. '/"><span lang="en">Home</span></a></li>';
 		$last = count($path) - 1;
-		$currentUrl = '';
+		$currentUrl = $prefix;
 		for ($i = 0; $i < $last; $i++) {
 			$currentUrl .= '/' . $path[$i];
-			$currentPath = str_replace('-', ' ', ucfirst($path[$i])); // remove -
+			$currentPath = str_replace('-', ' ', ucfirst($path[$i])); // remove '-'
 			if (isset($_SESSION['user']) && $i > 0 && $path[$i - 1] == 'profilo' && $path[$i] == $_SESSION['user']) {
 				$currentPath = 'Il mio profilo';
 			}

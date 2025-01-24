@@ -2,7 +2,7 @@
    FONT FACES
    ========================================================================== */
 
-   @font-face {
+@font-face {
     font-family: 'Gentium Book Plus';
     src: url("./../assets/fonts/GentiumBookPlus-Regular.woff2") format("woff2"),
     url("./../assets/fonts/GentiumBookPlus-Regular.ttf") format("truetype");
@@ -59,7 +59,7 @@
     --svg-invert: invert(0);
     --text: #18140c;
     --text-opposite: #f3efe6;
-    --text-error: #ff525f;
+    --text-error: #ab4e68;
     --background: #f8f6f1;
     --primary: #655024;
     --secondary: #ccd5ae;
@@ -154,7 +154,7 @@
     --svg-invert: invert(1);
     --text: #f3efe6;
     --text-opposite: #f3efe6; /*#18140c;*/
-    --text-error: #ab4e68;
+    --text-error: #ff525f;
     --background: #0f0c07;
     --primary: #dbc69b;
     --secondary: #48512a;

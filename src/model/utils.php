@@ -649,6 +649,6 @@ function exceptionToError(Exception $e, string  $genericError): string
 	if ($e instanceof CustomExceptions\CustomException) {
 		return $e->getMessage();
 	} else {
-		return $genericError;
+		return "Errore: " . $genericError;
 	}
 }

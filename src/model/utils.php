@@ -635,3 +635,20 @@ function addErrorsToPage($page): string
 	$page = str_replace('<!-- [displayError] -->', $errors, $page);
 	return $page;
 }
+
+/**
+ * Converte un'eccezione in una stringa di errore
+ * Se l'eccezione presenta del testo personalizzato, questo viene restituito
+ * Altrimenti restituisce un messaggio di errore generico.
+ * Consente di visualizzare errori specifici identificabili solo lato DB, senza però mostrare 
+ * all'utente interi stack trace o messaggi di errore non gestiti
+ */
+function exceptionToError(Exception $e, string  $genericError): string
+{
+	require_once 'exceptions.php';
+	if ($e instanceof CustomExceptions\CustomException) {
+		return $e->getMessage();
+	} else {
+		return $genericError;
+	}
+}

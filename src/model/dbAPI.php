@@ -1,5 +1,16 @@
 <?php
 
+require './exceptions.php';
+use CustomExceptions\{
+	UsernameAlreadyExistsException,
+	EmailAlreadyExistsException,
+	IncorrectCredentialsException,
+	GenericRegistrationException,
+	GenericCustomException,
+	GenericCustomException_Alt,
+	CustomException, 
+};
+
 // TODO: maybe exception could be handled using best practices but i don´t think it's a requirement
 class DBAccess
 {
@@ -229,12 +240,49 @@ class DBAccess
 		return null;
 	}
 
+	private function check_exists_finalize($query, $identifier): bool
+	{
+		try {
+			$stmt = $this->prepare_sql_statement($query, "s", [$identifier]);
+			if (!$stmt->execute()) {
+				throw new GenericRegistrationException();
+			}
+			$stmt->store_result();
+			$num_rows = $stmt->num_rows;
+			$stmt->close();
+			if ($num_rows > 0) {
+				return true;
+			}
+		} catch (Exception $e) {
+			error_log("check_user_exists: " . $e->getMessage());
+		}
+		return false;
+	}
+
+	private function check_username_exists($username): bool
+	{
+		$query = "SELECT COUNT(*) FROM Utente WHERE username = ? LIMIT 1";
+		return $this->check_exists_finalize($query, $username);
+	}
+
+	private function check_email_exists($email): bool
+	{
+		$query = "SELECT COUNT(*) FROM Utente WHERE email = ? LIMIT 1";
+		return $this->check_exists_finalize($query, $email);
+	}
+
 	public function register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $profileImg = null): void
 	{
-		$passwordHashed = password_hash($password, PASSWORD_BCRYPT);
-
-		$query = "INSERT INTO Utente (email, password_hash, username, nome, cognome, provincia, comune, path_immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
+			if ($this->check_username_exists($$username)) {
+				throw new UsernameAlreadyExistsException($username);
+			}
+			if ($this->check_email_exists($email)) {
+				throw new EmailAlreadyExistsException($email);
+			}
+			$passwordHashed = password_hash($password, PASSWORD_BCRYPT);
+			$query = "INSERT INTO Utente (email, password_hash, username, nome, cognome, provincia, comune, path_immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		
 			$this->void_query($query, "ssssssss", [$email, $passwordHashed, $username, $nome, $cognome, $provincia, $comune, $profileImg]);
 		} catch (Exception $e) {
 			throw $e;
@@ -250,10 +298,10 @@ class DBAccess
 				if (password_verify($password, $res[0]['password_hash'])) {
 					return $res;
 				} else {
-					throw new Exception("Invalid Credentials");
+					throw new IncorrectCredentialsException();
 				}
 			} else {
-				throw new Exception("Invalid Credentials");
+				throw new IncorrectCredentialsException();
 			}
 		} catch (Exception $e) {
 			throw $e;
@@ -301,7 +349,7 @@ class DBAccess
 	public function insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina): void
 	{
 		if (empty(trim($isbn))) {
-			throw new Exception("Errore: ISBN non valido");
+			throw new GenericCustomException("ISBN non valido");
 		}
 		$path_copertina = str_replace("&edge=curl", "", $path_copertina);
 		$path_copertina = str_replace("http", "https", $path_copertina);
@@ -310,8 +358,7 @@ class DBAccess
 		try {
 			$this->void_query($query, "sssssssss", [$isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina]);
 		} catch (Exception $e) {
-			error_log("insert_new_book: " . $e->getMessage());
-			throw new Exception("Errore: libro non aggiunto");
+			throw $e;
 		}
 	}
 
@@ -598,10 +645,10 @@ class DBAccess
 	public function insert_scambio($user_prop, $user_acc, $isbn_prop, $isbn_acc): void
 	{
 		if ($user_prop === $user_acc) {
-			throw new Exception("Errore: non è consentito proporre uno scambio con se stessi");
+			throw new GenericCustomException("non è consentito proporre uno scambio con se stessi");
 		}
 		if ($this->check_scambio_proposto($user_prop, $user_acc, $isbn_prop, $isbn_acc)) {
-			throw new Exception("Errore: scambio già proposto");
+			throw new GenericCustomException("scambio già proposto");
 		}
 		$query = "INSERT INTO Scambio (emailProponente, emailAccettatore, idCopiaProp, idCopiaAcc) VALUES (?, ?, ?, ?)";
 		try {
@@ -613,7 +660,7 @@ class DBAccess
 			$this->void_query($query, "ssii", [$user_email_prop, $user_email_acc, $id_copia_prop, $id_copia_acc]);
 		} catch (Exception $e) {
 			error_log("insert_scambio: " . $e->getMessage());
-			throw new Exception("Errore: scambio non proposto");
+			throw $e;
 		}
 	}
 
@@ -669,7 +716,7 @@ class DBAccess
 			$this->void_query($query, "i", [$id]);
 		} catch (Exception $e) {
 			error_log("set_books_unavailable_by_idscambio: " . $e->getMessage());
-			throw new Exception("Errore: scambio non accettato");
+			throw new GenericCustomException("Errore: scambio non accettato");
 		}
 	}
 
@@ -681,7 +728,7 @@ class DBAccess
 			$this->set_books_unavailable_by_idscambio($id);
 		} catch (Exception $e) {
 			error_log("accetta_scambio_by_id: " . $e->getMessage());
-			throw new Exception("Errore: scambio non accettato");
+			throw new GenericCustomException("Errore: scambio non accettato");
 		}
 	}
 

@@ -12,7 +12,7 @@ if ($_GET['user'] != $_SESSION['user']) {
 
 $db = new DBAccess();
 
-$fileGeneri = file_get_contents(__DIR__ . '/../../utils/bisac.json');
+$fileGeneri = file_get_contents(__DIR__ . './../../utils/bisac.json');
 $fileGeneri = json_decode($fileGeneri, true);
 
 $generiUtente = $db->get_generi_by_username($_SESSION['user']);

@@ -45,7 +45,7 @@ function ratingStars($rating): string
 	}
 	$n_full_star = floor($rating); //PARTE INTERA
 	$n_partial_star = $rating - $n_full_star; //PARTE FRAZIONARIA
-	$star_svg = file_get_contents('../public/assets/imgs/star.svg');
+	$star_svg = file_get_contents(__DIR__ . '/../../assets/imgs/star.svg');
 	
 	$total_star = 5;
 	$rating_stars = '';

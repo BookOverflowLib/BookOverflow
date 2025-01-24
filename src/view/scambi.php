@@ -26,6 +26,7 @@ echo $page;
 
 function addScambiSection($profilo, $db)
 {
+    $prefix = getPrefix();
 	$storicoScambi = $db->get_scambi_by_user($_SESSION['user']);
 	$storicoScambiHTML = "";
 	
@@ -37,7 +38,7 @@ function addScambiSection($profilo, $db)
 		$storicoScambiHTML = <<<HTML
 		<div class="empty-list">	
 			<p>Non hai ancora fatto scambi!</p>
-			<a href="/esplora">Inzia subito ad esplorare</a>
+			<a href="{$prefix}/esplora">Inzia subito ad esplorare</a>
 		</div>
 		HTML;
 		
@@ -93,15 +94,16 @@ function generateScambioRow($scambio, $db)
 
 function generateScambioButtons($scambio, $isScambioRicevuto)
 {
+    $prefix = getPrefix();
 	if ($isScambioRicevuto) {
 		if ($scambio['stato'] === 'in attesa') {
 			return <<<HTML
 			<div class="storico-buttons accetta">
-				<form action="/api/accetta-scambio" method="POST">
+				<form action="{$prefix}/api/accetta-scambio" method="POST">
 					<input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
 					<input type="submit" class="button-layout" value="Accetta" />
 				</form>
-				<form action="/api/rifiuta-scambio" method="POST">
+				<form action="{$prefix}/api/rifiuta-scambio" method="POST">
 					<input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
 					<input type="submit" class="button-layout secondary" value="Rifiuta" />
 				</form>
@@ -113,7 +115,7 @@ function generateScambioButtons($scambio, $isScambioRicevuto)
 			return <<<HTML
             <div class="storico-buttons">
                 <p>In attesa di risposta</p>
-                <form action="/api/rimuovi-scambio" method="POST">
+                <form action="{$prefix}/api/rimuovi-scambio" method="POST">
                     <input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
                     <input type="submit" class="button-layout secondary" value="Annulla scambio" />
                 </form>
@@ -139,12 +141,13 @@ function generateScambioButtons($scambio, $isScambioRicevuto)
 
 function generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utenteProponente)
 {
+    $prefix = getPrefix();
 	$utente = $isScambioRicevuto ? $utenteProponente : $utenteAccettatore;
 	return <<<HTML
     <div class="storico-utente-scambio">
         <p>Scambio con:</p>
         <div>
-            <a href="/profilo/{$utente['username']}">
+            <a href="{$prefix}/profilo/{$utente['username']}">
             <img src="{$utente['path_immagine']}" alt="" width="50">
             <div>
                 <p class="bold">{$utente['nome']} {$utente['cognome']}</p>

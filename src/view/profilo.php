@@ -57,7 +57,7 @@ function generatePage($user, $isTuoProfilo, $db)
 	
 	$profilo = replacePlaceholders($profilo, $user, $db);
 	$profilo = replaceLocation($profilo, $user);
-	$profilo = replaceRating($profilo, $user, $db);
+//	$profilo = replaceRating($profilo, $user, $db); HEI
 	$profilo = replaceGeneri($profilo, $user, $db);
 	$profilo = replaceLibri($profilo, $user, $db);
 	

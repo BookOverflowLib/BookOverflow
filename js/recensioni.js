@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const datiUtente = button.parentNode.parentNode.querySelector('.dati-utente').children;
             const nome = datiUtente[0].textContent;
             const user = datiUtente[1].textContent.replace('@', '');
+
+
+            document.getElementById('id-scambio').value = idScambio;
+            document.getElementById('user-ricevente').value = user;
+
             document.querySelector('#recensione-dialog .nome-utente').textContent = nome;
             recensioneDialog.showModal();
         });

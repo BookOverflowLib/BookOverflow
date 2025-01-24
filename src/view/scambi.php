@@ -95,6 +95,9 @@ function generateScambioRow($scambio, $db)
 function generateScambioButtons($scambio, $isScambioRicevuto)
 {
 	$prefix = getPrefix();
+	
+	$emailRecensito = $isScambioRicevuto ? $scambio['emailProponente'] : $scambio['emailAccettatore'];
+	
 	if ($isScambioRicevuto) {
 		if ($scambio['stato'] === 'in attesa') {
 			return <<<HTML
@@ -125,7 +128,7 @@ function generateScambioButtons($scambio, $isScambioRicevuto)
 	}
 	if ($scambio['stato'] === 'rifiutato' || $scambio['stato'] === 'accettato') {
 		$recensioneButton = '';
-		if (checkRecensioneDisponibile(new DBAccess(), $scambio['emailAccettatore'], $scambio['emailProponente'], $scambio['ID'])) {
+		if (checkRecensioneDisponibile($emailRecensito, $scambio['ID'])) {
 			$recensioneButton = $scambio['stato'] === 'accettato' ? '<button class="button-layout button-recensione" type="button">Scrivi una recensione</button>' : '';
 		}
 		return <<<HTML
@@ -158,10 +161,12 @@ function generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utentePr
     HTML;
 }
 
-function checkRecensioneDisponibile($db, $userRecensito, $userRecensore, $id)
+function checkRecensioneDisponibile($emailRecensito, $id)
 {
 	try {
-		return $db->check_if_user_can_add_review($userRecensito, $userRecensore, $id);
+		$db = new DBAccess();
+		$userRecensito = $db->get_user_by_identifier($emailRecensito)[0]['username'];
+		return $db->check_if_user_can_add_review($userRecensito, $_SESSION['user'], $id);
 	} catch (Exception $e) {
 		return false;
 	}

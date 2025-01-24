@@ -1696,3 +1696,7 @@ textarea {
     border-bottom-style: solid;
     color: var(--star-color);
 }
+
+#recensione-dialog > .dialog-window {
+    max-width: 30em;
+}

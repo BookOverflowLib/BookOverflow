@@ -114,12 +114,6 @@ function getTemplatePage($title = null): string
 	return $page;
 }
 
-function getPrefix(): string
-{
-	$prefix = isset($_ENV['PREFIX']) ? $_ENV['PREFIX'] : '';
-	return rtrim($prefix, '/');
-}
-
 /**
  * Genera gli elementi \<li\> della navbar rimuovendo il link dalla pagina corrente (circolari!)
  *
@@ -590,4 +584,27 @@ function ensure_login(): void
 		header('Location: ' . $prefix . '/accedi');
 		exit();
 	}
+}
+
+/**  
+ * Restituisce il prefisso della sottocartella in cui il sito è ospitato
+ * la variabile PREFIX viene impostata all'interno di index.php. 
+ * la funzione assume quindi che il valore sia già stato letto dal file .env
+ */
+function getPrefix(): string
+{
+	$prefix = isset($_ENV['PREFIX']) ? $_ENV['PREFIX'] : '';
+	return rtrim($prefix, '/');
+}
+
+/**
+ * Rimpiazza tutti i placeholder <!-- [prefix] --> in un file HTML con la sottocartella in cui il sito è ospitato
+ * @param string $page Pagina HTML
+ * @return string Pagina HTML con i placeholder sostituiti
+ */
+function populateWebdirPrefixPlaceholders($page): string
+{
+	$prefix = getPrefix();
+	$page = str_replace('<!-- [prefix] -->', $prefix, $page);
+	return $page;	
 }

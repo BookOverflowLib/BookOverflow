@@ -12,10 +12,10 @@ if (isset($_POST) && isset($_SESSION['user'])) {
 	try {
 		$db->rifiuta_scambio_by_id($id);
 	} catch (Exception $e) {
-		$_SESSION['error'] = 'Errore: scambio non rifiutato';
+		$_SESSION['error'] = exceptionToError($e, "scambio non rifiutato");
 	}
 } else {
-	throw new Exception(message: "Errore: scambio non rifiutato");
+	$_SESSION['error'] = "Errore: scambio non rifiutato";
 }
 
 $previousUrl = $_SERVER['HTTP_REFERER'];

@@ -16,7 +16,7 @@ if (isset($_POST) && isset($_SESSION['user'])) {
 	try {
 		$db->insert_scambio($user_prop, $user_acc, $isbn_prop, $isbn_acc);
 	} catch (Exception $e) {
-		$_SESSION['error'] = $e->getMessage();
+		$_SESSION['error'] = exceptionToError($e, "scambio non proposto");
 	}
 } else {
 	throw new Exception(message: "Errore: scambio non proposto");

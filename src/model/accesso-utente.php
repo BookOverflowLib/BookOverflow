@@ -22,13 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             }
         } catch (Exception $e) {
-            header('Location: ' . $prefix . '/accedi?error=invalid');
-            $_SESSION['error'] = "invalid-credentials";
+            header('Location: ' . $prefix . '/accedi');
+            $_SESSION['error'] = "Le credenziali inserite non sono corrette";
             exit();
         }
     }
 }
 
-$_SESSION['error'] = "missing-fields";
-header('Location: ' . $prefix . '/accedi?error=missing');
+$_SESSION['error'] = "Inserire tutti i campi richiesti";
+header('Location: ' . $prefix . '/accedi');
 exit();

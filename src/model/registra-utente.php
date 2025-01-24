@@ -6,7 +6,7 @@ require_once __DIR__ . '/' . '../model/registration-select.php';
 $db = new DBAccess();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	if (isset($_POST['nome'], $_POST['cognome'], $_POST['provincia'], $_POST['comune'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['conferma-password'])) {
+	if (isset($_POST['nome'], $_POST['cognome'], $_POST['provincia'], $_POST['comune'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['conferma_password'])) {
 		$nome = $_POST['nome'];
 		$cognome = $_POST['cognome'];
 		$provincia = $_POST['provincia'];
@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$email = $_POST['email'];
 		$username = $_POST['username'];
 		$password = $_POST['password'];
-		$password2 = $_POST['conferma-password'];
+		$password2 = $_POST['conferma_password'];
 		$image = getUserImageUrlByEmail($email);
 
 		$prefix = getPrefix();
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$_SESSION['error'] = exceptionToError($e, "registrazione non riuscita");
 			exit();
 		}
-	
+
 		ensure_session();
 
 		$_SESSION['user'] = $username;

@@ -256,7 +256,7 @@ class DBAccess
 	public function register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $profileImg = null): void
 	{
 		try {
-			if ($this->check_username_exists($$username)) {
+			if ($this->check_username_exists($username)) {
 				throw new UsernameAlreadyExistsException($username);
 			}
 			if ($this->check_email_exists($email)) {

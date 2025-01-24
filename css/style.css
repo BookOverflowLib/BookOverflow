@@ -2,34 +2,38 @@
    FONT FACES
    ========================================================================== */
 
-@font-face {
+   @font-face {
     font-family: 'Gentium Book Plus';
-    src: url("/assets/fonts/GentiumBookPlus-Regular.ttf") format("woff2");
+    src: url("./../assets/fonts/GentiumBookPlus-Regular.woff2") format("woff2"),
+    url("./../assets/fonts/GentiumBookPlus-Regular.ttf") format("truetype");
     font-weight: normal;
 }
 
 @font-face {
     font-family: 'Gentium Book Plus';
-    src: url("/assets/fonts/GentiumBookPlus-Bold.ttf") format("woff2");
+    src: url("./../assets/fonts/GentiumBookPlus-Bold.woff2") format("woff2"),
+    url("./../assets/fonts/GentiumBookPlus-Bold.ttf") format("truetype");
     font-weight: bold;
 }
 
 @font-face {
     font-family: 'Gentium Book Plus';
-    src: url("/assets/fonts/GentiumBookPlus-Italic.ttf") format("woff2");
+    src: url("./../assets/fonts/GentiumBookPlus-Italic.woff2") format("woff2"),
+    url("./../assets/fonts/GentiumBookPlus-Italic.ttf") format("truetype");
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Gentium Book Plus';
-    src: url("/assets/fonts/GentiumBookPlus-BoldItalic.ttf") format("woff2");
+    src: url("./../assets/fonts/GentiumBookPlus-BoldItalic.woff2") format("woff2"),
+    url("./../assets/fonts/GentiumBookPlus-BoldItalic.ttf") format("truetype");
     font-style: italic;
     font-weight: bold;
 }
 
 @font-face {
     font-family: 'Onest';
-    src: url("/assets/fonts/Onest.ttf") format("woff2");
+    src: url("./../assets/fonts/Onest.ttf") format("woff2");
 }
 
 :root {
@@ -50,8 +54,8 @@
 }
 
 [data-theme='light'] {
-    --theme-icon: url('/assets/imgs/sun.svg');
-    --no-theme-icon: url('/assets/imgs/moon.svg');
+    --theme-icon: url('./../assets/imgs/sun.svg');
+    --no-theme-icon: url('./../assets/imgs/moon.svg');
     --svg-invert: invert(0);
     --text: #18140c;
     --text-opposite: #f3efe6;
@@ -72,6 +76,7 @@
 
     --background-50: #fbf4ea;
     --background-100: #f7ead4;
+    --background-100-alpha: #f7ead4cc;
     --background-200: #efd4a9;
     --background-300: #e7bf7e;
     --background-400: #dea954;
@@ -144,8 +149,8 @@
 }
 
 [data-theme='dark'] {
-    --theme-icon: url('/assets/imgs/moon.svg');
-    --no-theme-icon: url('/assets/imgs/sun.svg');
+    --theme-icon: url('./../assets/imgs/moon.svg');
+    --no-theme-icon: url('./../assets/imgs/sun.svg');
     --svg-invert: invert(1);
     --text: #f3efe6;
     --text-opposite: #f3efe6; /*#18140c;*/
@@ -180,6 +185,7 @@
 
     --background-50: #110e08;
     --background-100: #231c10;
+    --background-100-alpha: #231c10cc;
     --background-200: #453821;
     --background-300: #685431;
     --background-400: #8b7041;
@@ -441,8 +447,8 @@ header {
 
 .header-container.active {
     border-radius: 1em;
-    background-color: var(--background-100);
-    backdrop-filter: blur(80px);
+    background-color: var(--background-100-alpha);
+    backdrop-filter: blur(40px);
 }
 
 .header-buttons {
@@ -622,7 +628,7 @@ main {
     width: 35vw;
     max-width: 38em;
     overflow: hidden;
-    mask-image: url('/assets/imgs/blob-mask2.svg');
+    mask-image: url('./../assets/imgs/blob-mask2.svg');
 }
 
 .sezione-libri {
@@ -709,7 +715,7 @@ main {
 }
 
 #citazione > blockquote::before {
-    content: url('/assets/imgs/quote.svg');
+    content: url('./../assets/imgs/quote.svg');
 }
 
 #citazione > blockquote ::after {
@@ -1202,7 +1208,7 @@ li.activePage {
     overflow: hidden;
     mask-repeat: no-repeat;
     background-repeat: no-repeat;
-    mask-image: url('/assets/imgs/blob-mask3.svg');
+    mask-image: url('./..//assets/imgs/blob-mask3.svg');
 }
 
 #perche-farlo > div {
@@ -1629,12 +1635,13 @@ li.activePage {
     width: 1em;
     height: 1em;
     filter: var(--svg-invert);
-    background-image: url("/assets/imgs/external-link.svg");
+    background-image: url("./../assets/imgs/external-link.svg");
     background-size: 1em 1em;
 
 }
 
 #button-read-more {
+    color: var(--text);
     margin-top: 1em;
     margin-bottom: 1em;
     text-decoration: underline;

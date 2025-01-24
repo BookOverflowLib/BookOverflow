@@ -211,22 +211,6 @@ class DBAccess
 		return $this->query_results_to_array($queryRes);
 	}
 	
-	public function get_most_traded_with_cover($limit)
-	{
-		$query = "SELECT L.ISBN, L.titolo, L.autore, I.path, COUNT(*) AS numero_vendite
-                    FROM Scambio AS S 
-                    JOIN Copia AS CProp ON S.idCopiaProp = CProp.ID
-                    JOIN Copia AS CAcc ON (S.idCopiaAcc = CAcc.ID AND CProp.ID != CAcc.ID) 
-                    JOIN Libro AS L ON (CProp.ISBN = L.ISBN AND CAcc.ISBN = L.ISBN)
-                    JOIN Immagine AS I ON L.ISBN = I.libro
-                    WHERE I.isCopertina = TRUE
-                    GROUP BY L.ISBN, L.titolo, L.autore, I.path
-                    ORDER BY numero_vendite DESC
-                    LIMIT ?";
-		
-		return $this->query_to_array($query, "i", [$limit]);
-	}
-	
 	public function get_comune_by_provincia($idProvincia): ?array
 	{
 		$query = "SELECT * FROM comuni WHERE id_provincia = ?";
@@ -252,7 +236,7 @@ class DBAccess
 				return true;
 			}
 		} catch (Exception $e) {
-			error_log("check_user_exists: " . $e->getMessage());
+			error_log("check_exists: " . $e->getMessage());
 		}
 		return false;
 	}
@@ -313,7 +297,7 @@ class DBAccess
                     WHERE R.emailRecensito = ?
 					GROUP BY R.emailRecensito';
 		try {
-			return $this->query_to_array($query, "s", $email);
+			return $this->query_to_array($query, "s", [$email]);
 		} catch (Exception $e) {
 			error_log("get_user_rating_by_email: " . $e->getMessage());
 		}
@@ -885,7 +869,7 @@ class DBAccess
 	 * @param $contenuto string contenuto
 	 * @throws Exception se si verifica un errore
 	 */
-	function insert_review($userRecensito, $idScambio, $valutazione, $contenuto)
+	function insert_review($userRecensito, $idScambio, $valutazione, $contenuto): void
 	{
 		$query = "INSERT INTO Recensione (emailRecensito, idScambio, valutazione, contenuto) VALUES (?, ?, ?, ?)";
 		try {

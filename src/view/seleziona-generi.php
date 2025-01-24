@@ -4,15 +4,15 @@ require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
+$prefix = getPrefix();
 if ($_GET['user'] != $_SESSION['user']) {
-	$prefix = getPrefix();
 	header('Location: ' . $prefix . '/profilo/' . $_SESSION['user']);
 	exit;
 }
 
 $db = new DBAccess();
 
-$fileGeneri = file_get_contents('../utils/bisac.json');
+$fileGeneri = file_get_contents(__DIR__ . '/../../utils/bisac.json');
 $fileGeneri = json_decode($fileGeneri, true);
 
 $generiUtente = $db->get_generi_by_username($_SESSION['user']);

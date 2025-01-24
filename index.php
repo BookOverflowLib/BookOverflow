@@ -141,7 +141,7 @@ switch ($path) {
 	case '/api/rimuovi-scambio':
 		require $GLOBALS['MODEL_PATH'] . 'rimuovi-scambio.php';
 		break;
-	case 'api/aggiungi-recensione':
+	case '/api/aggiungi-recensione':
 		require $GLOBALS['MODEL_PATH'] . 'aggiungi-recensione.php';
 		break;
 	

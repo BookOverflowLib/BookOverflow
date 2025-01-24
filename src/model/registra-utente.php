@@ -20,14 +20,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$prefix = getPrefix();
 		// TODO: errore se username già esistente
 		if ($password !== $password2) {
-			header('Location: ' . $prefix . '/registrati?error=password-mismatch');
+			header('Location: ' . $prefix . '/registrati');
+			$_SESSION['error'] = "Le password non corrispondono";
 			exit();
 		}
 		try {
 			$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
 		} catch (Exception $e) {
-			header('Location: ' . $prefix . '/registrati?error=generic');
-			// TODO
+			header('Location: ' . $prefix . '/registrati');
+			$_SESSION['error'] = "Errore durante la registrazione";
 			exit();
 		}
 	

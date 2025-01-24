@@ -173,7 +173,7 @@ function getHeaderButtons($path): string
 		$ris = <<<HTML
 			<div class="header-buttons">
 				{$themeToggleButton}
-				<a class="profile-button" href="/profilo/{$_SESSION['user']}" aria-label="Vai al tuo profilo">
+				<a class="profile-button" href="{$prefix}/profilo/{$_SESSION['user']}" aria-label="Vai al tuo profilo">
 					{$_SESSION['user']}<img src="{$_SESSION['path_immagine']}" alt="" width="40">
 				</a>
 			</div>

@@ -114,12 +114,6 @@ function getTemplatePage($title = null): string
 	return $page;
 }
 
-function getPrefix(): string
-{
-	$prefix = isset($_ENV['PREFIX']) ? $_ENV['PREFIX'] : '';
-	return rtrim($prefix, '/');
-}
-
 /**
  * Genera gli elementi \<li\> della navbar rimuovendo il link dalla pagina corrente (circolari!)
  *

@@ -92,19 +92,18 @@ CREATE TABLE
 
 CREATE TABLE
     Recensione (
-        -- email del recensito derivata dalla tabella scambio
-        emailRecensore VARCHAR(255),
+        -- email del recensore derivata dalla tabella scambio
+        emailRecensito VARCHAR(255),
         idScambio INT,
         dataPubblicazione DATE DEFAULT CURRENT_DATE,
-        titolo VARCHAR(255) NOT NULL,
         valutazione TINYINT UNSIGNED CHECK (
             valutazione >= 1
             AND valutazione <= 5
         ),
         contenuto TEXT, -- 65k caratteri
-        FOREIGN KEY (emailRecensore) REFERENCES Utente (email),
+        FOREIGN KEY (emailRecensito) REFERENCES Utente (email),
         FOREIGN KEY (idScambio) REFERENCES Scambio (ID),
-        PRIMARY KEY (emailRecensore, idScambio)
+        PRIMARY KEY (emailRecensito, idScambio)
     );
 
 CREATE TABLE

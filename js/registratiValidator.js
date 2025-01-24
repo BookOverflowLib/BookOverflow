@@ -55,7 +55,7 @@ window.onload = function () {
 
     form.addEventListener('submit', function () {
         saveAllInputValues();
-        return checkForm("registrati", "/api/registra-utente", formChecks);
+        return checkForm("registrati", "api/registra-utente", formChecks);
     });
 
 };

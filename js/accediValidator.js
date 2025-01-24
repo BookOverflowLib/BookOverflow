@@ -25,6 +25,6 @@ window.onload = function () {
 
     const form = document.getElementById('accedi');
     form.addEventListener('submit', function () {
-        return checkForm("accedi", "../api/accesso-utente", formChecks);
+        return checkForm("accedi", "api/accesso-utente", formChecks);
     });
 };

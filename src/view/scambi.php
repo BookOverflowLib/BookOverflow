@@ -60,6 +60,7 @@ function generateScambioRow($scambio, $db)
 	$user_libro = $isScambioRicevuto ? $libroAcc : $libroProp;
 	$other_libro = $isScambioRicevuto ? $libroProp : $libroAcc;
 	
+    $prefix = getPrefix();
 	return <<<HTML
     <div class="storico-row">   
     	<div class="storico-books">
@@ -73,7 +74,7 @@ function generateScambioRow($scambio, $db)
                 </div>
             </div>
         </div>
-        <img src="{$GLOBALS['prefix']}/assets/imgs/scambio-arrows.svg" alt="" id="scambio-arrows">
+        <img src="{$prefix}/assets/imgs/scambio-arrows.svg" alt="" id="scambio-arrows">
         <div class="storico-ricevi">
             <p>Ricevi:</p>
             <div>

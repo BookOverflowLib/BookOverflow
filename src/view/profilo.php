@@ -16,7 +16,7 @@ try {
 
 $user = getUser($db, $profileId);
 $page = generatePage($user, $isTuoProfilo, $db);
-
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;
 
 function getProfileId()

@@ -5,7 +5,7 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
 if ($_GET['user'] != $_SESSION['user']) {
-    $prefix = getPrefix();
+	$prefix = getPrefix();
 	header('Location: ' . $prefix . '/profilo/' . $_SESSION['user']);
 	exit;
 }
@@ -26,7 +26,7 @@ echo $page;
 
 function addScambiSection($profilo, $db)
 {
-    $prefix = getPrefix();
+	$prefix = getPrefix();
 	$storicoScambi = $db->get_scambi_by_user($_SESSION['user']);
 	$storicoScambiHTML = "";
 	
@@ -62,7 +62,7 @@ function generateScambioRow($scambio, $db)
 	
     $prefix = getPrefix();
 	return <<<HTML
-    <div class="storico-row">   
+    <div class="storico-row" id="scambio-{$scambio['ID']}">
     	<div class="storico-books">
         <div class="storico-dai">
             <p>Dai:</p>
@@ -85,8 +85,7 @@ function generateScambioRow($scambio, $db)
                 </div>
             </div>
         </div>
-        </div> 
-
+        </div>
         {$scambio_utente}
         {$scambio_buttons}
     </div>
@@ -95,7 +94,7 @@ function generateScambioRow($scambio, $db)
 
 function generateScambioButtons($scambio, $isScambioRicevuto)
 {
-    $prefix = getPrefix();
+	$prefix = getPrefix();
 	if ($isScambioRicevuto) {
 		if ($scambio['stato'] === 'in attesa') {
 			return <<<HTML
@@ -124,16 +123,11 @@ function generateScambioButtons($scambio, $isScambioRicevuto)
             HTML;
 		}
 	}
-	if ($scambio['stato'] === 'rifiutato') {
+	if ($scambio['stato'] === 'rifiutato' || $scambio['stato'] === 'accettato') {
 		return <<<HTML
             <div class="storico-buttons">
-                <p>Scambio rifiutato</p>
-            </div>
-            HTML;
-	} elseif ($scambio['stato'] === 'accettato') {
-		return <<<HTML
-            <div class="storico-buttons">
-                <p>Scambio accettato</p>
+                <p>Scambio {$scambio['stato']}</p>
+                <button class="button-layout button-recensione" type="button">Scrivi una recensione</button>
             </div>
             HTML;
 	}
@@ -142,7 +136,7 @@ function generateScambioButtons($scambio, $isScambioRicevuto)
 
 function generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utenteProponente)
 {
-    $prefix = getPrefix();
+	$prefix = getPrefix();
 	$utente = $isScambioRicevuto ? $utenteProponente : $utenteAccettatore;
 	return <<<HTML
     <div class="storico-utente-scambio">
@@ -150,7 +144,7 @@ function generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utentePr
         <div>
             <a href="{$prefix}/profilo/{$utente['username']}">
             <img src="{$utente['path_immagine']}" alt="" width="50">
-            <div>
+            <div class="dati-utente">
                 <p class="bold">{$utente['nome']} {$utente['cognome']}</p>
                 <p>@{$utente['username']}</p>
             </div>
@@ -158,4 +152,44 @@ function generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utentePr
         </div>
     </div>
     HTML;
+}
+
+function getRecensioneDialog()
+{
+	
+	$recensioneDialog = <<<HTML
+	<dialog id="recensione-dialog">
+		<div class="dialog-window">
+			<h2>Scrivi una recensione a {$user}</h2>
+			<form action={$form_action} method="post">
+				<label for="titolo" class="visually-hidden">Cerca un libro</label>
+				<input type="search"
+					name="cerca"
+					id="cerca"
+					placeholder="Cerca un libro ..."
+					autocomplete="off"
+					/>
+				<span class="sr-only" role="alert" aria-atomic="false" id="sr-risultati"></span>
+				<div id="book-results">
+					<p>Nessun risultato</p>
+				</div>
+				{$select_condizioni}
+				<input type="hidden" name="ISBN" value="">
+				<input type="hidden" name="titolo" value="">
+				<input type="hidden" name="autore" value="">
+				<input type="hidden" name="editore" value="">
+				<input type="hidden" name="anno" value="">
+				<input type="hidden" name="genere" value="">
+				<input type="hidden" name="descrizione" value="">
+				<input type="hidden" name="lingua" value="">
+				<input type="hidden" name="path_copertina" value="">
+				<div class="dialog-buttons">
+					<input type="submit" id="aggiungi-libro" class="button-layout" value="Aggiungi libro">
+					<button id="close-dialog" class="button-layout-light" type="reset" formnovalidate>Annulla</button>
+				</div>
+			</form>
+		</div>
+	</dialog>
+	HTML;
+	return str_replace('<!-- [cercaLibriDialog] -->', $cercaLibriDialog, $libri_utente);
 }

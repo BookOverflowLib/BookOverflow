@@ -1,51 +1,51 @@
-<script src="<!-- [prefix] -->/js/registratiValidator.js" type="module"></script>
+<script
+	src="<!-- [prefix] -->/js/registratiValidator.js"
+	type="module"></script>
 
 <section class="signin center">
 	<h1 class="center">Registrati</h1>
 	<p class="center">
-		Hai già un <span lang="en">account</span>? <a href="<!-- [prefix] -->/accedi">Accedi</a>
+		Hai già un <span lang="en">account</span>?
+		<a href="<!-- [prefix] -->/accedi">Accedi</a>
 	</p>
-	<!-- nome cognome username email città(provincia e città)-->
+	<div class="display-error">
+		<!-- [displayError] -->
+	</div>
 	<form autocomplete="on" id="registrati" method="post" onsubmit="">
-		<fieldset class="login-data">
-			<!-- [displayError] -->
+		<fieldset class="form-data">
 			<legend class="sr-only">Inserire i dati per registrarsi</legend>
 			<div>
 				<label for="nome">Nome</label>
 				<input
-						class="form-input"
-						id="nome"
-						name="nome"
-						required
-						type="text"/>
+					class="form-input"
+					id="nome"
+					name="nome"
+					required
+					type="text" />
 			</div>
 			<div>
 				<label for="cognome">Cognome</label>
-				<input
-						id="cognome"
-						name="cognome"
-						required
-						type="text"/>
+				<input id="cognome" name="cognome" required type="text" />
 			</div>
 
 			<!-- provincia e citta -->
 			<div>
 				<label for="provincia">Provincia</label>
 				<select
-						class="form-input"
-						id="provincia"
-						name="provincia"
-						required>
-						<option value="">Seleziona una provincia</option>
-						<hr/>
-						<!-- [province] -->
-					</select>
-				</div>
-				<div>
-					<label for="comune">Comune</label>
+					class="form-input"
+					id="provincia"
+					name="provincia"
+					required>
+					<option value="">Seleziona una provincia</option>
+					<hr />
+					<!-- [province] -->
+				</select>
+			</div>
+			<div>
+				<label for="comune">Comune</label>
 				<select class="form-input" id="comune" name="comune" required>
 					<option value="">Seleziona un comune</option>
-					<hr/>
+					<hr />
 				</select>
 			</div>
 
@@ -54,45 +54,45 @@
 			<div>
 				<label for="username" lang="en">Username</label>
 				<input
-						class="form-input"
-						id="username"
-						name="username"
-						required
-						type="text"/>
+					class="form-input"
+					id="username"
+					name="username"
+					required
+					type="text" />
 			</div>
 			<!-- email -->
 			<div>
 				<label for="email">Indirizzo Mail</label>
 				<input
-						class="form-input"
-						id="email"
-						name="email"
-						required
-						type="email"/>
+					class="form-input"
+					id="email"
+					name="email"
+					required
+					type="email" />
 			</div>
 			<!-- password -->
 			<div>
 				<label for="password" lang="en">Password</label>
 				<input
-						class="form-input"
-						id="password"
-						name="password"
-						required
-						type="password"/>
+					class="form-input"
+					id="password"
+					name="password"
+					required
+					type="password" />
 			</div>
 			<!-- conferma password -->
 			<div>
-				<label for="conferma-password"
-				>Conferma <span lang="en">Password</span></label
+				<label for="conferma_password"
+					>Conferma <span lang="en">Password</span></label
 				>
 				<input
-						class="form-input"
-						id="conferma-password"
-						name="conferma-password"
-						required
-						type="password"/>
+					class="form-input"
+					id="conferma_password"
+					name="conferma_password"
+					required
+					type="password" />
 			</div>
-			<input class="button-layout" type="submit" value="Registrati"/>
+			<input class="button-layout" type="submit" value="Registrati" />
 		</fieldset>
 	</form>
 </section>

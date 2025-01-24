@@ -4,6 +4,10 @@ require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
+if(!is_logged_in()){
+	header('Location: ' . getPrefix().'/profilo');
+	exit;
+}
 if ($_GET['user'] != $_SESSION['user']) {
 	$prefix = getPrefix();
 	header('Location: ' . $prefix . '/profilo/' . $_SESSION['user']);
@@ -104,11 +108,11 @@ function generateScambioButtons($scambio, $isScambioRicevuto)
 			<div class="storico-buttons accetta">
 				<form action="{$prefix}/api/accetta-scambio" method="POST">
 					<input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
-					<input type="submit" class="button-layout" value="Accetta" />
+					<input type="submit" class="button-layout secondary" value="Accetta" />
 				</form>
 				<form action="{$prefix}/api/rifiuta-scambio" method="POST">
 					<input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
-					<input type="submit" class="button-layout secondary" value="Rifiuta" />
+					<input type="submit" class="button-layout destructive" value="Rifiuta" />
 				</form>
 			</div>
 			HTML;
@@ -120,7 +124,7 @@ function generateScambioButtons($scambio, $isScambioRicevuto)
                 <p>In attesa di risposta</p>
                 <form action="{$prefix}/api/rimuovi-scambio" method="POST">
                     <input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
-                    <input type="submit" class="button-layout secondary" value="Annulla scambio" />
+                    <input type="submit" class="button-layout" value="Annulla scambio" />
                 </form>
             </div>
             HTML;
@@ -132,7 +136,7 @@ function generateScambioButtons($scambio, $isScambioRicevuto)
 			$recensioneButton = $scambio['stato'] === 'accettato' ? '<button class="button-layout button-recensione" type="button">Scrivi una recensione</button>' : '';
 		}
 		return <<<HTML
-            <div class="storico-buttons">
+            <div class="storico-buttons {$scambio['stato']}">
                 <p>Scambio {$scambio['stato']}</p>
                 {$recensioneButton}
             </div>

@@ -278,7 +278,7 @@ class DBAccess
 				throw new UsernameAlreadyExistsException($username);
 			}
 			if ($this->check_email_exists($email)) {
-				throw new EmailAlreadyExistsException($email);
+				throw new EmailAlreadyExistsException();
 			}
 			$passwordHashed = password_hash($password, PASSWORD_BCRYPT);
 			$query = "INSERT INTO Utente (email, password_hash, username, nome, cognome, provincia, comune, path_immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";

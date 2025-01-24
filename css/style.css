@@ -51,6 +51,8 @@
     --dark-gray: var(--slate-gray);
     --colored-background: var(--light-yellow);
     --hover-color: var(--light-orange);
+
+    --star-color: #F5C66B;
 }
 
 [data-theme='light'] {
@@ -1397,7 +1399,7 @@ li.activePage {
     justify-self: end;
 }
 
-#aggiungi-libro-dialog {
+#aggiungi-libro-dialog, #recensione-dialog {
     border: none;
     background-color: transparent;
     margin-inline: auto;
@@ -1418,6 +1420,7 @@ li.activePage {
 
 .dialog-window > h2 {
     font-size: var(--font-lg);
+    margin-bottom: 1em;
 }
 
 .dialog-window > form > input[type='search'] {
@@ -1648,19 +1651,48 @@ li.activePage {
     font-size: var(--font-sm);
 }
 
-/*.book-row .book-info {*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    gap: 1em;*/
-/*    align-items: center;*/
-/*}*/
+textarea {
+    font-family: 'Onest', sans-serif;
+    font-size: var(--font-base);
+    background-color: var(--neutral-50);
+    border-radius: 0.5em;
+    border-style: none;
+    padding: 1em;
+    color: var(--text);
+}
 
-/*.book-row .book-info > div {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    gap: 0.5em;*/
-/*}*/
+.valutazione-stelle {
+    color: var(--star-color);
+}
 
-/*.book-buttons {*/
-/*    justify-self: end;*/
-/*}*/
+.valutazione-stelle svg {
+    width: 2em;
+    height: 2em;
+    fill: currentColor;
+    stroke: currentColor;
+    cursor: pointer;
+}
+
+.valutazione-stelle input:checked ~ label {
+    color: var(--neutral-100);
+}
+
+.valutazione-stelle input:checked + label {
+    color: var(--star-color);
+}
+
+.valutazione-stelle:hover input + label {
+    color: var(--star-color);
+}
+
+.valutazione-stelle input:hover ~ label,
+.valutazione-stelle input:focus ~ label {
+    color: var(--neutral-100);
+}
+
+.valutazione-stelle input:hover + label,
+.valutazione-stelle input:focus + label {
+    border-bottom-color: var(--text);
+    border-bottom-style: solid;
+    color: var(--star-color);
+}

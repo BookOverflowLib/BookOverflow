@@ -392,7 +392,7 @@ function getLibriCopertinaGrande($libri, $max_risultati): string
 	}
 	$num_libri = count(value: $libri) > $max_risultati ? $max_risultati : count(value: $libri);
 	for ($i = 0; $i < $num_libri; $i++) {
-		$path_copertina = str_replace('http', 'https', $libri[$i]['path_copertina']);
+		$path_copertina = $libri[$i]['path_copertina'];
 		
 		$libroTemplate = <<<HTML
 		<div class="libro">

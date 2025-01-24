@@ -310,11 +310,12 @@ class DBAccess
 
 	public function get_user_rating_by_email($email): ?array
 	{
-		$query = 'SELECT AVG(R.valutazione) AS media_valutazioni 
-                    FROM Recensione R JOIN Scambio S ON R.idScambio = S.ID 
-                    WHERE S.emailAccettatore = ? OR S.emailProponente = ?';
+		$query = 'SELECT R.emailRecensito, AVG(R.valutazione) AS media_valutazioni 
+                    FROM Recensione R 
+                    WHERE R.emailRecensito = ?
+					GROUP BY R.emailRecensito';
 		try {
-			return $this->query_to_array($query, "ss", [$email, $email]);
+			return $this->query_to_array($query, "s", $email);
 		} catch (Exception $e) {
 			error_log("get_user_rating_by_email: " . $e->getMessage());
 		}

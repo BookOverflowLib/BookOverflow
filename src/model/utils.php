@@ -148,16 +148,15 @@ function getNavBarLi($path): string
 function getHeaderButtons($path): string
 {
 	$scura =
-		'<span class="active"><img class="theme-icon" src="./assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità scura</span></span>';
+		'<span class="active"><img class="theme-icon" src="' . $prefix . '/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità scura</span></span>';
 	$chiara =
-		'<span><img class="theme-icon" src="./assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità chiara</span></span>';
+		'<span><img class="theme-icon" src="' . $prefix . '/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità chiara</span></span>';
 	$themeToggleButton =
 		'<button class="theme-toggle" aria-pressed="false">' .
 		$chiara .
 		$scura .
 		'</button>';
 	
-	$prefix = getPrefix();
 	// Se la pagina corrente è /accedi, il pulsante deve portare a /registrati
 	$accediButton = '';
 	if ($path != '/accedi') {
@@ -193,10 +192,11 @@ function getHeaderButtons($path): string
 //TODO: sta roba non ha niente di dinamico quindi forse non va qui??
 function getHamburgerButton(): string
 {
+	$prefix = getPrefix();
 	$chiuso =
-		'<span class="active"><img class="hamburger-icon" src="./assets/imgs/hamburger.svg" alt=""><span class="visually-hidden">Apri l\'<span lang="en">hamburger</span> menù</span></span>';
+		'<span class="active"><img class="hamburger-icon" src="' . $prefix . '/assets/imgs/hamburger.svg" alt=""><span class="visually-hidden">Apri l\'<span lang="en">hamburger</span> menù</span></span>';
 	$aperto =
-		'<span><img class="hamburger-icon" src="./assets/imgs/cross.svg" alt=""><span class="visually-hidden">Chiudi l\'<span lang="en">hamburger</span> menù</span></span>';
+		'<span><img class="hamburger-icon" src="' . $prefix . '/assets/imgs/cross.svg" alt=""><span class="visually-hidden">Chiudi l\'<span lang="en">hamburger</span> menù</span></span>';
 	$hamburgerIcon =
 		'<button id="hamburger" aria-pressed="false">' .
 		$chiuso .

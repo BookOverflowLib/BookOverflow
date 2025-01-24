@@ -159,8 +159,11 @@ function getHeaderButtons($path): string
 		'</button>';
 	
 	// Se la pagina corrente è /accedi, il pulsante deve portare a /registrati
+	// Vengono rimossi eventuali parametri GET e controllata solo la parte finale del path per gestire 
+	// il caso in cui il sito venga hostato in una sottocartella
+	$path = parse_url($path, PHP_URL_PATH);
 	$accediButton = '';
-	if ($path != '/accedi') {
+	if (substr($path, -7) != '/accedi') {
 		$accediButton = '<a class="button-layout" href="' . $prefix . '/accedi">Accedi</a>';
 	} else {
 		$accediButton =

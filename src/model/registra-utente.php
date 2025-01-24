@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
 		} catch (Exception $e) {
 			header('Location: ' . $prefix . '/registrati');
-			$_SESSION['error'] = "Errore durante la registrazione";
+			$_SESSION['error'] = exceptionToError($e, "registrazione non riuscita");
 			exit();
 		}
 	

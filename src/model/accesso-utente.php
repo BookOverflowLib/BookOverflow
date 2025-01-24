@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } catch (Exception $e) {
             header('Location: ' . $prefix . '/accedi');
-            $_SESSION['error'] = "Le credenziali inserite non sono corrette";
+            $_SESSION['error'] = exceptionToError($e, "accesso non riuscito");
             exit();
         }
     }

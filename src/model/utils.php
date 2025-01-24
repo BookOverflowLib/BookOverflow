@@ -1,5 +1,6 @@
 <?php
-
+require_once __DIR__ . '/' . '../paths.php';
+require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 /**
  * Assicura che la sessione sia attiva
  * @return void
@@ -17,12 +18,12 @@ function load_env(): void
 	if (!file_exists($env_path)) {
 		throw new Exception('.env file not found');
 	}
-
+	
 	$env = parse_ini_file($env_path);
 	if ($env === false) {
 		throw new Exception('Error parsing .env file');
 	}
-
+	
 	foreach ($env as $key => $value) {
 		if (!array_key_exists($key, $_ENV)) {
 			$_ENV[$key] = $value;
@@ -160,7 +161,7 @@ function getHeaderButtons($path): string
 	// Se la pagina corrente è /accedi, il pulsante deve portare a /registrati
 	$accediButton = '';
 	if ($path != '/accedi') {
-		$accediButton = '<a class="button-layout" href="'. $prefix . '/accedi">Accedi</a>';
+		$accediButton = '<a class="button-layout" href="' . $prefix . '/accedi">Accedi</a>';
 	} else {
 		$accediButton =
 			'<a class="button-layout" href="' . $prefix . '/registrati">Registrati</a>';
@@ -354,7 +355,7 @@ function getGeneriPreferiti($generi)
 		return '<p>Non c\'è ancora nessun genere preferito!</p>';
 	}
 	
-	$fileGeneri = json_decode(file_get_contents('../utils/bisac.json'), true);
+	$fileGeneri = json_decode(file_get_contents(__DIR__ . '/../../utils/bisac.json'), true);
 	$generiPreferiti = json_decode($generi[0]['generi_preferiti'], true);
 	
 	$output = '';
@@ -383,10 +384,12 @@ function getLibriCopertinaGrande($libri, $max_risultati): string
 	}
 	$num_libri = count(value: $libri) > $max_risultati ? $max_risultati : count(value: $libri);
 	for ($i = 0; $i < $num_libri; $i++) {
+		$path_copertina = str_replace('http', 'https', $libri[$i]['path_copertina']);
+		
 		$libroTemplate = <<<HTML
 		<div class="libro">
-			<a href="/libro/{$libri[$i]['ISBN']}" aria-label="{$libri[$i]["titolo"]} {$libri[$i]["autore"]}">
-				<img alt="" src="{$libri[$i]['path_copertina']}" width="150" />
+			<a href="/libro/{$libri[$i]['ISBN']}" aria-label="Libro {$libri[$i]["titolo"]} di {$libri[$i]["autore"]}">
+				<img alt="" src="{$path_copertina}" width="150" />
 				<p class="titolo-libro">{$libri[$i]["titolo"]}</p>
 				<p class="autore-libro">{$libri[$i]["autore"]}</p>
 			</a>
@@ -562,7 +565,7 @@ function addButtonsLibriList($libri_page, $list_name): string
 
 function getItaGenere($genere): string
 {
-	$fileGeneri = json_decode(file_get_contents('../utils/bisac.json'), true);
+	$fileGeneri = json_decode(file_get_contents(__DIR__ . '/../../utils/bisac.json'), true);
 	$genere = strtolower($genere);
 	return $fileGeneri[$genere]['name'];
 }
@@ -586,9 +589,9 @@ function ensure_login(): void
 	}
 }
 
-/**  
+/**
  * Restituisce il prefisso della sottocartella in cui il sito è ospitato
- * la variabile PREFIX viene impostata all'interno di index.php. 
+ * la variabile PREFIX viene impostata all'interno di index.php.
  * la funzione assume quindi che il valore sia già stato letto dal file .env
  */
 function getPrefix(): string
@@ -606,5 +609,5 @@ function populateWebdirPrefixPlaceholders($page): string
 {
 	$prefix = getPrefix();
 	$page = str_replace('<!-- [prefix] -->', $prefix, $page);
-	return $page;	
+	return $page;
 }

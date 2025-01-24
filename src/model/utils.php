@@ -619,3 +619,19 @@ function populateWebdirPrefixPlaceholders($page): string
 	$page = str_replace('<!-- [prefix] -->', $prefix, $page);
 	return $page;
 }
+
+function addErrorsToPage($page): string
+{
+	$errors = '';
+	if (isset($_SESSION['error'])) {
+		$errors = '<p class="input-error-regular">' . $_SESSION['error'] . '</p>';
+		unset($_SESSION['error']);
+	}
+	//debug function
+	if (strpos($page, '<!-- [displayError] -->') === false) {
+		throw new Exception('Error placeholder not found in the page: ' . $page);
+
+	}
+	$page = str_replace('<!-- [displayError] -->', $errors, $page);
+	return $page;
+}

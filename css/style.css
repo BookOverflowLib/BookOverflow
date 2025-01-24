@@ -370,6 +370,13 @@ a {
     background: var(--secondary-200);
     color: var(--text);
 }
+.destructive {
+    background: var(--accent-200);
+    color: var(--text);
+}
+.destructive:hover {
+    background: var(--accent-300);
+}
 
 .secondary:hover {
     background: var(--secondary-300);
@@ -833,18 +840,20 @@ main {
     margin-bottom: 20em;
     margin-top: 3em;
 }
-
+::placeholder {
+    color: var(--neutral-400);
+}
 fieldset {
     border: none;
 }
 
-.login-data {
+.form-data {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 1.5em;
 }
 
-.login-data > button {
+.form-data > button {
     margin-left: 50%;
 }
 
@@ -1124,7 +1133,7 @@ li.activePage {
     font-size: var(--font-sm);
 }
 
-.login-data > div {
+.form-data > div {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
@@ -1609,12 +1618,22 @@ li.activePage {
 
 .storico-buttons {
     align-self: center;
+    text-align: center;
 }
 
 .storico-buttons.accetta {
     display: flex;
     gap: 0.5em;
     flex-direction: row;
+}
+
+.storico-buttons.accettato > p{
+    border: var(--secondary-300) 4px solid;
+    padding: 0.5em;
+}
+.storico-buttons.rifiutato > p{
+    border: var(--accent-300) 4px solid;
+    padding: 0.5em;
 }
 
 #scambio-arrows {

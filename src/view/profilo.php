@@ -57,7 +57,7 @@ function generatePage($user, $isTuoProfilo, $db)
 	
 	$profilo = replacePlaceholders($profilo, $user, $db);
 	$profilo = replaceLocation($profilo, $user);
-//	$profilo = replaceRating($profilo, $user, $db); HEI
+	$profilo = replaceRating($profilo, $user, $db);
 	$profilo = replaceGeneri($profilo, $user, $db);
 	$profilo = replaceLibri($profilo, $user, $db);
 	
@@ -95,7 +95,12 @@ function replaceLocation($profilo, $user)
 function replaceRating($profilo, $user, $db)
 {
 	$userRating = $db->get_user_rating_by_email($user['email']);
-	$ratingValue = $userRating && isset($userRating[0]['media_valutazioni']) ? $userRating[0]['media_valutazioni'] : "0.0";
+	
+	$ratingValue = "0.0";
+	if ($userRating && isset($userRating[0]['media_valutazioni'])) {
+		$ratingValue = $userRating[0]['media_valutazioni'];
+		$ratingValue = number_format($ratingValue, 1);
+	}
 	
 	$profilo = str_replace('<!-- [userRating] -->', $ratingValue, $profilo);
 	return str_replace('<!-- [userRatingStars] -->', ratingStars($ratingValue), $profilo);

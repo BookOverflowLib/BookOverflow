@@ -35,4 +35,5 @@ $generi = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'seleziona-generi.html'
 
 $page = str_replace('<!-- [content] -->', $generi, $page);
 $page = str_replace('<!-- [opzioniGeneri] -->', $buttonsGeneri, $page);
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;

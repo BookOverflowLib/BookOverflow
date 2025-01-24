@@ -1550,7 +1550,7 @@ li.activePage {
     display: flex;
     flex-direction: row;
     gap: 1em;
-    align-items: center;
+    align-items: start;
 }
 
 .storico-dai > div,

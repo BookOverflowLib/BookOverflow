@@ -60,7 +60,7 @@ function generateScambioRow($scambio, $db)
 	$user_libro = $isScambioRicevuto ? $libroAcc : $libroProp;
 	$other_libro = $isScambioRicevuto ? $libroProp : $libroAcc;
 	
-    $prefix = getPrefix();
+	$prefix = getPrefix();
 	return <<<HTML
     <div class="storico-row" id="scambio-{$scambio['ID']}">
     	<div class="storico-books">
@@ -124,10 +124,14 @@ function generateScambioButtons($scambio, $isScambioRicevuto)
 		}
 	}
 	if ($scambio['stato'] === 'rifiutato' || $scambio['stato'] === 'accettato') {
+		$recensioneButton = '';
+		if (checkRecensioneDisponibile(new DBAccess(), $scambio['emailAccettatore'], $scambio['emailProponente'], $scambio['ID'])) {
+			$recensioneButton = $scambio['stato'] === 'accettato' ? '<button class="button-layout button-recensione" type="button">Scrivi una recensione</button>' : '';
+		}
 		return <<<HTML
             <div class="storico-buttons">
                 <p>Scambio {$scambio['stato']}</p>
-                <button class="button-layout button-recensione" type="button">Scrivi una recensione</button>
+                {$recensioneButton}
             </div>
             HTML;
 	}
@@ -154,42 +158,11 @@ function generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utentePr
     HTML;
 }
 
-function getRecensioneDialog()
+function checkRecensioneDisponibile($db, $userRecensito, $userRecensore, $id)
 {
-	
-	$recensioneDialog = <<<HTML
-	<dialog id="recensione-dialog">
-		<div class="dialog-window">
-			<h2>Scrivi una recensione a {$user}</h2>
-			<form action={$form_action} method="post">
-				<label for="titolo" class="visually-hidden">Cerca un libro</label>
-				<input type="search"
-					name="cerca"
-					id="cerca"
-					placeholder="Cerca un libro ..."
-					autocomplete="off"
-					/>
-				<span class="sr-only" role="alert" aria-atomic="false" id="sr-risultati"></span>
-				<div id="book-results">
-					<p>Nessun risultato</p>
-				</div>
-				{$select_condizioni}
-				<input type="hidden" name="ISBN" value="">
-				<input type="hidden" name="titolo" value="">
-				<input type="hidden" name="autore" value="">
-				<input type="hidden" name="editore" value="">
-				<input type="hidden" name="anno" value="">
-				<input type="hidden" name="genere" value="">
-				<input type="hidden" name="descrizione" value="">
-				<input type="hidden" name="lingua" value="">
-				<input type="hidden" name="path_copertina" value="">
-				<div class="dialog-buttons">
-					<input type="submit" id="aggiungi-libro" class="button-layout" value="Aggiungi libro">
-					<button id="close-dialog" class="button-layout-light" type="reset" formnovalidate>Annulla</button>
-				</div>
-			</form>
-		</div>
-	</dialog>
-	HTML;
-	return str_replace('<!-- [cercaLibriDialog] -->', $cercaLibriDialog, $libri_utente);
+	try {
+		return $db->check_if_user_can_add_review($userRecensito, $userRecensore, $id);
+	} catch (Exception $e) {
+		return false;
+	}
 }

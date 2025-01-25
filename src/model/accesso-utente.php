@@ -8,15 +8,11 @@ $db = new DBAccess();
 
 $prefix = getPrefix();
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    $_SESSION['error'] = "Errore: richiesta non valida";
-    header('Location: ' . $prefix . '/accedi');
-    exit();
+    redirect('Errore: richiesta non valida');
 }
 
 if (!isset($_POST['identifier'], $_POST['password'])) {
-    $_SESSION['error'] = "Errore: dati mancanti";
-    header('Location: ' . $prefix . '/accedi');
-    exit();
+    redirect('Errore: dati mancanti');
 }
 
 $identifier = $_POST['identifier'];
@@ -28,11 +24,20 @@ try {
         $user = ($db->get_user_by_identifier($identifier))[0];
         $_SESSION['user'] = $user['username'];
         $_SESSION['path_immagine'] = $user['path_immagine'];
-        header('Location: ' . $prefix . '/profilo/' . $user['username']);
-        exit();
+        redirect();
     }
 } catch (Exception $e) {
-    header('Location: ' . $prefix . '/accedi');
-    $_SESSION['error'] = exceptionToError($e, "accesso non riuscito");
+    $err = exceptionToError($e, "accesso non riuscito");
+    redirect($err);
+}
+
+function redirect(string $error = null): never
+{
+    if ($error) {
+        $_SESSION['error'] = $error;
+        header('Location: ' . $GLOBALS['prefix'] . '/accedi');
+    } else {
+        header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user']);
+    }
     exit();
 }

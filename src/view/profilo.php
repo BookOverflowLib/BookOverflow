@@ -164,3 +164,14 @@ function getContattaButton($profilo, $user)
 	$formatMailHref = 'mailto:' . $user['email'] . '?subject=' . $oggettoMail;
 	return '<a href="' . $formatMailHref . '" class="button-layout secondary external-link">Contatta via mail</a>';
 }
+
+function redirect(string $error = null): never
+{
+	if ($error) {
+		$_SESSION['error'] = $error;
+		header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user'] . '/seleziona-generi');
+	}else{
+		header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user'] . '#generi');
+	}
+	exit();
+}

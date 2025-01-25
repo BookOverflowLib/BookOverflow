@@ -100,7 +100,7 @@ footer .logo p {
 
 #unipd,
 #nomi {
-    font-size: var(--font-base);
+    font-size: var(--font-sm);
 }
 
 /* ACCEDI */

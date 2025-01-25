@@ -1661,6 +1661,16 @@ li.activePage {
 	background-image: url('./../assets/imgs/external-link.svg');
 	background-size: 1em 1em;
 }
+.logout::after {
+	margin-left: 0.5em;
+	display: inline-block;
+	content: '';
+	width: 1em;
+	height: 1em;
+	filter: var(--svg-invert);
+	background-image: url('./../assets/imgs/logout.svg');
+	background-size: 1em 1em;
+}
 
 #button-read-more {
 	color: var(--text);

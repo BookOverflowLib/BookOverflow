@@ -13,13 +13,25 @@ class CustomException extends Exception {
 
 class UsernameAlreadyExistsException extends CustomException {
     public function __construct() {
-        parent::__construct("Errore: username già esistente");
+        parent::__construct("Errore: username già in uso");
+    }
+}
+
+class InvalidProvinciaException extends CustomException {
+    public function __construct() {
+        parent::__construct("Errore: provincia non valida");
+    }
+}
+
+class InvalidComuneException extends CustomException {
+    public function __construct() {
+        parent::__construct("Errore: comune non esistente");
     }
 }
 
 class EmailAlreadyExistsException extends CustomException {
     public function __construct() {
-        parent::__construct("Errore: Questa email è già registrata");
+        parent::__construct("Errore: email già in uso");
     }
 }
 

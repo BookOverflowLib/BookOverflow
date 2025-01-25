@@ -2,98 +2,186 @@
 	src="<!-- [prefix] -->/js/registratiValidator.js"
 	type="module"></script>
 
-<section class="signin center">
-	<h1 class="center">Registrati</h1>
-	<p class="center">
-		Hai già un <span lang="en">account</span>?
-		<a href="<!-- [prefix] -->/accedi">Accedi</a>
-	</p>
-	<div class="display-error">
-		<!-- [displayError] -->
+<section id="signin-section">
+	<div class="signin center">
+		<h1 class="center">Registrati</h1>
+		<p class="center">
+			Hai già un <span lang="en">account</span>?
+			<a href="<!-- [prefix] -->/accedi">Accedi</a>
+		</p>
+		<div class="display-error">
+			<!-- [displayError] -->
+		</div>
+		<form
+			action="<!-- [prefix] -->/api/registra-utente"
+			autocomplete="on"
+			id="registrati"
+			method="post">
+			<fieldset class="form-data">
+				<legend class="sr-only">Inserire i dati per registrarsi</legend>
+				<div>
+					<label for="nome"
+						>Nome <span class="required">(richiesto)</span></label
+					>
+					<input
+						autocomplete="given-name"
+						class="form-input"
+						id="nome"
+						name="nome"
+						pattern="^[A-Za-z\sÀ-ÿ'’]{2,50}$"
+						required
+						title="Deve contenere almeno 2 caratteri, non sono ammessi numeri o caratteri speciali"
+						aria-describedby="nome_help"
+						type="text" />
+					<p id="nome_help" class="form_help">
+						Deve contenere almeno 2 caratteri, non sono ammessi
+						numeri o caratteri speciali
+					</p>
+				</div>
+				<div>
+					<label for="cognome"
+						>Cognome
+						<span class="required">(richiesto)</span></label
+					>
+					<input
+						autocomplete="family-name"
+						class="form-input"
+						id="cognome"
+						name="cognome"
+						pattern="^[A-Za-z\sÀ-ÿ'’]{2,50}$"
+						required
+						title="Deve contenere almeno 2 caratteri, non sono ammessi numeri o caratteri speciali"
+						aria-describedby="cognome_help"
+						type="text" />
+					<p id="cognome_help" class="form_help">
+						Deve contenere almeno 2 caratteri, non sono ammessi
+						numeri o caratteri speciali
+					</p>
+				</div>
+
+				<!-- provincia e citta -->
+				<div>
+					<label for="provincia"
+						>Provincia
+						<span class="required">(richiesto)</span></label
+					>
+					<select
+						class="form-input"
+						id="provincia"
+						name="provincia"
+						required>
+						<option value="" selected disabled>
+							Seleziona una provincia
+						</option>
+						<hr />
+						<!-- [province] -->
+					</select>
+				</div>
+				<div>
+					<label for="comune"
+						>Comune <span class="required">(richiesto)</span></label
+					>
+					<select
+						class="form-input"
+						id="comune"
+						name="comune"
+						required>
+						<option value="" selected disabled>
+							Seleziona un comune
+						</option>
+						<hr />
+					</select>
+				</div>
+
+				<!-- spans required to make validation work -->
+				<!-- username -->
+				<div>
+					<label for="username" lang="en"
+						>Username
+						<span class="required">(richiesto)</span></label
+					>
+					<input
+						autocomplete="username"
+						class="form-input"
+						id="username"
+						name="username"
+						required
+						pattern="^[^\s\r\n]{2,50}$"
+						title="Deve contenere almeno 2 caratteri, non sono ammessi spazi"
+						aria-describedby="username_help"
+						type="text" />
+					<p id="username_help" class="form_help">
+						Non può essere modificato in seguito. Deve contenere
+						almeno 2 caratteri, non sono ammessi spazi
+					</p>
+				</div>
+				<!-- email -->
+				<div>
+					<label for="email"
+						>Indirizzo Email
+						<span class="required">(richiesto)</span></label
+					>
+					<input
+						autocomplete="email"
+						class="form-input"
+						id="email"
+						name="email"
+						pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+						title="Inserire un indirizzo email valido"
+						required
+						aria-describedby="email_help"
+						type="email" />
+					<p id="email_help" class="form_help">
+						Indirizzo a cui gli altri utenti potranno scrivere per
+						contattarti
+					</p>
+				</div>
+				<!-- password -->
+				<div>
+					<label for="password" lang="en"
+						>Password
+						<span class="required">(richiesto)</span></label
+					>
+					<input
+						autocomplete="new-password"
+						class="form-input"
+						id="password"
+						name="password"
+						minlength="8"
+						title="Deve contenere almeno 8 caratteri"
+						required
+						type="password" />
+					<p id="password_help" class="form_help">
+						Deve contenere almeno 8 caratteri
+					</p>
+					<!-- <div id="password_help" class="form_help">
+						<p>Deve contenere:</p>
+						<ul>
+							<li>Almeno 8 caratteri</li>
+							<li>Una lettera maiuscola (A-Z)</li>
+							<li>Una lettera minuscola (a-z)</li>
+							<li>Un numero (0-9)</li>
+							<li>Un carattere speciale</li>
+						</ul>
+					</div> -->
+				</div>
+				<!-- conferma password -->
+				<div>
+					<label for="conferma_password"
+						>Conferma <span lang="en">Password</span>
+						<span class="required">(richiesto)</span></label
+					>
+					<input
+						autocomplete="new-password"
+						class="form-input"
+						id="conferma_password"
+						name="conferma_password"
+						required
+						type="password" />
+				</div>
+				<input class="button-layout" type="submit" value="Registrati" />
+			</fieldset>
+		</form>
 	</div>
-	<form autocomplete="on" id="registrati" method="post" onsubmit="">
-		<fieldset class="form-data">
-			<legend class="sr-only">Inserire i dati per registrarsi</legend>
-			<div>
-				<label for="nome">Nome</label>
-				<input
-					class="form-input"
-					id="nome"
-					name="nome"
-					required
-					type="text" />
-			</div>
-			<div>
-				<label for="cognome">Cognome</label>
-				<input id="cognome" name="cognome" required type="text" />
-			</div>
-
-			<!-- provincia e citta -->
-			<div>
-				<label for="provincia">Provincia</label>
-				<select
-					class="form-input"
-					id="provincia"
-					name="provincia"
-					required>
-					<option value="">Seleziona una provincia</option>
-					<hr />
-					<!-- [province] -->
-				</select>
-			</div>
-			<div>
-				<label for="comune">Comune</label>
-				<select class="form-input" id="comune" name="comune" required>
-					<option value="">Seleziona un comune</option>
-					<hr />
-				</select>
-			</div>
-
-			<!-- spans required to make validation work -->
-			<!-- username -->
-			<div>
-				<label for="username" lang="en">Username</label>
-				<input
-					class="form-input"
-					id="username"
-					name="username"
-					required
-					type="text" />
-			</div>
-			<!-- email -->
-			<div>
-				<label for="email">Indirizzo Mail</label>
-				<input
-					class="form-input"
-					id="email"
-					name="email"
-					required
-					type="email" />
-			</div>
-			<!-- password -->
-			<div>
-				<label for="password" lang="en">Password</label>
-				<input
-					class="form-input"
-					id="password"
-					name="password"
-					required
-					type="password" />
-			</div>
-			<!-- conferma password -->
-			<div>
-				<label for="conferma_password"
-					>Conferma <span lang="en">Password</span></label
-				>
-				<input
-					class="form-input"
-					id="conferma_password"
-					name="conferma_password"
-					required
-					type="password" />
-			</div>
-			<input class="button-layout" type="submit" value="Registrati" />
-		</fieldset>
-	</form>
 </section>
 <script src="<!-- [prefix] -->/js/comuneSelect.js"></script>

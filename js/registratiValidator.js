@@ -46,7 +46,7 @@ var formChecks = {
 window.onload = function () {
     const form = document.getElementById('registrati');
 
-    fillSuggestion(formChecks);
+    //fillSuggestion(formChecks);
     if (sessionStorage.getItem("nome")) {
         restoreAllInputValues();
         let provinciaSelect = document.querySelector('select[name="provincia"]')
@@ -55,7 +55,7 @@ window.onload = function () {
 
     form.addEventListener('submit', function () {
         saveAllInputValues();
-        return checkForm("registrati", "api/registra-utente", formChecks);
+    //    return checkForm("registrati", "api/registra-utente", formChecks);
     });
 
 };

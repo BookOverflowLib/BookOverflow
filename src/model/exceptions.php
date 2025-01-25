@@ -12,8 +12,8 @@ class CustomException extends Exception {
 }
 
 class UsernameAlreadyExistsException extends CustomException {
-    public function __construct($username) {
-        parent::__construct("L'utente $username è già registrato");
+    public function __construct() {
+        parent::__construct("Errore: username già esistente");
     }
 }
 

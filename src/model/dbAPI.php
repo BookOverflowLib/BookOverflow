@@ -269,7 +269,7 @@ class DBAccess
 	{
 		try {
 			if ($this->check_username_exists($username)) {
-				throw new UsernameAlreadyExistsException($username);
+				throw new UsernameAlreadyExistsException();
 			}
 			if ($this->check_email_exists($email)) {
 				throw new EmailAlreadyExistsException();

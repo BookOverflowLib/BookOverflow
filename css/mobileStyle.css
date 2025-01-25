@@ -375,3 +375,9 @@ footer .logo p {
 	padding: 1em;
 	text-align: justify;
 }
+
+.sezione-scambi .scambi{
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1em;
+}

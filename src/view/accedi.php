@@ -5,7 +5,7 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 ensure_session();
 
 if (isset($_SESSION['user'])) {
-	header('Location: /profilo/' . $_SESSION['user']);
+	header('Location: ' . getPrefix() . '/profilo/' . $_SESSION['user']);
 	exit();
 }
 

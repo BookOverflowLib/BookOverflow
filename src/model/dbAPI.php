@@ -230,39 +230,38 @@ class DBAccess
 			if (!$stmt->execute()) {
 				throw new GenericRegistrationException();
 			}
-			$stmt->store_result();
-			$num_rows = $stmt->num_rows;
-			$stmt->close();
-			if ($num_rows > 0) {
-				return true;
-			}
+			return $stmt->get_result()->fetch_row()[0];
 		} catch (Exception $e) {
 			error_log("check_exists: " . $e->getMessage());
+		} finally {
+			if ($stmt) $stmt->close();
 		}
 		return false;
 	}
 
+	// https://stackoverflow.com/a/7171075
+	// The 1 or * in the EXISTS is ignored
 	public function check_username_exists($username): bool
 	{
-		$query = "SELECT * FROM Utente WHERE username = ? LIMIT 1";
+		$query = "SELECT EXISTS ( SELECT * FROM Utente WHERE username = ? LIMIT 1)";
 		return $this->check_exists_finalize($query, $username);
 	}
 
 	public function check_email_exists($email): bool
 	{
-		$query = "SELECT * FROM Utente WHERE email = ? LIMIT 1";
+		$query = "SELECT EXISTS ( SELECT * FROM Utente WHERE email = ? LIMIT 1)";
 		return $this->check_exists_finalize($query, $email);
 	}
 
 	function check_provincia_exists($idProvincia): bool
 	{
-		$query = "SELECT * FROM province WHERE id = ? LIMIT 1";
+		$query = "SELECT EXISTS ( SELECT * FROM province WHERE id = ? LIMIT 1)";
 		return $this->check_exists_finalize($query, $idProvincia);
 	}
 
 	function check_comune_exists($idComune): bool
 	{
-		$query = "SELECT * FROM comuni WHERE id = ? LIMIT 1";
+		$query = "SELECT EXISTS ( SELECT * FROM comuni WHERE id = ? LIMIT 1)";
 		return $this->check_exists_finalize($query, $idComune);
 	}
 

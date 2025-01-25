@@ -8,6 +8,8 @@ use CustomExceptions\{
 	GenericRegistrationException,
 	IncorrectCredentialsException,
 	UsernameAlreadyExistsException,
+	InvalidProvinciaException,
+	InvalidComuneException
 };
 
 // TODO: maybe exception could be handled using best practices but i don´t think it's a requirement
@@ -241,39 +243,45 @@ class DBAccess
 
 	// https://stackoverflow.com/a/7171075
 	// The 1 or * in the EXISTS is ignored
-	public function check_username_exists($username): bool
+	public function check_username_exists($username): void
 	{
 		$query = "SELECT EXISTS ( SELECT * FROM Utente WHERE username = ? LIMIT 1)";
-		return $this->check_exists_finalize($query, $username);
+		if (! $this->check_exists_finalize($query, $username)) {
+			throw new UsernameAlreadyExistsException();
+		}
 	}
 
-	public function check_email_exists($email): bool
+	public function check_email_exists($email): void
 	{
 		$query = "SELECT EXISTS ( SELECT * FROM Utente WHERE email = ? LIMIT 1)";
-		return $this->check_exists_finalize($query, $email);
+		if (! $this->check_exists_finalize($query, $email)) {
+			throw new EmailAlreadyExistsException();
+		}
 	}
 
-	function check_provincia_exists($idProvincia): bool
+	function check_provincia_exists($idProvincia): void
 	{
 		$query = "SELECT EXISTS ( SELECT * FROM province WHERE id = ? LIMIT 1)";
-		return $this->check_exists_finalize($query, $idProvincia);
+		if (! $this->check_exists_finalize($query, $idProvincia)) {
+			throw new InvalidProvinciaException();
+		}
 	}
 
-	function check_comune_exists($idComune): bool
+	function check_comune_exists($idComune): void
 	{
 		$query = "SELECT EXISTS ( SELECT * FROM comuni WHERE id = ? LIMIT 1)";
-		return $this->check_exists_finalize($query, $idComune);
+		if (! $this->check_exists_finalize($query, $idComune)) {
+			throw new InvalidComuneException();
+		}
 	}
 
 	public function register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $profileImg = null): void
 	{
 		try {
-			if ($this->check_username_exists($username)) {
-				throw new UsernameAlreadyExistsException();
-			}
-			if ($this->check_email_exists($email)) {
-				throw new EmailAlreadyExistsException();
-			}
+			$this->check_username_exists($username);
+			$this->check_email_exists($email);
+			$this->check_provincia_exists($provincia);
+			$this->check_comune_exists($comune);
 			$passwordHashed = password_hash($password, PASSWORD_BCRYPT);
 			$query = "INSERT INTO Utente (email, password_hash, username, nome, cognome, provincia, comune, path_immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 

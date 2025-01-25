@@ -36,23 +36,11 @@ if (!preg_match("/^[a-zA-Z ]{2,50}$/", $nome)) {
 if (!preg_match("/^[a-zA-Z ]{2,50}$/", $cognome)) {
 	redirect("Cognome non valido");
 }
-if (!$db->check_provincia_exists($id_provincia)) {
-	redirect("Provincia non valida");
-}
-if (!$db->check_comune_exists($id_comune)) {
-	redirect("Comune non esistente");
-}
 if (!preg_match("/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/", $email)) {
 	redirect("Email non valida");
 }
-if ($db->check_email_exists($email)) {
-	redirect("Email già in uso");
-}
 if (!preg_match("/^[^\s\r\n]{2,50}$/", $username)) {
 	redirect("Username non valido");
-}
-if ($db->check_username_exists($username)) {
-	redirect("Username già in uso");
 }
 
 try {

@@ -6,39 +6,43 @@ require_once __DIR__ . '/' . '../model/registration-select.php';
 $db = new DBAccess();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	if (isset($_POST['nome'], $_POST['cognome'], $_POST['provincia'], $_POST['comune'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['conferma_password'])) {
-		$nome = $_POST['nome'];
-		$cognome = $_POST['cognome'];
-		$provincia = $_POST['provincia'];
-		$comune = $_POST['comune'];
-		$email = $_POST['email'];
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$password2 = $_POST['conferma_password'];
-		$image = getUserImageUrlByEmail($email);
-
-		$prefix = getPrefix();
-		// TODO: errore se username già esistente
-		if ($password !== $password2) {
-			header('Location: ' . $prefix . '/registrati');
-			$_SESSION['error'] = "Le password non corrispondono";
-			exit();
-		}
-		try {
-			$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
-		} catch (Exception $e) {
-			header('Location: ' . $prefix . '/registrati');
-			$_SESSION['error'] = exceptionToError($e, "registrazione non riuscita");
-			exit();
-		}
-
-		ensure_session();
-
-		$_SESSION['user'] = $username;
-		$_SESSION['path_immagine'] = $image;
-
-		header('Location: ' . $prefix . '/profilo/' . $username);
-
+	if (!isset($_POST['nome'], $_POST['cognome'], $_POST['provincia'], $_POST['comune'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['conferma_password'])) {
+		header('Location: ' . $prefix . '/registrati');
+		$_GET['error'] = 'Errore: non tutti i campi del form sono stati riempiti';//exceptionToError($e, "registrazione non riuscita");
 		exit();
 	}
+
+	$nome = $_POST['nome'];
+	$cognome = $_POST['cognome'];
+	$provincia = $_POST['provincia'];
+	$comune = $_POST['comune'];
+	$email = $_POST['email'];
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+	$password2 = $_POST['conferma_password'];
+	$image = getUserImageUrlByEmail($email);
+
+	$prefix = getPrefix();
+	// TODO: errore se username già esistente
+	if ($password !== $password2) {
+		header('Location: ' . $prefix . '/registrati');
+		$_SESSION['error'] = "Le password non corrispondono";
+		exit();
+	}
+	try {
+		$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
+	} catch (Exception $e) {
+		header('Location: ' . $prefix . '/registrati');
+		$_SESSION['error'] = exceptionToError($e, "registrazione non riuscita");
+		exit();
+	}
+
+	ensure_session();
+
+	$_SESSION['user'] = $username;
+	$_SESSION['path_immagine'] = $image;
+
+	header('Location: ' . $prefix . '/profilo/' . $username);
+
+	exit();
 }

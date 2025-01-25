@@ -1,31 +1,11 @@
 <?php
 require_once 'src/paths.php';
+require_once 'src/model/utils.php';
 $request = $_SERVER['REQUEST_URI'];
 
 // Rimuovi eventuali query string dal percorso principale
 $path = parse_url($request, PHP_URL_PATH);
-
-// parse prefix from .env file
-// DB_HOST is likely to always be present, even if the website has no prefix
-if (!isset($_ENV['DB_HOST'])) {
-	$env_path = __DIR__ . '/.env';
-	if (!file_exists($env_path)) {
-		throw new Exception('.env file not found');
-	}
-	
-	$env = parse_ini_file($env_path);
-	if ($env === false) {
-		throw new Exception('Error parsing .env file');
-	}
-	
-	foreach ($env as $key => $value) {
-		if (!array_key_exists($key, $_ENV)) {
-			$_ENV[$key] = $value;
-		}
-	}
-}
-isset($_ENV['PREFIX']) ? $prefix = $_ENV['PREFIX'] : $prefix = '';
-
+$prefix = getPrefix();
 
 #echo $path . "<br>";
 // Remove the prefix from the path

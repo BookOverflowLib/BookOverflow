@@ -17,6 +17,7 @@ $libri_desiderati_utente = $db->get_libri_desiderati_by_username($_GET['user']);
 $titoloIntestazione = 'Lista dei desideri';
 $libri_desiderati = str_replace('<!-- [titoloIntestazione] -->', $titoloIntestazione, $libri_desiderati);
 $libri_desiderati_html = getLibriList($libri_desiderati_utente, 'libri-desiderati');
+$libri_desiderati = str_replace('<!-- [tipoLista] -->', 'desiderati', $libri_desiderati);
 $libri_desiderati = str_replace('<!-- [listaLibri] -->', $libri_desiderati_html, $libri_desiderati);
 
 // aggiungi bottoni solo se è il suo profilo

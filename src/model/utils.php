@@ -439,11 +439,13 @@ function getLibriList($libri_utente, $list_name): string
 				$disponibileClass = $libro['disponibile'] ? 'disponibile' : 'non-disponibile';
 				$disponibileLabel = $libro['disponibile'] ? 'Disponibile' : 'Non disponibile';
 				$book_copy_info = <<<HTML
-				<div>
-					<div class="libro-stato-{$disponibileClass}" aria-hidden="true"></div>
-					<span class="sr-only">Stato</span> {$disponibileLabel}
+				<div class="book-copy-info">
+					<div>
+						<div class="libro-stato-{$disponibileClass}" aria-hidden="true"></div>
+						<span class="sr-only">Stato</span> {$disponibileLabel}
+					</div>
+					<p>Condizioni: {$condizioni}</p>
 				</div>
-				<p>Condizioni: {$condizioni}</p>
 				HTML;
 			}
 
@@ -467,9 +469,7 @@ function getLibriList($libri_utente, $list_name): string
 						</div>
 					</a>
 				</div>
-				<div class="book-copy-info">
-					{$book_copy_info}
-				</div>
+				{$book_copy_info}
 				<div class="book-buttons">
 					{$bookButtons}
 				</div>

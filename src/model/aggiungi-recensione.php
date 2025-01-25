@@ -48,8 +48,8 @@ try {
 	$_SESSION['error'] = 'Errore: recensione non aggiunta';
 	throw new Exception(message: "Errore: recensione non aggiunta");
 }
-
-$previousUrl = $_SERVER['HTTP_REFERER'] ?? $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user'] . '/scambi';
+$prefix = getPrefix();
+$previousUrl = $_SERVER['HTTP_REFERER'] ?? $prefix . '/profilo/' . $_SESSION['user'] . '/scambi';
 $previousUrl = parse_url($previousUrl, PHP_URL_PATH);
 header('Location: ' . $previousUrl);
 exit();

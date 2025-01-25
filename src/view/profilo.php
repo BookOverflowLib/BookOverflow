@@ -134,7 +134,7 @@ function addTuoProfiloButtons($profilo)
 	$modificaGeneriButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';
 	$profilo = str_replace('<!-- [generiPreferitiButton] -->', $modificaGeneriButton, $profilo);
 
-	$libriOffertiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/libri-offerti" class="button-layout" aria-label="MOdifica la lista dei libri offerti">Modifica la lista</a>';
+	$libriOffertiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/libri-offerti" class="button-layout" aria-label="Modifica la lista dei libri offerti">Modifica la lista</a>';
 	$profilo = str_replace('<!-- [libriOffertiButton] -->', $libriOffertiButton, $profilo);
 
 	$libriDesideratiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/libri-desiderati" class="button-layout" aria-label="Modifica la lista dei desideri">Modifica la lista</a>';

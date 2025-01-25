@@ -57,5 +57,4 @@ window.onload = function () {
         saveAllInputValues();
     //    return checkForm("registrati", "api/registra-utente", formChecks);
     });
-
 };

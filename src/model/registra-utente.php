@@ -21,12 +21,12 @@ if (!isset($_POST['nome'], $_POST['cognome'], $_POST['provincia'], $_POST['comun
 	exit();
 }
 
-$nome = $_POST['nome'];
-$cognome = $_POST['cognome'];
+$nome = htmlspecialchars($_POST['nome']);
+$cognome = htmlspecialchars($_POST['cognome']);
 $id_provincia = $_POST['provincia'];
 $id_comune = $_POST['comune'];
 $email = $_POST['email'];
-$username = $_POST['username'];
+$username = htmlspecialchars($_POST['username']);
 $password = $_POST['password'];
 $password2 = $_POST['conferma_password'];
 $image = getUserImageUrlByEmail($email);

@@ -9,16 +9,11 @@ $db = new DBAccess();
 $prefix = getPrefix();
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-	header('Location: ' . $prefix . '/registrati');
-	$_SESSION['error'] = 'Errore: metodo non valido';
-	exit();
+	redirect("Errore: richiesta non valida");
 }
 
 if (!isset($_POST['nome'], $_POST['cognome'], $_POST['provincia'], $_POST['comune'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['conferma_password'])) {
-	header('Location: ' . $prefix . '/registrati');
-	$_SESSION['error'] = 'Errore: non tutti i campi del form sono stati riempiti';
-	//exceptionToError($e, "registrazione non riuscita");
-	exit();
+	redirect("Errore: dati mancanti");
 }
 
 $nome = htmlspecialchars($_POST['nome']);
@@ -33,65 +28,48 @@ $image = getUserImageUrlByEmail($email);
 
 
 if ($password !== $password2) {
-	header('Location: ' . $prefix . '/registrati');
-	$_SESSION['error'] = "Le password non corrispondono";
-	exit();
+	redirect("Le password non corrispondono");
 }
 if (!preg_match("/^[a-zA-Z ]{2,50}$/", $nome)) {
-	print_r("nome non valido");
-	header('Location: ' . $prefix . '/registrati');
-	$_SESSION['error'] = "Errore: il nome può contenere solo lettere e spazi, e deve essere lungo almeno 2 caratteri";
-	exit();
+	redirect("Nome non valido");
 }
 if (!preg_match("/^[a-zA-Z ]{2,50}$/", $cognome)) {
-	print_r("cognome non valido");
-	header('Location: ' . $prefix . '/registrati');
-	$_SESSION['error'] = "Errore: il cognome può contenere solo lettere e spazi, e deve essere lungo almeno 2 caratteri";
-	exit();
+	redirect("Cognome non valido");
 }
 if (!$db->check_provincia_exists($id_provincia)) {
-	print_r("provincia non valida");
-	header('Location: ' . $prefix . '/registrati');
-	$_SESSION['error'] = "Errore: la provincia non esiste";
-	exit();
+	redirect("Provincia non valida");
 }
 if (!$db->check_comune_exists($id_comune)) {
-	header('Location: ' . $prefix . '/registrati');
-	$_SESSION['error'] = "Errore: il comune non esiste";
-	exit();
+	redirect("Comune non esistente");
 }
 if (!preg_match("/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/", $email)) {
-	header('Location: ' . $prefix . '/registrati');
-	$_SESSION['error'] = "Errore: email non valida";
-	exit();
+	redirect("Email non valida");
 }
 if ($db->check_email_exists($email)) {
-	header('Location: ' . $prefix . '/registrati');
-	$_SESSION['error'] = "Errore: email già registrata";
-	exit();
+	redirect("Email già in uso");
 }
 if (!preg_match("/^[^\s\r\n]{2,50}$/", $username)) {
-	header('Location: ' . $prefix . '/registrati');
-	$_SESSION['error'] = "Errore: lo username deve essere lungo almeno 2 caratteri e non può contenere spazi";
-	exit();
+	redirect("Username non valido");
 }
 if ($db->check_username_exists($username)) {
-	header('Location: ' . $prefix . '/registrati');
-	$_SESSION['error'] = "Errore: username già esistente";
-	exit();
+	redirect("Username già in uso");
 }
 
 try {
 	$db->register_user($nome, $cognome, $id_provincia, $id_comune, $email, $username, $password, $image);
+	redirect();
 } catch (Exception $e) {
-	header('Location: ' . $prefix . '/registrati');
-	$_SESSION['error'] = exceptionToError($e, "registrazione non riuscita");
-	exit();
+	$err = exceptionToError($e, "registrazione non riuscita");
+	redirect($err);
 }
 
-$_SESSION['user'] = $username;
-$_SESSION['path_immagine'] = $image;
-
-header('Location: ' . $prefix . '/profilo/' . $username);
-
-exit();
+function redirect(string $error = null): never
+{
+	if ($error) {
+		$_SESSION['error'] = $error;
+		header('Location: ' . $GLOBALS['prefix'] . '/registrati');
+	} else {
+		header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user']);
+	}
+	exit();
+}

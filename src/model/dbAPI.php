@@ -2,17 +2,19 @@
 
 require __DIR__ . '/exceptions.php';
 
-use CustomExceptions\{EmailAlreadyExistsException,
+use CustomExceptions\{
+	EmailAlreadyExistsException,
 	GenericCustomException,
 	GenericRegistrationException,
 	IncorrectCredentialsException,
-	UsernameAlreadyExistsException,};
+	UsernameAlreadyExistsException,
+};
 
 // TODO: maybe exception could be handled using best practices but i don´t think it's a requirement
 class DBAccess
 {
 	private $connection;
-	
+
 	public function __construct()
 	{
 		try {
@@ -22,36 +24,36 @@ class DBAccess
 			$_SESSION['error'] = "Errore durante la connessione al database";
 		}
 	}
-	
+
 	public function __destruct()
 	{
 		$this->close_connection();
 	}
-	
+
 	private function load_env(): void
 	{
 		$env_path = __DIR__ . '/../../.env';
 		if (!file_exists($env_path)) {
 			throw new Exception('.env file not found');
 		}
-		
+
 		$env = parse_ini_file($env_path);
 		if ($env === false) {
 			throw new Exception('Error parsing .env file');
 		}
-		
+
 		foreach ($env as $key => $value) {
 			if (!array_key_exists($key, $_ENV)) {
 				$_ENV[$key] = $value;
 			}
 		}
 	}
-	
+
 	public function open_connection(): bool
 	{
 		// turn on the errors | convert those errors into exceptions
 		mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-		
+
 		try {
 			$this->connection = new mysqli(
 				$_ENV['DB_HOST'],
@@ -62,8 +64,8 @@ class DBAccess
 		} catch (mysqli_sql_exception $e) {
 			throw new Exception("Connection error: " . $e->getMessage());
 		}
-		
-		
+
+
 		// errors check in production
 		if (mysqli_connect_errno()) {
 			return false;
@@ -71,7 +73,7 @@ class DBAccess
 			return true;
 		}
 	}
-	
+
 	public function close_connection(): void
 	{
 		if ($this->connection) {
@@ -79,14 +81,14 @@ class DBAccess
 			$this->connection = null;
 		}
 	}
-	
+
 	public function ensure_connection(): void
 	{
 		if (!$this->connection) {
 			$this->open_connection();
 		}
 	}
-	
+
 	/**
 	 * Prepares an SQL statement for execution.
 	 *
@@ -105,12 +107,12 @@ class DBAccess
 	private function prepare_sql_statement($query, $types = null, $params = null): mysqli_stmt
 	{
 		$this->ensure_connection();
-		
+
 		$stmt = $this->connection->prepare($query);
 		if (!$stmt) {
 			throw new Exception("Prepare failed: " . $this->connection->error);
 		}
-		
+
 		if ($types && $params) {
 			// there must be the same number of types and parameters
 			// e.g types = "iss", params = [1, "hello", 3.14]
@@ -118,17 +120,17 @@ class DBAccess
 				error_log("prepare_sql_statement: Number of types does not match number of parameters");
 				throw new Exception("Error preparing query");
 			}
-			
+
 			// Bind parameters dynamically
 			if (!$stmt->bind_param($types, ...$params)) {
 				error_log("prepare_sql_statement: Parameter binding failed: " . $stmt->error);
 				throw new Exception("Error preparing query");
 			}
 		}
-		
+
 		return $stmt;
 	}
-	
+
 	/**
 	 * Executes an SQL query and returns the results as an associative array.
 	 *
@@ -147,18 +149,18 @@ class DBAccess
 			if (!$stmt->execute()) {
 				throw new Exception("Query execution failed");
 			}
-			
+
 			$results = $this->query_results_to_array($stmt->get_result());
 			$stmt->close();
 			return $results;
 		} catch (Exception $e) {
 			error_log("execute_select_query: " . $e->getMessage());
 			error_log("execute_select_query: QUERY=" . $query . "; TYPES= " . $types . "; PARAMS=" .
-				(is_array($params) ? implode(", ", $params) : (string)$params));
+				(is_array($params) ? implode(", ", $params) : (string) $params));
 			throw $e;
 		}
 	}
-	
+
 	/**
 	 * Executes an SQL query that does not return a result set.
 	 *
@@ -184,8 +186,8 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Converts the result of a MySQL query to an associative array.
 	 *
@@ -201,16 +203,15 @@ class DBAccess
 		$queryRes->free();
 		return $res;
 	}
-	
+
 	public function get_province(): ?array
 	{
 		$this->ensure_connection();
-		$query = "SELECT id, nome FROM province ORDER BY nome";
-		$queryRes = mysqli_query($this->connection, $query);
-		
-		return $this->query_results_to_array($queryRes);
+		$query = "SELECT p.id, p.nome, r.nome as regione FROM province p JOIN regioni r ON p.id_regione = r.id ORDER BY p.nome";
+		return $this->query_to_array($query);
+
 	}
-	
+
 	public function get_comune_by_provincia($idProvincia): ?array
 	{
 		$query = "SELECT * FROM comuni WHERE id_provincia = ?";
@@ -221,7 +222,7 @@ class DBAccess
 		}
 		return null;
 	}
-	
+
 	private function check_exists_finalize($query, $identifier): bool
 	{
 		try {
@@ -240,13 +241,13 @@ class DBAccess
 		}
 		return false;
 	}
-	
+
 	public function check_username_exists($username): bool
 	{
 		$query = "SELECT * FROM Utente WHERE username = ? LIMIT 1";
 		return $this->check_exists_finalize($query, $username);
 	}
-	
+
 	public function check_email_exists($email): bool
 	{
 		$query = "SELECT * FROM Utente WHERE email = ? LIMIT 1";
@@ -264,7 +265,7 @@ class DBAccess
 		$query = "SELECT * FROM comuni WHERE id = ? LIMIT 1";
 		return $this->check_exists_finalize($query, $idComune);
 	}
-	
+
 	public function register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $profileImg = null): void
 	{
 		try {
@@ -276,13 +277,13 @@ class DBAccess
 			}
 			$passwordHashed = password_hash($password, PASSWORD_BCRYPT);
 			$query = "INSERT INTO Utente (email, password_hash, username, nome, cognome, provincia, comune, path_immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-			
+
 			$this->void_query($query, "ssssssss", [$email, $passwordHashed, $username, $nome, $cognome, $provincia, $comune, $profileImg]);
 		} catch (Exception $e) {
 			throw $e;
 		}
 	}
-	
+
 	public function login_user($identifier, $password): ?array
 	{
 		$query = "SELECT * FROM Utente WHERE email = ? OR username = ?";
@@ -301,7 +302,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	public function get_user_rating_by_email($email): ?array
 	{
 		$query = 'SELECT R.emailRecensito, AVG(R.valutazione) AS media_valutazioni 
@@ -315,7 +316,7 @@ class DBAccess
 		}
 		return null;
 	}
-	
+
 	public function get_user_by_identifier($identifier): ?array
 	{
 		$query = "SELECT * FROM Utente WHERE email = ? OR username = ?";
@@ -326,7 +327,7 @@ class DBAccess
 		}
 		return null;
 	}
-	
+
 	public function get_comune_provincia_sigla_by_ids($idComune, $idProvincia): ?array
 	{
 		$queryProvincia = "SELECT nome, sigla FROM province WHERE id = ?";
@@ -340,7 +341,7 @@ class DBAccess
 		}
 		return null;
 	}
-	
+
 	public function insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina): void
 	{
 		if (empty(trim($isbn))) {
@@ -348,7 +349,7 @@ class DBAccess
 		}
 		$path_copertina = str_replace("&edge=curl", "", $path_copertina);
 		$path_copertina = str_replace("http", "https", $path_copertina);
-		
+
 		$query = "INSERT IGNORE INTO Libro (ISBN, titolo, autore, editore, anno, genere, descrizione, lingua, path_copertina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			$this->void_query($query, "sssssssss", [$isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina]);
@@ -356,7 +357,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	/**
 	 * Aggiorna i generi preferiti dell'utente
 	 * @param string $user username dell'utente
@@ -374,7 +375,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	/**
 	 * Ottiene i generi preferiti dell'utente
 	 * @param string $user username dell'utente
@@ -390,7 +391,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	private function get_user_email_by_username($username): ?string
 	{
 		$query = "SELECT email FROM Utente WHERE username = ?";
@@ -402,19 +403,19 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	public function get_libri_offerti_by_username($user): ?array
 	{
 		try {
 			$userEmail = $this->get_user_email_by_username($user);
-			
+
 			$query = <<<SQL
 			SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina, C.condizioni, C.disponibile
 			FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
 			WHERE C.proprietario = ? 
 			ORDER BY C.disponibile DESC;
 			SQL;
-			
+
 			return $this->query_to_array($query, "s", [$userEmail]);
 		} catch (Exception $e) {
 			error_log("get_libri_offerti_by_username: " . $e->getMessage());
@@ -422,7 +423,7 @@ class DBAccess
 		}
 		return null;
 	}
-	
+
 	public function insert_libri_offerti_by_username($user, $isbn, $condizione): void
 	{
 		try {
@@ -431,14 +432,14 @@ class DBAccess
 			INSERT INTO Copia (ISBN, proprietario, condizioni)
 			VALUES (?, ?, ?)
 			SQL;
-			
+
 			$this->void_query($query, "sss", [$isbn, $userEmail, $condizione]);
 		} catch (Exception $e) {
 			error_log("insert_libri_offerti_by_username: " . $e->getMessage());
 			//throw $e;
 		}
 	}
-	
+
 	public function delete_libro_offerto($user, $isbn): void
 	{
 		try {
@@ -447,32 +448,32 @@ class DBAccess
 			DELETE FROM Copia
 			WHERE ISBN = ? AND proprietario = ?
 			SQL;
-			
+
 			$this->void_query($query, "ss", [$isbn, $userEmail]);
 		} catch (Exception $e) {
 			error_log("delete_libro_offerto: " . $e->getMessage());
 			throw $e;
 		}
 	}
-	
+
 	public function get_libri_desiderati_by_username($user): ?array
 	{
 		try {
 			$userEmail = $this->get_user_email_by_username($user);
-			
+
 			$query = <<<SQL
 			SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina
 			FROM Desiderio D JOIN Libro L ON D.ISBN = L.ISBN
 			WHERE D.email = ?
 			SQL;
-			
+
 			return $this->query_to_array($query, "s", [$userEmail]);
 		} catch (Exception $e) {
 			error_log("get_libri_desiderati_by_username: " . $e->getMessage());
 			return null;
 		}
 	}
-	
+
 	public function insert_libri_desiderati_by_username($user, $isbn): void
 	{
 		try {
@@ -481,14 +482,14 @@ class DBAccess
 			INSERT INTO Desiderio (email, ISBN)
 			VALUES (?, ?)
 			SQL;
-			
+
 			$this->void_query($query, "ss", [$userEmail, $isbn]);
 		} catch (Exception $e) {
 			error_log("insert_libri_desiderati_by_username: " . $e->getMessage());
 			throw $e;
 		}
 	}
-	
+
 	public function delete_libro_desiderato($user, $isbn): void
 	{
 		try {
@@ -497,14 +498,14 @@ class DBAccess
 			DELETE FROM Desiderio
 			WHERE ISBN = ? AND email = ?
 			SQL;
-			
+
 			$this->void_query($query, "ss", [$isbn, $userEmail]);
 		} catch (Exception $e) {
 			error_log("delete_libro_desiderato: " . $e->getMessage());
 			throw $e;
 		}
 	}
-	
+
 	/**
 	 * Ottiene i libri con quel ISBN
 	 * @param string $ISBN isbn del libro
@@ -520,7 +521,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	public function get_users_interested_in_user_books($user): ?array
 	{
 		$query = <<<SQL
@@ -532,7 +533,7 @@ class DBAccess
 			WHERE C.proprietario = ?
 		)
 		SQL;
-		
+
 		try {
 			return $this->query_to_array($query, "s", [$user]);
 		} catch (Exception $e) {
@@ -540,7 +541,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	// U è l'utente "destinazione" della richiesta
 	// C è la sua copia, da scambiare con la nostra
 	// D sono i desideri dell'utente destnatario, 
@@ -559,7 +560,7 @@ class DBAccess
 		    WHERE C2.proprietario = ?
 		);
 		SQL;
-		
+
 		try {
 			$user_email = $this->get_user_email_by_username($username);
 			return $this->query_to_array($query, "sss", [$isbnLibro, $user_email, $user_email]);
@@ -568,7 +569,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	public function get_desiderati_che_offro($userOfferente, $userDesiderante): ?array
 	{
 		$query = <<<SQL
@@ -580,7 +581,7 @@ class DBAccess
 			WHERE D.email = ?
 		)
 		SQL;
-		
+
 		try {
 			$user_email_off = $this->get_user_email_by_username($userOfferente);
 			$user_email_des = $this->get_user_email_by_username($userDesiderante);
@@ -590,7 +591,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	public function get_id_copia_by_user_libro($user, $isbn): ?array
 	{
 		$query = <<<SQL
@@ -598,7 +599,7 @@ class DBAccess
 		FROM Copia C
 		WHERE C.proprietario = ? AND C.ISBN = ?
 		SQL;
-		
+
 		try {
 			$user_email = $this->get_user_email_by_username($user);
 			return $this->query_to_array($query, "ss", [$user_email, $isbn]);
@@ -607,23 +608,23 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	/* 
-	* Controlla che non ci sia un'altro scambio in attesa con gli stessi libri
-	*/
+	 * Controlla che non ci sia un'altro scambio in attesa con gli stessi libri
+	 */
 	public function check_scambio_proposto($user_prop, $user_acc, $isbn_prop, $isbn_acc): bool
 	{
 		$query = <<<SQL
 		SELECT * FROM Scambio S
 		WHERE S.emailProponente = ? AND S.emailAccettatore = ? AND S.idCopiaProp = ? AND S.idCopiaAcc = ? AND S.stato = 'in attesa'
 		SQL;
-		
+
 		try {
 			$user_email_prop = $this->get_user_email_by_username($user_prop);
 			$user_email_acc = $this->get_user_email_by_username($user_acc);
 			$id_copia_prop = $this->get_id_copia_by_user_libro($user_prop, $isbn_prop)[0]['ID'];
 			$id_copia_acc = $this->get_id_copia_by_user_libro($user_acc, $isbn_acc)[0]['ID'];
-			
+
 			$res = $this->query_to_array($query, "ssii", [$user_email_prop, $user_email_acc, $id_copia_prop, $id_copia_acc]);
 			return count($res) > 0;
 		} catch (Exception $e) {
@@ -631,12 +632,12 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	/*
-	* Casi da escludere: 
-	* - Scambi con se stessi
-	* - Scambi già proposti -> stato: in attesa
-	*/
+	 * Casi da escludere: 
+	 * - Scambi con se stessi
+	 * - Scambi già proposti -> stato: in attesa
+	 */
 	public function insert_scambio($user_prop, $user_acc, $isbn_prop, $isbn_acc): void
 	{
 		if ($user_prop === $user_acc) {
@@ -651,14 +652,14 @@ class DBAccess
 			$user_email_acc = $this->get_user_email_by_username($user_acc);
 			$id_copia_prop = $this->get_id_copia_by_user_libro($user_prop, $isbn_prop)[0]['ID'];
 			$id_copia_acc = $this->get_id_copia_by_user_libro($user_acc, $isbn_acc)[0]['ID'];
-			
+
 			$this->void_query($query, "ssii", [$user_email_prop, $user_email_acc, $id_copia_prop, $id_copia_acc]);
 		} catch (Exception $e) {
 			error_log("insert_scambio: " . $e->getMessage());
 			throw $e;
 		}
 	}
-	
+
 	public function get_scambi_by_user($user): ?array
 	{
 		$query = <<<SQL
@@ -666,7 +667,7 @@ class DBAccess
 		WHERE S.emailProponente = ? OR S.emailAccettatore = ?
 		ORDER BY S.dataProposta DESC;
 		SQL;
-		
+
 		try {
 			$user_email = $this->get_user_email_by_username($user);
 			return $this->query_to_array($query, "ss", [$user_email, $user_email]);
@@ -675,7 +676,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	public function get_copia_by_id($id): ?array
 	{
 		$query = "SELECT * FROM Copia c JOIN Libro l ON c.ISBN = l.ISBN WHERE c.ID = ?";
@@ -686,7 +687,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	public function remove_scambio_by_id($id): void
 	{
 		$query = "DELETE FROM Scambio WHERE ID = ?";
@@ -697,7 +698,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	public function set_books_unavailable_by_idscambio($id): void
 	{
 		$query = <<<SQL
@@ -706,7 +707,7 @@ class DBAccess
 		SET C.disponibile = FALSE
 		WHERE S.ID = ?
 		SQL;
-		
+
 		try {
 			$this->void_query($query, "i", [$id]);
 		} catch (Exception $e) {
@@ -714,7 +715,7 @@ class DBAccess
 			throw new GenericCustomException("Errore: scambio non accettato");
 		}
 	}
-	
+
 	public function accetta_scambio_by_id($id): void
 	{
 		$query = "UPDATE Scambio SET stato = 'accettato' WHERE ID = ?";
@@ -726,7 +727,7 @@ class DBAccess
 			throw new GenericCustomException("Errore: scambio non accettato");
 		}
 	}
-	
+
 	public function rifiuta_scambio_by_id($id): void
 	{
 		$query = "UPDATE Scambio SET stato = 'rifiutato' WHERE ID = ?";
@@ -737,7 +738,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	public function get_match_per_te_by_user($username): ?array
 	{
 		$query = <<<SQL
@@ -757,7 +758,7 @@ class DBAccess
 		    WHERE D2.email = ?
 		)
 		SQL;
-		
+
 		try {
 			$user_email = $this->get_user_email_by_username($username);
 			return $this->query_to_array($query, "ss", [$user_email, $user_email]);
@@ -766,7 +767,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	public function get_potrebbe_piacerti_by_user($username): ?array
 	{
 		$query = <<<SQL
@@ -787,7 +788,7 @@ class DBAccess
 		    WHERE D2.email = ?
 		)
 		SQL;
-		
+
 		try {
 			$user_email = $this->get_user_email_by_username($username);
 			return $this->query_to_array($query, "ss", [$user_email, $user_email]);
@@ -796,7 +797,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	function get_piu_scambiati(): ?array
 	{
 		//commento quella parte perchè ci sarebbero troppi pochi risultati per il momento
@@ -820,7 +821,7 @@ class DBAccess
 		GROUP BY L.ISBN
 		ORDER BY numero_scambi DESC
 		SQL;
-		
+
 		try {
 			return $this->query_to_array($query);
 		} catch (Exception $e) {
@@ -828,7 +829,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	function get_book_title_by_ISBN($isbn): ?array
 	{
 		$query = "SELECT titolo FROM Libro WHERE ISBN = ?";
@@ -839,7 +840,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	/**
 	 * Controlla se l'utente può aggiungere una recensione
 	 * @param $userRecensito string utente recensito
@@ -852,14 +853,14 @@ class DBAccess
 	{
 		$query_scambio = "SELECT * FROM Scambio WHERE emailProponente = ? AND emailAccettatore = ?";
 		$query_recensione = "SELECT * FROM Recensione WHERE emailRecensito = ? AND idScambio = ?";
-		
+
 		try {
 			$emailRecensito = $this->get_user_email_by_username($userRecensito);
 			$emailRecensore = $this->get_user_email_by_username($userRecensore);
 			// controllo se c'è uno scambio tra i due utenti
 			$res1 = $this->query_to_array($query_scambio, "ss", [$emailRecensito, $emailRecensore]);
 			$res2 = $this->query_to_array($query_scambio, "ss", [$emailRecensore, $emailRecensito]);
-			
+
 			if (count($res1) > 0 || count($res2) > 0) {
 				// controllo se l'utente ha già recensito l'altro
 				$res3 = $this->query_to_array($query_recensione, "si", [$emailRecensito, $id]);
@@ -872,7 +873,7 @@ class DBAccess
 			throw $e;
 		}
 	}
-	
+
 	/**
 	 * Inserisce una recensione
 	 * @param $userRecensito string utente recensito

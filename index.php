@@ -133,13 +133,13 @@ switch ($path) {
 		require $GLOBALS['MODEL_PATH'] . 'proponi-scambio.php';
 		break;
 	case '/api/accetta-scambio':
-		require $GLOBALS['MODEL_PATH'] . 'accetta-scambio.php';
+		require $GLOBALS['MODEL_PATH'] . 'gestisci-scambio.php';
 		break;
 	case '/api/rifiuta-scambio':
-		require $GLOBALS['MODEL_PATH'] . 'rifiuta-scambio.php';
+		require $GLOBALS['MODEL_PATH'] . 'gestisci-scambio.php';
 		break;
 	case '/api/rimuovi-scambio':
-		require $GLOBALS['MODEL_PATH'] . 'rimuovi-scambio.php';
+		require $GLOBALS['MODEL_PATH'] . 'gestisci-scambio.php';
 		break;
 	case '/api/aggiungi-recensione':
 		require $GLOBALS['MODEL_PATH'] . 'aggiungi-recensione.php';

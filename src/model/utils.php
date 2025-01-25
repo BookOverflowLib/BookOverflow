@@ -599,13 +599,23 @@ function ensure_login(): void
 
 /**
  * Restituisce il prefisso della sottocartella in cui il sito è ospitato
- * la variabile PREFIX viene impostata all'interno di index.php.
- * la funzione assume quindi che il valore sia già stato letto dal file .env
  */
 function getPrefix(): string
 {
-	$prefix = isset($_ENV['PREFIX']) ? $_ENV['PREFIX'] : '';
-	return rtrim($prefix, '/');
+	static $sanitizedPrefix = null;
+	if ($sanitizedPrefix === null) {
+		$env_path = __DIR__ . '/../../.env';
+		if (!file_exists($env_path)) {
+			throw new Exception('.env file not found');
+		}
+
+		$env = parse_ini_file($env_path);
+		if ($env === false) {
+			throw new Exception('Error parsing .env file');
+		}
+		$sanitizedPrefix = isset($env['PREFIX']) ? rtrim($env['PREFIX'], '/') : '';
+	}
+	return $sanitizedPrefix;
 }
 
 /**

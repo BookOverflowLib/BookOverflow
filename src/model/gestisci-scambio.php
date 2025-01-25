@@ -55,7 +55,8 @@ function redirect(string $error = null): never
 	if ($error) {
 		$_SESSION['error'] = $error;
 	}
-	$previousUrl = parse_url($_SERVER['HTTP_REFERER'] ?? $GLOBALS['prefix'] . '/', PHP_URL_PATH);
+	$prefix = getPrefix();
+	$previousUrl = parse_url($_SERVER['HTTP_REFERER'] ?? $prefix . '/', PHP_URL_PATH);
 	header('Location: ' . $previousUrl);
 	exit();
 }

@@ -53,11 +53,12 @@ try {
 
 function redirect(string $error = null): never
 {
+	$prefix = getPrefix();
 	if ($error) {
 		$_SESSION['error'] = $error;
-		header('Location: ' . $GLOBALS['prefix'] . '/registrati');
+		header('Location: ' . $prefix . '/registrati');
 	} else {
-		header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user']);
+		header('Location: ' . $prefix . '/profilo/' . $_SESSION['user']);
 	}
 	exit();
 }

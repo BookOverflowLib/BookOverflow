@@ -246,7 +246,7 @@ class DBAccess
 	public function check_username_exists($username): void
 	{
 		$query = "SELECT EXISTS ( SELECT * FROM Utente WHERE username = ? LIMIT 1)";
-		if (! $this->check_exists_finalize($query, $username)) {
+		if ($this->check_exists_finalize($query, $username)) {
 			throw new UsernameAlreadyExistsException();
 		}
 	}
@@ -254,7 +254,7 @@ class DBAccess
 	public function check_email_exists($email): void
 	{
 		$query = "SELECT EXISTS ( SELECT * FROM Utente WHERE email = ? LIMIT 1)";
-		if (! $this->check_exists_finalize($query, $email)) {
+		if ($this->check_exists_finalize($query, $email)) {
 			throw new EmailAlreadyExistsException();
 		}
 	}

@@ -54,19 +54,19 @@ function generatePage($user, $isTuoProfilo, $db)
 {
 	$page = getTemplatePage($user["username"]);
 	$profilo = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'profilo.html');
-	
+
 	$profilo = replacePlaceholders($profilo, $user, $db);
 	$profilo = replaceLocation($profilo, $user);
 	$profilo = replaceRating($profilo, $user, $db);
 	$profilo = replaceGeneri($profilo, $user, $db);
 	$profilo = replaceLibri($profilo, $user, $db);
-	
+
 	if ($isTuoProfilo) {
 		$profilo = addTuoProfiloButtons($profilo);
 	} else {
 		$profilo = addOtherProfiloButtons($profilo, $user);
 	}
-	
+
 	return str_replace('<!-- [content] -->', $profilo, $page);
 }
 
@@ -78,11 +78,11 @@ function replacePlaceholders($profilo, $user, $db)
 		'<!-- [userAvatarPath] -->' => $user['path_immagine'],
 		'<!-- [userUsername] -->' => $user['username']
 	];
-	
+
 	foreach ($sostituzioni as $placeholder => $value) {
 		$profilo = str_replace($placeholder, $value, $profilo);
 	}
-	
+
 	return $profilo;
 }
 
@@ -95,13 +95,13 @@ function replaceLocation($profilo, $user)
 function replaceRating($profilo, $user, $db)
 {
 	$userRating = $db->get_user_rating_by_email($user['email']);
-	
+
 	$ratingValue = "0.0";
 	if ($userRating && isset($userRating[0]['media_valutazioni'])) {
 		$ratingValue = $userRating[0]['media_valutazioni'];
 		$ratingValue = number_format($ratingValue, 1);
 	}
-	
+
 	$profilo = str_replace('<!-- [userRating] -->', $ratingValue, $profilo);
 	return str_replace('<!-- [userRatingStars] -->', ratingStars($ratingValue), $profilo);
 }
@@ -116,7 +116,7 @@ function replaceLibri($profilo, $user, $db)
 {
 	$libri_offerti_db = $db->get_libri_offerti_by_username($user['username']);
 	$profilo = str_replace('<!-- [libriOffertiLista] -->', getLibriCopertinaGrande($libri_offerti_db, 4), $profilo);
-	
+
 	$libri_desiderati_db = $db->get_libri_desiderati_by_username($user['username']);
 	return str_replace('<!-- [libriDesideratiLista] -->', getLibriCopertinaGrande($libri_desiderati_db, 4), $profilo);
 }
@@ -126,20 +126,20 @@ function addTuoProfiloButtons($profilo)
 	$prefix = getPrefix();
 	$scambiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout ">I tuoi scambi</a>';
 	$profilo = str_replace('<!-- [scambiButton] -->', $scambiButton, $profilo);
-	
-	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><input type="submit" class="button-layout secondary" value="Esci" aria-label="Esci dal tuo profilo"/></form>';
+
+	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><button type="submit" class="button-layout secondary logout" aria-label="Esci dal tuo profilo"/>Esci</button></form>';
 	$profilo = str_replace('<!-- [logoutButton] -->', $logoutButton, $profilo);
-	
+
 	$modificaGeneriButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';
 	$profilo = str_replace('<!-- [generiPreferitiButton] -->', $modificaGeneriButton, $profilo);
-	
+
 	$libriOffertiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/libri-offerti" class="button-layout" aria-label="MOdifica la lista dei libri offerti">Modifica la lista</a>';
 	$profilo = str_replace('<!-- [libriOffertiButton] -->', $libriOffertiButton, $profilo);
-	
+
 	$libriDesideratiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/libri-desiderati" class="button-layout" aria-label="Modifica la lista dei desideri">Modifica la lista</a>';
 	return str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
-	
-	
+
+
 }
 
 function addOtherProfiloButtons($profilo, $user)
@@ -147,13 +147,13 @@ function addOtherProfiloButtons($profilo, $user)
 	$prefix = getPrefix();
 	$contattaButton = getContattaButton($profilo, $user);
 	$profilo = str_replace('<!-- [scambiButton] -->', $contattaButton, $profilo);
-	
+
 	$profilo = str_replace('<!-- [logoutButton] -->', '', $profilo);
 	$profilo = str_replace('<!-- [generiPreferitiButton] -->', '', $profilo);
-	
+
 	$libriOffertiButton = '<a href="' . $prefix . '/profilo/' . $user['username'] . '/libri-offerti" class="button-layout" aria-label="Mostra tutti i libri offerti">Mostra tutti</a>';
 	$profilo = str_replace('<!-- [libriOffertiButton] -->', $libriOffertiButton, $profilo);
-	
+
 	$libriDesideratiButton = '<a href="' . $prefix . '/profilo/' . $user['username'] . '/libri-desiderati" class="button-layout" aria-label="Mostra tutta la lista dei desideri">Mostra tutti</a>';
 	return str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
 }
@@ -170,7 +170,7 @@ function redirect(string $error = null): never
 	if ($error) {
 		$_SESSION['error'] = $error;
 		header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user'] . '/seleziona-generi');
-	}else{
+	} else {
 		header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user'] . '#generi');
 	}
 	exit();

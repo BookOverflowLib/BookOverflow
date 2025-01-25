@@ -853,6 +853,7 @@ fieldset {
 
 .input-error-regular {
 	color: var(--text-error);
+    font-weight: 600;
 	text-align: center;
 	margin: 0.625em 0;
 }

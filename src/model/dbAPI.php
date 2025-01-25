@@ -241,16 +241,28 @@ class DBAccess
 		return false;
 	}
 	
-	private function check_username_exists($username): bool
+	public function check_username_exists($username): bool
 	{
-		$query = "SELECT COUNT(*) FROM Utente WHERE username = ? LIMIT 1";
+		$query = "SELECT * FROM Utente WHERE username = ? LIMIT 1";
 		return $this->check_exists_finalize($query, $username);
 	}
 	
-	private function check_email_exists($email): bool
+	public function check_email_exists($email): bool
 	{
-		$query = "SELECT COUNT(*) FROM Utente WHERE email = ? LIMIT 1";
+		$query = "SELECT * FROM Utente WHERE email = ? LIMIT 1";
 		return $this->check_exists_finalize($query, $email);
+	}
+
+	function check_provincia_exists($idProvincia): bool
+	{
+		$query = "SELECT * FROM province WHERE id = ? LIMIT 1";
+		return $this->check_exists_finalize($query, $idProvincia);
+	}
+
+	function check_comune_exists($idComune): bool
+	{
+		$query = "SELECT * FROM comuni WHERE id = ? LIMIT 1";
+		return $this->check_exists_finalize($query, $idComune);
 	}
 	
 	public function register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $profileImg = null): void
@@ -880,4 +892,6 @@ class DBAccess
 			throw $e;
 		}
 	}
+
+
 }

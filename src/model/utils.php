@@ -624,7 +624,7 @@ function addErrorsToPage($page): string
 {
 	$errors = '';
 	if (isset($_SESSION['error'])) {
-		$errors = '<p class="input-error-regular role="alert">' . $_SESSION['error'] . '</p>';
+		$errors = '<p class="input-error-regular" role="alert">' . $_SESSION['error'] . '</p>';
 		unset($_SESSION['error']);
 	}
 	//debug function

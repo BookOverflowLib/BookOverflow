@@ -45,6 +45,7 @@ if (!preg_match("/^[^\s\r\n]{2,50}$/", $username)) {
 
 try {
 	$db->register_user($nome, $cognome, $id_provincia, $id_comune, $email, $username, $password, $image);
+	$_SESSION['user'] = $username;
 	redirect();
 } catch (Exception $e) {
 	$err = exceptionToError($e, "registrazione non riuscita");

@@ -6,7 +6,7 @@ function optionProvince(): string
     $html_output = "";
     $db = new DBAccess(); // ma che diamine? dubito sia giusto
     try {
-        $html_output .= optionGroupRegioniProvince();
+        $html_output .= optionProvinceNoGroup();
     } catch (Exception $e) {
         $_SESSION['error'] = exceptionToError($e, "caricamento delle province non riuscito");
     }
@@ -31,6 +31,21 @@ function optionGroupRegioniProvince(): string
                 $html_output .= "<option value='$provincia[id]'>$provincia[nome]</option>";
             }
             $html_output .= "</optgroup>";
+        }
+    } catch (Exception $e) {
+        $_SESSION['error'] = exceptionToError($e, "caricamento delle province non riuscito");
+    }
+    return $html_output;
+}
+
+function optionProvinceNoGroup(): string
+{
+    $html_output = "";
+    $db = new DBAccess();
+    try {
+        $array_province = $db->get_province();
+        foreach ($array_province as $provincia) {
+            $html_output .= "<option value='$provincia[id]'>$provincia[nome]</option>";
         }
     } catch (Exception $e) {
         $_SESSION['error'] = exceptionToError($e, "caricamento delle province non riuscito");

@@ -360,7 +360,7 @@ function getGeneriPreferiti($generi)
 		$generi[0]['generi_preferiti'] == null ||
 		$generi[0]['generi_preferiti'] == '[]'
 	) {
-		return '<p>Non c\'è ancora nessun genere preferito!</p>';
+		return '<p class="center-text">Non c\'è ancora nessun genere preferito!</p>';
 	}
 	
 	$fileGeneri = json_decode(file_get_contents(__DIR__ . '/../../utils/bisac.json'), true);

@@ -18,12 +18,12 @@ function load_env(): void
 	if (!file_exists($env_path)) {
 		throw new Exception('.env file not found');
 	}
-	
+
 	$env = parse_ini_file($env_path);
 	if ($env === false) {
 		throw new Exception('Error parsing .env file');
 	}
-	
+
 	foreach ($env as $key => $value) {
 		if (!array_key_exists($key, $_ENV)) {
 			$_ENV[$key] = $value;
@@ -47,29 +47,31 @@ function ratingStars($rating): string
 	$n_full_star = floor($rating); //PARTE INTERA
 	$n_partial_star = $rating - $n_full_star; //PARTE FRAZIONARIA
 	$star_svg = file_get_contents(__DIR__ . '/../../assets/imgs/star.svg');
-	
+
 	$total_star = 5;
 	$rating_stars = '';
-	
+
 	// STELLE PIENE
 	for ($i = 0; $i < $n_full_star; $i++) {
 		$tmp_star = str_replace('{{star-offset}}', '100', $star_svg);
 		$tmp_star = str_replace('{{id}}', '1', $tmp_star);
-		
+
 		$rating_stars .= $tmp_star;
 		$total_star--;
 	}
-	
+
 	// STELLA PERCENTUALE
-	$par_star = str_replace(
-		'{{star-offset}}',
-		strval($n_partial_star * 100),
-		$star_svg
-	);
-	$par_star = str_replace('{{id}}', '2', $par_star);
-	$rating_stars .= $par_star;
-	$total_star--;
-	
+	if (!$n_partial_star == 0) {
+		$par_star = str_replace(
+			'{{star-offset}}',
+			strval($n_partial_star * 100),
+			$star_svg
+		);
+		$par_star = str_replace('{{id}}', '2', $par_star);
+		$rating_stars .= $par_star;
+		$total_star--;
+	}
+
 	//STELLE VUOTE
 	while ($total_star > 0) {
 		$tmp_star = str_replace('{{star-offset}}', '0', $star_svg);
@@ -77,7 +79,7 @@ function ratingStars($rating): string
 		$rating_stars .= $tmp_star;
 		$total_star--;
 	}
-	
+
 	return $rating_stars;
 }
 
@@ -97,16 +99,16 @@ function getTemplatePage($title = null): string
 	$header = getHeaderSection($_SERVER['REQUEST_URI']);
 	$breadcrumb = getBreadcrumb($_SERVER['REQUEST_URI']);
 	$footer = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'footer.html');
-	
+
 	$PAGE_TITLE = '';
 	if ($title == null) {
 		$PAGE_TITLE = 'BookOverflow';
 	} else {
 		$PAGE_TITLE = ucfirst($title) . ' - BookOverflow';
 	}
-	
+
 	$page = str_replace('<!-- [pageTitle] -->', $PAGE_TITLE, $template);
-	
+
 	$page = str_replace('<!-- [header] -->', $header, $page);
 	$page = str_replace('<!-- [breadcrumb] -->', $breadcrumb, $page);
 	$page = str_replace('<!-- [footer] -->', $footer, $page);
@@ -128,7 +130,7 @@ function getNavBarLi($path): string
 		['href' => $prefix . '/esplora', 'text' => 'Esplora'],
 		['href' => $prefix . '/come-funziona', 'text' => 'Come funziona'],
 	];
-	
+
 	$li = '';
 	foreach ($navbarReferences as $ref) {
 		if ($currentPage != $ref['href']) {
@@ -157,7 +159,7 @@ function getHeaderButtons($path): string
 		$chiara .
 		$scura .
 		'</button>';
-	
+
 	// Se la pagina corrente è /accedi, il pulsante deve portare a /registrati
 	// Vengono rimossi eventuali parametri GET e controllata solo la parte finale del path per gestire 
 	// il caso in cui il sito venga hostato in una sottocartella
@@ -169,10 +171,10 @@ function getHeaderButtons($path): string
 		$accediButton =
 			'<a class="button-layout" href="' . $prefix . '/registrati">Registrati</a>';
 	}
-	
+
 	$ris = '';
 	ensure_session();
-	
+
 	if (isset($_SESSION['user'])) {
 		$ris = <<<HTML
 			<div class="header-buttons">
@@ -189,7 +191,7 @@ function getHeaderButtons($path): string
 			$accediButton .
 			'</div>';
 	}
-	
+
 	return $ris;
 }
 
@@ -206,7 +208,7 @@ function getHamburgerButton(): string
 		$chiuso .
 		$aperto .
 		'</button>';
-	
+
 	return $hamburgerIcon;
 }
 
@@ -218,7 +220,7 @@ function getHamburgerButton(): string
 function getHeaderSection($path): string
 {
 	$header = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'header.html');
-	
+
 	$myHeader = str_replace('<!-- [navbar] -->', getNavBarLi($path), $header);
 	$myHeader = str_replace(
 		'<!-- [header-buttons] -->',
@@ -230,7 +232,7 @@ function getHeaderSection($path): string
 		getHamburgerButton(),
 		$myHeader
 	);
-	
+
 	return $myHeader;
 }
 
@@ -243,7 +245,7 @@ function getHeaderSection($path): string
 function getBreadcrumb($path): string
 {
 	ensure_session();
-	
+
 	// remove prefixes and get parameters
 	$path = parse_url($path, PHP_URL_PATH);
 	$prefix = getPrefix();
@@ -256,7 +258,7 @@ function getBreadcrumb($path): string
 		$path = explode('/', $path);
 		$path = array_filter($path);
 		$path = array_values($path);
-		$elements = '<li><a href="' . $prefix. '/"><span lang="en">Home</span></a></li>';
+		$elements = '<li><a href="' . $prefix . '/"><span lang="en">Home</span></a></li>';
 		$last = count($path) - 1;
 		$currentUrl = $prefix;
 		for ($i = 0; $i < $last; $i++) {
@@ -268,14 +270,14 @@ function getBreadcrumb($path): string
 			if ($currentPath !== 'Profilo' && $currentPath !== 'Libro') {
 				$elements .= '<li><a href="' . $currentUrl . '">' . $currentPath . '</a></li>';
 			}
-			
+
 		}
 		$currentPath = str_replace('-', ' ', ucfirst($path[$i]));
-		
+
 		if (isset($_SESSION['user']) && $i > 0 && $path[$i - 1] == 'profilo' && $path[$i] == $_SESSION['user']) {
 			$currentPath = 'Il mio profilo';
 		}
-		
+
 		// Check if the URL is /libro/{isbn} and replace it with /{titolo-libro}
 		if ($i > 0 && $path[$i - 1] == 'libro') {
 			$isbn = $path[$i];
@@ -284,13 +286,13 @@ function getBreadcrumb($path): string
 			$bookTitle = $bookTitle[0]['titolo'];
 			$currentPath = ucfirst($bookTitle);
 		}
-		
+
 		if ($currentPath !== 'Profilo') {
 			$elements .= '<li aria-current="page" class="bold">' . $currentPath . '</li>';
 		}
 	}
 	$breadcrumb = "<ol>$elements</ol>";
-	
+
 	return $breadcrumb;
 }
 
@@ -303,17 +305,17 @@ function getBreadcrumb($path): string
 function getUserImageUrlByEmail($email): string
 {
 	$image = 'https://picsum.photos/seed/' . $email . '/500';
-	
+
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $image);
 	curl_setopt($ch, CURLOPT_HEADER, true); // true to include the header in the output.
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Must be set to true true to follow any "Location: " header that the server sends as part of the HTTP header.
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // true to return the transfer as a string of the return value of curl_exec() instead of outputting it directly.
-	
+
 	$a = curl_exec($ch); // $a will contain all headers
-	
+
 	$finalUrl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); // This is what you need, it will return you the last effective URL
-	
+
 	return $finalUrl; // Voila
 }
 
@@ -362,10 +364,10 @@ function getGeneriPreferiti($generi)
 	) {
 		return '<p class="center-text">Non c\'è ancora nessun genere preferito!</p>';
 	}
-	
+
 	$fileGeneri = json_decode(file_get_contents(__DIR__ . '/../../utils/bisac.json'), true);
 	$generiPreferiti = json_decode($generi[0]['generi_preferiti'], true);
-	
+
 	$output = '';
 	foreach ($generiPreferiti as $genereKey) {
 		$genere = $fileGeneri[$genereKey];
@@ -419,8 +421,8 @@ function getLibriList($libri_utente, $list_name): string
 	if ($list_name != 'libri-offerti' && $list_name != 'libri-desiderati') {
 		throw new TypeError("list_name deve essere 'libri-desiderati' o 'libri-offerti'");
 	}
-	
-	
+
+
 	$libri_html = '';
 	if (!$libri_utente) {
 		$libri_html = '<p>Non ci sono ancora libri qui!</p>';
@@ -430,7 +432,7 @@ function getLibriList($libri_utente, $list_name): string
 			$titolo = $libro['titolo'];
 			$autore = $libro['autore'];
 			$path_copertina = $libro['path_copertina'];
-			
+
 			$book_copy_info = '';
 			if ($list_name === 'libri-offerti') {
 				$condizioni = ucfirst($libro['condizioni']);
@@ -444,13 +446,13 @@ function getLibriList($libri_utente, $list_name): string
 				<p>Condizioni: {$condizioni}</p>
 				HTML;
 			}
-			
+
 			if (isTuoProfilo($_GET['user'])) {
 				$bookButtons = getLibriListBookButtons($list_name, $isbn, $titolo);
 			} else {
 				$bookButtons = '';
 			}
-			
+
 			$libroRowTemplate = <<<HTML
 			<div class="book-row">
 				<div class="book-info">
@@ -486,7 +488,7 @@ function isTuoProfilo($profileId)
 
 function getLibriListBookButtons($list_name, $isbn, $titolo)
 {
-	
+
 	$api = $list_name === 'libri-offerti' ? '/api/rimuovi-libro-offerto' : '/api/rimuovi-libro-desiderato';
 	$bookButtons = <<<HTML
 	<form action="{$api}" method="post">
@@ -509,13 +511,13 @@ function addButtonsLibriList($libri_page, $list_name): string
 	if ($list_name != 'libri-offerti' && $list_name != 'libri-desiderati') {
 		throw new TypeError("list_name deve essere 'libri-desiderati' o 'libri-offerti'");
 	}
-	
+
 	$form_action = $list_name === 'libri-offerti' ? '/api/aggiungi-libro-offerto' : '/api/aggiungi-libro-desiderato';
-	
+
 	$libri_utente = $libri_page;
 	$aggiungiLibro = '<button class="button-layout" id="aggiungi-libro-button" aria-label="Aggiungi un libro ai libri offerti">Aggiungi un libro</button>';
 	$libri_utente = str_replace('<!-- [aggiungiLibroButton] -->', $aggiungiLibro, $libri_utente);
-	
+
 	$select_condizioni = '';
 	if ($list_name === 'libri-offerti') {
 		$select_condizioni = <<<HTML
@@ -533,7 +535,7 @@ function addButtonsLibriList($libri_page, $list_name): string
 		</div>
 		HTML;
 	}
-	
+
 	$cercaLibriDialog = <<<HTML
 	<dialog id="aggiungi-libro-dialog">
 		<div class="dialog-window">
@@ -653,7 +655,7 @@ function addErrorsToPage($page): string
  * Consente di visualizzare errori specifici identificabili solo lato DB, senza però mostrare 
  * all'utente interi stack trace o messaggi di errore non gestiti
  */
-function exceptionToError(Exception $e, string  $genericError): string
+function exceptionToError(Exception $e, string $genericError): string
 {
 	require_once __DIR__ . '/exceptions.php';
 	if ($e instanceof CustomExceptions\CustomException) {

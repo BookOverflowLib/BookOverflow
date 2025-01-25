@@ -759,11 +759,11 @@ class DBAccess
 		AND D.ISBN IN (
 		    SELECT C2.ISBN
 		    FROM Copia C2
-		    WHERE C2.proprietario = ?
+		    WHERE C2.proprietario = ? AND C2.disponibile = TRUE
 		) AND C.ISBN IN (
 		    SELECT D2.ISBN
 		    FROM Desiderio D2
-		    WHERE D2.email = ?
+		    WHERE D2.email = ? 
 		)
 		SQL;
 
@@ -789,7 +789,7 @@ class DBAccess
 		AND D.ISBN IN (
 		    SELECT C2.ISBN
 		    FROM Copia C2
-		    WHERE C2.proprietario = ?
+		    WHERE C2.proprietario = ? AND C2.disponibile = TRUE
 		) AND C.ISBN NOT IN (
 		    SELECT D2.ISBN
 		    FROM Desiderio D2
@@ -904,7 +904,7 @@ class DBAccess
 
 	public function check_user_has_libri_offerti($username): bool
 	{
-		$query = "SELECT EXISTS ( SELECT * FROM Copia WHERE proprietario = ? LIMIT 1)";
+		$query = "SELECT * FROM Copia WHERE proprietario = ? LIMIT 1";
 		try {
 			$emailRec = $this->get_user_email_by_username($username);
 			$val = $this->query_to_array($query, 's', [$emailRec]);
@@ -917,7 +917,7 @@ class DBAccess
 
 	public function check_user_has_libri_desiderati($username): bool
 	{
-		$query = "SELECT EXISTS ( SELECT * FROM Desiderio WHERE email = ? LIMIT 1)";
+		$query = "SELECT * FROM Desiderio WHERE email = ? LIMIT 1";
 		try {
 			$emailRec = $this->get_user_email_by_username($username);
 			$val = $this->query_to_array($query, 's', [$emailRec]);

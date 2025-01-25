@@ -1766,3 +1766,14 @@ textarea {
 	margin-top: 0.5em;
 	list-style-position: inside;
 }
+
+#inizia-esplorare {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	justify-content: center;
+	align-items: center;
+}
+#inizia-esplorare > p {
+	font-size: var(--font-md);
+}

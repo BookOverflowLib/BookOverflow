@@ -17,6 +17,7 @@ try {
 $user = getUser($db, $profileId);
 $page = generatePage($user, $isTuoProfilo, $db);
 $page = populateWebdirPrefixPlaceholders($page);
+$page = getBannerNuovoProfilo($isTuoProfilo, $page);
 echo $page;
 
 function getProfileId()
@@ -165,11 +166,24 @@ function getContattaButton($profilo, $user)
 	return '<a href="' . $formatMailHref . '" class="button-layout secondary external-link">Contatta via mail</a>';
 }
 
-function getBannerNuovoProfilo($isTuoProfilo)
+function getBannerNuovoProfilo($isTuoProfilo, $page)
 {
-	if(!$isTuoProfilo) {
-		return '';
+	$db = new DBAccess();
+	if (!$isTuoProfilo) {
+		return str_replace('<!-- [bannerCompletaProfilo] -->', '', $page);
 	}
+	$hasGeneriPreferiti = $db->check_user_has_generi_preferiti($_SESSION['user']);
+	$hasLibriOfferti = $db->check_user_has_libri_offerti($_SESSION['user']);
+	$hasLibriDesiderati = $db->check_user_has_libri_desiderati($_SESSION['user']);
+
+	if ($hasGeneriPreferiti && $hasLibriOfferti && $hasLibriDesiderati) {
+		return str_replace('<!-- [bannerCompletaProfilo] -->', '', $page);
+	}
+
+	$list = $hasGeneriPreferiti ? '' : '<li>i tuoi generi preferiti</li>';
+	$list .= $hasLibriOfferti ? '' : '<li>i libri che offri</li>';
+	$list .= $hasLibriDesiderati ? '' : '<li>i libri che desideri</li>';
+
 	$icon = <<<HTML
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
@@ -200,20 +214,14 @@ function getBannerNuovoProfilo($isTuoProfilo)
 				<h2>Completa il tuo profilo</h2>
 				<p class="center">Aggiungi subito:</p>
 				<ul>
-					<li>
-						i tuoi generi preferiti
-					</li>
-					<li>
-						i libri che offri
-					</li>
-					<li>
-						i libri che desideri
-					</li>
+					{$list}
 				</ul>
 			</div>
 		</div>
 	</div>
 	HTML;
+
+	return str_replace('<!-- [bannerCompletaProfilo] -->', $banner, $page);
 }
 
 function redirect(string $error = null): never

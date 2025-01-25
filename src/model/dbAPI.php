@@ -236,7 +236,8 @@ class DBAccess
 		} catch (Exception $e) {
 			error_log("check_exists: " . $e->getMessage());
 		} finally {
-			if ($stmt) $stmt->close();
+			if ($stmt)
+				$stmt->close();
 		}
 		return false;
 	}
@@ -262,7 +263,7 @@ class DBAccess
 	function check_provincia_exists($idProvincia): void
 	{
 		$query = "SELECT EXISTS ( SELECT * FROM province WHERE id = ? LIMIT 1)";
-		if (! $this->check_exists_finalize($query, $idProvincia)) {
+		if (!$this->check_exists_finalize($query, $idProvincia)) {
 			throw new InvalidProvinciaException();
 		}
 	}
@@ -270,7 +271,7 @@ class DBAccess
 	function check_comune_exists($idComune): void
 	{
 		$query = "SELECT EXISTS ( SELECT * FROM comuni WHERE id = ? LIMIT 1)";
-		if (! $this->check_exists_finalize($query, $idComune)) {
+		if (!$this->check_exists_finalize($query, $idComune)) {
 			throw new InvalidComuneException();
 		}
 	}
@@ -901,5 +902,42 @@ class DBAccess
 		}
 	}
 
+	public function check_user_has_libri_offerti($username): bool
+	{
+		$query = "SELECT EXISTS ( SELECT * FROM Copia WHERE proprietario = ? LIMIT 1)";
+		try {
+			$emailRec = $this->get_user_email_by_username($username);
+			$val = $this->query_to_array($query, 's', [$emailRec]);
+			return count($val) > 0;
+		} catch (Exception $e) {
+			error_log("check_user_has_libri_offerti: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function check_user_has_libri_desiderati($username): bool
+	{
+		$query = "SELECT EXISTS ( SELECT * FROM Desiderio WHERE email = ? LIMIT 1)";
+		try {
+			$emailRec = $this->get_user_email_by_username($username);
+			$val = $this->query_to_array($query, 's', [$emailRec]);
+			return count($val) > 0;
+		} catch (Exception $e) {
+			error_log("check_user_has_libri_desiderati: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function check_user_has_generi_preferiti($username): bool
+	{
+		$query = "SELECT * FROM Utente WHERE username = ? AND generi_preferiti IS NOT NULL LIMIT 1";
+		try {
+			$val = $this->query_to_array($query, 's', [$username]);
+			return count($val) > 0;
+		} catch (Exception $e) {
+			error_log("check_user_has_generi_preferiti: " . $e->getMessage());
+			throw $e;
+		}
+	}
 
 }

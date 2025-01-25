@@ -44,7 +44,7 @@ try {
 		default:
 			redirect("Errore: endpoint non valido");
 	}
-
+	redirect();
 } catch (Exception $e) {
 	$err = exceptionToError($e, "scambio non riuscito");
 	redirect($err);
@@ -52,10 +52,10 @@ try {
 
 function redirect(string $error = null): never
 {
+	$prefix = getPrefix();
 	if ($error) {
 		$_SESSION['error'] = $error;
 	}
-	$prefix = getPrefix();
 	$previousUrl = parse_url($_SERVER['HTTP_REFERER'] ?? $prefix . '/', PHP_URL_PATH);
 	header('Location: ' . $previousUrl);
 	exit();

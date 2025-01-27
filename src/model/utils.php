@@ -455,10 +455,11 @@ function getLibriList($libri_utente, $list_name): string
 				$bookButtons = '';
 			}
 
+			$prefix = getPrefix();
 			$libroRowTemplate = <<<HTML
 			<div class="book-row">
 				<div class="book-info">
-					<a href="/libro/{$isbn}" aria-label="Libro {$titolo} di {$autore}" ">
+					<a href="{$prefix}/libro/{$isbn}" aria-label="Libro {$titolo} di {$autore}" ">
 						<img
 							src="{$path_copertina}"
 							alt=""

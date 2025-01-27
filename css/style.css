@@ -1544,7 +1544,9 @@ li.activePage {
 	gap: 0.5em;
 	align-items: flex-start;
 }
-
+.storico-utente-scambio img {
+	border-radius: 100%;
+}
 .storico-utente-scambio > div > a {
 	text-decoration: none;
 	padding: 0.5em;

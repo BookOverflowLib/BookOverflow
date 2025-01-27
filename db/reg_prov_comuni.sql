@@ -3,14 +3,36 @@
 --
 
 -- --------------------------------------------------------
-
---
--- Struttura della tabella `comuni`
---
 DROP TABLE IF EXISTS `comuni`;
 DROP TABLE IF EXISTS `province`;
 DROP TABLE IF EXISTS `regioni`;
 
+--
+-- Struttura della tabella `regioni`
+--
+CREATE TABLE `regioni` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `latitudine` decimal(9,6) NOT NULL,
+  `longitudine` decimal(9,6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Struttura della tabella `province`
+--
+CREATE TABLE `province` (
+  `id` int(11) NOT NULL,
+  `id_regione` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `sigla` varchar(2) NOT NULL,
+  `latitudine` decimal(9,6) NOT NULL,
+  `longitudine` decimal(9,6) NOT NULL
+  -- FOREIGN KEY (`id_regione`) REFERENCES `regioni`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Struttura della tabella `comuni`
+--
 CREATE TABLE `comuni` (
   `id` int(11) NOT NULL,
   `id_regione` int(11) NOT NULL,
@@ -19,12 +41,13 @@ CREATE TABLE `comuni` (
   `codice_catastale` char(4) NOT NULL,
   `latitudine` decimal(9,6) NOT NULL,
   `longitudine` decimal(9,6) NOT NULL
+  -- FOREIGN KEY (`id_regione`) REFERENCES `regioni`(`id`),
+  -- FOREIGN KEY (`id_provincia`) REFERENCES `province`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dump dei dati per la tabella `comuni`
 --
-
 INSERT INTO `comuni` (`id`, `id_regione`, `id_provincia`, `nome`, `codice_catastale`, `latitudine`, `longitudine`) VALUES
 (1001, 1, 1, 'Agliè', 'A074', '45.364155', '7.768627'),
 (1002, 1, 1, 'Airasca', 'A109', '44.917111', '7.489349'),
@@ -8037,20 +8060,6 @@ INSERT INTO `comuni` (`id`, `id_regione`, `id_provincia`, `nome`, `codice_catast
 (110010, 16, 110, 'Trinitapoli', 'B915', '41.359243', '16.078841');
 
 -- --------------------------------------------------------
-
---
--- Struttura della tabella `province`
---
-
-CREATE TABLE `province` (
-  `id` int(11) NOT NULL,
-  `id_regione` int(11) NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  `sigla` varchar(2) NOT NULL,
-  `latitudine` decimal(9,6) NOT NULL,
-  `longitudine` decimal(9,6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 --
 -- Dump dei dati per la tabella `province`
 --
@@ -8168,18 +8177,6 @@ INSERT INTO `province` (`id`, `id_regione`, `nome`, `sigla`, `latitudine`, `long
 (110, 16, 'Barletta-Andria-Trani', 'BT', '41.200454', '16.205148');
 
 -- --------------------------------------------------------
-
---
--- Struttura della tabella `regioni`
---
-
-CREATE TABLE `regioni` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(100) NOT NULL,
-  `latitudine` decimal(9,6) NOT NULL,
-  `longitudine` decimal(9,6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 --
 -- Dump dei dati per la tabella `regioni`
 --

@@ -59,10 +59,28 @@ foreach ($sostituzioni as $placeholder => $value) {
 }
 
 // Aggiungi scambi disponibili
-function viewScambioDisponibileDiUtente($utente, $libro): string
+function viewScambioDisponibileDiUtente($utente, $libro, $isProposto): string
 {
 	$prefix = getPrefix();
 	$location = getLocationName($utente['provincia'], $utente['comune']);
+
+	$scambioButtons = "";
+	if ($isProposto) {
+		$scambioButtons = <<<HTML
+		<p>Scambio già proposto</p>
+		HTML;
+	} else {
+		$scambioButtons = <<<HTML
+		<form action="{$prefix}/api/proponi-scambio" method="post">
+			<input type="hidden" name="utente_proponente" value="{$_SESSION['user']}" />
+			<input type="hidden" name="utente_accettatore" value="{$utente['username']}" />
+			<input type="hidden" name="ISBN_proponente" value="{$libro['ISBN']}" />
+			<input type="hidden" name="ISBN_accettatore" value="{$_GET['ISBN']}" />
+			<input type="submit" class="button-layout danger bold" value="Proponi scambio" />
+		</form>
+		HTML;
+
+	}
 	$scambio = <<<HTML
 	<div class="scambio"> <!-- uno scambio -->
 	    <div class="scambio-utente"> <!-- info utente -->
@@ -89,13 +107,7 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 			<a href="{$prefix}/profilo/{$utente['username']}/libri-desiderati">Oppure altri libri</a>
 		</div>
 		<div class="scambio-button">
-			<form action="{$prefix}/api/proponi-scambio" method="post">
-				<input type="hidden" name="utente_proponente" value="{$_SESSION['user']}" />
-				<input type="hidden" name="utente_accettatore" value="{$utente['username']}" />
-				<input type="hidden" name="ISBN_proponente" value="{$libro['ISBN']}" />
-				<input type="hidden" name="ISBN_accettatore" value="{$_GET['ISBN']}" />
-				<input type="submit" class="button-layout danger bold" value="Proponi scambio" />
-			</form>
+			{$scambioButtons}
 		</div>
 	</div>
 	HTML;
@@ -122,9 +134,9 @@ if (is_logged_in()) {
 			exit();
 		}
 		foreach ($libriDesiderati as $libroDes) {
-			if (!$db->check_scambio_gia_proposto($_SESSION['user'], $utente['username'], $utente['id_copia'], $libroDes['id_copia'])) {
-				$scambi_html .= viewScambioDisponibileDiUtente($utente, $libroDes);
-			}
+			$isProposto = $db->check_scambio_proposto($_SESSION['user'], $utente['username'], $libroDes['ISBN'], $_GET['ISBN']);
+			$scambi_html .= viewScambioDisponibileDiUtente($utente, $libroDes, $isProposto);
+
 		}
 	}
 } else {

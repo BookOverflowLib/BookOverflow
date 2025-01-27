@@ -539,6 +539,7 @@ class DBAccess
 			SELECT C.ISBN
 			FROM Copia C
 			WHERE C.proprietario = ?
+			AND C.disponibile = TRUE
 		)
 		SQL;
 
@@ -568,6 +569,7 @@ class DBAccess
 		    SELECT C2.ISBN
 		    FROM Copia C2
 		    WHERE C2.proprietario = ?
+			AND C2.disponibile = TRUE
 		);
 		SQL;
 
@@ -585,7 +587,9 @@ class DBAccess
 		$query = <<<SQL
 		SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina, C.ID AS id_copia
 		FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
-		WHERE C.proprietario = ? AND C.ISBN IN (
+		WHERE C.proprietario = ? 
+		AND C.disponibile = TRUE
+		AND C.ISBN IN (
 			SELECT D.ISBN
 			FROM Desiderio D
 			WHERE D.email = ?
@@ -793,7 +797,9 @@ class DBAccess
 		AND D.ISBN IN (
 		    SELECT C2.ISBN
 		    FROM Copia C2
-		    WHERE C2.proprietario = ? AND C2.disponibile = TRUE
+		    WHERE C2.proprietario = ? 
+			AND C2.proprietario != U.email
+			AND C2.disponibile = TRUE
 		) AND C.ISBN NOT IN (
 		    SELECT D2.ISBN
 		    FROM Desiderio D2
@@ -812,7 +818,6 @@ class DBAccess
 
 	function get_piu_scambiati(): ?array
 	{
-		//commento quella parte perchè ci sarebbero troppi pochi risultati per il momento
 		$query = <<<SQL
 		SELECT L.ISBN, L.titolo, L.autore, L.path_copertina, COUNT(*) AS numero_scambi		
 		FROM (		    
@@ -820,7 +825,7 @@ class DBAccess
 			FROM Scambio s 
 			JOIN Copia c ON s.idCopiaProp = c.ID
 			JOIN Libro l ON c.ISBN = l.ISBN
-			-- WHERE s.stato = 'accettato'
+			WHERE s.stato = 'accettato'
 			
 			UNION ALL 
 			
@@ -828,7 +833,7 @@ class DBAccess
 			FROM Scambio s
 			JOIN Copia c ON s.idCopiaAcc = c.ID
 			JOIN Libro l ON c.ISBN = l.ISBN
-			-- WHERE s.stato = 'accettato'
+			WHERE s.stato = 'accettato'
 		) AS L
 		GROUP BY L.ISBN
 		ORDER BY numero_scambi DESC
@@ -940,24 +945,6 @@ class DBAccess
 			return count($val) > 0;
 		} catch (Exception $e) {
 			error_log("check_user_has_generi_preferiti: " . $e->getMessage());
-			throw $e;
-		}
-	}
-
-	public function check_scambio_gia_proposto($user_prop, $user_acc, $id_copia_prop, $id_copia_acc): bool
-	{
-		$query = <<<SQL
-		SELECT * FROM Scambio S
-		WHERE S.emailProponente = ? AND S.emailAccettatore = ? AND S.idCopiaProp = ? AND S.idCopiaAcc = ? AND S.stato = 'in attesa'
-		SQL;
-
-		try {
-			$user_email_prop = $this->get_user_email_by_username($user_prop);
-			$user_email_acc = $this->get_user_email_by_username($user_acc);
-			$res = $this->query_to_array($query, "ssss", [$user_email_prop, $user_email_acc, $id_copia_prop, $id_copia_acc]);
-			return count($res) > 0;
-		} catch (Exception $e) {
-			error_log("check_scambio_gia_proposto: " . $e->getMessage());
 			throw $e;
 		}
 	}

@@ -128,7 +128,7 @@ function replaceLibri($profilo, $user, $db)
 function addTuoProfiloButtons($profilo)
 {
 	$prefix = getPrefix();
-	$scambiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout ">I tuoi scambi</a>';
+	$scambiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout">I tuoi scambi</a>';
 	$profilo = str_replace('<!-- [scambiButton] -->', $scambiButton, $profilo);
 
 	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><button type="submit" class="button-layout secondary logout" aria-label="Esci dal tuo profilo"/>Esci</button></form>';

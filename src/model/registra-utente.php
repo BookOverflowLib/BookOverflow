@@ -1,41 +1,66 @@
 <?php
-require_once '../src/model/dbAPI.php';
-require_once '../src/model/utils.php';
-require_once '../src/model/registration-select.php';
+require_once __DIR__ . '/' . '../model/dbAPI.php';
+require_once __DIR__ . '/' . '../model/utils.php';
+require_once __DIR__ . '/' . '../model/registration-select.php';
+
+ensure_session();
 
 $db = new DBAccess();
+$prefix = getPrefix();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	if (isset($_POST['nome'], $_POST['cognome'], $_POST['provincia'], $_POST['comune'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['conferma-password'])) {
-		$nome = $_POST['nome'];
-		$cognome = $_POST['cognome'];
-		$provincia = $_POST['provincia'];
-		$comune = $_POST['comune'];
-		$email = $_POST['email'];
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$password2 = $_POST['conferma-password'];
-		$image = getUserImageUrlByEmail($email);
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+	redirect("Errore: richiesta non valida");
+}
 
-		if ($password !== $password2) {
-			header('Location: /registrati?error=password-mismatch');
-			exit();
-		}
-		try {
-			$db->register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $image);
-		} catch (Exception $e) {
-			header('Location: /registrati?error=generic');
-			// TODO
-			exit();
-		}
-	
-		ensure_session();
+if (!isset($_POST['nome'], $_POST['cognome'], $_POST['provincia'], $_POST['comune'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['conferma_password'])) {
+	redirect("Errore: dati mancanti");
+}
 
-		$_SESSION['user'] = $username;
-		$_SESSION['path_immagine'] = $image;
+$nome = htmlspecialchars($_POST['nome']);
+$cognome = htmlspecialchars($_POST['cognome']);
+$id_provincia = $_POST['provincia'];
+$id_comune = $_POST['comune'];
+$email = $_POST['email'];
+$username = htmlspecialchars($_POST['username']);
+$password = $_POST['password'];
+$password2 = $_POST['conferma_password'];
+$image = getUserImageUrlByEmail($email);
 
-		header('Location: /profilo/' . $username);
 
-		exit();
+if ($password !== $password2) {
+	redirect("Le password non corrispondono");
+}
+if (!preg_match("/^[a-zA-Z ]{2,50}$/", $nome)) {
+	redirect("Nome non valido");
+}
+if (!preg_match("/^[a-zA-Z ]{2,50}$/", $cognome)) {
+	redirect("Cognome non valido");
+}
+if (!preg_match("/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/", $email)) {
+	redirect("Email non valida");
+}
+if (!preg_match("/^[^\s\r\n]{2,50}$/", $username)) {
+	redirect("Username non valido");
+}
+
+try {
+	$db->register_user($nome, $cognome, $id_provincia, $id_comune, $email, $username, $password, $image);
+	$_SESSION['user'] = $username;
+	$_SESSION['path_immagine'] = $image;
+	redirect();
+} catch (Exception $e) {
+	$err = exceptionToError($e, "registrazione non riuscita");
+	redirect($err);
+}
+
+function redirect(string $error = null): never
+{
+	$prefix = getPrefix();
+	if ($error) {
+		$_SESSION['error'] = $error;
+		header('Location: ' . $prefix . '/registrati');
+	} else {
+		header('Location: ' . $prefix . '/profilo/' . $_SESSION['user']);
 	}
+	exit();
 }

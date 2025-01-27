@@ -17,7 +17,6 @@ var formChecks = {
         "Inserire un cognome di lunghezza almeno 2 e massimo 50, non sono ammessi numeri o caratteri speciali",
         false
     ],
-    // all characters are allowed
     username: [
         "Es: MarioRossi",
         /^[^\s\r\n]{2,50}$/,
@@ -36,7 +35,7 @@ var formChecks = {
         "La password deve essere lunga tra 8 e 50 caratteri, contenere almeno una lettera maiuscola (A-Z), una lettera minuscola (a-z), un numero (0-9) e un carattere speciale tra i seguenti: !@#$%^&*()-+=.",
         false
     ],
-    conferma: [
+    conferma_password: [
         "Es: Password123!",
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-+=])[A-Za-z\d!@#$%^&*()\-+=]{8,50}$/,
         "La password deve essere lunga tra 8 e 50 caratteri, contenere almeno una lettera maiuscola (A-Z), una lettera minuscola (a-z), un numero (0-9) e un carattere speciale tra i seguenti: !@#$%^&*()-+=.",
@@ -47,7 +46,7 @@ var formChecks = {
 window.onload = function () {
     const form = document.getElementById('registrati');
 
-    fillSuggestion(formChecks);
+    //fillSuggestion(formChecks);
     if (sessionStorage.getItem("nome")) {
         restoreAllInputValues();
         let provinciaSelect = document.querySelector('select[name="provincia"]')
@@ -56,7 +55,6 @@ window.onload = function () {
 
     form.addEventListener('submit', function () {
         saveAllInputValues();
-        return checkForm("registrati", "/api/registra-utente", formChecks);
+    //    return checkForm("registrati", "api/registra-utente", formChecks);
     });
-
 };

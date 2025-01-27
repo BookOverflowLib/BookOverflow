@@ -1,5 +1,5 @@
 <?php
-require_once '../src/paths.php';
+require_once __DIR__ . '/' . '../paths.php';
 require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
@@ -17,6 +17,7 @@ $libri_offerti_utente = $db->get_libri_offerti_by_username($_GET['user']);
 $titoloIntestazione = 'Libri offerti';
 $libri_offerti = str_replace('<!-- [titoloIntestazione] -->', $titoloIntestazione, $libri_offerti);
 $libri_offerti_html = getLibriList($libri_offerti_utente, 'libri-offerti');
+$libri_offerti = str_replace('<!-- [tipoLista] -->', 'offerti', $libri_offerti);
 $libri_offerti = str_replace('<!-- [listaLibri] -->', $libri_offerti_html, $libri_offerti);
 
 
@@ -26,4 +27,5 @@ if (check_ownership()) {
 }
 
 $page = str_replace('<!-- [content] -->', $libri_offerti, $page);
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;

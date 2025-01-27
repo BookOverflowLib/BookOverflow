@@ -1,10 +1,13 @@
 <div class="scegli-generi">
-	<h2 class="center-text">Seleziona i generi che ti interessano</h2>
+	<h2 class="text-center">Seleziona i generi che ti interessano</h2>
 	<div class="display-error">
 		<!-- [displayError] -->
 	</div>
-	<form action="<!-- [prefix] -->/api/aggiorna-generi" id="form-generi" method="post">
-		<div class="generi-buttons center-text">
+	<form
+		action="<!-- [prefix] -->/api/aggiorna-generi"
+		id="form-generi"
+		method="post">
+		<div class="generi-buttons text-center">
 			<button class="button-layout" onclick="resetButtons()" type="reset">
 				Azzera le scelte
 			</button>
@@ -12,11 +15,13 @@
 		<div class="lista-generi center">
 			<!-- [opzioniGeneri] -->
 		</div>
-		<div class="center-text generi-buttons">
-			<input class="button-layout" type="submit" value="Conferma"/>
-			<a class="button-layout-light" href="<!-- [prefix] -->/profilo">Annulla</a>
+		<div class="text-center generi-buttons">
+			<input class="button-layout" type="submit" value="Conferma" />
+			<a class="button-layout-light" href="<!-- [prefix] -->/profilo"
+				>Annulla</a
+			>
 		</div>
-		<input id="generi-selezionati" name="generi" type="hidden" value=""/>
+		<input id="generi-selezionati" name="generi" type="hidden" value="" />
 	</form>
 	<script src="<!-- [prefix] -->/js/generi.js"></script>
 </div>

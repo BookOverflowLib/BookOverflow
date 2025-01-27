@@ -207,7 +207,7 @@ function getBannerNuovoProfilo($isTuoProfilo, $page)
 	</svg>
 	HTML;
 	$banner = <<<HTML
-	<div class="sezione-libri" id="completa-profilo">
+	<div class="sezione-stretta" id="completa-profilo">
 		<div class="message-box">
 			{$icon}
 			<div>

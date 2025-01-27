@@ -1,19 +1,38 @@
-<section id="landing">
+<section id="landing" class="sezione-stretta">
 	<div>
 		<h1>Un nuovo capitolo per i tuoi libri</h1>
 		<p>La prima piattaforma di scambi di libri gratuita e accessibile</p>
-		<a class="button-layout" href="<!-- [prefix] -->/accedi">Inizia</a>
+		<a
+			class="button-layout call-to-action"
+			href="<!-- [prefix] -->/come-funziona"
+			>Scopri come funziona</a
+		>
 	</div>
 	<picture>
-		<source srcset="<!-- [prefix] -->/assets/imgs/jaredd-square.avif" type="image/avif">
-		<img alt="" src="<!-- [prefix] -->/assets/imgs/jaredd-square.png"/>
+		<source
+			srcset="
+			<!-- [prefix] -->/assets/imgs/jaredd-square-768.avif 768w,
+			<!-- [prefix] -->/assets/imgs/jaredd-square-320.avif 320w
+			"
+			sizes="(min-width: 768px) 768px, 320px"
+			type="image/avif" />
+		<img
+			alt=""
+			src="<!-- [prefix] -->/assets/imgs/jaredd-square.png"
+			width="200"
+			decoding="async"
+			loading="eager" />
 	</picture>
 </section>
 <section id="piu-scambiati">
 	<article>
 		<div class="intestazione">
 			<h2>Libri più scambiati</h2>
-			<a aria-label="Mostra tutti i libri più scambiati" href="<!-- [prefix] -->/piu-scambiati">Mostra tutti</a>
+			<a
+				aria-label="Mostra tutti i libri più scambiati"
+				href="<!-- [prefix] -->/piu-scambiati"
+				>Mostra tutti</a
+			>
 		</div>
 		<div class="carosello-libri">
 			<!-- [piuScambiati] -->

@@ -151,9 +151,9 @@ function getHeaderButtons($path): string
 {
 	$prefix = getPrefix();
 	$scura =
-		'<span class="active"><img class="theme-icon" src="' . $prefix . '/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità scura</span></span>';
+		'<span class="active"><img class="theme-icon" src="' . $prefix . '/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="sr-only">Modalità scura</span></span>';
 	$chiara =
-		'<span><img class="theme-icon" src="' . $prefix . '/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="visually-hidden">Modalità chiara</span></span>';
+		'<span><img class="theme-icon" src="' . $prefix . '/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="sr-only">Modalità chiara</span></span>';
 	$themeToggleButton =
 		'<button class="theme-toggle" aria-pressed="false">' .
 		$chiara .
@@ -200,9 +200,9 @@ function getHamburgerButton(): string
 {
 	$prefix = getPrefix();
 	$chiuso =
-		'<span class="active"><img class="hamburger-icon" src="' . $prefix . '/assets/imgs/hamburger.svg" alt=""><span class="visually-hidden">Apri l\'<span lang="en">hamburger</span> menù</span></span>';
+		'<span class="active"><img class="hamburger-icon" src="' . $prefix . '/assets/imgs/hamburger.svg" alt=""><span class="sr-only">Apri l\'<span lang="en">hamburger</span> menù</span></span>';
 	$aperto =
-		'<span><img class="hamburger-icon" src="' . $prefix . '/assets/imgs/cross.svg" alt=""><span class="visually-hidden">Chiudi l\'<span lang="en">hamburger</span> menù</span></span>';
+		'<span><img class="hamburger-icon" src="' . $prefix . '/assets/imgs/cross.svg" alt=""><span class="sr-only">Chiudi l\'<span lang="en">hamburger</span> menù</span></span>';
 	$hamburgerIcon =
 		'<button id="hamburger" aria-pressed="false">' .
 		$chiuso .
@@ -362,7 +362,7 @@ function getGeneriPreferiti($generi)
 		$generi[0]['generi_preferiti'] == null ||
 		$generi[0]['generi_preferiti'] == '[]'
 	) {
-		return '<p class="center-text">Non c\'è ancora nessun genere preferito!</p>';
+		return '<p class="text-center">Non c\'è ancora nessun genere preferito!</p>';
 	}
 
 	$fileGeneri = json_decode(file_get_contents(__DIR__ . '/../../utils/bisac.json'), true);
@@ -541,7 +541,7 @@ function addButtonsLibriList($libri_page, $list_name): string
 		<div class="dialog-window">
 			<h2>Cerca un libro</h2>
 			<form action={$form_action} method="post">
-				<label for="titolo" class="visually-hidden">Cerca un libro</label>
+				<label for="titolo" class="sr-only">Cerca un libro</label>
 				<input type="search"
 					name="cerca"
 					id="cerca"

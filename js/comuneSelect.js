@@ -15,7 +15,7 @@ function getComuniByProvincia(provincia) {
     fd.set('provinciaSelezionata', provincia)
 
     // send the ajax request using fetch
-    fetch('/api/ottieni-comuni', {method: 'post', body: fd})
+    fetch('api/ottieni-comuni', {method: 'post', body: fd})
         .then(response => response.json())
         .then(json => {
             let options = '<option value="">Seleziona un comune</option><hr />'

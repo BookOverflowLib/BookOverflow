@@ -159,7 +159,7 @@ export function checkForm(formId, redirect, formChecks) {
         }
     }
 
-    clearInputValueSessionStorage();
+    // clearInputValueSessionStorage();
     form.setAttribute("action", redirect);
     return true;
 }

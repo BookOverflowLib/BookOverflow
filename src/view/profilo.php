@@ -1,5 +1,5 @@
 <?php
-require_once '../src/paths.php';
+require_once __DIR__ . '/' . '../paths.php';
 require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
@@ -16,14 +16,16 @@ try {
 
 $user = getUser($db, $profileId);
 $page = generatePage($user, $isTuoProfilo, $db);
-
+$page = populateWebdirPrefixPlaceholders($page);
+$page = getBannerNuovoProfilo($isTuoProfilo, $page);
 echo $page;
 
 function getProfileId()
 {
 	if (!isset($_GET['user'])) {
 		if (!isset($_SESSION['user'])) {
-			header('Location: /accedi');
+			$prefix = getPrefix();
+			header('Location: ' . $prefix . '/accedi');
 			exit();
 		} else {
 			$_GET['user'] = $_SESSION['user'];
@@ -35,7 +37,8 @@ function getProfileId()
 function handleError($message)
 {
 	$_SESSION['error'] = $message;
-	header('Location: /404');
+	$prefix = getPrefix();
+	header('Location: ' . $prefix . '/404');
 	exit();
 }
 
@@ -61,7 +64,6 @@ function generatePage($user, $isTuoProfilo, $db)
 
 	if ($isTuoProfilo) {
 		$profilo = addTuoProfiloButtons($profilo);
-		$profilo = addScambiSection($profilo, $db);
 	} else {
 		$profilo = addOtherProfiloButtons($profilo, $user);
 	}
@@ -94,7 +96,12 @@ function replaceLocation($profilo, $user)
 function replaceRating($profilo, $user, $db)
 {
 	$userRating = $db->get_user_rating_by_email($user['email']);
-	$ratingValue = $userRating && isset($userRating[0]['media_valutazioni']) ? $userRating[0]['media_valutazioni'] : "0.0";
+
+	$ratingValue = "0.0";
+	if ($userRating && isset($userRating[0]['media_valutazioni'])) {
+		$ratingValue = $userRating[0]['media_valutazioni'];
+		$ratingValue = number_format($ratingValue, 1);
+	}
 
 	$profilo = str_replace('<!-- [userRating] -->', $ratingValue, $profilo);
 	return str_replace('<!-- [userRatingStars] -->', ratingStars($ratingValue), $profilo);
@@ -117,160 +124,113 @@ function replaceLibri($profilo, $user, $db)
 
 function addTuoProfiloButtons($profilo)
 {
-	$logoutButton = '<form action="/api/logout" method="POST"><input type="submit" class="button-layout" value="Esci" aria-label="Esci dal tuo profilo"/></form>';
+	$prefix = getPrefix();
+	$scambiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout ">I tuoi scambi</a>';
+	$profilo = str_replace('<!-- [scambiButton] -->', $scambiButton, $profilo);
+
+	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><button type="submit" class="button-layout secondary logout" aria-label="Esci dal tuo profilo"/>Esci</button></form>';
 	$profilo = str_replace('<!-- [logoutButton] -->', $logoutButton, $profilo);
 
-	$modificaGeneriButton = '<a href="/profilo/' . $_SESSION['user'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';
+	$modificaGeneriButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';
 	$profilo = str_replace('<!-- [generiPreferitiButton] -->', $modificaGeneriButton, $profilo);
 
-	$libriOffertiButton = '<a href="/profilo/' . $_SESSION['user'] . '/libri-offerti" class="button-layout" aria-label="MOdifica la lista dei libri offerti">Modifica la lista</a>';
+	$libriOffertiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/libri-offerti" class="button-layout" aria-label="Modifica la lista dei libri offerti">Modifica la lista</a>';
 	$profilo = str_replace('<!-- [libriOffertiButton] -->', $libriOffertiButton, $profilo);
 
-	$libriDesideratiButton = '<a href="/profilo/' . $_SESSION['user'] . '/libri-desiderati" class="button-layout" aria-label="Modifica la lista dei desideri">Modifica la lista</a>';
-	$profilo = str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
+	$libriDesideratiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/libri-desiderati" class="button-layout" aria-label="Modifica la lista dei desideri">Modifica la lista</a>';
+	return str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
 
-	$sezioneScambi = <<<HTML
-    <section id="storico-scambi">
-        <div class="intestazione">
-            <h2>I miei scambi</h2>
-        </div>
-        <div class="storico-table">
-            <!-- [storicoScambi] --> 
-        </div>
-    </section>
-    HTML;
-	return str_replace('<!-- [sezioneScambi] -->', $sezioneScambi, $profilo);
-}
 
-function addScambiSection($profilo, $db)
-{
-	$storicoScambi = $db->get_scambi_by_user($_SESSION['user']);
-	$storicoScambiHTML = "";
-
-	foreach ($storicoScambi as $scambio) {
-		$storicoScambiHTML .= generateScambioRow($scambio, $db);
-	}
-
-	return str_replace('<!-- [storicoScambi] -->', $storicoScambiHTML, $profilo);
-}
-
-function generateScambioRow($scambio, $db)
-{
-	$libroProp = $db->get_copia_by_id($scambio['idCopiaProp'])[0];
-	$libroAcc = $db->get_copia_by_id($scambio['idCopiaAcc'])[0];
-	$utenteAccettatore = $db->get_user_by_identifier($scambio['emailAccettatore'])[0];
-	$utenteProponente = $db->get_user_by_identifier($scambio['emailProponente'])[0];
-
-	$isScambioRicevuto = $utenteAccettatore['username'] === $_SESSION['user'];
-
-	$scambio_buttons = generateScambioButtons($scambio, $isScambioRicevuto);
-	$scambio_utente = generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utenteProponente);
-	$user_libro = $isScambioRicevuto ? $libroAcc : $libroProp;
-	$other_libro = $isScambioRicevuto ? $libroProp : $libroAcc;
-
-	return <<<HTML
-    <div class="storico-row">   
-    	<div class="storico-books">
-        <div class="storico-dai">
-            <p>Dai:</p>
-            <div>
-                <img src="{$user_libro['path_copertina']}" alt="" width="50">
-                <div>
-                    <p class="bold">{$user_libro['titolo']}</p>
-                    <p class="italic">{$user_libro['autore']}</p>
-                </div>
-            </div>
-        </div>
-        <img src="/assets/imgs/scambio-arrows.svg" alt="" id="scambio-arrows">
-        <div class="storico-ricevi">
-            <p>Ricevi:</p>
-            <div>
-                <img src="{$other_libro['path_copertina']}" alt="" width="50">
-                <div>
-                    <p class="bold">{$other_libro['titolo']}</p>
-                    <p class="italic">{$other_libro['autore']}</p>
-                </div>
-            </div>
-        </div>
-        </div> 
-
-        {$scambio_utente}
-        {$scambio_buttons}
-    </div>
-    HTML;
-}
-
-function generateScambioButtons($scambio, $isScambioRicevuto)
-{
-	if ($isScambioRicevuto) {
-		if ($scambio['stato'] === 'in attesa') {
-			return <<<HTML
-			<div class="storico-buttons accetta">
-				<form action="/api/accetta-scambio" method="POST">
-					<input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
-					<input type="submit" class="button-layout" value="Accetta" />
-				</form>
-				<form action="/api/rifiuta-scambio" method="POST">
-					<input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
-					<input type="submit" class="button-layout secondary" value="Rifiuta" />
-				</form>
-			</div>
-			HTML;
-		}
-	} else {
-		if ($scambio['stato'] === 'in attesa') {
-			return <<<HTML
-            <div class="storico-buttons">
-                <p>In attesa di risposta</p>
-                <form action="/api/rimuovi-scambio" method="POST">
-                    <input type="hidden" name="id_scambio" value="{$scambio['ID']}" />
-                    <input type="submit" class="button-layout secondary" value="Annulla scambio" />
-                </form>
-            </div>
-            HTML;
-		}
-	}
-	if ($scambio['stato'] === 'rifiutato') {
-		return <<<HTML
-            <div class="storico-buttons">
-                <p>Scambio rifiutato</p>
-            </div>
-            HTML;
-	} elseif ($scambio['stato'] === 'accettato') {
-		return <<<HTML
-            <div class="storico-buttons">
-                <p>Scambio accettato</p>
-            </div>
-            HTML;
-	}
-	return '';
-}
-
-function generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utenteProponente)
-{
-	$utente = $isScambioRicevuto ? $utenteProponente : $utenteAccettatore;
-	return <<<HTML
-    <div class="storico-utente-scambio">
-        <p>Scambio con:</p>
-        <div>
-            <img src="{$utente['path_immagine']}" alt="" width="50">
-            <div>
-                <p>{$utente['nome']} {$utente['cognome']}</p>
-                <p class="italic">@{$utente['username']}</p>
-            </div>
-        </div>
-    </div>
-    HTML;
 }
 
 function addOtherProfiloButtons($profilo, $user)
 {
+	$prefix = getPrefix();
+	$contattaButton = getContattaButton($profilo, $user);
+	$profilo = str_replace('<!-- [scambiButton] -->', $contattaButton, $profilo);
+
 	$profilo = str_replace('<!-- [logoutButton] -->', '', $profilo);
 	$profilo = str_replace('<!-- [generiPreferitiButton] -->', '', $profilo);
 
-	$libriOffertiButton = '<a href="/profilo/' . $user['username'] . '/libri-offerti" class="button-layout" aria-label="Mostra tutti i libri offerti">Mostra tutti</a>';
+	$libriOffertiButton = '<a href="' . $prefix . '/profilo/' . $user['username'] . '/libri-offerti" class="button-layout" aria-label="Mostra tutti i libri offerti">Mostra tutti</a>';
 	$profilo = str_replace('<!-- [libriOffertiButton] -->', $libriOffertiButton, $profilo);
 
-	$libriDesideratiButton = '<a href="/profilo/' . $user['username'] . '/libri-desiderati" class="button-layout" aria-label="Mostra tutta la lista dei desideri">Mostra tutti</a>';
+	$libriDesideratiButton = '<a href="' . $prefix . '/profilo/' . $user['username'] . '/libri-desiderati" class="button-layout" aria-label="Mostra tutta la lista dei desideri">Mostra tutti</a>';
 	return str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
+}
+
+function getContattaButton($profilo, $user)
+{
+	$oggettoMail = '[BookOverflow] Scambio libri';
+	$formatMailHref = 'mailto:' . $user['email'] . '?subject=' . $oggettoMail;
+	return '<a href="' . $formatMailHref . '" class="button-layout secondary external-link">Contatta via mail</a>';
+}
+
+function getBannerNuovoProfilo($isTuoProfilo, $page)
+{
+	$db = new DBAccess();
+	if (!$isTuoProfilo) {
+		return str_replace('<!-- [bannerCompletaProfilo] -->', '', $page);
+	}
+	$hasGeneriPreferiti = $db->check_user_has_generi_preferiti($_SESSION['user']);
+	$hasLibriOfferti = $db->check_user_has_libri_offerti($_SESSION['user']);
+	$hasLibriDesiderati = $db->check_user_has_libri_desiderati($_SESSION['user']);
+
+	if ($hasGeneriPreferiti && $hasLibriOfferti && $hasLibriDesiderati) {
+		return str_replace('<!-- [bannerCompletaProfilo] -->', '', $page);
+	}
+
+	$list = $hasGeneriPreferiti ? '' : '<li>i tuoi generi preferiti</li>';
+	$list .= $hasLibriOfferti ? '' : '<li>i libri che offri</li>';
+	$list .= $hasLibriDesiderati ? '' : '<li>i libri che desideri</li>';
+
+	$icon = <<<HTML
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		class="lucide lucide-notebook-pen">
+		<path
+			d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4" />
+		<path d="M2 6h4" />
+		<path d="M2 10h4" />
+		<path d="M2 14h4" />
+		<path d="M2 18h4" />
+		<path
+			d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z" />
+	</svg>
+	HTML;
+	$banner = <<<HTML
+	<div class="sezione-libri" id="completa-profilo">
+		<div class="message-box">
+			{$icon}
+			<div>
+				<h2>Completa il tuo profilo</h2>
+				<p class="center">Aggiungi subito:</p>
+				<ul>
+					{$list}
+				</ul>
+			</div>
+		</div>
+	</div>
+	HTML;
+
+	return str_replace('<!-- [bannerCompletaProfilo] -->', $banner, $page);
+}
+
+function redirect(string $error = null): never
+{
+	if ($error) {
+		$_SESSION['error'] = $error;
+		header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user'] . '/seleziona-generi');
+	} else {
+		header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user'] . '#generi');
+	}
+	exit();
 }

@@ -1,13 +1,14 @@
 <?php
-require_once '../src/paths.php';
+require_once __DIR__ . '/' . '../paths.php';
 require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
+$prefix = getPrefix();
 
 if (!isset($_GET['ISBN'])) {
 	$_SESSION['error'] = "Nessun libro specificato";
-	header('Location: /404');
+	header('Location: ' . $prefix . '/404');
 	exit();
 }
 
@@ -22,7 +23,7 @@ try {
 	$libro = $libro[0];
 } catch (Exception $e) {
 	$_SESSION['error'] = "Errore nessun libro trovato";
-	header('Location: /404');
+	header('Location: ' . $prefix . '/404');
 	exit();
 }
 
@@ -60,6 +61,7 @@ foreach ($sostituzioni as $placeholder => $value) {
 // Aggiungi scambi disponibili
 function viewScambioDisponibileDiUtente($utente, $libro): string
 {
+	$prefix = getPrefix();
 	$location = getLocationName($utente['provincia'], $utente['comune']);
 	$scambio = <<<HTML
 	<div class="scambio"> <!-- uno scambio -->
@@ -87,7 +89,7 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 			<a href="/profilo/{$utente['username']}/libri-desiderati">Oppure altri libri</a>
 		</div>
 		<div class="scambio-button">
-			<form action="/api/proponi-scambio" method="post">
+			<form action="{$prefix}/api/proponi-scambio" method="post">
 				<input type="hidden" name="utente_proponente" value="{$_SESSION['user']}" />
 				<input type="hidden" name="utente_accettatore" value="{$utente['username']}" />
 				<input type="hidden" name="ISBN_proponente" value="{$libro['ISBN']}" />
@@ -116,14 +118,15 @@ if (is_logged_in()) {
 
 		} catch (Exception $e) {
 			$_SESSION['error'] = "Errore durante la connessione al database";
-			header('Location: /404');
+			header('Location: ' . $prefix . '/404');
 			exit();
 		}
 		$libroDesiderato = $libriDesiderati[0];
 		$scambi_html .= viewScambioDisponibileDiUtente($utente, $libroDesiderato);
 	}
 } else {
-	$scambi_html = "<p>Per vedere gli scambi disponibili devi fare accesso. <a href='/accedi'>Accedi</a></p>";
+	$prefix = getPrefix();
+	$scambi_html = "<p>Per vedere gli scambi disponibili devi fare accesso. <a href='" . $prefix . "/accedi'>Accedi</a></p>";
 }
 
 $libro_page = str_replace('<!-- [scambiPossibili] -->', $scambi_html, $libro_page);
@@ -131,4 +134,5 @@ $libro_page = str_replace('<!-- [scambiPossibili] -->', $scambi_html, $libro_pag
 //TODO: se l'utente non è loggato non mostra un avviso che bisogna loggare per vedere gli scambi
 
 $page = str_replace('<!-- [content] -->', $libro_page, $page);
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;

@@ -1,11 +1,10 @@
-import {checkForm, fillSuggestion} from './formValidator.js';
+import { checkForm, fillSuggestion } from './formValidator.js';
 
 // [0]: hint
 // [1]: regex
 // [2]: error
 // [3]: isValid
 var formChecks = {
-    //todo: move to dedicated JS function
     identifier: [
         "Es: mariorossi o mariorossi@gmail.com",
         "*",
@@ -20,11 +19,13 @@ var formChecks = {
     ]
 };
 
+/*
 window.onload = function () {
-    fillSuggestion(formChecks);
+    //fillSuggestion(formChecks);
 
     const form = document.getElementById('accedi');
     form.addEventListener('submit', function () {
-        return checkForm("accedi", "/api/accesso-utente", formChecks);
+        //return checkForm("accedi", "api/accesso-utente", formChecks);
     });
 };
+*/

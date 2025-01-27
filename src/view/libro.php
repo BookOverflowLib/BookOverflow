@@ -66,7 +66,7 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 	$scambio = <<<HTML
 	<div class="scambio"> <!-- uno scambio -->
 	    <div class="scambio-utente"> <!-- info utente -->
-			<a href="/profilo/{$utente['username']}">
+			<a href="{$prefix}/profilo/{$utente['username']}">
 				<img alt="" src="{$utente['path_immagine']}" width="100"/>
 				<div>
 					<p class="bold">{$utente['nome']} {$utente['cognome']}</p>
@@ -78,7 +78,7 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 		<div class="scambio-info">
 			<p>Vorrebbe in cambio: </p>
 			<div class="scambio-libro">
-				<a href="/libro/{$libro['ISBN']}">
+				<a href="{$prefix}/libro/{$libro['ISBN']}">
 					<img alt="" src="{$libro['path_copertina']}" width="70"/>
 					<div>
 						<p class="bold">{$libro['titolo']}</p>
@@ -86,7 +86,7 @@ function viewScambioDisponibileDiUtente($utente, $libro): string
 					</div>
 				</a>
 			</div>
-			<a href="/profilo/{$utente['username']}/libri-desiderati">Oppure altri libri</a>
+			<a href="{$prefix}/profilo/{$utente['username']}/libri-desiderati">Oppure altri libri</a>
 		</div>
 		<div class="scambio-button">
 			<form action="{$prefix}/api/proponi-scambio" method="post">
@@ -121,8 +121,11 @@ if (is_logged_in()) {
 			header('Location: ' . $prefix . '/404');
 			exit();
 		}
-		$libroDesiderato = $libriDesiderati[0];
-		$scambi_html .= viewScambioDisponibileDiUtente($utente, $libroDesiderato);
+		foreach ($libriDesiderati as $libroDes) {
+			if (!$db->check_scambio_gia_proposto($_SESSION['user'], $utente['username'], $utente['id_copia'], $libroDes['id_copia'])) {
+				$scambi_html .= viewScambioDisponibileDiUtente($utente, $libroDes);
+			}
+		}
 	}
 } else {
 	$prefix = getPrefix();
@@ -135,4 +138,5 @@ $libro_page = str_replace('<!-- [scambiPossibili] -->', $scambi_html, $libro_pag
 
 $page = str_replace('<!-- [content] -->', $libro_page, $page);
 $page = populateWebdirPrefixPlaceholders($page);
+$page = addErrorsToPage($page);
 echo $page;

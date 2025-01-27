@@ -16,8 +16,11 @@ try {
 
 $user = getUser($db, $profileId);
 $page = generatePage($user, $isTuoProfilo, $db);
+
 $page = populateWebdirPrefixPlaceholders($page);
 $page = getBannerNuovoProfilo($isTuoProfilo, $page);
+$page = iniziaEsplorare($isTuoProfilo, $page);
+$page = addErrorsToPage($page);
 echo $page;
 
 function getProfileId()
@@ -222,6 +225,23 @@ function getBannerNuovoProfilo($isTuoProfilo, $page)
 	HTML;
 
 	return str_replace('<!-- [bannerCompletaProfilo] -->', $banner, $page);
+}
+
+function iniziaEsplorare($isTuoProfilo, $page)
+{
+	if (!$isTuoProfilo) {
+		return str_replace('<!-- [iniziaEsplorare] -->', '', $page);
+	}
+	$prefix = getPrefix();
+	$sec = <<<HTML
+	<section class="sezione-stretta">
+		<div id="inizia-esplorare">
+			<p class="">Inizia subito ad esplorare!</p>
+			<a class="button-layout" href="{$prefix}/esplora">Esplora</a>
+		</div>
+	</section>
+	HTML;
+	return str_replace('<!-- [iniziaEsplorare] -->', $sec, $page);
 }
 
 function redirect(string $error = null): never

@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS Follow;
-
 DROP TABLE IF EXISTS Recensione;
 
 DROP TABLE IF EXISTS Scambio;
@@ -106,14 +104,14 @@ CREATE TABLE
         PRIMARY KEY (emailRecensito, idScambio)
     );
 
-CREATE TABLE
-    Follow (
-        emailSeguace VARCHAR(255),
-        emailSeguito VARCHAR(255),
-        PRIMARY KEY (emailSeguito, emailSeguace),
-        FOREIGN KEY (emailSeguace) REFERENCES Utente (email),
-        FOREIGN KEY (emailSeguito) REFERENCES Utente (email)
-    );
+-- CREATE TABLE
+--     Follow (
+--         emailSeguace VARCHAR(255),
+--         emailSeguito VARCHAR(255),
+--         PRIMARY KEY (emailSeguito, emailSeguace),
+--         FOREIGN KEY (emailSeguace) REFERENCES Utente (email),
+--         FOREIGN KEY (emailSeguito) REFERENCES Utente (email)
+--     );
 
 -- CREATE TABLE
 --     Immagine (

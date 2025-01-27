@@ -1738,3 +1738,7 @@ textarea {
 #inizia-esplorare > p {
 	font-size: var(--font-md);
 }
+
+.scambio-button > p {
+	padding: 1em;
+}

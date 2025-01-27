@@ -104,7 +104,6 @@ function viewScambioDisponibileDiUtente($utente, $libro, $isProposto): string
 					</div>
 				</a>
 			</div>
-			<a href="{$prefix}/profilo/{$utente['username']}/libri-desiderati">Oppure altri libri</a>
 		</div>
 		<div class="scambio-button">
 			{$scambioButtons}

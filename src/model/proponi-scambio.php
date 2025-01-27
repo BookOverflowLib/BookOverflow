@@ -20,10 +20,6 @@ if (isset($_POST) && isset($_SESSION['user'])) {
 } else {
 	throw new Exception(message: "Errore: scambio non proposto");
 }
-
-$previousUrl = $_SERVER['HTTP_REFERER'];
-$previousUrl = parse_url($previousUrl, PHP_URL_PATH);
 $prefix = getPrefix();
-header('Location ' . $prefix . $previousUrl);
-//header('Location: ' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi');
+header('Location: ' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi');
 exit();

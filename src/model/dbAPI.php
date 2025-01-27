@@ -557,11 +557,13 @@ class DBAccess
 	public function get_users_with_that_book_and_interested_in_my_books($username, $isbnLibro): ?array
 	{
 		$query = <<<SQL
-		SELECT DISTINCT U.email, U.nome, U.cognome, U.username, U.path_immagine, U.provincia, U.comune
+		SELECT DISTINCT U.email, U.nome, U.cognome, U.username, U.path_immagine, U.provincia, U.comune, C.ID AS id_copia
 		FROM Utente U
 		JOIN Copia C ON U.email = C.proprietario
 		JOIN Desiderio D ON U.email = D.email
-		WHERE C.ISBN = ? AND C.disponibile = TRUE AND C.proprietario != ?
+		WHERE C.ISBN = ? 
+		AND C.disponibile = TRUE 
+		AND C.proprietario != ?
 		AND D.ISBN IN (
 		    SELECT C2.ISBN
 		    FROM Copia C2
@@ -581,7 +583,7 @@ class DBAccess
 	public function get_desiderati_che_offro($userOfferente, $userDesiderante): ?array
 	{
 		$query = <<<SQL
-		SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina	
+		SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina, C.ID AS id_copia
 		FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
 		WHERE C.proprietario = ? AND C.ISBN IN (
 			SELECT D.ISBN
@@ -758,8 +760,10 @@ class DBAccess
 		WHERE C.disponibile = TRUE
 		AND D.ISBN IN (
 		    SELECT C2.ISBN
-		    FROM Copia C2
-		    WHERE C2.proprietario = ? AND C2.disponibile = TRUE
+		    FROM Copia C2 
+		    WHERE C2.proprietario = ? 
+			AND C2.proprietario != U.email
+			AND C2.disponibile = TRUE
 		) AND C.ISBN IN (
 		    SELECT D2.ISBN
 		    FROM Desiderio D2
@@ -936,6 +940,24 @@ class DBAccess
 			return count($val) > 0;
 		} catch (Exception $e) {
 			error_log("check_user_has_generi_preferiti: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function check_scambio_gia_proposto($user_prop, $user_acc, $id_copia_prop, $id_copia_acc): bool
+	{
+		$query = <<<SQL
+		SELECT * FROM Scambio S
+		WHERE S.emailProponente = ? AND S.emailAccettatore = ? AND S.idCopiaProp = ? AND S.idCopiaAcc = ? AND S.stato = 'in attesa'
+		SQL;
+
+		try {
+			$user_email_prop = $this->get_user_email_by_username($user_prop);
+			$user_email_acc = $this->get_user_email_by_username($user_acc);
+			$res = $this->query_to_array($query, "ssss", [$user_email_prop, $user_email_acc, $id_copia_prop, $id_copia_acc]);
+			return count($res) > 0;
+		} catch (Exception $e) {
+			error_log("check_scambio_gia_proposto: " . $e->getMessage());
 			throw $e;
 		}
 	}

@@ -1,5 +1,17 @@
 <?php
 
+require __DIR__ . '/exceptions.php';
+
+use CustomExceptions\{
+	EmailAlreadyExistsException,
+	GenericCustomException,
+	GenericRegistrationException,
+	IncorrectCredentialsException,
+	UsernameAlreadyExistsException,
+	InvalidProvinciaException,
+	InvalidComuneException
+};
+
 // TODO: maybe exception could be handled using best practices but i don´t think it's a requirement
 class DBAccess
 {
@@ -145,7 +157,8 @@ class DBAccess
 			return $results;
 		} catch (Exception $e) {
 			error_log("execute_select_query: " . $e->getMessage());
-			error_log("execure_select_query: QUERY=" . $query . "; TYPES= " . $types . "; PARAMS=" . implode(", ", $params));
+			error_log("execute_select_query: QUERY=" . $query . "; TYPES= " . $types . "; PARAMS=" .
+				(is_array($params) ? implode(", ", $params) : (string) $params));
 			throw $e;
 		}
 	}
@@ -196,26 +209,9 @@ class DBAccess
 	public function get_province(): ?array
 	{
 		$this->ensure_connection();
-		$query = "SELECT id, nome FROM province ORDER BY nome";
-		$queryRes = mysqli_query($this->connection, $query);
+		$query = "SELECT p.id, p.nome, r.nome as regione FROM province p JOIN regioni r ON p.id_regione = r.id ORDER BY p.nome";
+		return $this->query_to_array($query);
 
-		return $this->query_results_to_array($queryRes);
-	}
-
-	public function get_most_traded_with_cover($limit)
-	{
-		$query = "SELECT L.ISBN, L.titolo, L.autore, I.path, COUNT(*) AS numero_vendite
-                    FROM Scambio AS S 
-                    JOIN Copia AS CProp ON S.idCopiaProp = CProp.ID
-                    JOIN Copia AS CAcc ON (S.idCopiaAcc = CAcc.ID AND CProp.ID != CAcc.ID) 
-                    JOIN Libro AS L ON (CProp.ISBN = L.ISBN AND CAcc.ISBN = L.ISBN)
-                    JOIN Immagine AS I ON L.ISBN = I.libro
-                    WHERE I.isCopertina = TRUE
-                    GROUP BY L.ISBN, L.titolo, L.autore, I.path
-                    ORDER BY numero_vendite DESC
-                    LIMIT ?";
-
-		return $this->query_to_array($query, "i", [$limit]);
 	}
 
 	public function get_comune_by_provincia($idProvincia): ?array
@@ -229,12 +225,67 @@ class DBAccess
 		return null;
 	}
 
+	private function check_exists_finalize($query, $identifier): bool
+	{
+		try {
+			$stmt = $this->prepare_sql_statement($query, "s", [$identifier]);
+			if (!$stmt->execute()) {
+				throw new GenericRegistrationException();
+			}
+			return $stmt->get_result()->fetch_row()[0];
+		} catch (Exception $e) {
+			error_log("check_exists: " . $e->getMessage());
+		} finally {
+			if ($stmt)
+				$stmt->close();
+		}
+		return false;
+	}
+
+	// https://stackoverflow.com/a/7171075
+	// The 1 or * in the EXISTS is ignored
+	public function check_username_exists($username): void
+	{
+		$query = "SELECT EXISTS ( SELECT * FROM Utente WHERE username = ? LIMIT 1)";
+		if ($this->check_exists_finalize($query, $username)) {
+			throw new UsernameAlreadyExistsException();
+		}
+	}
+
+	public function check_email_exists($email): void
+	{
+		$query = "SELECT EXISTS ( SELECT * FROM Utente WHERE email = ? LIMIT 1)";
+		if ($this->check_exists_finalize($query, $email)) {
+			throw new EmailAlreadyExistsException();
+		}
+	}
+
+	function check_provincia_exists($idProvincia): void
+	{
+		$query = "SELECT EXISTS ( SELECT * FROM province WHERE id = ? LIMIT 1)";
+		if (!$this->check_exists_finalize($query, $idProvincia)) {
+			throw new InvalidProvinciaException();
+		}
+	}
+
+	function check_comune_exists($idComune): void
+	{
+		$query = "SELECT EXISTS ( SELECT * FROM comuni WHERE id = ? LIMIT 1)";
+		if (!$this->check_exists_finalize($query, $idComune)) {
+			throw new InvalidComuneException();
+		}
+	}
+
 	public function register_user($nome, $cognome, $provincia, $comune, $email, $username, $password, $profileImg = null): void
 	{
-		$passwordHashed = password_hash($password, PASSWORD_BCRYPT);
-
-		$query = "INSERT INTO Utente (email, password_hash, username, nome, cognome, provincia, comune, path_immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
+			$this->check_username_exists($username);
+			$this->check_email_exists($email);
+			$this->check_provincia_exists($provincia);
+			$this->check_comune_exists($comune);
+			$passwordHashed = password_hash($password, PASSWORD_BCRYPT);
+			$query = "INSERT INTO Utente (email, password_hash, username, nome, cognome, provincia, comune, path_immagine) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
 			$this->void_query($query, "ssssssss", [$email, $passwordHashed, $username, $nome, $cognome, $provincia, $comune, $profileImg]);
 		} catch (Exception $e) {
 			throw $e;
@@ -250,10 +301,10 @@ class DBAccess
 				if (password_verify($password, $res[0]['password_hash'])) {
 					return $res;
 				} else {
-					throw new Exception("Invalid Credentials");
+					throw new IncorrectCredentialsException();
 				}
 			} else {
-				throw new Exception("Invalid Credentials");
+				throw new IncorrectCredentialsException();
 			}
 		} catch (Exception $e) {
 			throw $e;
@@ -262,11 +313,12 @@ class DBAccess
 
 	public function get_user_rating_by_email($email): ?array
 	{
-		$query = 'SELECT AVG(R.valutazione) AS media_valutazioni 
-                    FROM Recensione R JOIN Scambio S ON R.idScambio = S.ID 
-                    WHERE S.emailAccettatore = ? OR S.emailProponente = ?';
+		$query = 'SELECT R.emailRecensito, AVG(R.valutazione) AS media_valutazioni 
+                    FROM Recensione R 
+                    WHERE R.emailRecensito = ?
+					GROUP BY R.emailRecensito';
 		try {
-			return $this->query_to_array($query, "ss", [$email, $email]);
+			return $this->query_to_array($query, "s", [$email]);
 		} catch (Exception $e) {
 			error_log("get_user_rating_by_email: " . $e->getMessage());
 		}
@@ -284,14 +336,14 @@ class DBAccess
 		return null;
 	}
 
-	public function get_provincia_comune_by_ids($idProvincia, $idComune): ?array
+	public function get_comune_provincia_sigla_by_ids($idComune, $idProvincia): ?array
 	{
-		$queryProvincia = "SELECT nome FROM province WHERE id = ?";
+		$queryProvincia = "SELECT nome, sigla FROM province WHERE id = ?";
 		$queryComune = "SELECT nome FROM comuni WHERE id = ?";
 		try {
 			$prov = $this->query_to_array($queryProvincia, "i", [$idProvincia]);
 			$comu = $this->query_to_array($queryComune, "i", [$idComune]);
-			return array("provincia" => $prov[0]['nome'], "comune" => $comu[0]['nome']);
+			return array("provincia" => $prov[0]['nome'], "provincia_sigla" => $prov[0]['sigla'], "comune" => $comu[0]['nome']);
 		} catch (Exception $e) {
 			error_log("get_provincia_comune_by_ids: " . $e->getMessage());
 		}
@@ -300,16 +352,17 @@ class DBAccess
 
 	public function insert_new_book($isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina): void
 	{
-		if (empty(trim($isbn))){
-			throw new Exception("Errore: ISBN non valido");
+		if (empty(trim($isbn))) {
+			throw new GenericCustomException("ISBN non valido");
 		}
 		$path_copertina = str_replace("&edge=curl", "", $path_copertina);
+		$path_copertina = str_replace("http", "https", $path_copertina);
+
 		$query = "INSERT IGNORE INTO Libro (ISBN, titolo, autore, editore, anno, genere, descrizione, lingua, path_copertina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			$this->void_query($query, "sssssssss", [$isbn, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina]);
 		} catch (Exception $e) {
-			error_log("insert_new_book: " . $e->getMessage());
-			throw new Exception("Errore: libro non aggiunto");
+			throw $e;
 		}
 	}
 
@@ -368,6 +421,7 @@ class DBAccess
 			SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina, C.condizioni, C.disponibile
 			FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
 			WHERE C.proprietario = ? 
+			ORDER BY C.disponibile DESC;
 			SQL;
 
 			return $this->query_to_array($query, "s", [$userEmail]);
@@ -564,8 +618,8 @@ class DBAccess
 	}
 
 	/* 
-	* Controlla che non ci sia un'altro scambio in attesa con gli stessi libri
-	*/
+	 * Controlla che non ci sia un'altro scambio in attesa con gli stessi libri
+	 */
 	public function check_scambio_proposto($user_prop, $user_acc, $isbn_prop, $isbn_acc): bool
 	{
 		$query = <<<SQL
@@ -588,17 +642,17 @@ class DBAccess
 	}
 
 	/*
-	* Casi da escludere: 
-	* - Scambi con se stessi
-	* - Scambi già proposti -> stato: in attesa
-	*/
+	 * Casi da escludere: 
+	 * - Scambi con se stessi
+	 * - Scambi già proposti -> stato: in attesa
+	 */
 	public function insert_scambio($user_prop, $user_acc, $isbn_prop, $isbn_acc): void
 	{
 		if ($user_prop === $user_acc) {
-			throw new Exception("Errore: non è consentito proporre uno scambio con se stessi");
+			throw new GenericCustomException("non è consentito proporre uno scambio con se stessi");
 		}
 		if ($this->check_scambio_proposto($user_prop, $user_acc, $isbn_prop, $isbn_acc)) {
-			throw new Exception("Errore: scambio già proposto");
+			throw new GenericCustomException("scambio già proposto");
 		}
 		$query = "INSERT INTO Scambio (emailProponente, emailAccettatore, idCopiaProp, idCopiaAcc) VALUES (?, ?, ?, ?)";
 		try {
@@ -610,7 +664,7 @@ class DBAccess
 			$this->void_query($query, "ssii", [$user_email_prop, $user_email_acc, $id_copia_prop, $id_copia_acc]);
 		} catch (Exception $e) {
 			error_log("insert_scambio: " . $e->getMessage());
-			throw new Exception("Errore: scambio non proposto");
+			throw $e;
 		}
 	}
 
@@ -619,6 +673,7 @@ class DBAccess
 		$query = <<<SQL
 		SELECT * FROM Scambio S
 		WHERE S.emailProponente = ? OR S.emailAccettatore = ?
+		ORDER BY S.dataProposta DESC;
 		SQL;
 
 		try {
@@ -665,7 +720,7 @@ class DBAccess
 			$this->void_query($query, "i", [$id]);
 		} catch (Exception $e) {
 			error_log("set_books_unavailable_by_idscambio: " . $e->getMessage());
-			throw new Exception("Errore: scambio non accettato");
+			throw new GenericCustomException("Errore: scambio non accettato");
 		}
 	}
 
@@ -677,8 +732,8 @@ class DBAccess
 			$this->set_books_unavailable_by_idscambio($id);
 		} catch (Exception $e) {
 			error_log("accetta_scambio_by_id: " . $e->getMessage());
-			throw new Exception("Errore: scambio non accettato");
-		}	
+			throw new GenericCustomException("Errore: scambio non accettato");
+		}
 	}
 
 	public function rifiuta_scambio_by_id($id): void
@@ -704,11 +759,11 @@ class DBAccess
 		AND D.ISBN IN (
 		    SELECT C2.ISBN
 		    FROM Copia C2
-		    WHERE C2.proprietario = ?
+		    WHERE C2.proprietario = ? AND C2.disponibile = TRUE
 		) AND C.ISBN IN (
 		    SELECT D2.ISBN
 		    FROM Desiderio D2
-		    WHERE D2.email = ?
+		    WHERE D2.email = ? 
 		)
 		SQL;
 
@@ -734,7 +789,7 @@ class DBAccess
 		AND D.ISBN IN (
 		    SELECT C2.ISBN
 		    FROM Copia C2
-		    WHERE C2.proprietario = ?
+		    WHERE C2.proprietario = ? AND C2.disponibile = TRUE
 		) AND C.ISBN NOT IN (
 		    SELECT D2.ISBN
 		    FROM Desiderio D2
@@ -794,5 +849,95 @@ class DBAccess
 		}
 	}
 
-}
+	/**
+	 * Controlla se l'utente può aggiungere una recensione
+	 * @param $userRecensito string utente recensito
+	 * @param $userRecensore string utente recensore
+	 * @param $id int id scambio
+	 * @return bool true se l'utente può aggiungere una recensione, false altrimenti
+	 * @throws Exception se si verifica un errore
+	 */
+	function check_if_user_can_add_review($userRecensito, $userRecensore, $id): bool
+	{
+		$query_scambio = "SELECT * FROM Scambio WHERE emailProponente = ? AND emailAccettatore = ?";
+		$query_recensione = "SELECT * FROM Recensione WHERE emailRecensito = ? AND idScambio = ?";
 
+		try {
+			$emailRecensito = $this->get_user_email_by_username($userRecensito);
+			$emailRecensore = $this->get_user_email_by_username($userRecensore);
+			// controllo se c'è uno scambio tra i due utenti
+			$res1 = $this->query_to_array($query_scambio, "ss", [$emailRecensito, $emailRecensore]);
+			$res2 = $this->query_to_array($query_scambio, "ss", [$emailRecensore, $emailRecensito]);
+
+			if (count($res1) > 0 || count($res2) > 0) {
+				// controllo se l'utente ha già recensito l'altro
+				$res3 = $this->query_to_array($query_recensione, "si", [$emailRecensito, $id]);
+				return count($res3) === 0;
+			} else {
+				return false;
+			}
+		} catch (Exception $e) {
+			error_log("check_if_user_can_add_review: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	/**
+	 * Inserisce una recensione
+	 * @param $userRecensito string utente recensito
+	 * @param $idScambio int id scambio
+	 * @param $valutazione int valutazione
+	 * @param $contenuto string contenuto
+	 * @throws Exception se si verifica un errore
+	 */
+	function insert_review($userRecensito, $idScambio, $valutazione, $contenuto): void
+	{
+		$query = "INSERT INTO Recensione (emailRecensito, idScambio, valutazione, contenuto) VALUES (?, ?, ?, ?)";
+		try {
+			$emailRecensito = $this->get_user_email_by_username($userRecensito);
+			$this->void_query($query, "siis", [$emailRecensito, $idScambio, $valutazione, $contenuto]);
+		} catch (Exception $e) {
+			error_log("insert_review: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function check_user_has_libri_offerti($username): bool
+	{
+		$query = "SELECT * FROM Copia WHERE proprietario = ? LIMIT 1";
+		try {
+			$emailRec = $this->get_user_email_by_username($username);
+			$val = $this->query_to_array($query, 's', [$emailRec]);
+			return count($val) > 0;
+		} catch (Exception $e) {
+			error_log("check_user_has_libri_offerti: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function check_user_has_libri_desiderati($username): bool
+	{
+		$query = "SELECT * FROM Desiderio WHERE email = ? LIMIT 1";
+		try {
+			$emailRec = $this->get_user_email_by_username($username);
+			$val = $this->query_to_array($query, 's', [$emailRec]);
+			return count($val) > 0;
+		} catch (Exception $e) {
+			error_log("check_user_has_libri_desiderati: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function check_user_has_generi_preferiti($username): bool
+	{
+		$query = "SELECT * FROM Utente WHERE username = ? AND generi_preferiti IS NOT NULL LIMIT 1";
+		try {
+			$val = $this->query_to_array($query, 's', [$username]);
+			return count($val) > 0;
+		} catch (Exception $e) {
+			error_log("check_user_has_generi_preferiti: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+}

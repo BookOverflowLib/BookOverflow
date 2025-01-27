@@ -1,5 +1,5 @@
 <?php
-require_once '../src/paths.php';
+require_once __DIR__ . '/' . '../paths.php';
 require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
@@ -15,4 +15,5 @@ $index = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'index.html');
 
 $page = str_replace('<!-- [content] -->', $index, $page);
 $page = str_replace('<!-- [piuScambiati] -->', $mostTradedCoversHTML, $page);
+$page = populateWebdirPrefixPlaceholders($page);
 echo $page;

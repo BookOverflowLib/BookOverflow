@@ -1,6 +1,5 @@
 <?php
-
-require_once '../src/paths.php';
+require_once __DIR__ . '/' . '../paths.php';
 require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
@@ -8,18 +7,18 @@ ensure_session();
 $db = new DBAccess();
 
 if (isset($_POST) && isset($_SESSION['user'])) {
-	$id = $_POST['id_scambio'];
-
+	$user = $_SESSION['user'];
+	$isbn = $_POST['isbn'];
 	try {
-		$db->remove_scambio_by_id($id);
+		$db->delete_libro_desiderato($user, $isbn);
 	} catch (Exception $e) {
-		$_SESSION['error'] = 'Errore: scambio non rimosso';
+		$_SESSION['error'] = exceptionToError($e, "libro non rimosso");
 	}
 } else {
-	throw new Exception(message: "Errore: scambio non rimosso");
+	$_SESSION['error'] = "Errore: libro non rimosso";
 }
-//
-$previousUrl = $_SERVER['HTTP_REFERER'];
+
+$previousUrl = $_SERVER['HTTP_REFERER'] ?? '/profilo/' . $_SESSION['user'];
 $previousUrl = parse_url($previousUrl, PHP_URL_PATH);
 header('Location: ' . $previousUrl);
 exit();

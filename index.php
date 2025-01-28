@@ -87,6 +87,9 @@ switch ($path) {
 	case '/profilo/scambi':
 		require $GLOBALS['PAGES_PATH'] . 'scambi.php';
 		break;
+	case '/profilo/recensioni':
+		require $GLOBALS['PAGES_PATH'] . 'recensioni.php';
+		break;
 	case '/libro':
 		require $GLOBALS['PAGES_PATH'] . 'libro.php';
 		break;

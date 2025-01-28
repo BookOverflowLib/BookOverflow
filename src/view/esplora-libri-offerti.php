@@ -8,17 +8,17 @@ require_once $GLOBALS['MODEL_PATH'] . 'nyt-libri.php';
 //insert_NYT_books();
 ensure_session();
 
-$page = getTemplatePage("Più scambiati");
+$page = getTemplatePage("Libri offerti");
 $esplora = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'esplora-tutti.html');
-$esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Più scambiati', $esplora);
+$esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Libri offerti', $esplora);
 
-$sottotitolo = 'La collezione dei libri più scambiati tra gli utenti!';
+$sottotitolo = 'Tutti i libri messi a disposizione dagli utenti nella piattaforma!';
 $esplora = str_replace('<!-- [sottotitolo] -->', $sottotitolo, $esplora);
 
 $db = new DBAccess();
-$piu_scambiati = $db->get_piu_scambiati();
+$libri_offerti = $db->get_libri_offerti();
 
-$esplora = str_replace('<!-- [caroselloTuttiLibri] -->', getLibriCopertinaGrande($piu_scambiati, 999), $esplora);
+$esplora = str_replace('<!-- [caroselloTuttiLibri] -->', getLibriCopertinaGrande($libri_offerti, 999), $esplora);
 
 $page = str_replace('<!-- [content] -->', $esplora, $page);
 $page = populateWebdirPrefixPlaceholders($page);

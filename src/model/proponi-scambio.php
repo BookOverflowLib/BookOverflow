@@ -6,7 +6,6 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
 $db = new DBAccess();
-
 if (isset($_POST) && isset($_SESSION['user'])) {
 	$user_prop = $_POST['utente_proponente'];
 	$user_acc = $_POST['utente_accettatore'];
@@ -21,9 +20,6 @@ if (isset($_POST) && isset($_SESSION['user'])) {
 } else {
 	throw new Exception(message: "Errore: scambio non proposto");
 }
-
-//$previousUrl = $_SERVER['HTTP_REFERER'];
-//$previousUrl = parse_url($previousUrl, PHP_URL_PATH);
 $prefix = getPrefix();
 header('Location: ' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi');
 exit();

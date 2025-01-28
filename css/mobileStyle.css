@@ -57,7 +57,7 @@
 }
 
 #landing img {
-	width: 80vw;
+	max-width: 20em;
 }
 
 #landing > div > h1 {
@@ -68,14 +68,28 @@
 	font-size: var(--font-md);
 }
 
+.intestazione h2 {
+	font-size: var(--font-md);
+}
+
+.sottotitolo {
+	padding: 0 1em;
+}
+
 .carosello-libri {
-	grid-template-columns: 1fr 1fr;
-	margin-top: 2em;
+	grid-template-columns: repeat(auto-fit, minmax(144px, 1fr));
+	margin-top: 1em;
 	gap: 0.5em;
 }
 
 .libro {
-	padding: 0;
+	min-width: 4em;
+	width: 100%;
+	padding: 0.5em;
+	box-sizing: border-box;
+}
+.libro img {
+	width: 100%;
 }
 
 #citazione {
@@ -188,31 +202,24 @@ footer .logo p {
 
 #come-funziona h1,
 #come-funziona p {
-	justify-self: center;
+	text-align: center;
 }
 
 #come-funziona > div > div > p {
-	margin: 0;
-	padding: 1.5em;
+	padding: 1em;
 	font-size: var(--font-base);
 }
 
 #come-funziona > div > div > img {
-	border-radius: 1em;
-	width: 22vw;
-	max-width: 23em;
+	max-width: 10em;
 	overflow: hidden;
 	mask-image: url('./assets/imgs/blob-mask3.svg');
-	justify-self: center;
-	padding-bottom: 0;
-	margin-right: 2em;
 }
 
 #perche-farlo > div > div {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 2em;
-	padding: 0em;
 }
 
 #perche-farlo > div > h2 {
@@ -223,8 +230,6 @@ footer .logo p {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 2em;
-	padding: 0em;
-	margin: 2em;
 }
 
 #step > div > h2 {
@@ -376,8 +381,17 @@ footer .logo p {
 	text-align: justify;
 }
 
-.sezione-scambi .scambi{
+.sezione-scambi .scambi {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 1em;
+}
+
+.carosello-libri-vuoto {
+	grid-column-start: span 2;
+	padding: 1em;
+	justify-self: center;
+}
+.carosello-libri-vuoto a {
+	padding: 0em;
 }

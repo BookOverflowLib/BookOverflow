@@ -13,6 +13,9 @@ $page = getTemplatePage("Per Te");
 $esplora = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'esplora-tutti.html');
 $esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Match per te', $esplora);
 
+$sottotitolo = 'Scopri i match perfetti! Qui trovi i libri che desideri e che altri utenti offrono, la bella notizia è che anche tu hai qualcosa che loro desiderano!';
+$esplora = str_replace('<!-- [sottotitolo] -->', $sottotitolo, $esplora);
+
 $db = new DBAccess();
 $match_per_te = $db->get_match_per_te_by_user($_SESSION['user']);
 

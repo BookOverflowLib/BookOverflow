@@ -539,6 +539,7 @@ class DBAccess
 			SELECT C.ISBN
 			FROM Copia C
 			WHERE C.proprietario = ?
+			AND C.disponibile = TRUE
 		)
 		SQL;
 
@@ -557,15 +558,18 @@ class DBAccess
 	public function get_users_with_that_book_and_interested_in_my_books($username, $isbnLibro): ?array
 	{
 		$query = <<<SQL
-		SELECT DISTINCT U.email, U.nome, U.cognome, U.username, U.path_immagine, U.provincia, U.comune
+		SELECT DISTINCT U.email, U.nome, U.cognome, U.username, U.path_immagine, U.provincia, U.comune, C.ID AS id_copia
 		FROM Utente U
 		JOIN Copia C ON U.email = C.proprietario
 		JOIN Desiderio D ON U.email = D.email
-		WHERE C.ISBN = ? AND C.disponibile = TRUE AND C.proprietario != ?
+		WHERE C.ISBN = ? 
+		AND C.disponibile = TRUE 
+		AND C.proprietario != ?
 		AND D.ISBN IN (
 		    SELECT C2.ISBN
 		    FROM Copia C2
 		    WHERE C2.proprietario = ?
+			AND C2.disponibile = TRUE
 		);
 		SQL;
 
@@ -581,9 +585,11 @@ class DBAccess
 	public function get_desiderati_che_offro($userOfferente, $userDesiderante): ?array
 	{
 		$query = <<<SQL
-		SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina	
+		SELECT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina, C.ID AS id_copia
 		FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
-		WHERE C.proprietario = ? AND C.ISBN IN (
+		WHERE C.proprietario = ? 
+		AND C.disponibile = TRUE
+		AND C.ISBN IN (
 			SELECT D.ISBN
 			FROM Desiderio D
 			WHERE D.email = ?
@@ -673,7 +679,7 @@ class DBAccess
 		$query = <<<SQL
 		SELECT * FROM Scambio S
 		WHERE S.emailProponente = ? OR S.emailAccettatore = ?
-		ORDER BY S.dataProposta DESC;
+		ORDER BY S.ID DESC;
 		SQL;
 
 		try {
@@ -758,8 +764,10 @@ class DBAccess
 		WHERE C.disponibile = TRUE
 		AND D.ISBN IN (
 		    SELECT C2.ISBN
-		    FROM Copia C2
-		    WHERE C2.proprietario = ? AND C2.disponibile = TRUE
+		    FROM Copia C2 
+		    WHERE C2.proprietario = ? 
+			AND C2.proprietario != U.email
+			AND C2.disponibile = TRUE
 		) AND C.ISBN IN (
 		    SELECT D2.ISBN
 		    FROM Desiderio D2
@@ -789,7 +797,9 @@ class DBAccess
 		AND D.ISBN IN (
 		    SELECT C2.ISBN
 		    FROM Copia C2
-		    WHERE C2.proprietario = ? AND C2.disponibile = TRUE
+		    WHERE C2.proprietario = ? 
+			AND C2.proprietario != U.email
+			AND C2.disponibile = TRUE
 		) AND C.ISBN NOT IN (
 		    SELECT D2.ISBN
 		    FROM Desiderio D2
@@ -808,26 +818,25 @@ class DBAccess
 
 	function get_piu_scambiati(): ?array
 	{
-		//commento quella parte perchè ci sarebbero troppi pochi risultati per il momento
 		$query = <<<SQL
 		SELECT L.ISBN, L.titolo, L.autore, L.path_copertina, COUNT(*) AS numero_scambi		
 		FROM (		    
-			SELECT l.ISBN, l.titolo, l.autore, l.path_copertina
+			SELECT l.ISBN, l.titolo, l.autore, l.path_copertina, s.ID
 			FROM Scambio s 
 			JOIN Copia c ON s.idCopiaProp = c.ID
 			JOIN Libro l ON c.ISBN = l.ISBN
-			-- WHERE s.stato = 'accettato'
+			WHERE s.stato = 'accettato'
 			
 			UNION ALL 
 			
-			SELECT l.ISBN, l.titolo, l.autore, l.path_copertina
+			SELECT l.ISBN, l.titolo, l.autore, l.path_copertina, s.ID
 			FROM Scambio s
 			JOIN Copia c ON s.idCopiaAcc = c.ID
 			JOIN Libro l ON c.ISBN = l.ISBN
-			-- WHERE s.stato = 'accettato'
+			WHERE s.stato = 'accettato'
 		) AS L
 		GROUP BY L.ISBN
-		ORDER BY numero_scambi DESC
+		ORDER BY L.ID DESC
 		SQL;
 
 		try {
@@ -936,6 +945,23 @@ class DBAccess
 			return count($val) > 0;
 		} catch (Exception $e) {
 			error_log("check_user_has_generi_preferiti: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function get_libri_offerti(): array
+	{
+		$query = <<<SQL
+		SELECT DISTINCT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina
+		FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN JOIN Utente U ON C.proprietario = U.email
+		WHERE C.disponibile = TRUE
+		ORDER BY C.ID DESC
+		SQL;
+
+		try {
+			return $this->query_to_array($query);
+		} catch (Exception $e) {
+			error_log("get_libri_offerti: " . $e->getMessage());
 			throw $e;
 		}
 	}

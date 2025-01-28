@@ -16,8 +16,11 @@ try {
 
 $user = getUser($db, $profileId);
 $page = generatePage($user, $isTuoProfilo, $db);
+
 $page = populateWebdirPrefixPlaceholders($page);
 $page = getBannerNuovoProfilo($isTuoProfilo, $page);
+$page = iniziaEsplorare($isTuoProfilo, $page);
+$page = addErrorsToPage($page);
 echo $page;
 
 function getProfileId()
@@ -125,7 +128,7 @@ function replaceLibri($profilo, $user, $db)
 function addTuoProfiloButtons($profilo)
 {
 	$prefix = getPrefix();
-	$scambiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout ">I tuoi scambi</a>';
+	$scambiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout">I tuoi scambi</a>';
 	$profilo = str_replace('<!-- [scambiButton] -->', $scambiButton, $profilo);
 
 	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><button type="submit" class="button-layout secondary logout" aria-label="Esci dal tuo profilo"/>Esci</button></form>';
@@ -207,7 +210,7 @@ function getBannerNuovoProfilo($isTuoProfilo, $page)
 	</svg>
 	HTML;
 	$banner = <<<HTML
-	<div class="sezione-libri" id="completa-profilo">
+	<div class="sezione-stretta" id="completa-profilo">
 		<div class="message-box">
 			{$icon}
 			<div>
@@ -222,6 +225,23 @@ function getBannerNuovoProfilo($isTuoProfilo, $page)
 	HTML;
 
 	return str_replace('<!-- [bannerCompletaProfilo] -->', $banner, $page);
+}
+
+function iniziaEsplorare($isTuoProfilo, $page)
+{
+	if (!$isTuoProfilo) {
+		return str_replace('<!-- [iniziaEsplorare] -->', '', $page);
+	}
+	$prefix = getPrefix();
+	$sec = <<<HTML
+	<section class="sezione-stretta">
+		<div id="inizia-esplorare">
+			<p class="">Inizia subito ad esplorare!</p>
+			<a class="button-layout" href="{$prefix}/esplora">Esplora</a>
+		</div>
+	</section>
+	HTML;
+	return str_replace('<!-- [iniziaEsplorare] -->', $sec, $page);
 }
 
 function redirect(string $error = null): never

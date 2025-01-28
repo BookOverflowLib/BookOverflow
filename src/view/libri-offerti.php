@@ -28,4 +28,5 @@ if (check_ownership()) {
 
 $page = str_replace('<!-- [content] -->', $libri_offerti, $page);
 $page = populateWebdirPrefixPlaceholders($page);
+$page = addErrorsToPage($page);
 echo $page;

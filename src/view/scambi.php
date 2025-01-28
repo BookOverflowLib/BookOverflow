@@ -25,6 +25,7 @@ $scambi = addScambiSection($scambi, $db);
 
 $page = str_replace('<!-- [content] -->', $scambi, $page);
 $page = populateWebdirPrefixPlaceholders($page);
+$page = addErrorsToPage($page);
 echo $page;
 
 

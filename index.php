@@ -51,6 +51,12 @@ switch ($path) {
 	case '/esplora/potrebbe-piacerti':
 		require $GLOBALS['PAGES_PATH'] . 'esplora-potrebbe-piacerti.php';
 		break;
+	case '/esplora/libri-offerti':
+		require $GLOBALS['PAGES_PATH'] . 'esplora-libri-offerti.php';
+		break;
+	case '/esplora/piu-scambiati':
+		require $GLOBALS['PAGES_PATH'] . 'esplora-piu-scambiati.php';
+		break;
 	case '/piu-scambiati':
 		require $GLOBALS['PAGES_PATH'] . 'esplora-piu-scambiati.php';
 		break;
@@ -124,7 +130,7 @@ switch ($path) {
 	case '/api/aggiungi-recensione':
 		require $GLOBALS['MODEL_PATH'] . 'aggiungi-recensione.php';
 		break;
-	
+
 	default:
 		require $GLOBALS['PAGES_PATH'] . '404.php';
 		break;

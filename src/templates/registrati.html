@@ -28,6 +28,7 @@
 						class="form-input"
 						id="nome"
 						name="nome"
+						placeholder="Es. Mario"
 						pattern="^[A-Za-z\sÀ-ÿ'’]{2,50}$"
 						required
 						title="Deve contenere almeno 2 caratteri, non sono ammessi numeri o caratteri speciali"
@@ -48,6 +49,7 @@
 						class="form-input"
 						id="cognome"
 						name="cognome"
+						placeholder="Es. Rossi"
 						pattern="^[A-Za-z\sÀ-ÿ'’]{2,50}$"
 						required
 						title="Deve contenere almeno 2 caratteri, non sono ammessi numeri o caratteri speciali"
@@ -69,6 +71,7 @@
 						class="form-input"
 						id="provincia"
 						name="provincia"
+						aria-describedby="provincia_help"
 						required>
 						<option value="" selected disabled>
 							Seleziona una provincia
@@ -76,6 +79,10 @@
 						<hr />
 						<!-- [province] -->
 					</select>
+					<p id="provincia_help" class="form_help">
+						La provincia in cui risiedi, sarà utile agli altri utenti
+						per capire le modalità di scambio
+					</p>
 				</div>
 				<div>
 					<label for="comune"
@@ -85,12 +92,17 @@
 						class="form-input"
 						id="comune"
 						name="comune"
+						aria-describedby="comune_help"
 						required>
 						<option value="" selected disabled>
 							Seleziona un comune
 						</option>
 						<hr />
 					</select>
+					<p id="comune_help" class="form_help">
+						Il comune in cui risiedi, sarà utile agli altri utenti
+						per capire le modalità di scambio
+					</p>
 				</div>
 
 				<!-- spans required to make validation work -->
@@ -106,6 +118,7 @@
 						id="username"
 						name="username"
 						required
+						placeholder="Es. mario.rossi"
 						pattern="^[^\s\r\n]{2,50}$"
 						title="Deve contenere almeno 2 caratteri, non sono ammessi spazi"
 						aria-describedby="username_help"
@@ -126,6 +139,7 @@
 						class="form-input"
 						id="email"
 						name="email"
+						placeholder="Es. mariorossi@esempio.it"
 						pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
 						title="Inserire un indirizzo email valido"
 						required

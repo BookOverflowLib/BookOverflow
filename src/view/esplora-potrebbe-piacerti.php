@@ -14,6 +14,9 @@ $page = getTemplatePage("Potrebbe piacerti");
 $esplora = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'esplora-tutti.html');
 $esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Potrebbe piacerti', $esplora);
 
+$sottotitolo = 'Libri offerti da utenti interessati ai tuoi: lasciati ispirare anche da queste proposte!';
+$esplora = str_replace('<!-- [sottotitolo] -->', $sottotitolo, $esplora);
+
 $db = new DBAccess();
 $match_potrebbe_piacerti = $db->get_potrebbe_piacerti_by_user($_SESSION['user']);
 

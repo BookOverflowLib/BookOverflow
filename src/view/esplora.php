@@ -97,16 +97,22 @@ function posizionaCategorie($page)
 function getSezioneEsploraTemplate($titolo, $link, $marker)
 {
     $titoloLower = strtolower($titolo);
+    $mostraTutti = '';
+    if (($link == 'per-te' || $link == 'potrebbe-piacerti') && !is_logged_in()) {
+        $mostraTutti = '';
+    } else {
+        $mostraTutti = <<<HTML
+        <a aria-label="Mostra tutti i {$titoloLower}" 
+        href="<!-- [prefix] -->/esplora/{$link}">Mostra tutti</a>
+        HTML;
+    }
+
     return <<<HTML
     <section>
         <article class="sezione-stretta">
             <div class="intestazione">
                 <h2>{$titolo}</h2>
-                <a
-                    aria-label="Mostra tutti i {$titoloLower}"
-                    href="<!-- [prefix] -->/esplora/{$link}"
-                    >Mostra tutti</a
-                >
+                {$mostraTutti}
             </div>
             <div class="carosello-libri">
                 <!-- [{$marker}] -->

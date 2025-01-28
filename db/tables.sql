@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS Follow;
-
 DROP TABLE IF EXISTS Recensione;
 
 DROP TABLE IF EXISTS Scambio;
@@ -30,8 +28,6 @@ CREATE TABLE
 
 CREATE TABLE
     Libro (
-        -- la lunghezza dell'ISBN può essere 10 o 13 
-        -- ISBN CHAR(13) PRIMARY KEY, 
         -- Google Books API spesso restituisce ISBN malformati, come "PARAMS=MINN:319510008464605"
         -- Motivo per cui abbiamo modificato l'SQL per accettare ISBN più lunghi ed a lunghezza variabile, piuttosto di far fallire gli inserimenti
         ISBN VARCHAR(50) PRIMARY KEY,
@@ -40,7 +36,7 @@ CREATE TABLE
         editore VARCHAR(255),
         anno YEAR,
         genere VARCHAR(100),
-        descrizione TEXT, -- giusto?
+        descrizione TEXT,
         lingua VARCHAR(50),
         path_copertina VARCHAR(255)
     );
@@ -59,7 +55,6 @@ CREATE TABLE
             'usato',
             'danneggiato'
         ),
-        UNIQUE (ISBN, proprietario),
         FOREIGN KEY (ISBN) REFERENCES Libro (ISBN),
         FOREIGN KEY (proprietario) REFERENCES Utente (email)
     );
@@ -106,14 +101,14 @@ CREATE TABLE
         PRIMARY KEY (emailRecensito, idScambio)
     );
 
-CREATE TABLE
-    Follow (
-        emailSeguace VARCHAR(255),
-        emailSeguito VARCHAR(255),
-        PRIMARY KEY (emailSeguito, emailSeguace),
-        FOREIGN KEY (emailSeguace) REFERENCES Utente (email),
-        FOREIGN KEY (emailSeguito) REFERENCES Utente (email)
-    );
+-- CREATE TABLE
+--     Follow (
+--         emailSeguace VARCHAR(255),
+--         emailSeguito VARCHAR(255),
+--         PRIMARY KEY (emailSeguito, emailSeguace),
+--         FOREIGN KEY (emailSeguace) REFERENCES Utente (email),
+--         FOREIGN KEY (emailSeguito) REFERENCES Utente (email)
+--     );
 
 -- CREATE TABLE
 --     Immagine (

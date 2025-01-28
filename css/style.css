@@ -3,43 +3,47 @@
    ========================================================================== */
 
 @font-face {
-	font-family: 'Gentium Book Plus';
-	src: url('./../assets/fonts/GentiumBookPlus-Regular.woff2') format('woff2'),
+	font-family: 'GentiumBookPlus-Regular';
+	src: url('./../assets/fonts/GentiumBookPlus-Regular.woff') format('woff'),
+		url('./../assets/fonts/GentiumBookPlus-Regular.woff2') format('woff2'),
 		url('./../assets/fonts/GentiumBookPlus-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-display: swap;
 }
 
 @font-face {
-	font-family: 'Gentium Book Plus';
-	src: url('./../assets/fonts/GentiumBookPlus-Bold.woff2') format('woff2'),
+	font-family: 'GentiumBookPlus-Bold';
+	src: url('./../assets/fonts/GentiumBookPlus-Bold.woff') format('woff'), 
+		url('./../assets/fonts/GentiumBookPlus-Bold.woff2') format('woff2'),
 		url('./../assets/fonts/GentiumBookPlus-Bold.ttf') format('truetype');
 	font-weight: bold;
 	font-display: swap;
 }
 
 @font-face {
-	font-family: 'Gentium Book Plus';
-	src: url('./../assets/fonts/GentiumBookPlus-Italic.woff2') format('woff2'),
+	font-family: 'GentiumBookPlus-Italic';
+	src: url('./../assets/fonts/GentiumBookPlus-BoldItalic.woff') format('woff'),
+		url('./../assets/fonts/GentiumBookPlus-Italic.woff2') format('woff2'),
 		url('./../assets/fonts/GentiumBookPlus-Italic.ttf') format('truetype');
 	font-style: italic;
 	font-display: swap;
 }
 
 @font-face {
-	font-family: 'Gentium Book Plus';
-	src: url('./../assets/fonts/GentiumBookPlus-BoldItalic.woff2')
-			format('woff2'),
-		url('./../assets/fonts/GentiumBookPlus-BoldItalic.ttf')
-			format('truetype');
+	font-family: 'GentiumBookPlus-BoldItalic';
+	src: url('./../assets/fonts/GentiumBookPlus-BoldItalic.woff') format('woff'), 
+		url('./../assets/fonts/GentiumBookPlus-BoldItalic.woff2') format('woff2'),
+		url('./../assets/fonts/GentiumBookPlus-BoldItalic.ttf') format('truetype');
 	font-style: italic;
 	font-weight: bold;
 	font-display: swap;
 }
 
 @font-face {
-	font-family: 'Onest';
-	src: url('./../assets/fonts/Onest.ttf') format('woff2');
+	font-family: 'Onest-VariableFont_wght';
+	src: url('./../assets/fonts/Onest-VariableFont_wght.woff') format('woff'),
+		url('./../assets/fonts/Onest-VariableFont_wght.woff2') format('woff2'),
+		url('./../assets/fonts/Onest-VariableFont_wght.ttf') format('truetype'); 
 	font-display: swap;
 }
 
@@ -162,7 +166,8 @@
 	--no-theme-icon: url('./../assets/imgs/sun.svg');
 	--svg-invert: invert(1);
 	--text: #f3efe6;
-	--text-opposite: #f3efe6; /*#18140c;*/
+	--text-opposite: #f3efe6;
+	/*#18140c;*/
 	--text-error: #ff525f;
 	--background: #0f0c07;
 	--primary: #dbc69b;
@@ -280,10 +285,6 @@
 	}
 }
 
-@media (prefers-reduced-motion) {
-	/* TODO: togliere animazioni? */
-}
-
 * {
 	margin: 0;
 	padding: 0;
@@ -301,7 +302,7 @@ blockquote {
 }
 
 html {
-	font-family: 'Onest', sans-serif;
+	font-family: 'Onest-VariableFont_wght', sans-serif;
 	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;
@@ -319,7 +320,7 @@ body {
 }
 
 button {
-	font-family: 'Onest', sans-serif;
+	font-family: 'Onest-VariableFont_wght', sans-serif;
 	border: none;
 	background-color: transparent;
 	cursor: pointer;
@@ -377,10 +378,12 @@ a {
 	background: var(--secondary-200);
 	color: var(--text);
 }
+
 .destructive {
 	background: var(--accent-200);
 	color: var(--text);
 }
+
 .destructive:hover {
 	background: var(--accent-300);
 }
@@ -414,7 +417,7 @@ a {
 	background-color: var(--secondary-100);
 }
 
-.profile-button > img {
+.profile-button>img {
 	width: 3em;
 	height: 3em;
 	border-radius: 50%;
@@ -429,18 +432,18 @@ a {
 
 /* LOGO */
 .logo {
-	font-family: 'Gentium Book Plus', serif;
+	font-family: 'GentiumBookPlus-Regular', serif;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	gap: 1em;
 }
 
-.logo > h1 {
+.logo>h1 {
 	font-size: var(--font-md);
 }
 
-.logo > p {
+.logo>p {
 	font-size: var(--font-base);
 }
 
@@ -485,7 +488,7 @@ header {
 	justify-self: start;
 }
 
-.header > .button-layout {
+.header>.button-layout {
 	justify-self: end;
 }
 
@@ -507,11 +510,11 @@ header {
 	background: var(--secondary-100);
 }
 
-.theme-toggle > span {
+.theme-toggle>span {
 	display: none;
 }
 
-.theme-toggle > span.active {
+.theme-toggle>span.active {
 	display: inline-flex;
 	align-items: center;
 	height: 100%;
@@ -544,7 +547,7 @@ header {
 	font-size: var(--font-base);
 }
 
-#menu > ul > li > a {
+#menu>ul>li>a {
 	text-decoration: none;
 	color: var(--text);
 	padding-top: 1em;
@@ -553,7 +556,7 @@ header {
 	margin-bottom: -2em;
 }
 
-#menu > ul > li > a:hover {
+#menu>ul>li>a:hover {
 	text-decoration: underline;
 }
 
@@ -565,7 +568,7 @@ header {
 	font-size: var(--font-sm);
 }
 
-#breadcrumb > ol {
+#breadcrumb>ol {
 	list-style: none;
 	display: flex;
 	text-align: center;
@@ -573,11 +576,12 @@ header {
 	margin-inline: 1em;
 }
 
-#breadcrumb > ol > li + li::before {
+#breadcrumb>ol>li+li::before {
 	content: '/' / '';
 	margin-inline: 0.5em;
 }
-#breadcrumb > ol > li {
+
+#breadcrumb>ol>li {
 	max-width: 20em;
 	overflow: hidden;
 	white-space: nowrap;
@@ -608,7 +612,7 @@ footer {
 }
 
 /*TEMP PADDING*/
-footer > .logo {
+footer>.logo {
 	padding-top: 10em;
 }
 
@@ -637,7 +641,7 @@ main {
 
 #landing h1 {
 	font-size: var(--font-xxl);
-	font-family: 'Gentium Book Plus', serif;
+	font-family: 'GentiumBookPlus-BoldItalic', serif;
 	font-style: italic;
 	line-height: 1.2em;
 }
@@ -665,7 +669,7 @@ main {
 	gap: 2em;
 }
 
-#piu-scambiati > article {
+#piu-scambiati>article {
 	max-width: 60em;
 	margin: auto;
 }
@@ -673,7 +677,8 @@ main {
 .carosello-libri {
 	display: grid;
 	/* grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); */
-	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	;
 	gap: 1em;
 	margin-top: 1em;
 	justify-content: space-between;
@@ -685,7 +690,8 @@ main {
 	grid-column-start: span 4;
 	padding: 2em;
 }
-.carosello-libri-vuoto > a {
+
+.carosello-libri-vuoto>a {
 	padding: 2em;
 }
 
@@ -701,19 +707,19 @@ main {
 	background-color: var(--background-100);
 }
 
-.libro > a {
+.libro>a {
 	display: block;
 	border-radius: inherit;
 	text-decoration: none;
 }
 
-.libro > a > img {
+.libro>a>img {
 	border-radius: 0.5em;
 	aspect-ratio: 1/1.5;
 	object-fit: cover;
 }
 
-.libro > a > p {
+.libro>a>p {
 	max-width: 9.3em;
 	overflow: hidden;
 	white-space: nowrap;
@@ -734,26 +740,26 @@ main {
 	margin: auto;
 }
 
-#citazione > blockquote {
+#citazione>blockquote {
 	font-style: italic;
 	font-size: 2em;
 }
 
-#citazione > blockquote::before {
+#citazione>blockquote::before {
 	content: url('./../assets/imgs/quote.svg');
 }
 
-#citazione > blockquote ::after {
+#citazione>blockquote ::after {
 	content: '”';
 }
 
-#citazione > p {
+#citazione>p {
 	font-size: 1.5em;
 	text-align: right;
 }
 
 .serif {
-	font-family: 'Gentium Book Plus', serif;
+	font-family: 'GentiumBookPlus-Bold', serif;
 }
 
 .intestazione {
@@ -761,7 +767,8 @@ main {
 	grid-template-columns: 1fr auto;
 	align-items: center;
 }
-.intestazione > a {
+
+.intestazione>a {
 	padding-top: 1em;
 	padding-bottom: 1em;
 }
@@ -791,7 +798,7 @@ main {
 	padding: 2em;
 }
 
-.dati-profilo > img {
+.dati-profilo>img {
 	width: 100%;
 	max-width: 10em;
 	border-radius: 50%;
@@ -799,7 +806,7 @@ main {
 	object-fit: cover;
 }
 
-.dati-profilo > div {
+.dati-profilo>div {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;
@@ -846,6 +853,7 @@ main {
 ::placeholder {
 	color: var(--neutral-400);
 }
+
 fieldset {
 	border: none;
 }
@@ -856,7 +864,7 @@ fieldset {
 	gap: 1.5em;
 }
 
-.form-data > button {
+.form-data>button {
 	margin-left: 50%;
 }
 
@@ -864,7 +872,7 @@ fieldset {
 	font-weight: 600;
 }
 
-.form-data label > .required {
+.form-data label>.required {
 	font-weight: 400;
 	color: var(--text-error);
 	font-size: var(--font-sm);
@@ -908,7 +916,7 @@ select {
 	padding-right: 0.5em;
 }
 
-section > p > a {
+section>p>a {
 	color: var(--text);
 }
 
@@ -928,7 +936,7 @@ section > p > a {
 	gap: 1em;
 }
 
-.doppio-input > div {
+.doppio-input>div {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;
@@ -969,10 +977,11 @@ section > p > a {
 	padding: 1em;
 }
 
-.libro-panoramica > div > h1 {
+.libro-panoramica>div>h1 {
 	margin-top: 0.5em;
 }
-.libro-panoramica > div > h2 {
+
+.libro-panoramica>div>h2 {
 	margin-top: 1em;
 }
 
@@ -982,17 +991,17 @@ section > p > a {
 	padding: 2em;
 }
 
-.sezione-scambi > h2 {
+.sezione-scambi>h2 {
 	font-size: var(--font-lg);
 	margin-bottom: 1em;
 }
 
-.sezione-scambi > h2::before {
+.sezione-scambi>h2::before {
 	content: '📚';
 	margin-right: 0.5em;
 }
 
-.sezione-scambi > .scambi {
+.sezione-scambi>.scambi {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1em;
@@ -1008,7 +1017,7 @@ section > p > a {
 	background-color: var(--background-100);
 }
 
-.scambio-utente > a {
+.scambio-utente>a {
 	display: flex;
 	align-items: center;
 	gap: 1em;
@@ -1019,11 +1028,11 @@ section > p > a {
 	transition: all 0.3s ease-in-out;
 }
 
-.scambio-utente > a:hover {
+.scambio-utente>a:hover {
 	background-color: var(--background-200);
 }
 
-.scambio-utente > a > img {
+.scambio-utente>a>img {
 	width: 100%;
 	max-width: 5em;
 	border-radius: 50%;
@@ -1031,11 +1040,11 @@ section > p > a {
 	object-fit: cover;
 }
 
-.scambio-utente > a > div {
+.scambio-utente>a>div {
 	max-width: 9em;
 }
 
-.scambio-utente > a > div p {
+.scambio-utente>a>div p {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -1048,17 +1057,17 @@ section > p > a {
 	align-items: center;
 }
 
-.scambio-info > p {
+.scambio-info>p {
 	font-size: var(--font-sm);
 	margin-bottom: 1em;
 }
 
-.scambio-info > a {
+.scambio-info>a {
 	font-size: var(--font-sm);
 	margin-top: 1em;
 }
 
-.scambio-libro > a {
+.scambio-libro>a {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -1070,11 +1079,11 @@ section > p > a {
 	color: var(--text);
 }
 
-.scambio-libro > a:hover {
+.scambio-libro>a:hover {
 	background-color: var(--background-200);
 }
 
-.scambio-libro > a > div > p {
+.scambio-libro>a>div>p {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -1158,7 +1167,7 @@ li.activePage {
 	font-size: var(--font-sm);
 }
 
-.form-data > div {
+.form-data>div {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;
@@ -1191,7 +1200,7 @@ li.activePage {
 }
 
 .button-genere {
-	font-family: 'Onest', sans-serif;
+	font-family: 'Onest-VariableFont_wght', sans-serif;
 	box-shadow: inset 0 0 0 2px var(--secondary-300);
 	border-radius: 9999px;
 	padding: 0.5em 1em;
@@ -1207,7 +1216,7 @@ li.activePage {
 	background: var(--background-200);
 }
 
-#come-funziona > div > div {
+#come-funziona>div>div {
 	grid-template-columns: 2fr 1fr;
 	display: grid;
 	justify-items: center;
@@ -1215,15 +1224,15 @@ li.activePage {
 	justify-content: center;
 }
 
-#come-funziona > div > h1 {
+#come-funziona>div>h1 {
 	font-size: var(--font-xl);
 }
 
-#come-funziona > div > div > p {
+#come-funziona>div>div>p {
 	font-size: var(--font-md);
 }
 
-#come-funziona > div > div > picture > img {
+#come-funziona>div>div>picture>img {
 	max-width: 25em;
 	width: 100%;
 	overflow: hidden;
@@ -1234,11 +1243,12 @@ li.activePage {
 #perche-farlo {
 	padding: 2em;
 }
-#perche-farlo > div > h2 {
+
+#perche-farlo>div>h2 {
 	font-size: var(--font-lg);
 }
 
-#perche-farlo > div > div {
+#perche-farlo>div>div {
 	margin-top: 2em;
 	display: grid;
 	grid-template-columns: 2fr 2fr;
@@ -1248,7 +1258,7 @@ li.activePage {
 .motivo1,
 .motivo2 {
 	font-size: var(--font-md);
-	font-family: 'Gentium Book Plus', serif;
+	font-family: 'GentiumBookPlus-Bold', serif;
 }
 
 .motivo1::before,
@@ -1278,18 +1288,18 @@ li.activePage {
 	text-align: center;
 }
 
-#step > div {
+#step>div {
 	padding: 2em;
 	padding-bottom: 4em;
 	max-width: 60em;
 	margin-inline: auto;
 }
 
-#step > div > h2 {
+#step>div>h2 {
 	font-size: var(--font-lg);
 }
 
-#step > div > div {
+#step>div>div {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: 2em;
@@ -1300,11 +1310,11 @@ li.activePage {
 	font-size: var(--font-md);
 }
 
-#step > div p {
+#step>div p {
 	font-size: var(--font-base);
 }
 
-#inizia > div {
+#inizia>div {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -1312,7 +1322,7 @@ li.activePage {
 	padding: 4em;
 }
 
-#inizia > div > p {
+#inizia>div>p {
 	font-size: var(--font-lg);
 	margin-bottom: 1em;
 }
@@ -1326,17 +1336,17 @@ li.activePage {
 	border-radius: 1em;
 }
 
-.book-table > :nth-child(even) {
+.book-table> :nth-child(even) {
 	box-shadow: inset 0 0 0 2px var(--primary-200);
 	background-color: var(--background-100);
 }
 
-.book-table > :first-child {
+.book-table> :first-child {
 	border-top-left-radius: 1em;
 	border-top-right-radius: 1em;
 }
 
-.book-table > :last-child {
+.book-table> :last-child {
 	border-bottom-left-radius: 1em;
 	border-bottom-right-radius: 1em;
 }
@@ -1345,7 +1355,7 @@ li.activePage {
 /*    border-bottom: 2px solid var(--primary-200);*/
 /*}*/
 
-.book-table > p {
+.book-table>p {
 	padding: 2em;
 	padding-top: 5em;
 	padding-bottom: 5em;
@@ -1360,7 +1370,7 @@ li.activePage {
 	align-items: center;
 }
 
-.book-row .book-info > a {
+.book-row .book-info>a {
 	display: flex;
 	flex-direction: row;
 	gap: 1em;
@@ -1369,13 +1379,13 @@ li.activePage {
 	transition: all 0.3s ease-in-out;
 }
 
-.book-row .book-info > a:hover {
+.book-row .book-info>a:hover {
 	background-color: var(--background-200);
 	border-bottom-right-radius: 1em;
 	border-top-right-radius: 1em;
 }
 
-.book-row .book-info > a > div {
+.book-row .book-info>a>div {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;
@@ -1405,12 +1415,12 @@ li.activePage {
 	box-shadow: inset 0 0 0 2px var(--primary-200);
 }
 
-.dialog-window > h2 {
+.dialog-window>h2 {
 	font-size: var(--font-lg);
 	margin-bottom: 1em;
 }
 
-.dialog-window > form > input[type='search'] {
+.dialog-window>form>input[type='search'] {
 	margin-top: 1em;
 	width: 100%;
 }
@@ -1423,7 +1433,7 @@ li.activePage {
 	border-radius: 1em;
 }
 
-#book-results > p {
+#book-results>p {
 	padding: 1em;
 	padding-top: 3em;
 	padding-bottom: 3em;
@@ -1454,7 +1464,7 @@ li.activePage {
 	border-bottom: 2px solid var(--primary-200);
 }
 
-.search-results-row > label {
+.search-results-row>label {
 	display: flex;
 	flex-direction: row;
 	gap: 1em;
@@ -1480,7 +1490,7 @@ li.activePage {
 	max-width: 7em;
 }
 
-.libro-seleziona > img {
+.libro-seleziona>img {
 	border-radius: 0.5em;
 	max-width: 7em;
 	aspect-ratio: 1/1.5;
@@ -1509,7 +1519,7 @@ li.activePage {
 	border-radius: 9999px;
 }
 
-.book-copy-info > div {
+.book-copy-info>div {
 	display: inline-flex;
 	gap: 0.5em;
 	align-items: center;
@@ -1543,51 +1553,53 @@ li.activePage {
 	align-items: start;
 }
 
-.storico-dai > div,
-.storico-ricevi > div,
-.storico-utente-scambio > div > a {
+.storico-dai>div,
+.storico-ricevi>div,
+.storico-utente-scambio>div>a {
 	display: flex;
 	flex-direction: row;
 	gap: 0.5em;
 	align-items: flex-start;
 }
+
 .storico-utente-scambio img {
 	border-radius: 100%;
 }
-.storico-utente-scambio > div > a {
+
+.storico-utente-scambio>div>a {
 	text-decoration: none;
 	padding: 0.5em;
 	border-radius: 1em;
 	transition: all 0.3s ease-in-out;
 }
 
-.storico-utente-scambio > div > a:hover {
+.storico-utente-scambio>div>a:hover {
 	background-color: var(--background-100);
 }
 
-.storico-dai > div > div,
-.storico-ricevi > div > div,
-.storico-utente-scambio > div > div {
+.storico-dai>div>div,
+.storico-ricevi>div>div,
+.storico-utente-scambio>div>div {
 	max-width: 8em;
 }
 
-.storico-dai > div > div > p,
-.storico-ricevi > div > div > p {
+.storico-dai>div>div>p,
+.storico-ricevi>div>div>p {
 	max-height: 4em;
 	overflow: hidden;
 	white-space: wrap;
 	text-overflow: ellipsis;
 }
 
-.storico-dai > p,
-.storico-ricevi > p,
-.storico-utente-scambio > p,
-.storico-buttons > p {
+.storico-dai>p,
+.storico-ricevi>p,
+.storico-utente-scambio>p,
+.storico-buttons>p {
 	margin-bottom: 1em;
 	text-align: center;
 }
 
-.storico-utente-scambio > div > img {
+.storico-utente-scambio>div>img {
 	width: 100%;
 	max-width: 4em;
 	border-radius: 50%;
@@ -1606,11 +1618,12 @@ li.activePage {
 	flex-direction: row;
 }
 
-.storico-buttons.accettato > p {
+.storico-buttons.accettato>p {
 	border: var(--secondary-300) 4px solid;
 	padding: 0.5em;
 }
-.storico-buttons.rifiutato > p {
+
+.storico-buttons.rifiutato>p {
 	border: var(--accent-300) 4px solid;
 	padding: 0.5em;
 }
@@ -1639,6 +1652,7 @@ li.activePage {
 	background-image: url('./../assets/imgs/external-link.svg');
 	background-size: 1em 1em;
 }
+
 .logout::after {
 	margin-left: 0.5em;
 	display: inline-block;
@@ -1659,7 +1673,7 @@ li.activePage {
 }
 
 textarea {
-	font-family: 'Onest', sans-serif;
+	font-family: 'Onest-VariableFont_wght', sans-serif;
 	font-size: var(--font-base);
 	background-color: var(--neutral-50);
 	border-radius: 0.5em;
@@ -1680,31 +1694,31 @@ textarea {
 	cursor: pointer;
 }
 
-.valutazione-stelle input:checked ~ label {
+.valutazione-stelle input:checked~label {
 	color: var(--neutral-100);
 }
 
-.valutazione-stelle input:checked + label {
+.valutazione-stelle input:checked+label {
 	color: var(--star-color);
 }
 
-.valutazione-stelle:hover input + label {
+.valutazione-stelle:hover input+label {
 	color: var(--star-color);
 }
 
-.valutazione-stelle input:hover ~ label,
-.valutazione-stelle input:focus ~ label {
+.valutazione-stelle input:hover~label,
+.valutazione-stelle input:focus~label {
 	color: var(--neutral-100);
 }
 
-.valutazione-stelle input:hover + label,
-.valutazione-stelle input:focus + label {
+.valutazione-stelle input:hover+label,
+.valutazione-stelle input:focus+label {
 	border-bottom-color: var(--text);
 	border-bottom-style: solid;
 	color: var(--star-color);
 }
 
-#recensione-dialog > .dialog-window {
+#recensione-dialog>.dialog-window {
 	max-width: 30em;
 }
 
@@ -1720,11 +1734,12 @@ textarea {
 	margin-inline: auto;
 }
 
-.message-box > svg {
+.message-box>svg {
 	width: 2em;
 	height: 2em;
 	stroke: var(--background-600);
 }
+
 .message-box h2 {
 	color: var(--text-800);
 	margin-bottom: 0.2em;
@@ -1742,15 +1757,16 @@ textarea {
 	justify-content: center;
 	align-items: center;
 }
-#inizia-esplorare > p {
+
+#inizia-esplorare>p {
 	font-size: var(--font-md);
 }
 
-.scambio-button > p {
+.scambio-button>p {
 	padding: 1em;
 }
 
-.sottotitolo{
+.sottotitolo {
 	font-size: var(--font-base);
-	padding:1em;
+	padding: 1em;
 }

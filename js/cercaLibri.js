@@ -26,33 +26,34 @@ function fetch_books_API() {
         .then((response) => response.json())
         .then((data) => {
             if (data === undefined) return;
-            let libri = data.items;
-            document.getElementById('sr-risultati').innerHTML = libri.length + ' Risultati trovati';
-
             let output = '';
-            libri.forEach(function (libro) {
-                let isbn = '';
-                if (libro.volumeInfo.industryIdentifiers === undefined) return;
-                if (libro.volumeInfo.industryIdentifiers[1] === undefined) {
-                    if (libro.volumeInfo.industryIdentifiers[0] !== undefined) {
-                        isbn = libro.volumeInfo.industryIdentifiers[0].identifier;
+            try {
+                let libri = data.items;
+                document.getElementById('sr-risultati').innerHTML = libri.length + ' Risultati trovati';
+
+                libri.forEach(function (libro) {
+                    let isbn = '';
+                    if (libro.volumeInfo.industryIdentifiers === undefined) return;
+                    if (libro.volumeInfo.industryIdentifiers[1] === undefined) {
+                        if (libro.volumeInfo.industryIdentifiers[0] !== undefined) {
+                            isbn = libro.volumeInfo.industryIdentifiers[0].identifier;
+                        } else {
+                            return;
+                        }
                     } else {
-                        return;
+                        isbn = libro.volumeInfo.industryIdentifiers[1].identifier;
                     }
-                } else {
-                    isbn = libro.volumeInfo.industryIdentifiers[1].identifier;
-                }
-                const titolo = libro.volumeInfo.title;
-                const autore = libro.volumeInfo.authors;
-                const immagine = libro.volumeInfo.imageLinks
-                    ? libro.volumeInfo.imageLinks.thumbnail
-                    : 'https://via.placeholder.com/128x200';
-                const descrizione = libro.volumeInfo.description;
-                const anno = libro.volumeInfo.publishedDate;
-                const genere = libro.volumeInfo.categories;
-                const lingua = libro.volumeInfo.language;
-                const editore = libro.volumeInfo.publisher;
-                output += `
+                    const titolo = libro.volumeInfo.title;
+                    const autore = libro.volumeInfo.authors;
+                    const immagine = libro.volumeInfo.imageLinks
+                        ? libro.volumeInfo.imageLinks.thumbnail
+                        : 'https://via.placeholder.com/128x200';
+                    const descrizione = libro.volumeInfo.description;
+                    const anno = libro.volumeInfo.publishedDate;
+                    const genere = libro.volumeInfo.categories;
+                    const lingua = libro.volumeInfo.language;
+                    const editore = libro.volumeInfo.publisher;
+                    output += `
                     <div class="search-results-row">
                         <input type="radio" name="search-result" value="" id="${isbn}" required/>
                         <label for="${isbn}">
@@ -65,18 +66,23 @@ function fetch_books_API() {
                         </label>
                     </div>
                 `;
-                booksResults.push({
-                    isbn: isbn,
-                    titolo: titolo,
-                    autore: autore,
-                    immagine: immagine,
-                    descrizione: descrizione,
-                    anno: anno,
-                    genere: genere,
-                    lingua: lingua,
-                    editore: editore
+                    booksResults.push({
+                        isbn: isbn,
+                        titolo: titolo,
+                        autore: autore,
+                        immagine: immagine,
+                        descrizione: descrizione,
+                        anno: anno,
+                        genere: genere,
+                        lingua: lingua,
+                        editore: editore
+                    });
                 });
-            });
+            } catch (e) {
+                output +=
+                    `<div class="search-results-row">
+                    <p>Nessun risultato</p> </div>`;
+            }
 
             document.getElementById('book-results').innerHTML = output;
         });

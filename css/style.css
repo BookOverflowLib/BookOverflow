@@ -647,10 +647,9 @@ main {
 	margin: 1em 0 2em;
 }
 
-#landing img {
-	width: 100%;
-	height: auto;
-	mask-image: url('./../assets/imgs/blob-mask2.svg');
+#landing svg {
+	width: 90%;
+	height: auto;	
 	overflow: hidden;
 }
 

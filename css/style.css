@@ -65,10 +65,12 @@
 	--no-theme-icon: url('./../assets/imgs/moon.svg');
 	--svg-invert: invert(0);
 	--text: #18140c;
+	--link-visited: #5A3C10;
+
 	--text-opposite: #f3efe6;
 	--text-error: #911f1f;
 	--background: #f8f6f1;
-	--primary: #655024;
+	--primary: #815918;
 	--secondary: #ccd5ae;
 	--accent: #d4a373;
 
@@ -159,9 +161,9 @@
 	--theme-icon: url('./../assets/imgs/moon.svg');
 	--no-theme-icon: url('./../assets/imgs/sun.svg');
 	--svg-invert: invert(1);
-	--text: #f3efe6;
-	--text-opposite: #f3efe6;
-	/*#18140c;*/
+	--text: #ffffff;
+	--link-visited: #e7ccb1;
+	--text-opposite: #f3efe6; /*#18140c;*/
 	--text-error: #ff525f;
 	--background: #0f0c07;
 	--primary: #dbc69b;
@@ -328,6 +330,10 @@ a {
 	color: var(--text);
 	text-underline-offset: 0.2em;
 }
+
+a:visited {
+	color: var(--link-visited);
+}	
 
 .button-layout {
 	font-size: var(--font-sm);
@@ -557,6 +563,9 @@ header {
 #menu>ul>li>a:hover {
 	text-decoration: underline;
 }
+#menu > ul > li > a:visited {
+	color: var(--link-visited);
+}
 
 #breadcrumb {
 	justify-self: center;
@@ -676,7 +685,6 @@ main {
 	display: grid;
 	/* grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); */
 	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-	;
 	gap: 1em;
 	margin-top: 1em;
 	justify-content: space-between;

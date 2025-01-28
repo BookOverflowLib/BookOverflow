@@ -3,36 +3,32 @@
    ========================================================================== */
 
 @font-face {
-	font-family: 'GentiumBookPlus-Regular';
-	src: url('./../assets/fonts/GentiumBookPlus-Regular.woff') format('woff'),
-		url('./../assets/fonts/GentiumBookPlus-Regular.woff2') format('woff2'),
+	font-family: 'Gentium Book Plus';
+	src: url('./../assets/fonts/GentiumBookPlus-Regular.woff2') format('woff2'),
 		url('./../assets/fonts/GentiumBookPlus-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-display: swap;
 }
 
 @font-face {
-	font-family: 'GentiumBookPlus-Bold';
-	src: url('./../assets/fonts/GentiumBookPlus-Bold.woff') format('woff'), 
-		url('./../assets/fonts/GentiumBookPlus-Bold.woff2') format('woff2'),
+	font-family: 'Gentium Book Plus';
+	src: url('./../assets/fonts/GentiumBookPlus-Bold.woff2') format('woff2'),
 		url('./../assets/fonts/GentiumBookPlus-Bold.ttf') format('truetype');
 	font-weight: bold;
 	font-display: swap;
 }
 
 @font-face {
-	font-family: 'GentiumBookPlus-Italic';
-	src: url('./../assets/fonts/GentiumBookPlus-BoldItalic.woff') format('woff'),
-		url('./../assets/fonts/GentiumBookPlus-Italic.woff2') format('woff2'),
+	font-family: 'Gentium Book Plus';
+	src: url('./../assets/fonts/GentiumBookPlus-Italic.woff2') format('woff2'),
 		url('./../assets/fonts/GentiumBookPlus-Italic.ttf') format('truetype');
 	font-style: italic;
 	font-display: swap;
 }
 
 @font-face {
-	font-family: 'GentiumBookPlus-BoldItalic';
-	src: url('./../assets/fonts/GentiumBookPlus-BoldItalic.woff') format('woff'), 
-		url('./../assets/fonts/GentiumBookPlus-BoldItalic.woff2') format('woff2'),
+	font-family: 'Gentium Book Plus';
+	src: url('./../assets/fonts/GentiumBookPlus-BoldItalic.woff2') format('woff2'),
 		url('./../assets/fonts/GentiumBookPlus-BoldItalic.ttf') format('truetype');
 	font-style: italic;
 	font-weight: bold;
@@ -40,10 +36,8 @@
 }
 
 @font-face {
-	font-family: 'Onest-VariableFont_wght';
-	src: url('./../assets/fonts/Onest-VariableFont_wght.woff') format('woff'),
-		url('./../assets/fonts/Onest-VariableFont_wght.woff2') format('woff2'),
-		url('./../assets/fonts/Onest-VariableFont_wght.ttf') format('truetype'); 
+	font-family: 'Onest';
+	src: url('./../assets/fonts/Onest.ttf') format('woff2');
 	font-display: swap;
 }
 
@@ -285,6 +279,10 @@
 	}
 }
 
+@media (prefers-reduced-motion) {
+	/* TODO: togliere animazioni? */
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -302,7 +300,7 @@ blockquote {
 }
 
 html {
-	font-family: 'Onest-VariableFont_wght', sans-serif;
+	font-family: 'Onest', sans-serif;
 	font-optical-sizing: auto;
 	font-weight: 400;
 	font-style: normal;
@@ -320,7 +318,7 @@ body {
 }
 
 button {
-	font-family: 'Onest-VariableFont_wght', sans-serif;
+	font-family: 'Onest', sans-serif;
 	border: none;
 	background-color: transparent;
 	cursor: pointer;
@@ -432,7 +430,7 @@ a {
 
 /* LOGO */
 .logo {
-	font-family: 'GentiumBookPlus-Regular', serif;
+	font-family: 'Gentium Book Plus', serif;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -641,7 +639,7 @@ main {
 
 #landing h1 {
 	font-size: var(--font-xxl);
-	font-family: 'GentiumBookPlus-BoldItalic', serif;
+	font-family: 'Gentium Book Plus', serif;
 	font-style: italic;
 	line-height: 1.2em;
 }
@@ -653,7 +651,7 @@ main {
 
 #landing svg {
 	width: 90%;
-	height: auto;	
+	height: auto;
 	overflow: hidden;
 }
 
@@ -759,7 +757,7 @@ main {
 }
 
 .serif {
-	font-family: 'GentiumBookPlus-Bold', serif;
+	font-family: 'Gentium Book Plus', serif;
 }
 
 .intestazione {
@@ -1200,7 +1198,7 @@ li.activePage {
 }
 
 .button-genere {
-	font-family: 'Onest-VariableFont_wght', sans-serif;
+	font-family: 'Onest', sans-serif;
 	box-shadow: inset 0 0 0 2px var(--secondary-300);
 	border-radius: 9999px;
 	padding: 0.5em 1em;
@@ -1258,7 +1256,7 @@ li.activePage {
 .motivo1,
 .motivo2 {
 	font-size: var(--font-md);
-	font-family: 'GentiumBookPlus-Bold', serif;
+	font-family: 'Gentium Book Plus', serif;
 }
 
 .motivo1::before,
@@ -1673,7 +1671,7 @@ li.activePage {
 }
 
 textarea {
-	font-family: 'Onest-VariableFont_wght', sans-serif;
+	font-family: 'Onest', sans-serif;
 	font-size: var(--font-base);
 	background-color: var(--neutral-50);
 	border-radius: 0.5em;

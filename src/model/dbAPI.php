@@ -679,7 +679,7 @@ class DBAccess
 		$query = <<<SQL
 		SELECT * FROM Scambio S
 		WHERE S.emailProponente = ? OR S.emailAccettatore = ?
-		ORDER BY S.dataProposta DESC;
+		ORDER BY S.ID DESC;
 		SQL;
 
 		try {
@@ -821,7 +821,7 @@ class DBAccess
 		$query = <<<SQL
 		SELECT L.ISBN, L.titolo, L.autore, L.path_copertina, COUNT(*) AS numero_scambi		
 		FROM (		    
-			SELECT l.ISBN, l.titolo, l.autore, l.path_copertina
+			SELECT l.ISBN, l.titolo, l.autore, l.path_copertina, s.ID
 			FROM Scambio s 
 			JOIN Copia c ON s.idCopiaProp = c.ID
 			JOIN Libro l ON c.ISBN = l.ISBN
@@ -829,14 +829,14 @@ class DBAccess
 			
 			UNION ALL 
 			
-			SELECT l.ISBN, l.titolo, l.autore, l.path_copertina
+			SELECT l.ISBN, l.titolo, l.autore, l.path_copertina, s.ID
 			FROM Scambio s
 			JOIN Copia c ON s.idCopiaAcc = c.ID
 			JOIN Libro l ON c.ISBN = l.ISBN
 			WHERE s.stato = 'accettato'
 		) AS L
 		GROUP BY L.ISBN
-		ORDER BY numero_scambi DESC
+		ORDER BY L.ID DESC
 		SQL;
 
 		try {
@@ -945,6 +945,23 @@ class DBAccess
 			return count($val) > 0;
 		} catch (Exception $e) {
 			error_log("check_user_has_generi_preferiti: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function get_libri_offerti(): array
+	{
+		$query = <<<SQL
+		SELECT DISTINCT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina
+		FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN JOIN Utente U ON C.proprietario = U.email
+		WHERE C.disponibile = TRUE
+		ORDER BY C.ID DESC
+		SQL;
+
+		try {
+			return $this->query_to_array($query);
+		} catch (Exception $e) {
+			error_log("get_libri_offerti: " . $e->getMessage());
 			throw $e;
 		}
 	}

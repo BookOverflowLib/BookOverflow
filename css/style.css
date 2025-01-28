@@ -327,6 +327,7 @@ button {
 
 a {
 	color: var(--text);
+	text-underline-offset: 0.2em;
 }
 
 .button-layout {
@@ -673,7 +674,7 @@ main {
 .carosello-libri {
 	display: grid;
 	/* grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); */
-	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));;
 	gap: 1em;
 	margin-top: 1em;
 	justify-content: space-between;
@@ -683,6 +684,10 @@ main {
 
 .carosello-libri-vuoto {
 	grid-column-start: span 4;
+	padding: 2em;
+}
+.carosello-libri-vuoto > a {
+	padding: 2em;
 }
 
 .libro {
@@ -967,6 +972,9 @@ section > p > a {
 
 .libro-panoramica > div > h1 {
 	margin-top: 0.5em;
+}
+.libro-panoramica > div > h2 {
+	margin-top: 1em;
 }
 
 .sezione-scambi {
@@ -1741,4 +1749,9 @@ textarea {
 
 .scambio-button > p {
 	padding: 1em;
+}
+
+.sottotitolo{
+	font-size: var(--font-base);
+	padding:1em;
 }

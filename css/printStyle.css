@@ -1,3 +1,7 @@
+*{
+	background-color: white;
+}
+
 body {
 	display: flex;
 	flex-direction: column;
@@ -17,7 +21,12 @@ body {
 	display: none;
 }
 /* FOOTER */
-
+footer {
+	background-color: white;
+}
+nav, #breadcrumb, #contenuto, #piu-scambiati, .message-box, .dialog-window {
+	background-color: white;
+}
 /* INDEX */
 #landing a {
 	text-decoration: underline;
@@ -107,4 +116,8 @@ input#conferma_password {
 
 a.button-layout {
 	border: 1px solid black;
+	background-color: white;
+}
+main{
+	background-color: white;
 }

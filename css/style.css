@@ -1776,3 +1776,50 @@ textarea {
 	font-size: var(--font-base);
 	padding: 1em;
 }
+
+/* FOOTER */
+#pre-footer {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 2em;
+	padding-top: 3em;
+}
+#quote > blockquote{
+	font-size: var(--font-lg);
+	padding-top: 3em;
+	font-size: 1.5em;
+
+}
+
+
+#quote>blockquote::before {
+	content: url('./../assets/imgs/quote.svg');
+	
+}
+
+#quote>blockquote ::after {
+	content: '”';
+}
+
+#quote>p {
+	font-size: 1em;
+	text-align: right;
+}
+#listf > p {
+	font-size: var(--font-md);
+	font-weight:1.5em;
+	text-align: center;
+	font-family: 'Gentium Book Plus', serif;
+	padding-top: 1em;
+}
+#listf > ul li::before  {
+	content: " 📚 ";
+}
+#listf>ul  li {
+	padding-top: 2em;
+	font-size: var(--font-sm);
+}
+#listf>ul {
+	text-align: center;
+	list-style-type: none;
+}

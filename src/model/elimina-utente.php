@@ -22,7 +22,7 @@ if (!isset($_POST, $_POST['username'])) {
 if (is_admin() || $_SESSION['user'] === $_POST['username']) {
 	deleteUser($_POST['username']);
 } else {
-	redirect("Errore: operazine non valida");
+	redirect("Errore: operazione non valida");
 }
 
 function deleteUser($username)

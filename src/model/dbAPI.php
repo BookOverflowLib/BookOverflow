@@ -439,7 +439,6 @@ class DBAccess
 			error_log("get_libri_offerti_by_username: " . $e->getMessage());
 			throw $e;
 		}
-		return null;
 	}
 
 	public function insert_libri_offerti_by_username($user, $isbn, $condizione): void

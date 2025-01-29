@@ -34,7 +34,7 @@ function addRecensioniSection($profilo, $db)
 
 	// var_dump($storicoRecensioni);
 	foreach ($storicoRecensioni as $recensione) {
-		$storicoRecensioniHTML .= generateRecensioneCard($recensione, $db);
+		$storicoRecensioniHTML .= generateRecensioneCard($recensione);
 	}
 
 	if ($storicoRecensioniHTML == '') {

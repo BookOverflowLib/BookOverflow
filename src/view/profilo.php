@@ -27,6 +27,7 @@ if (isset($_SESSION['user']) && $_SESSION['user'] === 'admin' && $profileId === 
 	$page = getBannerNuovoProfilo($isTuoProfilo, $page);
 	$page = iniziaEsplorare($isTuoProfilo, $page);
 	$page = addErrorsToPage($page);
+	$page = addSettingsProfilo($page, $isTuoProfilo);
 	$page = dialogSure($page, "il tuo account", "Perderai le tue liste, i tuoi scambi e tutti i dati del tuo account");
 }
 $page = populateWebdirPrefixPlaceholders($page);
@@ -145,14 +146,11 @@ function addTuoProfiloButtons($profilo)
 	$profilo = str_replace('<!-- [scambiButton] -->', $scambiButton, $profilo);
 
 	$prefix = getPrefix();
-	$recensioniButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/recensioni" class="button-layout">Recensioni ricevute <span aria-hidden="true"><img src="'.$prefix.'/assets/imgs/message-box.svg" alt=""/></span></a>';
+	$recensioniButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/recensioni" class="button-layout">Recensioni ricevute <span aria-hidden="true"><img src="' . $prefix . '/assets/imgs/message-box.svg" alt=""/></span></a>';
 	$profilo = str_replace('<!-- [recensioniButton] -->', $recensioniButton, $profilo);
 
 	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><button type="submit" class="button-layout secondary logout" aria-label="Esci dal tuo profilo">Esci</button></form>';
 	$profilo = str_replace('<!-- [logoutButton] -->', $logoutButton, $profilo);
-
-	$eliminaUtenteButton = '<button type="button" class="button-layout destructive elimina-utente" data-username="' . $_SESSION['user'] . '"/>Elimina account <span aria-hidden="true"><img src="'.$prefix.'/assets/imgs/trash.svg" alt=""/></span></button>';
-	$profilo = str_replace('<!-- [eliminaUtenteButton] -->', $eliminaUtenteButton, $profilo);
 
 	$modificaGeneriButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';
 	$profilo = str_replace('<!-- [generiPreferitiButton] -->', $modificaGeneriButton, $profilo);
@@ -281,4 +279,27 @@ function generatePageAdmin($user)
 	$prefix = getPrefix();
 	return str_replace('<!-- [content] -->', $profilo, $page);
 
+}
+
+function addSettingsProfilo($page, $isTuoProfilo)
+{
+	if (!$isTuoProfilo) {
+		return str_replace('<!-- [settingsProfilo] -->', '', $page);
+	}
+	$prefix = getPrefix();
+
+	$modificaUtenteButton = <<<HTML
+	<a href="{$prefix}/profilo/{$_SESSION['user']}/modifica-utente" class="button-layout">Modifica account <span aria-hidden="true"><img src="{$prefix}/assets/imgs/edit.svg" alt=""/></span></a>
+	HTML;
+	$eliminaUtenteButton = '<button type="button" class="button-layout destructive elimina-utente" data-username="' . $_SESSION['user'] . '"/>Elimina account <span aria-hidden="true"><img src="' . $prefix . '/assets/imgs/trash.svg" alt=""/></span></button>';
+
+
+	$settings = <<<HTML
+	<div class="sezione-stretta" id="settings-profilo">
+		{$modificaUtenteButton}
+		{$eliminaUtenteButton}
+	</div>
+	HTML;
+
+	return str_replace('<!-- [settingsProfilo] -->', $settings, $page);
 }

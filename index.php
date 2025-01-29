@@ -7,12 +7,11 @@ $request = $_SERVER['REQUEST_URI'];
 $path = parse_url($request, PHP_URL_PATH);
 $prefix = getPrefix();
 
-#echo $path . "<br>";
+
 // Remove the prefix from the path
 if (strpos($path, $prefix) === 0) {
 	$path = substr($path, strlen($prefix));
 }
-#echo $path . "<br>";
 
 // Controlla se il percorso è "/profilo/*"
 if (preg_match("#^/profilo/([^/]+)/seleziona-generi$#", $path, $matches)) {
@@ -30,6 +29,9 @@ if (preg_match("#^/profilo/([^/]+)/seleziona-generi$#", $path, $matches)) {
 } elseif (preg_match('#^/profilo/([^/]+)/recensioni#', $path, $matches)) {
 	$_GET['user'] = $matches[1];
 	$path = '/profilo/recensioni';
+} elseif (preg_match('#^/profilo/([^/]+)/modifica-utente#', $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo/modifica-utente';
 } elseif (preg_match("#^/profilo/([^/]+)$#", $path, $matches)) {
 	$_GET['user'] = $matches[1];
 	$path = '/profilo';
@@ -95,6 +97,9 @@ switch ($path) {
 		break;
 	case '/profilo/recensioni':
 		require $GLOBALS['PAGES_PATH'] . 'recensioni.php';
+		break;
+	case '/profilo/modifica-utente':
+		require $GLOBALS['PAGES_PATH'] . 'profilo-modifica.php';
 		break;
 	// ADMIN
 	case '/profilo/admin/gestione-utenti':

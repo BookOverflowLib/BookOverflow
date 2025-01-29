@@ -399,4 +399,29 @@ footer .logo p {
 /* FOOTER */
 #pre-footer {
 	display: flex;
-flex-direction: row;}
+	flex-direction: column;
+}
+
+
+.user-row {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	min-width: none;
+}
+.user-buttons {
+	display: flex;
+	flex-direction: column;
+	justify-self: center;
+}
+.user-data{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+.user-data > div {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}

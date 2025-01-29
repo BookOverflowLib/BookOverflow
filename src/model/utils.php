@@ -350,6 +350,12 @@ function is_logged_in(): bool
 	return isset($_SESSION['user']);
 }
 
+function is_admin(): bool
+{
+	ensure_session();
+	return isset($_SESSION['user']) && $_SESSION['user'] === 'admin';
+}
+
 /**
  * Restituisce una stringa HTML con i generi preferiti dell'utente
  * @param array $generi Array con i generi preferiti dell'utente
@@ -664,4 +670,32 @@ function exceptionToError(Exception $e, string $genericError): string
 	} else {
 		return "Errore: " . $genericError;
 	}
+}
+
+function dialogSure($page, $cheCosa, $sottotitolo): array|string
+{
+	$prefix = getPrefix();
+	$dialog_content = <<<HTML
+	<h2>Sei sicuro di voler eliminare {$cheCosa}?</h2>
+	<p class="input-error-regular">{$sottotitolo}</p>
+	<div class="dialog-buttons">
+		<form action="{$prefix}/api/elimina-utente" method="POST">
+			<input type="hidden" value="" name="username" id="form-username"/>
+			<input
+				class="button-layout destructive"
+				id="conferma-elimina"
+				type="submit"
+				value="Elimina" />
+			<button
+				class="button-layout-light"
+				formnovalidate
+				id="close-dialog"
+				type="reset">
+				Annulla
+			</button>
+		</div>
+	</form>
+	HTML;
+
+	return str_replace('<!-- [seiSicuro] -->', $dialog_content, $page);
 }

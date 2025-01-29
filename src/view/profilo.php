@@ -131,8 +131,14 @@ function addTuoProfiloButtons($profilo)
 	$scambiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout">I tuoi scambi</a>';
 	$profilo = str_replace('<!-- [scambiButton] -->', $scambiButton, $profilo);
 
+	$recensioniButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/recensioni" class="button-layout">Recensioni ricevute</a>';
+	$profilo = str_replace('<!-- [recensioniButton] -->', $recensioniButton, $profilo);
+
 	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><button type="submit" class="button-layout secondary logout" aria-label="Esci dal tuo profilo"/>Esci</button></form>';
 	$profilo = str_replace('<!-- [logoutButton] -->', $logoutButton, $profilo);
+
+	$eliminaUtenteButton = '<form action="' . $prefix . '/api/elimina-utente" method="POST"><button type="submit" class="button-layout danger" aria-label="Elimina utente"/>Elimina utente</button></form>';
+	$profilo = str_replace('<!-- [eliminaUtenteButton] -->', $eliminaUtenteButton, $profilo);
 
 	$modificaGeneriButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';
 	$profilo = str_replace('<!-- [generiPreferitiButton] -->', $modificaGeneriButton, $profilo);
@@ -142,8 +148,6 @@ function addTuoProfiloButtons($profilo)
 
 	$libriDesideratiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/libri-desiderati" class="button-layout" aria-label="Modifica la lista dei desideri">Modifica la lista</a>';
 	return str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
-
-
 }
 
 function addOtherProfiloButtons($profilo, $user)

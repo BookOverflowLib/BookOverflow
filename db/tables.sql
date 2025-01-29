@@ -55,6 +55,7 @@ CREATE TABLE
             'usato',
             'danneggiato'
         ),
+        UNIQUE(ISBN, proprietario, condizioni),
         FOREIGN KEY (ISBN) REFERENCES Libro (ISBN),
         FOREIGN KEY (proprietario) REFERENCES Utente (email)
     );
@@ -63,6 +64,7 @@ CREATE TABLE
     Desiderio (
         email VARCHAR(255),
         ISBN VARCHAR(50),
+        UNIQUE(email, ISBN),
         PRIMARY KEY (email, ISBN),
         FOREIGN KEY (email) REFERENCES Utente (email),
         FOREIGN KEY (ISBN) REFERENCES Libro (ISBN)
@@ -79,9 +81,9 @@ CREATE TABLE
         dataProposta DATE DEFAULT CURRENT_DATE,
         dataConclusione DATE,
         stato ENUM ('in attesa', 'accettato', 'rifiutato') DEFAULT 'in attesa',
-        FOREIGN KEY (emailProponente) REFERENCES Utente (email),
-        FOREIGN KEY (emailAccettatore) REFERENCES Utente (email),
-        FOREIGN KEY (idCopiaProp) REFERENCES Copia (ID),
+        FOREIGN KEY (emailProponente) REFERENCES Utente (email) ON DELETE CASCADE,
+        FOREIGN KEY (emailAccettatore) REFERENCES Utente (email) ON DELETE CASCADE,
+        FOREIGN KEY (idCopiaProp) REFERENCES Copia (ID) ,
         FOREIGN KEY (idCopiaAcc) REFERENCES Copia (ID)
     );
 
@@ -100,23 +102,6 @@ CREATE TABLE
         FOREIGN KEY (idScambio) REFERENCES Scambio (ID),
         PRIMARY KEY (emailRecensito, idScambio)
     );
-
--- CREATE TABLE
---     Follow (
---         emailSeguace VARCHAR(255),
---         emailSeguito VARCHAR(255),
---         PRIMARY KEY (emailSeguito, emailSeguace),
---         FOREIGN KEY (emailSeguace) REFERENCES Utente (email),
---         FOREIGN KEY (emailSeguito) REFERENCES Utente (email)
---     );
-
--- CREATE TABLE
---     Immagine (
---         path VARCHAR(255) PRIMARY KEY,
---         libro CHAR(13) NOT NULL,
---         isCopertina BOOLEAN DEFAULT FALSE,
---         FOREIGN KEY (libro) REFERENCES Libro (ISBN)
---     );
 
 -- ==================================================================================
 -- ================== DUMP DATA =====================================================

@@ -58,3 +58,4 @@ class GenericCustomException extends CustomException {
         parent::__construct("Errore: " . $text);
     }
 }
+

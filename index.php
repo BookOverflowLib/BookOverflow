@@ -27,6 +27,12 @@ if (preg_match("#^/profilo/([^/]+)/seleziona-generi$#", $path, $matches)) {
 } elseif (preg_match('#^/profilo/([^/]+)/scambi#', $path, $matches)) {
 	$_GET['user'] = $matches[1];
 	$path = '/profilo/scambi';
+} elseif (preg_match('#^/profilo/([^/]+)/recensioni#', $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo/recensioni';
+} elseif (preg_match("#^/profilo/([^/]+)$#", $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo';
 } elseif (preg_match("#^/profilo/([^/]+)$#", $path, $matches)) {
 	$_GET['user'] = $matches[1];
 	$path = '/profilo';
@@ -87,6 +93,9 @@ switch ($path) {
 	case '/profilo/scambi':
 		require $GLOBALS['PAGES_PATH'] . 'scambi.php';
 		break;
+	case '/profilo/recensioni':
+		require $GLOBALS['PAGES_PATH'] . 'recensioni.php';
+		break;
 	case '/libro':
 		require $GLOBALS['PAGES_PATH'] . 'libro.php';
 		break;
@@ -102,6 +111,9 @@ switch ($path) {
 		break;
 	case '/api/logout':
 		require $GLOBALS['MODEL_PATH'] . 'logout.php';
+		break;
+	case '/api/elimina-utente':
+		require $GLOBALS['MODEL_PATH'] . 'elimina-utente.php';
 		break;
 	case '/api/aggiorna-generi':
 		require $GLOBALS['MODEL_PATH'] . 'aggiorna-generi.php';

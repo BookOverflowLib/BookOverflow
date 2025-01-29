@@ -5,6 +5,10 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
 $profileId = getProfileId();
+if ($profileId === 'admin' && $_SESSION['user'] !== 'admin') {
+	header('Location: ' . getPrefix() . '/404');
+}
+
 $isTuoProfilo = isTuoProfilo($profileId);
 
 $db = new DBAccess();
@@ -15,12 +19,17 @@ try {
 }
 
 $user = getUser($db, $profileId);
-$page = generatePage($user, $isTuoProfilo, $db);
 
+if (isset($_SESSION['user']) && $_SESSION['user'] === 'admin' && $profileId === 'admin') {
+	$page = generatePageAdmin($user);
+} else {
+	$page = generatePage($user, $isTuoProfilo, $db);
+	$page = getBannerNuovoProfilo($isTuoProfilo, $page);
+	$page = iniziaEsplorare($isTuoProfilo, $page);
+	$page = addErrorsToPage($page);
+}
 $page = populateWebdirPrefixPlaceholders($page);
-$page = getBannerNuovoProfilo($isTuoProfilo, $page);
-$page = iniziaEsplorare($isTuoProfilo, $page);
-$page = addErrorsToPage($page);
+
 echo $page;
 
 function getProfileId()
@@ -59,7 +68,7 @@ function generatePage($user, $isTuoProfilo, $db)
 	$page = getTemplatePage($user["username"]);
 	$profilo = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'profilo.html');
 
-	$profilo = replacePlaceholders($profilo, $user, $db);
+	$profilo = replacePlaceholders($profilo, $user);
 	$profilo = replaceLocation($profilo, $user);
 	$profilo = replaceRating($profilo, $user, $db);
 	$profilo = replaceGeneri($profilo, $user, $db);
@@ -74,7 +83,7 @@ function generatePage($user, $isTuoProfilo, $db)
 	return str_replace('<!-- [content] -->', $profilo, $page);
 }
 
-function replacePlaceholders($profilo, $user, $db)
+function replacePlaceholders($profilo, $user)
 {
 	$sostituzioni = [
 		'<!-- [userNome] -->' => $user['nome'],
@@ -131,10 +140,7 @@ function addTuoProfiloButtons($profilo)
 	$scambiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout">I tuoi scambi</a>';
 	$profilo = str_replace('<!-- [scambiButton] -->', $scambiButton, $profilo);
 
-	$recensioniButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/recensioni" class="button-layout">Recensioni ricevute</a>';
-	$profilo = str_replace('<!-- [recensioniButton] -->', $recensioniButton, $profilo);
-
-	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><button type="submit" class="button-layout secondary logout" aria-label="Esci dal tuo profilo"/>Esci</button></form>';
+	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><button type="submit" class="button-layout secondary logout" aria-label="Esci dal tuo profilo">Esci</button></form>';
 	$profilo = str_replace('<!-- [logoutButton] -->', $logoutButton, $profilo);
 
 	$eliminaUtenteButton = '<form action="' . $prefix . '/api/elimina-utente" method="POST"><button type="submit" class="button-layout danger" aria-label="Elimina utente"/>Elimina utente</button></form>';
@@ -257,4 +263,14 @@ function redirect(string $error = null): never
 		header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user'] . '#generi');
 	}
 	exit();
+}
+
+function generatePageAdmin($user)
+{
+	$page = getTemplatePage($_SESSION['user']);
+	$profilo = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'profilo-admin.html');
+
+	$prefix = getPrefix();
+	return str_replace('<!-- [content] -->', $profilo, $page);
+
 }

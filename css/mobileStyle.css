@@ -395,3 +395,8 @@ footer .logo p {
 .carosello-libri-vuoto a {
 	padding: 0em;
 }
+
+/* FOOTER */
+#pre-footer {
+	display: flex;
+flex-direction: row;}

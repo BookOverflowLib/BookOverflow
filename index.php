@@ -96,6 +96,13 @@ switch ($path) {
 	case '/profilo/recensioni':
 		require $GLOBALS['PAGES_PATH'] . 'recensioni.php';
 		break;
+	// ADMIN
+	case '/profilo/admin/gestione-utenti':
+		require $GLOBALS['PAGES_PATH'] . 'gestione-utenti.php';
+		break;
+	case '/profilo/admin/gestione-scambi':
+		require $GLOBALS['PAGES_PATH'] . 'gestione-scambi.php';
+		break;
 	case '/libro':
 		require $GLOBALS['PAGES_PATH'] . 'libro.php';
 		break;

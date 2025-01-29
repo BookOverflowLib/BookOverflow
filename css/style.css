@@ -1953,3 +1953,11 @@ textarea {
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
+
+#settings-profilo {
+	display: flex;
+	flex-wrap: wrap;
+	gap:1em;
+	align-items: center;
+	justify-content: center;
+}

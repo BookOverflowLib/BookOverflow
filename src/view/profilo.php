@@ -138,17 +138,20 @@ function replaceLibri($profilo, $user, $db)
 function addTuoProfiloButtons($profilo)
 {
 	$prefix = getPrefix();
-	$scambiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout">I tuoi scambi</a>';
+	$scambiButton = <<<HTML
+	<a href="{$prefix}/profilo/{$_SESSION['user']}/scambi" class="button-layout">I tuoi scambi <span aria-hidden="true"><img src="{$prefix}/assets/imgs/scambio-arrows.svg" alt=""/></span></a>
+	HTML;
+
 	$profilo = str_replace('<!-- [scambiButton] -->', $scambiButton, $profilo);
 
 	$prefix = getPrefix();
-	$recensioniButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/recensioni" class="button-layout">Recensioni ricevute</a>';
+	$recensioniButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/recensioni" class="button-layout">Recensioni ricevute <span aria-hidden="true"><img src="'.$prefix.'/assets/imgs/message-box.svg" alt=""/></span></a>';
 	$profilo = str_replace('<!-- [recensioniButton] -->', $recensioniButton, $profilo);
 
 	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><button type="submit" class="button-layout secondary logout" aria-label="Esci dal tuo profilo">Esci</button></form>';
 	$profilo = str_replace('<!-- [logoutButton] -->', $logoutButton, $profilo);
 
-	$eliminaUtenteButton = '<button type="button" class="button-layout destructive elimina-utente" aria-label="Elimina utente" data-username="' . $_SESSION['user'] . '"/>Elimina utente</button>';
+	$eliminaUtenteButton = '<button type="button" class="button-layout destructive elimina-utente" data-username="' . $_SESSION['user'] . '"/>Elimina account <span aria-hidden="true"><img src="'.$prefix.'/assets/imgs/trash.svg" alt=""/></span></button>';
 	$profilo = str_replace('<!-- [eliminaUtenteButton] -->', $eliminaUtenteButton, $profilo);
 
 	$modificaGeneriButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';

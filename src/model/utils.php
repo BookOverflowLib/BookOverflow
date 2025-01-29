@@ -350,6 +350,12 @@ function is_logged_in(): bool
 	return isset($_SESSION['user']);
 }
 
+function is_admin(): bool
+{
+	ensure_session();
+	return isset($_SESSION['user']) && $_SESSION['user'] === 'admin';
+}
+
 /**
  * Restituisce una stringa HTML con i generi preferiti dell'utente
  * @param array $generi Array con i generi preferiti dell'utente

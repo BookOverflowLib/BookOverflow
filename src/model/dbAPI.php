@@ -994,4 +994,20 @@ class DBAccess
 			throw $e;
 		}
 	}
+
+	public function get_users(): array
+	{
+		$query = <<<SQL
+		SELECT email, username, nome, cognome, provincia, comune, path_immagine
+		FROM Utente WHERE username <> 'admin'
+		SQL;
+
+		try {
+			return $this->query_to_array($query);
+		} catch (Exception $e) {
+			error_log("get_users: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
 }

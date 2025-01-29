@@ -4,11 +4,12 @@ require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
-if(!is_logged_in()){
-	header('Location: ' . getPrefix().'/profilo');
+if (!is_logged_in()) {
+	header('Location: ' . getPrefix() . '/profilo');
 	exit;
 }
-if ($_GET['user'] != $_SESSION['user']) {
+
+if (!is_admin() && $_GET['user'] !== $_SESSION['user']) {
 	$prefix = getPrefix();
 	header('Location: ' . $prefix . '/profilo/' . $_SESSION['user']);
 	exit;
@@ -20,7 +21,7 @@ $db = new DBAccess();
 $page = getTemplatePage("I tuoi scambi");
 
 $scambi = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'scambi.html');
-$scambi = addScambiSection($scambi, $db);
+$scambi = addUserManageSection($scambi, $db);
 
 
 $page = str_replace('<!-- [content] -->', $scambi, $page);
@@ -29,16 +30,16 @@ $page = addErrorsToPage($page);
 echo $page;
 
 
-function addScambiSection($profilo, $db)
+function addUserManageSection($profilo, $db)
 {
 	$prefix = getPrefix();
-	$storicoScambi = $db->get_scambi_by_user($_SESSION['user']);
+	$storicoScambi = $db->get_scambi_by_user($_GET['user']);
 	$storicoScambiHTML = "";
-	
+
 	foreach ($storicoScambi as $scambio) {
-		$storicoScambiHTML .= generateScambioRow($scambio, $db);
+		$storicoScambiHTML .= generateUserRow($scambio, $db);
 	}
-	
+
 	if ($storicoScambiHTML == '') {
 		$storicoScambiHTML = <<<HTML
 		<div class="empty-list">	
@@ -46,25 +47,28 @@ function addScambiSection($profilo, $db)
 			<a href="{$prefix}/esplora">Inzia subito ad esplorare</a>
 		</div>
 		HTML;
-		
+
 	}
 	return str_replace('<!-- [storicoScambi] -->', $storicoScambiHTML, $profilo);
 }
 
-function generateScambioRow($scambio, $db)
+function generateUserRow($scambio, $db)
 {
 	$libroProp = $db->get_copia_by_id($scambio['idCopiaProp'])[0];
 	$libroAcc = $db->get_copia_by_id($scambio['idCopiaAcc'])[0];
 	$utenteAccettatore = $db->get_user_by_identifier($scambio['emailAccettatore'])[0];
 	$utenteProponente = $db->get_user_by_identifier($scambio['emailProponente'])[0];
-	
-	$isScambioRicevuto = $utenteAccettatore['username'] === $_SESSION['user'];
-	
-	$scambio_buttons = generateScambioButtons($scambio, $isScambioRicevuto);
+
+	$isScambioRicevuto = $utenteAccettatore['username'] === $_GET['user'];
+	if(!is_admin()){
+		$scambio_buttons = generateScambioButtons($scambio, $isScambioRicevuto);
+	}else{
+		$scambio_buttons = '';
+	}
 	$scambio_utente = generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utenteProponente);
 	$user_libro = $isScambioRicevuto ? $libroAcc : $libroProp;
 	$other_libro = $isScambioRicevuto ? $libroProp : $libroAcc;
-	
+
 	$prefix = getPrefix();
 	return <<<HTML
     <div class="storico-row" id="scambio-{$scambio['ID']}">
@@ -100,9 +104,9 @@ function generateScambioRow($scambio, $db)
 function generateScambioButtons($scambio, $isScambioRicevuto)
 {
 	$prefix = getPrefix();
-	
+
 	$emailRecensito = $isScambioRicevuto ? $scambio['emailProponente'] : $scambio['emailAccettatore'];
-	
+
 	if ($isScambioRicevuto) {
 		if ($scambio['stato'] === 'in attesa') {
 			return <<<HTML

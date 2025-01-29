@@ -6,7 +6,7 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 //check if user is logged in
 ensure_session();
 
-$page = getTemplatePage("Libri offerti");
+$page = getTemplatePage("Esplora tutti");
 
 $libri_offerti = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'libri-offerti-desiderati.html');
 

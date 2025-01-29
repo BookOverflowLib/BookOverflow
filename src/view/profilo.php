@@ -5,6 +5,10 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
 $profileId = getProfileId();
+if ($profileId === 'admin' && $_SESSION['user'] !== 'admin') {
+	header('Location: ' . getPrefix() . '/404');
+}
+
 $isTuoProfilo = isTuoProfilo($profileId);
 
 $db = new DBAccess();
@@ -15,12 +19,18 @@ try {
 }
 
 $user = getUser($db, $profileId);
-$page = generatePage($user, $isTuoProfilo, $db);
 
+if (isset($_SESSION['user']) && $_SESSION['user'] === 'admin' && $profileId === 'admin') {
+	$page = generatePageAdmin($user);
+} else {
+	$page = generatePage($user, $isTuoProfilo, $db);
+	$page = getBannerNuovoProfilo($isTuoProfilo, $page);
+	$page = iniziaEsplorare($isTuoProfilo, $page);
+	$page = addErrorsToPage($page);
+	$page = dialogSure($page, "il tuo account", "Perderai le tue liste, i tuoi scambi e tutti i dati del tuo account");
+}
 $page = populateWebdirPrefixPlaceholders($page);
-$page = getBannerNuovoProfilo($isTuoProfilo, $page);
-$page = iniziaEsplorare($isTuoProfilo, $page);
-$page = addErrorsToPage($page);
+
 echo $page;
 
 function getProfileId()
@@ -59,7 +69,7 @@ function generatePage($user, $isTuoProfilo, $db)
 	$page = getTemplatePage($user["username"]);
 	$profilo = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'profilo.html');
 
-	$profilo = replacePlaceholders($profilo, $user, $db);
+	$profilo = replacePlaceholders($profilo, $user);
 	$profilo = replaceLocation($profilo, $user);
 	$profilo = replaceRating($profilo, $user, $db);
 	$profilo = replaceGeneri($profilo, $user, $db);
@@ -74,7 +84,7 @@ function generatePage($user, $isTuoProfilo, $db)
 	return str_replace('<!-- [content] -->', $profilo, $page);
 }
 
-function replacePlaceholders($profilo, $user, $db)
+function replacePlaceholders($profilo, $user)
 {
 	$sostituzioni = [
 		'<!-- [userNome] -->' => $user['nome'],
@@ -128,11 +138,21 @@ function replaceLibri($profilo, $user, $db)
 function addTuoProfiloButtons($profilo)
 {
 	$prefix = getPrefix();
-	$scambiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/scambi" class="button-layout">I tuoi scambi</a>';
+	$scambiButton = <<<HTML
+	<a href="{$prefix}/profilo/{$_SESSION['user']}/scambi" class="button-layout">I tuoi scambi <span aria-hidden="true"><img src="{$prefix}/assets/imgs/scambio-arrows.svg" alt=""/></span></a>
+	HTML;
+
 	$profilo = str_replace('<!-- [scambiButton] -->', $scambiButton, $profilo);
 
-	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><button type="submit" class="button-layout secondary logout" aria-label="Esci dal tuo profilo"/>Esci</button></form>';
+	$prefix = getPrefix();
+	$recensioniButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/recensioni" class="button-layout">Recensioni ricevute <span aria-hidden="true"><img src="'.$prefix.'/assets/imgs/message-box.svg" alt=""/></span></a>';
+	$profilo = str_replace('<!-- [recensioniButton] -->', $recensioniButton, $profilo);
+
+	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><button type="submit" class="button-layout secondary logout" aria-label="Esci dal tuo profilo">Esci</button></form>';
 	$profilo = str_replace('<!-- [logoutButton] -->', $logoutButton, $profilo);
+
+	$eliminaUtenteButton = '<button type="button" class="button-layout destructive elimina-utente" data-username="' . $_SESSION['user'] . '"/>Elimina account <span aria-hidden="true"><img src="'.$prefix.'/assets/imgs/trash.svg" alt=""/></span></button>';
+	$profilo = str_replace('<!-- [eliminaUtenteButton] -->', $eliminaUtenteButton, $profilo);
 
 	$modificaGeneriButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';
 	$profilo = str_replace('<!-- [generiPreferitiButton] -->', $modificaGeneriButton, $profilo);
@@ -142,8 +162,6 @@ function addTuoProfiloButtons($profilo)
 
 	$libriDesideratiButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/libri-desiderati" class="button-layout" aria-label="Modifica la lista dei desideri">Modifica la lista</a>';
 	return str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
-
-
 }
 
 function addOtherProfiloButtons($profilo, $user)
@@ -253,4 +271,14 @@ function redirect(string $error = null): never
 		header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user'] . '#generi');
 	}
 	exit();
+}
+
+function generatePageAdmin($user)
+{
+	$page = getTemplatePage($_SESSION['user']);
+	$profilo = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'profilo-admin.html');
+
+	$prefix = getPrefix();
+	return str_replace('<!-- [content] -->', $profilo, $page);
+
 }

@@ -425,3 +425,11 @@ footer .logo p {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
+
+.recensioni-view{
+	grid-template-columns: 1fr;
+}
+.recensione-card {
+	min-width: 100%;
+
+}

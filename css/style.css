@@ -350,12 +350,12 @@ a:visited {
 	user-select: none;
 }
 
-.button-layout img{
+.button-layout img {
 	height: 1em;
 	width: 1em;
 	filter: var(--svg-invert);
 }
-.button-layout span{
+.button-layout span {
 	margin-left: 0.5em;
 	vertical-align: text-bottom;
 }
@@ -1416,7 +1416,8 @@ li.activePage {
 }
 
 #aggiungi-libro-dialog,
-#recensione-dialog, #sure-dialog {
+#recensione-dialog,
+#sure-dialog {
 	border: none;
 	background-color: transparent;
 	margin-inline: auto;
@@ -1426,7 +1427,6 @@ li.activePage {
 dialog::backdrop {
 	background: rgba(0, 0, 0, 0.4);
 }
-
 
 .dialog-window {
 	flex-grow: 100;
@@ -1802,42 +1802,39 @@ textarea {
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: 2em;
 }
-#quote > blockquote{
+#quote > blockquote {
 	font-size: var(--font-lg);
 	padding-top: 3em;
 	font-size: 1.5em;
-
 }
 
-
-#quote>blockquote::before {
+#quote > blockquote::before {
 	content: url('./../assets/imgs/quote.svg');
-	
 }
 
-#quote>blockquote ::after {
+#quote > blockquote ::after {
 	content: '”';
 }
 
-#quote>p {
+#quote > p {
 	font-size: 1em;
 	text-align: right;
 }
 #listf > p {
 	font-size: var(--font-md);
-	font-weight:1.5em;
+	font-weight: 1.5em;
 	text-align: center;
 	font-family: 'Gentium Book Plus', serif;
 	padding-top: 1em;
 }
-#listf > ul li::before  {
-	content: " 📚 ";
+#listf > ul li::before {
+	content: ' 📚 ';
 }
-#listf>ul  li {
+#listf > ul li {
 	padding-top: 2em;
 	font-size: var(--font-sm);
 }
-#listf>ul {
+#listf > ul {
 	text-align: center;
 	list-style-type: none;
 }
@@ -1904,4 +1901,55 @@ textarea {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.5em;
+}
+
+.recensioni-view {
+	margin-top: 1em;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 1em;
+	align-items: center;
+	justify-content: space-evenly
+}
+
+.recensione-card {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	padding: 1em;
+	background-color: var(--background-100);
+	border-radius: 1em;
+	width: 100%;
+	max-width: 17em;
+	box-sizing: border-box;
+}
+
+.dati-recensore {
+	padding: 0.5em;
+	text-decoration: none;
+	color: var(--text);
+	display: flex;
+	flex-direction: row;
+	gap: 1em;
+	transition: all ease-in 0.3s;
+	border-radius: 1em;
+}
+.dati-recensore:hover {
+	background-color: var(--background);
+}
+.dati-recensore img {
+	width: 4em;
+	height: 4em;
+	border-radius: 100%;
+}
+.dati-recensore > div > * + * {
+	margin-top: 0.5em;
+}
+
+.dati-recensore :first-child {
+	font-size: var(--font-base);
+}
+.bottoni-recensione {
+	margin-top: 1em;
+	margin-bottom: 1em;
 }

@@ -27,6 +27,7 @@ if (isset($_SESSION['user']) && $_SESSION['user'] === 'admin' && $profileId === 
 	$page = getBannerNuovoProfilo($isTuoProfilo, $page);
 	$page = iniziaEsplorare($isTuoProfilo, $page);
 	$page = addErrorsToPage($page);
+	$page = dialogSure($page, "il tuo account", "Perderai le tue liste, i tuoi scambi e tutti i dati del tuo account");
 }
 $page = populateWebdirPrefixPlaceholders($page);
 
@@ -147,7 +148,7 @@ function addTuoProfiloButtons($profilo)
 	$logoutButton = '<form action="' . $prefix . '/api/logout" method="POST"><button type="submit" class="button-layout secondary logout" aria-label="Esci dal tuo profilo">Esci</button></form>';
 	$profilo = str_replace('<!-- [logoutButton] -->', $logoutButton, $profilo);
 
-	$eliminaUtenteButton = '<form action="' . $prefix . '/api/elimina-utente" method="POST"><button type="submit" class="button-layout danger" aria-label="Elimina utente"/>Elimina utente</button></form>';
+	$eliminaUtenteButton = '<button type="button" class="button-layout destructive elimina-utente" aria-label="Elimina utente" data-username="' . $_SESSION['user'] . '"/>Elimina utente</button>';
 	$profilo = str_replace('<!-- [eliminaUtenteButton] -->', $eliminaUtenteButton, $profilo);
 
 	$modificaGeneriButton = '<a href="' . $prefix . '/profilo/' . $_SESSION['user'] . '/seleziona-generi" class="button-layout">Modifica i generi</a>';

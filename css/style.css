@@ -633,8 +633,6 @@ footer {
 }
 
 /*TEMP PADDING*/
-footer > .logo {
-	padding-top: 10em;
 footer>.logo {
 	padding-top: 2em;
 }

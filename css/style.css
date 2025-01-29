@@ -353,6 +353,7 @@ a:visited {
 .button-layout img{
 	height: 1em;
 	width: 1em;
+	filter: var(--svg-invert);
 }
 .button-layout span{
 	margin-left: 0.5em;
@@ -1877,8 +1878,8 @@ textarea {
 .user-data {
 	padding: 0.5em;
 	border-radius: 1em;
-	display: grid;
-	grid-template-columns: auto 1fr;
+	display: flex;
+	flex-direction: row;
 	gap: 1em;
 	transition: all 0.3s ease-in-out;
 	text-decoration: none;

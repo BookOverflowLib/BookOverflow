@@ -57,8 +57,8 @@ switch ($path) {
 	case '/esplora/potrebbe-piacerti':
 		require $GLOBALS['PAGES_PATH'] . 'esplora-potrebbe-piacerti.php';
 		break;
-	case '/esplora/libri-offerti':
-		require $GLOBALS['PAGES_PATH'] . 'esplora-libri-offerti.php';
+	case '/esplora/esplora-tutti':
+		require $GLOBALS['PAGES_PATH'] . 'esplora-tutti.php';
 		break;
 	case '/esplora/piu-scambiati':
 		require $GLOBALS['PAGES_PATH'] . 'esplora-piu-scambiati.php';

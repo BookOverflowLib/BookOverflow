@@ -16,18 +16,15 @@ if ($_GET['user'] != $_SESSION['user']) {
 
 $db = new DBAccess();
 
-
 $page = getTemplatePage("Recensioni ricevute");
 
 $recensioni = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'recensioni.html');
 $recensioni = addRecensioniSection($recensioni, $db);
 
-
 $page = str_replace('<!-- [content] -->', $recensioni, $page);
 $page = populateWebdirPrefixPlaceholders($page);
 $page = addErrorsToPage($page);
 echo $page;
-
 
 function addRecensioniSection($profilo, $db)
 {

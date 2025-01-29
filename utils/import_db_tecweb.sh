@@ -47,7 +47,7 @@ fi
 # Import each SQL file
 for FILE in "${SQL_FILES[@]}"; do
     echo "Importing $FILE..."
-    if ! mysql --host="$DB_HOST" --user="$DB_USERNAME" --password="$DB_PASSWORD" "$DB_DATABASE" < "$FILE"; then
+    if ! mysql --user="$DB_USERNAME" --password="$DB_PASSWORD" "$DB_DATABASE" < "$FILE"; then
         echo "Error: Failed to import $FILE"
         exit 1
     fi

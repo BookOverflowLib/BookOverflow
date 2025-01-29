@@ -98,7 +98,7 @@ function getTemplatePage($title = null): string
 	);
 	$header = getHeaderSection($_SERVER['REQUEST_URI']);
 	$breadcrumb = getBreadcrumb($_SERVER['REQUEST_URI']);
-	$footer = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'footer.html');
+	$footer = getFooterSection($_SERVER['REQUEST_URI']);
 
 	$PAGE_TITLE = '';
 	if ($title == null) {
@@ -115,7 +115,6 @@ function getTemplatePage($title = null): string
 	$page = populateWebdirPrefixPlaceholders($page);
 	return $page;
 }
-
 /**
  * Genera gli elementi \<li\> della navbar rimuovendo il link dalla pagina corrente (circolari!)
  *
@@ -234,6 +233,79 @@ function getHeaderSection($path): string
 	);
 
 	return $myHeader;
+}
+
+/**
+ * Genera gli elementi \<li\> della navbar rimuovendo il link dalla pagina corrente (circolari!)
+ *
+ * @return string HTML contenente i vari elementi \<li\>
+ */
+function getFooterAboutLi($path): string
+{
+	$currentPage = $path;
+	$prefix = getPrefix();
+	$aboutReferences = [
+		['href' => $prefix . '/', 'text' => 'Home'],
+		['href' => $prefix . '/esplora', 'text' => 'Esplora'],
+		['href' => $prefix . '/come-funziona', 'text' => 'Come funziona'],
+	];
+
+	$li = '';
+	foreach ($aboutReferences as $ref) {
+		if ($currentPage != $ref['href']) {
+			$li .=
+				'<li><a href="' .
+				$ref['href'] .
+				'">' .
+				$ref['text'] .
+				'</a></li>';
+		}
+	}
+	return $li;
+}
+
+function getStartFooterLi($path): string
+{
+	$currentPage = $path;
+	$prefix = getPrefix();
+	$startReferences = [
+		['href' => $prefix . '/accedi', 'text' => 'Accedi'],
+		['href' => $prefix . '/registrati', 'text' => 'Registrati'],
+	];
+
+	$li = '';
+	ensure_session();
+
+	if (isset($_SESSION['user'])) {
+		$li .= '<li><a href="' . $prefix . '/">Esci</a></li>';
+		session_destroy();
+	} else {
+		foreach ($startReferences as $ref) {
+			if ($currentPage != $ref['href']) {
+				$li .=
+					'<li><a href="' .
+					$ref['href'] .
+					'">' .
+					$ref['text'] .
+					'</a></li>';
+			}
+		}
+	}
+
+	return $li;
+}
+/**
+ * Restituisce l'footer" con la navbar aggiornata
+ *
+ * @return string HTML dell'Footer con la navbar sostituita
+ */
+function getFooterSection($path): string
+{
+	$footer = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'footer.html');
+
+	$footer = str_replace('<!-- [aboutlinkfooter] -->', getFooterAboutLi($path), $footer);
+	$footer = str_replace('<!-- [startlinkfooter] -->', getStartFooterLi($path), $footer);
+	return $footer;
 }
 
 /**

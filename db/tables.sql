@@ -109,7 +109,6 @@ CREATE TABLE
 --         FOREIGN KEY (emailSeguace) REFERENCES Utente (email),
 --         FOREIGN KEY (emailSeguito) REFERENCES Utente (email)
 --     );
-
 -- CREATE TABLE
 --     Immagine (
 --         path VARCHAR(255) PRIMARY KEY,
@@ -117,7 +116,6 @@ CREATE TABLE
 --         isCopertina BOOLEAN DEFAULT FALSE,
 --         FOREIGN KEY (libro) REFERENCES Libro (ISBN)
 --     );
-
 -- ==================================================================================
 -- ================== DUMP DATA =====================================================
 -- ==================================================================================
@@ -146,17 +144,6 @@ VALUES
         '28',
         '28060',
         'https://fastly.picsum.photos/id/532/500/500.jpg?hmac=gX2RSOOXKSV31haNz1jMrPzXCsx0bVJ_YV3v5GyuyOU',
-        NULL
-    ),
-    (
-        'user@user.com',
-        '$2y$10$IPlcDJlhRhY/PRAvtSeuDuLyV4FXrUDHNKQhyVNl/Y1CKbDhzxiFW',
-        'user',
-        'user',
-        'user',
-        '28',
-        '28060',
-        'https://fastly.picsum.photos/id/360/500/500.jpg?hmac=3fvPpl_8_Y4RdnU4UJiD3xAYDNpQ4eZnAbtNBUw6d-w',
         NULL
     ),
     (
@@ -193,6 +180,17 @@ VALUES
         '[\"nature\",\"performing arts\",\"cooking\",\"photography\",\"crafts & hobbies\",\"transportation\",\"travel\",\"language arts & disciplines\"]'
     ),
     (
+        'mari123@gmail.com',
+        '$2y$10$PlfGCJbmRjd/GcvKa4c05.9S5r2YZOcTRbxrVW02aVAhWaz5H3xO2',
+        'mari',
+        'mario',
+        'rossa',
+        '28',
+        '28060',
+        'https://fastly.picsum.photos/id/405/500/500.jpg?hmac=kALs-x5LPK5UEWmXyaLbtUhr2eBuZotJlNJdzm0wlXk',
+        NULL
+    ),
+    (
         'mariabranch@pucci.com',
         '$2y$10$A8qSiVItagJhJ/yeXswL.OtmdZ7qqkuUy0iTxaBR5AFUZzKbcvYce',
         'MaryB',
@@ -202,6 +200,28 @@ VALUES
         '103017',
         'https://fastly.picsum.photos/id/127/500/500.jpg?hmac=jNxr2TVan5LSjK5AmzUlD8KcmxSLujqpw3om8uUVt04',
         '[\"nature\",\"crafts & hobbies\",\"psychology\",\"fiction\",\"self-help\",\"gardening\",\"young adult fiction\"]'
+    ),
+    (
+        'mariorog123@gmail.com',
+        '$2y$10$qmD5HTrzk7UdW02vEORWOOIem30soIUl0GwVtIKv.suRuvrlqEuPy',
+        'marior',
+        'marco',
+        'roggiani',
+        '28',
+        '28060',
+        'https://fastly.picsum.photos/id/547/500/500.jpg?hmac=rhZzPey2iu0a-PB3oKt2rTWHwwSw52CY1038bTQD8JM',
+        NULL
+    ),
+    (
+        'mariorossi@gmail.com',
+        '$2y$10$93zBR9508aDuno1aVsSVPeBrKclt1ah65PxisPIR0uTKgROylcJm6',
+        'adsfdf',
+        'mario',
+        'rossi',
+        '6',
+        '6001',
+        'https://fastly.picsum.photos/id/83/500/500.jpg?hmac=fGXCjBxs-hII0MnNxmJVTNNzVNo0GE504vLn0o-UThw',
+        '[\"fiction\",\"comics & graphic novels\"]'
     ),
     (
         'matteobazzan333@gmail.com',
@@ -246,6 +266,28 @@ VALUES
         '87021',
         'https://fastly.picsum.photos/id/2/500/500.jpg?hmac=vAjkLR4Y91mPCNgWRVLc2dF_fuBnLtQTdj9gHrBZz2M',
         '[\"biography & autobiography\",\"business & economics\",\"pets\",\"crafts & hobbies\",\"political science\",\"science\",\"foreign language study\",\"true crime\",\"young adult fiction\"]'
+    ),
+    (
+        'user@user.com',
+        '$2y$10$IPlcDJlhRhY/PRAvtSeuDuLyV4FXrUDHNKQhyVNl/Y1CKbDhzxiFW',
+        'user',
+        'user',
+        'user',
+        '28',
+        '28060',
+        'https://fastly.picsum.photos/id/360/500/500.jpg?hmac=3fvPpl_8_Y4RdnU4UJiD3xAYDNpQ4eZnAbtNBUw6d-w',
+        '[\"language arts & disciplines\",\"biography & autobiography\",\"literary criticism\",\"cooking\",\"education\",\"social science\"]'
+    ),
+    (
+        'utente@utente.com',
+        '$2y$10$mfyfq7sfWJkqD5WEiTylSeKFZkbriQ.l6DFF8gEssiU2xj0xa8Arq',
+        'utente',
+        'utente',
+        'utente',
+        '24',
+        '24057',
+        'https://fastly.picsum.photos/id/277/500/500.jpg?hmac=4iX99jja_8ORqd4fP4h3Zk8VjakiUFEs16c76GP6GhE',
+        '[\"self-help\",\"body, mind & spirit\",\"literary criticism\",\"fiction\",\"mathematics\",\"young adult fiction\",\"technology & engineering\"]'
     );
 
 --
@@ -630,14 +672,7 @@ VALUES
         'danneggiato'
     ),
     (5, '8841216301', 'admin@admin.com', 1, 'nuovo'),
-    (
-        6,
-        '9788804646846',
-        'user@user.com',
-        1,
-        'nuovo'
-    ),
-    (7, '8852220828', 'user@user.com', 1, 'nuovo'),
+    (6, '9788804646846', 'user@user.com', 0, 'nuovo'),
     (
         9,
         '8858407148',
@@ -757,6 +792,212 @@ VALUES
         'noah95@pucci.com',
         1,
         'come nuovo'
+    ),
+    (
+        27,
+        '1452182175',
+        'mariorossi@gmail.com',
+        1,
+        'come nuovo'
+    ),
+    (
+        28,
+        '8890185074',
+        'utente@utente.com',
+        0,
+        'come nuovo'
+    ),
+    (
+        29,
+        '9788807821097',
+        'utente@utente.com',
+        1,
+        'usato'
+    ),
+    (
+        30,
+        '8822762576',
+        'utente@utente.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (31, '1451685556', 'utente@utente.com', 1, 'nuovo'),
+    (
+        32,
+        '8845985466',
+        'user@user.com',
+        0,
+        'come nuovo'
+    ),
+    (
+        34,
+        '8858819551',
+        'user@user.com',
+        1,
+        'come nuovo'
+    ),
+    (
+        35,
+        '8854980579',
+        'user@user.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        36,
+        '8858818962',
+        'utente@utente.com',
+        1,
+        'come nuovo'
+    ),
+    (
+        37,
+        '1781101582',
+        'utente@utente.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        38,
+        '8858814274',
+        'utente@utente.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        39,
+        'BML:37001102649147',
+        'utente@utente.com',
+        1,
+        'danneggiato'
+    ),
+    (40, '8892742027', 'utente@utente.com', 1, 'usato'),
+    (
+        41,
+        '8828103019',
+        'user@user.com',
+        1,
+        'come nuovo'
+    ),
+    (42, '8858845145', 'user@user.com', 1, 'usato'),
+    (
+        43,
+        '9788842498551',
+        'user@user.com',
+        1,
+        'danneggiato'
+    ),
+    (
+        44,
+        '8854529486',
+        'user@user.com',
+        1,
+        'come nuovo'
+    ),
+    (
+        45,
+        '9788807821097',
+        'noah95@pucci.com',
+        1,
+        'danneggiato'
+    ),
+    (
+        46,
+        '8835700159',
+        'utente@utente.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        47,
+        '8845985466',
+        'elena@elena.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        48,
+        '8845985466',
+        'sarah@pucci.com',
+        1,
+        'come nuovo'
+    ),
+    (51, '8845985466', 'pinetto@pino.com', 1, NULL),
+    (52, '8845985466', 'frafra35@pucci.com', 1, NULL),
+    (
+        53,
+        '8858407865',
+        'mariabranch@pucci.com',
+        1,
+        NULL
+    ),
+    (54, '8858407865', 'mariorossi@gmail.com', 1, NULL),
+    (55, '8858407865', 'utente@utente.com', 1, 'usato'),
+    (
+        56,
+        '1647573076',
+        'utente@utente.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        57,
+        '8858407865',
+        'mari123@gmail.com',
+        1,
+        'come nuovo'
+    ),
+    (58, '8854175382', 'mari123@gmail.com', 1, 'usato'),
+    (
+        59,
+        '8852024182',
+        'mariorog123@gmail.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        60,
+        '9788807821097',
+        'mari123@gmail.com',
+        1,
+        'come nuovo'
+    ),
+    (
+        61,
+        '3319672207',
+        'mariorog123@gmail.com',
+        0,
+        'come nuovo'
+    ),
+    (
+        62,
+        '8854175382',
+        'user@user.com',
+        0,
+        'come nuovo'
+    ),
+    (
+        63,
+        '1477730141',
+        'mariorossi@gmail.com',
+        0,
+        'usato ma ben conservato'
+    ),
+    (64, '9788846208002', 'user@user.com', 0, 'nuovo'),
+    (66, '8852220828', 'mari123@gmail.com', 0, 'usato'),
+    (
+        67,
+        '8861375596',
+        'user@user.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        68,
+        '8851800413',
+        'mariorossi@gmail.com',
+        1,
+        'come nuovo'
     );
 
 --
@@ -765,28 +1006,59 @@ VALUES
 INSERT INTO
     `Desiderio` (`email`, `ISBN`)
 VALUES
+    ('elena@elena.com', '8822762576'),
+    ('frafra35@pucci.com', '1781101582'),
     ('frafra35@pucci.com', '8811815290'),
     ('frafra35@pucci.com', '8858693361'),
     ('frafra35@pucci.com', '8860404401'),
     ('frafra35@pucci.com', '9791220225007'),
     ('gingin@pucci.com', '8858407865'),
     ('gingin@pucci.com', '8858693361'),
+    ('gingin@pucci.com', '8858818962'),
     ('gingin@pucci.com', '8868572982'),
     ('gingin@pucci.com', '9791220225007'),
+    ('mari123@gmail.com', '8845985466'),
+    ('mari123@gmail.com', '8852024182'),
+    ('mari123@gmail.com', '8858775880'),
     ('mariabranch@pucci.com', '8831804499'),
     ('mariabranch@pucci.com', '8835700159'),
     ('mariabranch@pucci.com', '8852035826'),
     ('mariabranch@pucci.com', '8858820746'),
+    ('mariorog123@gmail.com', '8854175382'),
+    ('mariorog123@gmail.com', '9788804646846'),
+    ('mariorossi@gmail.com', '1647573076'),
+    ('mariorossi@gmail.com', '8854175382'),
+    ('mariorossi@gmail.com', '8861375596'),
     ('matteobazzan333@gmail.com', '8809754530'),
     ('noah95@pucci.com', '1665904968'),
     ('noah95@pucci.com', '883573469X'),
     ('noah95@pucci.com', '8854505935'),
+    ('noah95@pucci.com', '8854980579'),
     ('noah95@pucci.com', '8873395007'),
     ('pinetto@pino.com', '8858407148'),
+    ('sarah@pucci.com', '1451685556'),
+    ('user@user.com', '1477730141'),
     ('user@user.com', '3319672207'),
+    ('user@user.com', '8851800413'),
     ('user@user.com', '885205720X'),
     ('user@user.com', '8852220828'),
-    ('user@user.com', '8893679833');
+    ('user@user.com', '8855057014'),
+    ('user@user.com', '8890185074'),
+    ('user@user.com', '8893679833'),
+    ('user@user.com', '9788807821097'),
+    ('user@user.com', '9788891802699'),
+    ('utente@utente.com', '8804591382'),
+    ('utente@utente.com', '8831804499'),
+    ('utente@utente.com', '8845984672'),
+    ('utente@utente.com', '8845985466'),
+    ('utente@utente.com', '8854980579'),
+    ('utente@utente.com', '8858407245'),
+    ('utente@utente.com', '8858611446'),
+    ('utente@utente.com', '8858693361'),
+    ('utente@utente.com', '8858819551'),
+    ('utente@utente.com', '8858862104'),
+    ('utente@utente.com', '9788808170033'),
+    ('utente@utente.com', '9791041969258');
 
 --
 -- Dump dei dati per la tabella `Scambio`
@@ -799,7 +1071,8 @@ INSERT INTO
         `idCopiaProp`,
         `idCopiaAcc`,
         `dataProposta`,
-        `dataConclusione`
+        `dataConclusione`,
+        `stato`
     )
 VALUES
     (
@@ -809,5 +1082,164 @@ VALUES
         16,
         9,
         '2025-01-15',
-        NULL
+        NULL,
+        'in attesa'
+    ),
+    (
+        3,
+        'matteobazzan333@gmail.com',
+        'pinetto@pino.com',
+        9,
+        16,
+        '2025-01-20',
+        NULL,
+        'in attesa'
+    ),
+    (
+        4,
+        'frafra35@pucci.com',
+        'mariabranch@pucci.com',
+        11,
+        14,
+        '2025-01-13',
+        '2025-01-15',
+        'accettato'
+    ),
+    (
+        6,
+        'mariabranch@pucci.com',
+        'frafra35@pucci.com',
+        18,
+        13,
+        '2025-01-22',
+        NULL,
+        'in attesa'
+    ),
+    (
+        7,
+        'gingin@pucci.com',
+        'noah95@pucci.com',
+        20,
+        23,
+        '2025-01-23',
+        '2025-01-24',
+        'accettato'
+    ),
+    (
+        8,
+        'mariabranch@pucci.com',
+        'gingin@pucci.com',
+        17,
+        21,
+        '2025-01-27',
+        '2025-01-28',
+        'rifiutato'
+    ),
+    (
+        9,
+        'user@user.com',
+        'utente@utente.com',
+        32,
+        28,
+        '2025-01-29',
+        NULL,
+        'accettato'
+    ),
+    (
+        10,
+        'user@user.com',
+        'utente@utente.com',
+        35,
+        30,
+        '2025-01-29',
+        NULL,
+        'rifiutato'
+    ),
+    (
+        11,
+        'mariorog123@gmail.com',
+        'mari123@gmail.com',
+        59,
+        58,
+        '2025-01-29',
+        '2025-01-29',
+        'accettato'
+    ),
+    (
+        12,
+        'mariorog123@gmail.com',
+        'user@user.com',
+        61,
+        6,
+        '2025-01-29',
+        NULL,
+        'accettato'
+    ),
+    (
+        13,
+        'mariorossi@gmail.com',
+        'user@user.com',
+        63,
+        62,
+        '2025-01-29',
+        NULL,
+        'accettato'
+    ),
+    (
+        15,
+        'mari123@gmail.com',
+        'user@user.com',
+        66,
+        64,
+        '2025-01-29',
+        NULL,
+        'accettato'
+    );
+
+--
+-- Dump dei dati per la tabella `Recensione`
+--
+INSERT INTO
+    `Recensione` (
+        `emailRecensito`,
+        `idScambio`,
+        `dataPubblicazione`,
+        `valutazione`,
+        `contenuto`
+    )
+VALUES
+    (
+        'mari123@gmail.com',
+        15,
+        '2025-01-29',
+        2,
+        'lento a inviare il libro ma tenuto bene'
+    ),
+    (
+        'mariorog123@gmail.com',
+        11,
+        '2025-01-29',
+        2,
+        'Consegna veloce ma alcune pagine erano rovinate'
+    ),
+    (
+        'mariorog123@gmail.com',
+        12,
+        '2025-01-29',
+        4,
+        'consegna un pochino lenta ma libro in ottimi stati'
+    ),
+    (
+        'mariorossi@gmail.com',
+        13,
+        '2025-01-29',
+        5,
+        'Consegna veloce e libro tenuto molto bene'
+    ),
+    (
+        'user@user.com',
+        9,
+        '2025-01-29',
+        5,
+        'Libro tenuto molto bene e consegna veloce'
     );

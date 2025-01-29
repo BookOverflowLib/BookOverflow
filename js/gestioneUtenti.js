@@ -1,4 +1,4 @@
-const buttonsElimina = document.querySelectorAll('.user-row .user-buttons .elimina-utente');
+const buttonsElimina = document.querySelectorAll('.elimina-utente');
 const sureDialog = document.getElementById('sure-dialog');
 
 let userClicked = '';

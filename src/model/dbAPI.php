@@ -871,7 +871,10 @@ class DBAccess
 	public function get_review_by_user($user): ?array
 	{
 		$query = <<<SQL
-		SELECT R.valutazione AS valutazione, R.contenuto AS contenuto, R.dataPubblicazione AS dataPubblicazione, U.username AS recensito, U2.username AS recensore, S.ID AS idScambio
+		SELECT R.valutazione AS valutazione, R.contenuto AS contenuto, 
+		R.dataPubblicazione AS dataPubblicazione, U.username AS recensito, 
+		U2.username AS recensore, U2.path_immagine as immagine_recensore, 
+		S.ID AS idScambio
 		FROM Recensione R 
 		JOIN Utente U ON R.emailRecensito = U.email
 		JOIN Scambio S ON R.idScambio = S.ID

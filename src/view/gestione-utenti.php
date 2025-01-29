@@ -5,8 +5,8 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
 if (!is_admin()) {
-    header('Location: ' . getPrefix() . '/profilo');
-    exit;
+	header('Location: ' . getPrefix() . '/profilo');
+	exit;
 }
 
 $db = new DBAccess();
@@ -27,30 +27,30 @@ echo $page;
 
 function addUserManageSection($page, $db)
 {
-    $prefix = getPrefix();
-    $utentiRegistrati = $db->get_users();
-    $utentiRegistratiHTML = "";
+	$prefix = getPrefix();
+	$utentiRegistrati = $db->get_users();
+	$utentiRegistratiHTML = "";
 
-    foreach ($utentiRegistrati as $utente) {
-        $utentiRegistratiHTML .= generateUserRow($utente, $db);
-    }
+	foreach ($utentiRegistrati as $utente) {
+		$utentiRegistratiHTML .= generateUserRow($utente, $db);
+	}
 
-    if ($utentiRegistratiHTML == '') {
-        $utentiRegistratiHTML = <<<HTML
+	if ($utentiRegistratiHTML == '') {
+		$utentiRegistratiHTML = <<<HTML
 		<div class="empty-list">
 			<p>Non ci sono utenti registrati</p>
 		</div>
 		HTML;
-    }
-    return str_replace('<!-- [utentiRegistrati] -->', $utentiRegistratiHTML, $page);
+	}
+	return str_replace('<!-- [utentiRegistrati] -->', $utentiRegistratiHTML, $page);
 }
 
 function generateUserRow($utente, $db)
 {
-    $location = getLocationName($utente['provincia'], $utente['comune']);
+	$location = getLocationName($utente['provincia'], $utente['comune']);
 
-    $prefix = getPrefix();
-    return <<<HTML
+	$prefix = getPrefix();
+	return <<<HTML
     <div class="user-row" id="user-{$utente['username']}">
         <a class="user-data" href="{$prefix}/profilo/{$utente['username']}">
             <img src="{$utente['path_immagine']}" alt="">
@@ -71,24 +71,28 @@ function generateUserRow($utente, $db)
 
 function dialogSure($page)
 {
+	$prefix = getPrefix();
 	$dialog_content = <<<HTML
 	<h2>Sei sicuro di voler eliminare l'utente?</h2>
 	<p class="input-error-regular">Eliminerai completamente il profilo e tutti i dati al suo interno</p>
 	<div class="dialog-buttons">
-				<input
-					class="button-layout destructive"
-					id="aggiungi-libro"
-					type="submit"
-					value="Elimina" />
-				<button
-					class="button-layout-light"
-					formnovalidate
-					id="close-dialog"
-					type="reset">
-					Annulla
-				</button>
-			</div>
+		<form action="{$prefix}/api/elimina-utente" method="POST">
+			<input type="hidden" value="" name="username" id="form-username"/>
+			<input
+				class="button-layout destructive"
+				id="conferma-elimina"
+				type="submit"
+				value="Elimina" />
+			<button
+				class="button-layout-light"
+				formnovalidate
+				id="close-dialog"
+				type="reset">
+				Annulla
+			</button>
+		</div>
+	</form>
 	HTML;
 
-    return str_replace('<!-- [seiSicuro] -->', $dialog_content, $page);
+	return str_replace('<!-- [seiSicuro] -->', $dialog_content, $page);
 }

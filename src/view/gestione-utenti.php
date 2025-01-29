@@ -16,7 +16,7 @@ $page = getTemplatePage("I tuoi scambi");
 
 $page_utenti = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'gestione-utenti.html');
 $page_utenti = addUserManageSection($page_utenti, $db);
-$page_utenti = dialogSure($page_utenti);
+$page_utenti = dialogSure($page_utenti, "l'account", "Eliminerai completamente il profilo e tutti i dati al suo interno");
 
 
 $page = str_replace('<!-- [content] -->', $page_utenti, $page);
@@ -67,32 +67,4 @@ function generateUserRow($utente, $db)
         </div>
     </div>
     HTML;
-}
-
-function dialogSure($page)
-{
-	$prefix = getPrefix();
-	$dialog_content = <<<HTML
-	<h2>Sei sicuro di voler eliminare l'utente?</h2>
-	<p class="input-error-regular">Eliminerai completamente il profilo e tutti i dati al suo interno</p>
-	<div class="dialog-buttons">
-		<form action="{$prefix}/api/elimina-utente" method="POST">
-			<input type="hidden" value="" name="username" id="form-username"/>
-			<input
-				class="button-layout destructive"
-				id="conferma-elimina"
-				type="submit"
-				value="Elimina" />
-			<button
-				class="button-layout-light"
-				formnovalidate
-				id="close-dialog"
-				type="reset">
-				Annulla
-			</button>
-		</div>
-	</form>
-	HTML;
-
-	return str_replace('<!-- [seiSicuro] -->', $dialog_content, $page);
 }

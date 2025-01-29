@@ -211,7 +211,6 @@ class DBAccess
 		$this->ensure_connection();
 		$query = "SELECT p.id, p.nome, r.nome as regione FROM province p JOIN regioni r ON p.id_regione = r.id ORDER BY p.nome";
 		return $this->query_to_array($query);
-
 	}
 
 	public function get_comune_by_provincia($idProvincia): ?array
@@ -427,7 +426,7 @@ class DBAccess
 			return $this->query_to_array($query, "s", [$userEmail]);
 		} catch (Exception $e) {
 			error_log("get_libri_offerti_by_username: " . $e->getMessage());
-			//throw $e;
+			throw $e;
 		}
 		return null;
 	}
@@ -444,7 +443,7 @@ class DBAccess
 			$this->void_query($query, "sss", [$isbn, $userEmail, $condizione]);
 		} catch (Exception $e) {
 			error_log("insert_libri_offerti_by_username: " . $e->getMessage());
-			//throw $e;
+			throw $e;
 		}
 	}
 
@@ -858,6 +857,25 @@ class DBAccess
 		}
 	}
 
+	function get_review_by_user($user): ?array
+	{
+		$query = <<<SQL
+		SELECT R.valutazione AS valutazione, R.contenuto AS contenuto, R.dataPubblicazione AS dataPubblicazione, U.username AS recensito, U2.username AS recensore, S.ID AS idScambio
+		FROM Recensione R 
+		JOIN Utente U ON R.emailRecensito = U.email
+		JOIN Scambio S ON R.idScambio = S.ID
+		JOIN Utente U2 ON (S.emailProponente = U2.email AND S.emailAccettatore = R.emailRecensito) OR (S.emailProponente = R.emailRecensito AND S.emailAccettatore = U2.email)
+		WHERE U.username = ?
+		SQL;
+
+		try {
+			return $this->query_to_array($query, "s", [$user]);
+		} catch (Exception $e) {
+			error_log("get_review_by_user: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
 	/**
 	 * Controlla se l'utente può aggiungere una recensione
 	 * @param $userRecensito string utente recensito
@@ -965,5 +983,4 @@ class DBAccess
 			throw $e;
 		}
 	}
-
 }

@@ -868,6 +868,20 @@ class DBAccess
 		}
 	}
 
+	public function search_books($searchInput) {
+		$query = <<<SQL
+		SELECT * FROM Libro
+		WHERE titolo LIKE ? OR autore LIKE ? OR genere LIKE ?
+		SQL;
+
+		try {
+			return $this->query_to_array($query, "sss", ["%$searchInput%", "%$searchInput%", "%$searchInput%"]);
+		} catch (Exception $e) {
+			error_log("search_books: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
 	public function get_review_by_user($user): ?array
 	{
 		$query = <<<SQL

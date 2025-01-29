@@ -42,6 +42,9 @@ if (!preg_match("/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/", $email))
 if (!preg_match("/^[^\s\r\n]{2,50}$/", $username)) {
 	redirect("Username non valido");
 }
+if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $password)) {
+	redirect("Password non valida");
+}
 
 try {
 	$db->register_user($nome, $cognome, $id_provincia, $id_comune, $email, $username, $password, $image);

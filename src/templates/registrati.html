@@ -80,8 +80,8 @@
 						<!-- [province] -->
 					</select>
 					<p id="provincia_help" class="form_help">
-						La provincia in cui risiedi, sarà utile agli altri utenti
-						per capire le modalità di scambio
+						La provincia in cui risiedi, sarà utile agli altri
+						utenti per capire le modalità di scambio
 					</p>
 				</div>
 				<div>
@@ -162,13 +162,11 @@
 						id="password"
 						name="password"
 						minlength="8"
-						title="Deve contenere almeno 8 caratteri"
+						pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+						title="Deve contenere almeno 8 caratteri, una lettera maiuscola, una lettera minuscola, un numero e un carattere speciale"
 						required
 						type="password" />
-					<p id="password_help" class="form_help">
-						Deve contenere almeno 8 caratteri
-					</p>
-					<!-- <div id="password_help" class="form_help">
+					<div id="password_help" class="form_help">
 						<p>Deve contenere:</p>
 						<ul>
 							<li>Almeno 8 caratteri</li>
@@ -177,7 +175,7 @@
 							<li>Un numero (0-9)</li>
 							<li>Un carattere speciale</li>
 						</ul>
-					</div> -->
+					</div>
 				</div>
 				<!-- conferma password -->
 				<div>

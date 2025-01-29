@@ -8,9 +8,9 @@ require_once $GLOBALS['MODEL_PATH'] . 'nyt-libri.php';
 //insert_NYT_books();
 ensure_session();
 
-$page = getTemplatePage("Libri offerti");
+$page = getTemplatePage("Esplora tutti");
 $esplora = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'esplora-tutti.html');
-$esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Libri offerti', $esplora);
+$esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Esplora tutti', $esplora);
 
 $sottotitolo = 'Tutti i libri messi a disposizione dagli utenti nella piattaforma!';
 $esplora = str_replace('<!-- [sottotitolo] -->', $sottotitolo, $esplora);

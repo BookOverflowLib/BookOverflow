@@ -616,11 +616,11 @@ header {
 footer {
 	background-color: var(--background-200);
 	padding: 2em;
+	padding-top: 1em;
 }
 
-/*TEMP PADDING*/
 footer>.logo {
-	padding-top: 10em;
+	padding-top: 2em;
 }
 
 #unipd,
@@ -1782,7 +1782,6 @@ textarea {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: 2em;
-	padding-top: 3em;
 }
 #quote > blockquote{
 	font-size: var(--font-lg);

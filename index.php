@@ -27,7 +27,14 @@ if (preg_match("#^/profilo/([^/]+)/seleziona-generi$#", $path, $matches)) {
 } elseif (preg_match('#^/profilo/([^/]+)/scambi#', $path, $matches)) {
 	$_GET['user'] = $matches[1];
 	$path = '/profilo/scambi';
+} elseif (preg_match('#^/profilo/([^/]+)/recensioni#', $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo/recensioni';
 } elseif (preg_match("#^/profilo/([^/]+)$#", $path, $matches)) {
+	$_GET['user'] = $matches[1];
+	$path = '/profilo';
+} 
+elseif (preg_match("#^/profilo/([^/]+)$#", $path, $matches)) {
 	$_GET['user'] = $matches[1];
 	$path = '/profilo';
 }

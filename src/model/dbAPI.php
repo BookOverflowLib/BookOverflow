@@ -310,6 +310,17 @@ class DBAccess
 		}
 	}
 
+	public function delete_user($user): void
+	{
+		$query = "DELETE FROM Utente WHERE username = ?";
+		try {
+			$this->void_query($query, "s", [$user]);
+		} catch (Exception $e) {
+			error_log("delete_user: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
 	public function get_user_rating_by_email($email): ?array
 	{
 		$query = 'SELECT R.emailRecensito, AVG(R.valutazione) AS media_valutazioni 
@@ -846,7 +857,7 @@ class DBAccess
 		}
 	}
 
-	function get_book_title_by_ISBN($isbn): ?array
+	public function get_book_title_by_ISBN($isbn): ?array
 	{
 		$query = "SELECT titolo FROM Libro WHERE ISBN = ?";
 		try {
@@ -857,7 +868,7 @@ class DBAccess
 		}
 	}
 
-	function get_review_by_user($user): ?array
+	public function get_review_by_user($user): ?array
 	{
 		$query = <<<SQL
 		SELECT R.valutazione AS valutazione, R.contenuto AS contenuto, R.dataPubblicazione AS dataPubblicazione, U.username AS recensito, U2.username AS recensore, S.ID AS idScambio

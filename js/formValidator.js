@@ -32,19 +32,19 @@ function setSuggestion(input, mode, formChecks) {
         case 1:
             newNode.textContent = formChecks[input.id][2];
             newNode.className = "input-error";
-            //parent.insertBefore(newNode, parent.lastChild); //TODO: maybe after is better?
+            //parent.insertBefore(newNode, parent.lastChild);
             parent.insertBefore(newNode, parent.lastChild.previousSibling);
             break;
         case 2:
             newNode.textContent = "Campo obbligatorio";
             newNode.className = "input-error";
-            //parent.insertBefore(newNode, parent.lastChild); //TODO: maybe after is better?
+            //parent.insertBefore(newNode, parent.lastChild);
             parent.insertBefore(newNode, parent.lastChild.previousSibling);
             break;
         case 3:
             newNode.textContent = "Le password non corrispondono";
             newNode.className = "input-error";
-            //parent.insertBefore(newNode, parent.lastChild); //TODO: maybe after is better?
+            //parent.insertBefore(newNode, parent.lastChild);
             parent.insertBefore(newNode, parent.lastChild.previousSibling);
             break;
         default:

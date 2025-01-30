@@ -268,12 +268,14 @@ function getFooterProfiloLi($path): string
 		['href' => $prefix . '/accedi', 'text' => 'Accedi'],
 		['href' => $prefix . '/registrati', 'text' => 'Registrati'],
 	];
-
-	$loggedReferences = [
-		['href' => $prefix . '/profilo/' . $_SESSION['user'], 'text' => 'Il mio profilo'],
-		['href' => $prefix . '/profilo/' . $_SESSION['user'] . '/scambi', 'text' => 'I miei scambi'],
-		['href' => $prefix . '/api/logout', 'text' => 'Esci dal profilo'],
-	];
+	
+	if (isset($_SESSION['user'])) {
+		$loggedReferences = [
+			['href' => $prefix . '/profilo/' . $_SESSION['user'], 'text' => 'Il mio profilo'],
+			['href' => $prefix . '/profilo/' . $_SESSION['user'] . '/scambi', 'text' => 'I miei scambi'],
+			['href' => $prefix . '/api/logout', 'text' => 'Esci dal profilo'],
+		];
+	}
 
 	$li = '';
 	ensure_session();
@@ -289,7 +291,7 @@ function getFooterProfiloLi($path): string
 					'</a></li>';
 			} else {
 				$li .= '<li class="activePage">' . $ref['text'] . '</li>';
-			}	
+			}
 		}
 	} else {
 		foreach ($startReferences as $ref) {

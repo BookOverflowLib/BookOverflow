@@ -277,8 +277,7 @@ function getStartFooterLi($path): string
 	ensure_session();
 
 	if (isset($_SESSION['user'])) {
-		$li .= '<li><a href="' . $prefix . '/">Esci</a></li>';
-		session_destroy();
+		$li .= '<li><a href="' . $prefix . '/api/logout">Esci</a></li>';
 	} else {
 		foreach ($startReferences as $ref) {
 			if ($currentPage != $ref['href']) {

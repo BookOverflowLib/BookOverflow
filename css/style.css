@@ -1795,9 +1795,13 @@ textarea {
 }
 
 #settings-profilo {
-	display: flex;
-	flex-wrap: wrap;
+	display: inline-flex;
 	gap: 1em;
 	align-items: center;
 	justify-content: center;
+}
+
+.disclaimer {
+	margin-top: 1em;
+	font-size: var(--font-sm);
 }

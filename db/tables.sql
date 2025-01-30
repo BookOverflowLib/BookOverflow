@@ -57,7 +57,7 @@ CREATE TABLE
         ),
         UNIQUE (ISBN, proprietario, condizioni),
         FOREIGN KEY (ISBN) REFERENCES Libro (ISBN),
-        FOREIGN KEY (proprietario) REFERENCES Utente (email)
+        FOREIGN KEY (proprietario) REFERENCES Utente (email) ON DELETE CASCADE
     );
 
 CREATE TABLE
@@ -66,7 +66,7 @@ CREATE TABLE
         ISBN VARCHAR(50),
         UNIQUE (email, ISBN),
         PRIMARY KEY (email, ISBN),
-        FOREIGN KEY (email) REFERENCES Utente (email),
+        FOREIGN KEY (email) REFERENCES Utente (email) ON DELETE CASCADE,
         FOREIGN KEY (ISBN) REFERENCES Libro (ISBN)
     );
 
@@ -83,8 +83,8 @@ CREATE TABLE
         stato ENUM ('in attesa', 'accettato', 'rifiutato') DEFAULT 'in attesa',
         FOREIGN KEY (emailProponente) REFERENCES Utente (email) ON DELETE CASCADE,
         FOREIGN KEY (emailAccettatore) REFERENCES Utente (email) ON DELETE CASCADE,
-        FOREIGN KEY (idCopiaProp) REFERENCES Copia (ID),
-        FOREIGN KEY (idCopiaAcc) REFERENCES Copia (ID)
+        FOREIGN KEY (idCopiaProp) REFERENCES Copia (ID) ON DELETE CASCADE,
+        FOREIGN KEY (idCopiaAcc) REFERENCES Copia (ID) ON DELETE CASCADE
     );
 
 CREATE TABLE
@@ -98,8 +98,8 @@ CREATE TABLE
             AND valutazione <= 5
         ),
         contenuto TEXT, -- 65k caratteri
-        FOREIGN KEY (emailRecensito) REFERENCES Utente (email),
-        FOREIGN KEY (idScambio) REFERENCES Scambio (ID),
+        FOREIGN KEY (emailRecensito) REFERENCES Utente (email) ON DELETE CASCADE,
+        FOREIGN KEY (idScambio) REFERENCES Scambio (ID) ON DELETE CASCADE,
         PRIMARY KEY (emailRecensito, idScambio)
     );
 

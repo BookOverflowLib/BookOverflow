@@ -12,7 +12,6 @@ use CustomExceptions\{
 	InvalidComuneException
 };
 
-// TODO: maybe exception could be handled using best practices but i don´t think it's a requirement
 class DBAccess
 {
 	private $connection;
@@ -878,6 +877,24 @@ class DBAccess
 			return $this->query_to_array($query, "sss", ["%$searchInput%", "%$searchInput%", "%$searchInput%"]);
 		} catch (Exception $e) {
 			error_log("search_books: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function get_books_by_preferences($user) {
+		$query = <<<SQL
+		SELECT * FROM Libro
+		WHERE genere IN (?)
+		SQL;
+
+		try {
+			$generi = $this->get_generi_by_username($user);
+			$generiString = $generi[0]['generi_preferiti'];
+			$generiString = str_replace(['[',']'], '', $generiString);
+			printf( str_replace('?', '%s', $query), $generiString);
+			return $this->query_to_array($query, "s", [$generiString]);
+		} catch (Exception $e) {
+			error_log("get_book_by_preferences: " . $e->getMessage());
 			throw $e;
 		}
 	}

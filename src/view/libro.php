@@ -117,7 +117,7 @@ $scambi_html = "";
 if (is_logged_in()) {
 	$utentiInteressati = $db->get_users_with_that_book_and_interested_in_my_books($_SESSION['user'], $_GET['ISBN']);
 	$numUtentiInteressati = count($utentiInteressati);
-	$libro_page = str_replace('<!-- [numUtentiInteressati] -->', $numUtentiInteressati . ' utenti lo scambiano', $libro_page);
+	$libro_page = str_replace('<!-- [numUtentiInteressati] -->', $numUtentiInteressati . ' utenti lo scambiano con i tuoi libri', $libro_page);
 
 	if ($numUtentiInteressati == 0) {
 		$scambi_html = "<p>Nessuno scambia ancora questo libro!</p>";

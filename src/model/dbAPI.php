@@ -894,8 +894,10 @@ class DBAccess
 	public function get_books_by_preferences($user)
 	{
 		$query = <<<SQL
-		SELECT * FROM Libro
-		WHERE genere IN (?)
+		SELECT UNIQUE(L.ISBN) AS ISBN, L.titolo AS titolo, L.autore AS autore, L.editore AS editore, L.anno AS anno, L.genere AS genere, L.descrizione AS descrizione, L.lingua AS lingua, L.path_copertina AS path_copertina
+		FROM Libro L
+		JOIN Copia C ON L.ISBN = C.ISBN
+		WHERE genere IN (?) AND C.disponibile = TRUE
 		SQL;
 
 		try {
@@ -1048,7 +1050,7 @@ class DBAccess
 	{
 		$query = <<<SQL
 		SELECT DISTINCT L.ISBN, L.titolo, L.autore, L.editore, L.anno, L.genere, L.descrizione, L.lingua, L.path_copertina
-		FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN JOIN Utente U ON C.proprietario = U.email
+		FROM Copia C JOIN Libro L ON C.ISBN = L.ISBN
 		WHERE C.disponibile = TRUE
 		ORDER BY C.ID DESC
 		SQL;

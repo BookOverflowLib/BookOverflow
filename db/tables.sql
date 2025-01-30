@@ -1023,9 +1023,9 @@ VALUES
         'https://books.google.com/books/content?id=4Yc_wRdHbwkC&printsec=frontcover&img=1&zoom=1&fife=w328&source=gbs_api'
     );
 
--- --
--- -- Dump dei dati per la tabella `Copia`
--- --
+--
+-- Dump dei dati per la tabella `Copia`
+--
 INSERT INTO
     `Copia` (
         `ID`,

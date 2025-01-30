@@ -30,7 +30,7 @@ $esplora = str_replace('<!-- [ricerca] -->', $ricerca, $esplora);
 $db = new DBAccess();
 
 if (isset($_GET) && isset($_GET['searchInput']) && !empty($_GET['searchInput'])) {
-    var_dump("ricerca");
+    // var_dump("ricerca");
     $searchInput = $_GET['searchInput'];
 
     try {
@@ -41,18 +41,18 @@ if (isset($_GET) && isset($_GET['searchInput']) && !empty($_GET['searchInput']))
 } elseif (isset($_GET) && isset($_GET['generiPreferitiButton']) && isset($_SESSION['user'])) {
     try {
         $tutti = $db->get_books_by_preferences($_SESSION['user']);
-        var_dump($tutti);
+        // var_dump($tutti);
     } catch (Exception $e) {
         $_SESSION['error'] = exceptionToError($e, "Errore: Ricerca per generi preferiti non riuscita");
     }
 } elseif (isset($_GET) && isset($_GET['resetButton'])) {
-    var_dump("reset");
+    // var_dump("reset");
     unset($_GET['searchInput']);
     unset($_GET['generiPreferitiButton']);
 
     $tutti = $db->get_libri_offerti();
 } else {
-    var_dump("tutti");
+    // var_dump("tutti");
     $tutti = $db->get_libri_offerti();
 }
 

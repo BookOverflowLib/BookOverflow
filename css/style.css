@@ -835,6 +835,9 @@ section > p > a {
 	justify-items: start;
 	padding: 1em;
 }
+.libro-panoramica > img {
+	aspect-ratio: 1/1.5;
+}
 
 .libro-panoramica > div > h1 {
 	margin-top: 0.5em;

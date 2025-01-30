@@ -175,7 +175,8 @@ a:visited {
 	color: var(--link-visited);
 }
 
-.button-layout, .button-layout-icon{
+.button-layout,
+.button-layout-icon {
 	font-size: var(--font-sm);
 	font-weight: bold;
 	border: none;
@@ -213,7 +214,8 @@ a:visited {
 	vertical-align: text-bottom;
 }
 
-.button-layout:hover , .button-layout-icon:hover{
+.button-layout:hover,
+.button-layout-icon:hover {
 	background: var(--primary-300);
 }
 
@@ -269,7 +271,8 @@ a:visited {
 	background: var(--accent-300);
 }
 
-.secondary:hover, .secondary-light:hover {
+.secondary:hover,
+.secondary-light:hover {
 	background: var(--secondary-300);
 }
 
@@ -1842,9 +1845,9 @@ textarea {
 	font-size: var(--font-sm);
 }
 
-.search-layout{
-	margin-top:0.5em;
+.search-layout {
+	margin-top: 0.5em;
 	display: grid;
 	grid-template-columns: 1fr auto auto auto;
-	gap:0.5em;
+	gap: 0.5em;
 }

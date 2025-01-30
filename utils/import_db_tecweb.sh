@@ -4,9 +4,12 @@
 # mi serve per testare il delete user
 
 
+# Determine the script's directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Path configurations
-ENV_FILE="../.env"
-DB_DIR="../db"
+ENV_FILE="$SCRIPT_DIR/../.env"
+DB_DIR="$SCRIPT_DIR/../db"
 
 # Check if .env file exists
 if [ ! -f "$ENV_FILE" ]; then
@@ -14,8 +17,17 @@ if [ ! -f "$ENV_FILE" ]; then
     exit 1
 fi
 
-# Read database variables from .env
-export "$(grep -E '^(DB_HOST|DB_DATABASE|DB_USERNAME|DB_PASSWORD)=' "$ENV_FILE" | xargs)"
+set -a
+# shellcheck disable=SC1090
+source "$ENV_FILE"
+set +a
+
+# Add debug output
+#echo "Loaded configuration:"
+#echo "DB_HOST: $DB_HOST"
+#echo "DB_DATABASE: $DB_DATABASE"
+#echo "DB_USERNAME: $DB_USERNAME"
+#echo "DB_PASSWORD: $DB_PASSWORD"
 
 # Check if all required variables are set
 if [ -z "$DB_HOST" ] || [ -z "$DB_DATABASE" ] || [ -z "$DB_USERNAME" ] || [ -z "$DB_PASSWORD" ]; then

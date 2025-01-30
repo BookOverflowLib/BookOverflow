@@ -1,29 +1,39 @@
 *{
 	background-color: white;
+	font-family: 'Times New Roman', Times, serif;
+	font-size: medium;
 }
 
 body {
 	display: flex;
 	flex-direction: column;
 	min-height: fit-content;
+	background-color: white;
+			
 }
 #breadcrumb {
 	margin-inline: auto;
 }
-/* HEADER */
-#menu {
-	display: none;
-}
-#hamburger-menu {
-	display: none;
-}
-.header-buttons {
-	display: none;
-}
-/* FOOTER */
-footer {
+.secondary, .destructive{
 	background-color: white;
+	border: 1px solid black;
 }
+/* HEADER */
+
+
+.header-container.active{
+background-color: white
+;}
+/* FOOTER */
+footer, .book-table> :nth-child(even) {
+	background-color: white;
+	
+}
+
+#contenuto, #piu-scambiati{
+	border-bottom:2px solid  var(--background-200);;
+}
+
 nav, #breadcrumb, #contenuto, #piu-scambiati, .message-box, .dialog-window {
 	background-color: white;
 }
@@ -102,7 +112,6 @@ input#conferma_password {
 	border-radius: 5em;
 }
 #come-funziona {
-	/* FASCIA */
 	background: var(--light-gray);
 }
 #come-funziona > div > div > p {
@@ -114,10 +123,17 @@ input#conferma_password {
 	padding: 1em;
 }
 
-a.button-layout {
+a.button-layout{
 	border: 1px solid black;
 	background-color: white;
 }
-main{
+main, .scambio, .danger{
 	background-color: white;
+}
+.scambio{
+	border: 1px var(--background-200) solid;
+}
+.danger{
+	border: 1px solid var(--accent-600);
+	color:black
 }

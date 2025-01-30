@@ -194,7 +194,6 @@ function getHeaderButtons($path): string
 	return $ris;
 }
 
-//TODO: sta roba non ha niente di dinamico quindi forse non va qui??
 function getHamburgerButton(): string
 {
 	$prefix = getPrefix();

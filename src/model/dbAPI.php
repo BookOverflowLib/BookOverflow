@@ -367,6 +367,7 @@ class DBAccess
 		}
 		$path_copertina = str_replace("&edge=curl", "", $path_copertina);
 		$path_copertina = str_replace("http", "https", $path_copertina);
+		$path_copertina .= "&fife=w328";
 
 		$query = "INSERT IGNORE INTO Libro (ISBN, titolo, autore, editore, anno, genere, descrizione, lingua, path_copertina) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {

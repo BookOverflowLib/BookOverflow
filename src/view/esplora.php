@@ -12,7 +12,7 @@ $esplora = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'esplora.html');
 
 $esplora = posizionaCategorie($esplora);
 
-$esplora = getLibriOfferti($esplora);
+$esplora = getEsploraTutti($esplora);
 
 $esplora = getPiuScambiati($esplora);
 
@@ -55,11 +55,11 @@ function getPotrebbePiacerti($page)
     }
 }
 
-function getLibriOfferti($page)
+function getEsploraTutti($page)
 {
     $db = new DBAccess();
     $libri_offerti = $db->get_libri_offerti();
-    return str_replace('<!-- [libriOfferti] -->', getLibriCopertinaGrande($libri_offerti, 4), $page);
+    return str_replace('<!-- [esploraTutti] -->', getLibriCopertinaGrande($libri_offerti, 4), $page);
 }
 
 function getPiuScambiati($page)
@@ -72,7 +72,7 @@ function getPiuScambiati($page)
 function posizionaCategorie($page)
 {
     $array = [
-        'libriOfferti' => ['titolo' => 'Libri offerti', 'link' => 'libri-offerti', 'marker' => 'libriOfferti'],
+        'esploraTutti' => ['titolo' => 'Esplora tutti', 'link' => 'esplora-tutti', 'marker' => 'esploraTutti'],
         'libriPiuScambiati' => ['titolo' => 'Libri più scambiati', 'link' => 'piu-scambiati', 'marker' => 'libriPiuScambiati'],
         'matchPerTe' => ['titolo' => 'Match per te', 'link' => 'per-te', 'marker' => 'matchPerTe'],
         'potrebbePiacerti' => ['titolo' => 'Potrebbe piacerti anche', 'link' => 'potrebbe-piacerti', 'marker' => 'matchPotrebbePiacerti']
@@ -83,10 +83,10 @@ function posizionaCategorie($page)
     if (is_logged_in()) {
         $esploraCategorie .= getSezioneEsploraTemplate($array['matchPerTe']['titolo'], $array['matchPerTe']['link'], $array['matchPerTe']['marker']);
         $esploraCategorie .= getSezioneEsploraTemplate($array['potrebbePiacerti']['titolo'], $array['potrebbePiacerti']['link'], $array['potrebbePiacerti']['marker']);
-        $esploraCategorie .= getSezioneEsploraTemplate($array['libriOfferti']['titolo'], $array['libriOfferti']['link'], $array['libriOfferti']['marker']);
+        $esploraCategorie .= getSezioneEsploraTemplate($array['esploraTutti']['titolo'], $array['esploraTutti']['link'], $array['esploraTutti']['marker']);
         $esploraCategorie .= getSezioneEsploraTemplate($array['libriPiuScambiati']['titolo'], $array['libriPiuScambiati']['link'], $array['libriPiuScambiati']['marker']);
     } else {
-        $esploraCategorie .= getSezioneEsploraTemplate($array['libriOfferti']['titolo'], $array['libriOfferti']['link'], $array['libriOfferti']['marker']);
+        $esploraCategorie .= getSezioneEsploraTemplate($array['esploraTutti']['titolo'], $array['esploraTutti']['link'], $array['esploraTutti']['marker']);
         $esploraCategorie .= getSezioneEsploraTemplate($array['libriPiuScambiati']['titolo'], $array['libriPiuScambiati']['link'], $array['libriPiuScambiati']['marker']);
         $esploraCategorie .= getSezioneEsploraTemplate($array['matchPerTe']['titolo'], $array['matchPerTe']['link'], $array['matchPerTe']['marker']);
         $esploraCategorie .= getSezioneEsploraTemplate($array['potrebbePiacerti']['titolo'], $array['potrebbePiacerti']['link'], $array['potrebbePiacerti']['marker']);

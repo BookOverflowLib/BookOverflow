@@ -1,14 +1,3 @@
-# Allow all robots to access the entire site
 User-agent: *
-Disallow:
-
-# Disallow access to specific directories
-Disallow: /db/
-Disallow: /utils/
-Disallow: /data/
-Disallow: /src/
-
-# Disallow access to specific files
-Disallow: /.env
-Disallow: /.htaccess
-Disallow: /apache.conf
+Disallow: /
+Allow: /$

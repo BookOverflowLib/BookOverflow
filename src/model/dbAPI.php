@@ -875,8 +875,16 @@ class DBAccess
 		WHERE titolo LIKE ? OR autore LIKE ? OR genere LIKE ?
 		SQL;
 
+		$queryEmpty = <<<SQL
+		SELECT * FROM Libro
+		SQL;
+
 		try {
-			return $this->query_to_array($query, "sss", ["%$searchInput%", "%$searchInput%", "%$searchInput%"]);
+			if (empty($searchInput)) {
+				return $this->query_to_array($queryEmpty);
+			} else {
+				return $this->query_to_array($query, "sss", ["%$searchInput%", "%$searchInput%", "%$searchInput%"]);
+			}
 		} catch (Exception $e) {
 			error_log("search_books: " . $e->getMessage());
 			throw $e;
@@ -900,7 +908,7 @@ class DBAccess
 			$stmt->execute();
 
 			$stmt->bind_result($ISBN, $titolo, $autore, $editore, $anno, $genere, $descrizione, $lingua, $path_copertina);
-			
+
 			$resArray = [];
 			while ($stmt->fetch()) {
 				$resArray[] = [

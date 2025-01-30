@@ -402,7 +402,6 @@ footer .logo p {
 	flex-direction: column;
 }
 
-
 .user-row {
 	display: flex;
 	flex-direction: column;
@@ -414,7 +413,7 @@ footer .logo p {
 	flex-direction: column;
 	justify-self: center;
 }
-.user-data{
+.user-data {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -426,13 +425,22 @@ footer .logo p {
 	text-overflow: ellipsis;
 }
 
-.recensioni-view{
+.recensioni-view {
 	grid-template-columns: 1fr;
 }
 .recensione-card {
 	min-width: 100%;
-
 }
+
+.search-layout {
+	display: grid;
+	grid-template-columns: 1fr auto;
+}
+.search-layout > #reset,
+.search-layout > #filtroGenere {
+	grid-column-start: span 2;
+}
+
 
 #settings-profilo {
 	display: flex;

@@ -174,13 +174,13 @@ function addOtherProfiloButtons($profilo, $user)
 	$libriOffertiButton = '<a href="' . $prefix . '/profilo/' . $user['username'] . '/libri-offerti" class="button-layout" aria-label="Mostra tutti i libri offerti">Mostra tutti</a>';
 	$profilo = str_replace('<!-- [libriOffertiButton] -->', $libriOffertiButton, $profilo);
 
-	$libriDesideratiButton = '<a href="' . $prefix . '/profilo/' . $user['username'] . '/libri-desiderati" class="button-layout" aria-label="Mostra tutta la lista dei desideri">Mostra tutti</a>';
+	$libriDesideratiButton = '<a href="' . $prefix . '/profilo/' . $user['username'] . '/libri-desiderati" class="button-layout" aria-label="Mostra tutti i libri desiderati">Mostra tutti</a>';
 	return str_replace('<!-- [libriDesideratiButton] -->', $libriDesideratiButton, $profilo);
 }
 
 function getContattaButton($profilo, $user)
 {
-	$oggettoMail = '[BookOverflow] Scambio libri';
+	$oggettoMail = '[BookOverflow]+Scambio+libro';
 	$formatMailHref = 'mailto:' . $user['email'] . '?subject=' . $oggettoMail;
 	return '<a href="' . $formatMailHref . '" class="button-layout secondary external-link">Contatta via mail</a>';
 }

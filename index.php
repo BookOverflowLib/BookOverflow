@@ -154,6 +154,9 @@ switch ($path) {
 	case '/api/aggiungi-recensione':
 		require $GLOBALS['MODEL_PATH'] . 'aggiungi-recensione.php';
 		break;
+	case '/api/modifica-utente':
+		require $GLOBALS['MODEL_PATH'] . 'modifica-utente.php';
+		break;
 
 	default:
 		require $GLOBALS['PAGES_PATH'] . '404.php';

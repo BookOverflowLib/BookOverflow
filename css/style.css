@@ -1795,7 +1795,8 @@ textarea {
 }
 
 #settings-profilo {
-	display: inline-flex;
+	display: flex;
+	flex-wrap: wrap;
 	gap: 1em;
 	align-items: center;
 	justify-content: center;

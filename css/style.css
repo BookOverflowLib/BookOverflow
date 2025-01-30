@@ -283,10 +283,6 @@
 	}
 }
 
-@media (prefers-reduced-motion) {
-	/* TODO: togliere animazioni? */
-}
-
 * {
 	margin: 0;
 	padding: 0;

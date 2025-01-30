@@ -54,7 +54,7 @@ function ratingStars($rating): string
 	// STELLE PIENE
 	for ($i = 0; $i < $n_full_star; $i++) {
 		$tmp_star = str_replace('{{star-offset}}', '100', $star_svg);
-		$tmp_star = str_replace('{{id}}', '1', $tmp_star);
+		$tmp_star = str_replace('{{id}}', '1'+$i, $tmp_star);
 
 		$rating_stars .= $tmp_star;
 		$total_star--;
@@ -67,7 +67,7 @@ function ratingStars($rating): string
 			strval($n_partial_star * 100),
 			$star_svg
 		);
-		$par_star = str_replace('{{id}}', '2', $par_star);
+		$par_star = str_replace('{{id}}', '2'+$i, $par_star);
 		$rating_stars .= $par_star;
 		$total_star--;
 	}
@@ -75,7 +75,7 @@ function ratingStars($rating): string
 	//STELLE VUOTE
 	while ($total_star > 0) {
 		$tmp_star = str_replace('{{star-offset}}', '0', $star_svg);
-		$tmp_star = str_replace('{{id}}', '3', $tmp_star);
+		$tmp_star = str_replace('{{id}}', '3'+$i, $tmp_star);
 		$rating_stars .= $tmp_star;
 		$total_star--;
 	}
@@ -146,13 +146,23 @@ function getNavBarLi($path): string
 	return $li;
 }
 
-function getHeaderButtons($path): string
+function getHeaderButtons($path, $isMobile = false): string
 {
 	$prefix = getPrefix();
+
 	$scura =
-		'<span class="active"><img class="theme-icon" src="' . $prefix . '/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="sr-only">Modalità scura</span></span>';
+		'<span class="active"><img class="theme-icon" src="' . $prefix . '/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="sr-only">Tema scuro</span></span>';
 	$chiara =
+		'<span><img class="theme-icon" src="' . $prefix . '/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="sr-only">Tema chiaro</span></span>';
+
+	$scuraMobile =
+		'<span class="active"><img class="theme-icon" src="' . $prefix . '/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="sr-only">Modalità scura</span></span>';
+	$chiaraMobile =
 		'<span><img class="theme-icon" src="' . $prefix . '/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="sr-only">Modalità chiara</span></span>';
+
+	$chiara = $isMobile ? $chiaraMobile : $chiara;
+	$scura = $isMobile ? $scuraMobile : $scura;
+
 	$themeToggleButton =
 		'<button class="theme-toggle" aria-pressed="false">' .
 		$chiara .
@@ -173,6 +183,7 @@ function getHeaderButtons($path): string
 
 	$ris = '';
 	ensure_session();
+
 
 	if (isset($_SESSION['user'])) {
 		$ris = <<<HTML
@@ -226,6 +237,11 @@ function getHeaderSection($path): string
 		$myHeader
 	);
 	$myHeader = str_replace(
+		'<!-- [header-buttons-mobile] -->',
+		getHeaderButtons($path, true),
+		$myHeader
+	);
+	$myHeader = str_replace(
 		'<!-- [hamburger-button] -->',
 		getHamburgerButton(),
 		$myHeader
@@ -268,7 +284,7 @@ function getFooterProfiloLi($path): string
 		['href' => $prefix . '/accedi', 'text' => 'Accedi'],
 		['href' => $prefix . '/registrati', 'text' => 'Registrati'],
 	];
-	
+
 	if (isset($_SESSION['user'])) {
 		$loggedReferences = [
 			['href' => $prefix . '/profilo/' . $_SESSION['user'], 'text' => 'Il mio profilo'],
@@ -490,7 +506,7 @@ function getLibriCopertinaGrande($libri, $max_risultati): string
 		$prefix = getPrefix();
 		$libroTemplate = <<<HTML
 		<div class="libro">
-			<a href="{$prefix}/libro/{$libri[$i]['ISBN']}" aria-label="Libro {$libri[$i]["titolo"]} di {$libri[$i]["autore"]}">
+			<a href="{$prefix}/libro/{$libri[$i]['ISBN']}" aria-label="{$libri[$i]['titolo']}, {$libri[$i]['autore']}">
 				<img alt="" src="{$path_copertina}" width="150" />
 				<p class="titolo-libro">{$libri[$i]["titolo"]}</p>
 				<p class="autore-libro">{$libri[$i]["autore"]}</p>

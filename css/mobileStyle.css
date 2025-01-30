@@ -441,7 +441,6 @@ footer .logo p {
 	grid-column-start: span 2;
 }
 
-
 #settings-profilo {
 	display: flex;
 	flex-direction: column;
@@ -450,5 +449,4 @@ footer .logo p {
 	justify-content: center;
 	margin-left: auto;
 	padding-top: 0;
-	
 }

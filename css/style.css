@@ -1,48 +1,3 @@
-/* ==========================================================================
-   FONT FACES
-   ========================================================================== */
-
-@font-face {
-	font-family: 'Gentium Book Plus';
-	src: url('./../assets/fonts/GentiumBookPlus-Regular.woff2') format('woff2'),
-		url('./../assets/fonts/GentiumBookPlus-Regular.ttf') format('truetype');
-	font-weight: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Gentium Book Plus';
-	src: url('./../assets/fonts/GentiumBookPlus-Bold.woff2') format('woff2'),
-		url('./../assets/fonts/GentiumBookPlus-Bold.ttf') format('truetype');
-	font-weight: bold;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Gentium Book Plus';
-	src: url('./../assets/fonts/GentiumBookPlus-Italic.woff2') format('woff2'),
-		url('./../assets/fonts/GentiumBookPlus-Italic.ttf') format('truetype');
-	font-style: italic;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Gentium Book Plus';
-	src: url('./../assets/fonts/GentiumBookPlus-BoldItalic.woff2')
-			format('woff2'),
-		url('./../assets/fonts/GentiumBookPlus-BoldItalic.ttf')
-			format('truetype');
-	font-style: italic;
-	font-weight: bold;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Onest-VariableFont_wght';
-	src: url('./../assets/fonts/Onest-VariableFont_wght.ttf') format('woff2');
-	font-display: swap;
-}
-
 :root {
 	/* PALETTE */
 	--light-yellow: #fefae0ff;
@@ -281,10 +236,6 @@
 			--font-xxxl: 5rem;
 		}
 	}
-}
-
-@media (prefers-reduced-motion) {
-	/* TODO: togliere animazioni? */
 }
 
 * {
@@ -1801,11 +1752,12 @@ textarea {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: 2em;
+	font-size: var(--font-base);
 }
+/* 
 #quote > blockquote {
 	font-size: var(--font-lg);
 	padding-top: 3em;
-	font-size: 1.5em;
 }
 
 #quote > blockquote::before {
@@ -1819,16 +1771,13 @@ textarea {
 #quote > p {
 	font-size: 1em;
 	text-align: right;
-}
+} */
 #listf > p {
 	font-size: var(--font-md);
 	font-weight: 1.5em;
 	text-align: center;
 	font-family: 'Gentium Book Plus', serif;
 	padding-top: 1em;
-}
-#listf > ul li::before {
-	content: ' 📚 ';
 }
 #listf > ul li {
 	padding-top: 2em;

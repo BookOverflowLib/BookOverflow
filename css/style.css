@@ -469,11 +469,20 @@ footer {
 	background-color: var(--background-200);
 	padding: 2em;
 	padding-top: 1em;
+	position: relative;
 }
 
 /*TEMP PADDING*/
 footer > .logo {
 	padding-top: 2em;
+}
+
+#scroll-to-top {
+	text-align: center;
+	border-radius: 40%;
+	background-color: #0f0c07;
+	padding: 0.5em;
+	cursor: pointer;
 }
 
 #unipd,
@@ -1663,18 +1672,18 @@ textarea {
 	font-size: 1em;
 	text-align: right;
 } */
-#listf > p {
+.listf > p {
 	font-size: var(--font-md);
 	font-weight: 1.5em;
 	text-align: center;
 	font-family: 'Gentium Book Plus', serif;
 	padding-top: 1em;
 }
-#listf > ul li {
+.listf > ul li {
 	padding-top: 2em;
 	font-size: var(--font-sm);
 }
-#listf > ul {
+.listf > ul {
 	text-align: center;
 	list-style-type: none;
 }

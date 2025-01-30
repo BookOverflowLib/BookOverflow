@@ -13,8 +13,7 @@ function getComuniByProvincia(provincia) {
 	fd.set('provinciaSelezionata', provincia)
 
 	// send the ajax request using fetch
-	const prefisso = window.location.pathname.split("/")[0] //piango... DA CONTROLLARE
-	prefisso != '' ? prefisso + '/' : prefisso;
+	prefisso = getPrefix(window.location.pathname)
 	fetch(window.location.origin + '/' + prefisso + 'api/ottieni-comuni', { method: 'post', body: fd })
 		.then(response => response.json())
 		.then(json => {
@@ -26,4 +25,12 @@ function getComuniByProvincia(provincia) {
 				cittaSelect.value = sessionStorage.getItem("comune")
 			}
 		})
+}
+
+function getPrefix(url) {
+	const parts = url.split('/');
+	if (parts.length > 1 && parts[1] !== '' && parts[1] !== 'registrati' && parts[1] !== 'profilo' && parts[1] !== 'api') {
+		return `${parts[1]}/`;
+	}
+	return '';
 }

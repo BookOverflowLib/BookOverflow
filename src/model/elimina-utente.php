@@ -25,7 +25,7 @@ $admin = is_admin();
 if ($admin || $_SESSION['user'] === $_POST['username']) {
 	$db = new DBAccess();
 	try {
-		$db->delete_user($username);
+		$db->delete_user($_POST['username']);
 	} catch (Exception $e) {
 		// in caso di errore torna alla pagina precedente in modo da poter visualizzare l'errore
 		redirect($previousUrl, exceptionToError($e, "utente non rimosso"));

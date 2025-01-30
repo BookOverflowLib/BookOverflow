@@ -468,12 +468,12 @@ header {
 	margin-inline: 0.5em;
 }
 
-#breadcrumb > ol > li {
+#breadcrumb > ol > li:last-child {
 	max-width: 20em;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-}
+} 
 
 #breadcrumb a {
 	color: var(--text);

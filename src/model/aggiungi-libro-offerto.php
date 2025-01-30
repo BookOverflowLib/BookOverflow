@@ -14,7 +14,6 @@ if (isset($_POST) && isset($_SESSION['user'])) {
     $autore = $_POST['autore'];
     $editore = $_POST['editore'];
     $anno = $_POST['anno'];
-    // TODO: fix me pls
     if (strlen($anno) > 4) {
         $anno = substr($anno, 0, 4);
     }

@@ -159,12 +159,3 @@ function getCampiDati($page, $user)
 	$campi = $nome . $cognome . $provinciaComune . $password . $conferma. $annulla;
 	return str_replace('<!-- [campiDati] -->', $campi, $page);
 }
-
-/*
-
-
-				
-
-				<!-- password -->
-				
-*/

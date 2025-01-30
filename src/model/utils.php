@@ -151,14 +151,14 @@ function getHeaderButtons($path, $isMobile = false): string
 	$prefix = getPrefix();
 
 	$scura =
-		'<span class="active"><img class="theme-icon" src="' . $prefix . '/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="sr-only">Tema scuro</span></span>';
+		'<span class="active"><img class="theme-icon" src="' . $prefix . '/assets/imgs/moon.svg" alt="" aria-hidden="true"/><span class="sr-only">Tema scuro</span></span>';
 	$chiara =
-		'<span><img class="theme-icon" src="' . $prefix . '/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="sr-only">Tema chiaro</span></span>';
+		'<span><img class="theme-icon" src="' . $prefix . '/assets/imgs/sun.svg" alt="" aria-hidden="true"/><span class="sr-only">Tema chiaro</span></span>';
 
 	$scuraMobile =
-		'<span class="active"><img class="theme-icon" src="' . $prefix . '/assets/imgs/moon.svg" alt="" aria-hidden="true"><span class="sr-only">Modalità scura</span></span>';
+		'<span class="active"><img class="theme-icon" src="' . $prefix . '/assets/imgs/moon.svg" alt="" aria-hidden="true"/><span class="sr-only">Modalità scura</span></span>';
 	$chiaraMobile =
-		'<span><img class="theme-icon" src="' . $prefix . '/assets/imgs/sun.svg" alt="" aria-hidden="true"><span class="sr-only">Modalità chiara</span></span>';
+		'<span><img class="theme-icon" src="' . $prefix . '/assets/imgs/sun.svg" alt="" aria-hidden="true"/><span class="sr-only">Modalità chiara</span></span>';
 
 	$chiara = $isMobile ? $chiaraMobile : $chiara;
 	$scura = $isMobile ? $scuraMobile : $scura;
@@ -209,9 +209,9 @@ function getHamburgerButton(): string
 {
 	$prefix = getPrefix();
 	$chiuso =
-		'<span class="active"><img class="hamburger-icon" src="' . $prefix . '/assets/imgs/hamburger.svg" alt=""><span class="sr-only">Apri l\'<span lang="en">hamburger</span> menù</span></span>';
+		'<span class="active"><img class="hamburger-icon" src="' . $prefix . '/assets/imgs/hamburger.svg" alt=""/><span class="sr-only">Apri l\'<span lang="en">hamburger</span> menù</span></span>';
 	$aperto =
-		'<span><img class="hamburger-icon" src="' . $prefix . '/assets/imgs/cross.svg" alt=""><span class="sr-only">Chiudi l\'<span lang="en">hamburger</span> menù</span></span>';
+		'<span><img class="hamburger-icon" src="' . $prefix . '/assets/imgs/cross.svg" alt=""/><span class="sr-only">Chiudi l\'<span lang="en">hamburger</span> menù</span></span>';
 	$hamburgerIcon =
 		'<button id="hamburger" aria-pressed="false">' .
 		$chiuso .

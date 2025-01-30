@@ -114,14 +114,6 @@ footer .logo p {
 	font-size: var(--font-sm);
 }
 
-/* ACCEDI */
-/*#accedi {*/
-/*    padding-left: 2em;*/
-/*    padding-right: 2em;*/
-/*}*/
-
-/* HAMBURGERINO:) */
-
 #hamburger {
 	display: inline-flex;
 	padding: 1em;
@@ -157,7 +149,6 @@ footer .logo p {
 	height: fit-content;
 	margin-top: 2em;
 	gap: 2em;
-	/* margin: 1em; */
 }
 
 #hamburger-menu.active ul {
@@ -187,7 +178,6 @@ footer .logo p {
 	margin-top: 1em;
 }
 
-/* come funziona */
 #come-funziona > div > div {
 	display: flex;
 	flex-direction: column;

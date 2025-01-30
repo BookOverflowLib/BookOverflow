@@ -473,7 +473,7 @@ header {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-} 
+}
 
 #breadcrumb a {
 	color: var(--text);
@@ -496,7 +496,6 @@ header {
 footer {
 	background-color: var(--background-200);
 	padding: 2em;
-	padding-top: 1em;
 	position: relative;
 }
 
@@ -505,12 +504,26 @@ footer > .logo {
 	padding-top: 2em;
 }
 
-#scroll-to-top {
-	text-align: center;
-	border-radius: 40%;
-	background-color: var(--secondary-300);
-	padding: 0.5em;
+.scroll-to-top {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 9999px;
+	background-color: var(--secondary-200);
+	box-shadow: inset 0 0 0 2px var(--secondary-500);
+	padding: 1em 3em;
 	cursor: pointer;
+	transition: all ease-in-out 0.3s;
+}
+.scroll-to-top img {
+	width: 1.5em;
+	height: 1.5em;
+	display: block;
+	filter: var(--svg-invert);
+}
+
+.scroll-to-top:hover {
+	background-color: var(--secondary-300);
 }
 
 #unipd,
@@ -1678,44 +1691,27 @@ textarea {
 }
 
 /* FOOTER */
-#pre-footer {
+.nav-footer {
+	margin-inline: auto;
+	margin-top: 2em;
+	max-width: 30em;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr;
 	gap: 2em;
 	font-size: var(--font-base);
-}
-/* 
-#quote > blockquote {
-	font-size: var(--font-lg);
-	padding-top: 3em;
+	justify-items: center;
 }
 
-#quote > blockquote::before {
-	content: url('./../assets/imgs/quote.svg');
-}
-
-#quote > blockquote ::after {
-	content: '”';
-}
-
-#quote > p {
-	font-size: 1em;
-	text-align: right;
-} */
-.listf > p {
-	font-size: var(--font-md);
-	font-weight: 1.5em;
-	text-align: center;
-	font-family: 'Gentium Book Plus', serif;
-	padding-top: 1em;
-}
-.listf > ul li {
-	padding-top: 2em;
-	font-size: var(--font-sm);
-}
-.listf > ul {
-	text-align: center;
+.nav-footer ul {
 	list-style-type: none;
+}
+
+.nav-footer ul > li {
+	margin-bottom: 0.5em;
+}
+
+.nav-footer > nav > p {
+	margin-bottom: 1em;
 }
 
 #opzioni-admin {
@@ -1843,6 +1839,7 @@ textarea {
 .disclaimer {
 	margin-top: 1em;
 	font-size: var(--font-sm);
+	max-width: 60em;
 }
 
 .search-layout {

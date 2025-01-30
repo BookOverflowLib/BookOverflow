@@ -790,13 +790,12 @@ function dialogSure($page, $cheCosa, $sottotitolo): array|string
 				value="Elimina" />
 			<button
 				class="button-layout-light"
-				formnovalidate
 				id="close-dialog"
 				type="reset">
 				Annulla
 			</button>
-		</div>
-	</form>
+		</form>
+	</div>
 	HTML;
 
 	return str_replace('<!-- [seiSicuro] -->', $dialog_content, $page);

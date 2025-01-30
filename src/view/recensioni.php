@@ -83,7 +83,7 @@ function generateRecensioneCard($recensione)
 	return <<<HTML
 	<div class="recensione-card">
 		<a class="dati-recensore" href="{$prefix}/profilo/{$recensione['recensore']}">
-			<img src="{$recensione['immagine_recensore']}" alt="">
+			<img src="{$recensione['immagine_recensore']}" alt=""/>
 			<div>
 				<p class="bold"><span class="sr-only">Recensore username</span><span aria-hidden="true">@</span>{$recensione['recensore']}</p>
 				<p>{$dataRecensione}</p>

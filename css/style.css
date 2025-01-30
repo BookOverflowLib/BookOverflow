@@ -508,7 +508,7 @@ footer > .logo {
 #scroll-to-top {
 	text-align: center;
 	border-radius: 40%;
-	background-color: #0f0c07;
+	background-color: var(--secondary-300);
 	padding: 0.5em;
 	cursor: pointer;
 }

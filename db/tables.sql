@@ -134,6 +134,28 @@ VALUES
         NULL
     ),
     (
+        'ale.berna@gmail.com',
+        '$2y$10$Z9xb/y0LNXB0KrUkzU0Px.eshf6IswvKFzzDrO4tmEsYfGX053Tma',
+        'AleBerna',
+        'Alessandro',
+        'Bernardello',
+        '28',
+        '28019',
+        'https://fastly.picsum.photos/id/476/500/500.jpg?hmac=E_lHvPgnl3L-QZV8fPpKBbubsR_fOU6B8trnFz_0BsU',
+        '[\"pets\",\"antiques & collectibles\",\"computers\",\"games & activities\",\"education\",\"technology & engineering\"]'
+    ),
+    (
+        'ale.math@gmail.com',
+        '$2y$10$GlCCnNLkKj9TuFcn3MPszeO0MbB7kQv./.YQLIfE0YBj5MSzsTpCK',
+        'Aleena',
+        'Aleena',
+        'Mathew',
+        '26',
+        '26056',
+        'https://fastly.picsum.photos/id/985/500/500.jpg?hmac=eWDl4YCKkTZg7VCIhqkkovbeNVY1e86vjOJCo-ClLBQ',
+        '[\"literary criticism\",\"philosophy\",\"young adult fiction\",\"psychology\",\"technology & engineering\"]'
+    ),
+    (
         'elena@elena.com',
         '$2y$10$eBiV6fCElL4sGls8VG2hI.PpIr8HBMwCoxqsQj5zTMf1GrBsHNgqG',
         'elena',
@@ -165,6 +187,17 @@ VALUES
         '40037',
         'https://fastly.picsum.photos/id/323/500/500.jpg?hmac=b24VENFLL59JsHRUlOIBhRigKfk84EllIDCVfa_alUQ',
         '[\"nature\",\"performing arts\",\"cooking\",\"photography\",\"crafts & hobbies\",\"transportation\",\"travel\",\"language arts & disciplines\"]'
+    ),
+    (
+        'luca.rib@gmail.com',
+        '$2y$10$i5u2oOdVfJVoTUdvL7o2kuzunlOilxwTRGvN1OFWWXKzQ7oYUsjOy',
+        'LucaRib',
+        'Luca',
+        'Ribon',
+        '27',
+        '27035',
+        'https://fastly.picsum.photos/id/395/500/500.jpg?hmac=sDyOxcZuKzogaz3HcaBSf2NZAUQNkkSyMLWx5n_31rM',
+        '[\"business & economics\",\"photography\",\"education\",\"law\",\"young adult nonfiction\"]'
     ),
     (
         'mari123@gmail.com',
@@ -1188,14 +1221,14 @@ VALUES
     ),
     (
         28,
-        '8858820746',
+        '8890185074',
         'utente@utente.com',
         0,
         'come nuovo'
     ),
     (
         29,
-        '8811135605',
+        '9788807821097',
         'utente@utente.com',
         1,
         'usato'
@@ -1219,14 +1252,14 @@ VALUES
         34,
         '8858819551',
         'user@user.com',
-        1,
+        0,
         'come nuovo'
     ),
     (
         35,
         '8854980579',
         'user@user.com',
-        1,
+        0,
         'usato ma ben conservato'
     ),
     (
@@ -1249,6 +1282,13 @@ VALUES
         'utente@utente.com',
         1,
         'usato ma ben conservato'
+    ),
+    (
+        39,
+        'BML:37001102649147',
+        'utente@utente.com',
+        1,
+        'danneggiato'
     ),
     (40, '8892742027', 'utente@utente.com', 1, 'usato'),
     (
@@ -1275,7 +1315,7 @@ VALUES
     ),
     (
         45,
-        '8811135605',
+        '9788807821097',
         'noah95@pucci.com',
         1,
         'danneggiato'
@@ -1336,7 +1376,7 @@ VALUES
     ),
     (
         60,
-        '8811135605',
+        '9788807821097',
         'mari123@gmail.com',
         1,
         'come nuovo'
@@ -1377,13 +1417,240 @@ VALUES
         'mariorossi@gmail.com',
         1,
         'come nuovo'
+    ),
+    (
+        69,
+        'IND:30000100662224',
+        'user@user.com',
+        1,
+        'usato'
+    ),
+    (
+        70,
+        '8835728657',
+        'user@user.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        71,
+        '8851130892',
+        'user@user.com',
+        1,
+        'come nuovo'
+    ),
+    (
+        72,
+        '8832104849',
+        'luca.rib@gmail.com',
+        1,
+        'danneggiato'
+    ),
+    (
+        74,
+        '1781102120',
+        'luca.rib@gmail.com',
+        1,
+        'nuovo'
+    ),
+    (
+        75,
+        '8893429713',
+        'luca.rib@gmail.com',
+        1,
+        'danneggiato'
+    ),
+    (
+        76,
+        '8834741587',
+        'luca.rib@gmail.com',
+        1,
+        'come nuovo'
+    ),
+    (
+        77,
+        '8893903008',
+        'luca.rib@gmail.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        78,
+        '8858407865',
+        'luca.rib@gmail.com',
+        0,
+        'usato'
+    ),
+    (
+        79,
+        '8850322089',
+        'ale.berna@gmail.com',
+        1,
+        'come nuovo'
+    ),
+    (
+        80,
+        '9788871923420',
+        'ale.berna@gmail.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        81,
+        '885842431X',
+        'ale.berna@gmail.com',
+        0,
+        'usato'
+    ),
+    (
+        82,
+        '9780192835956',
+        'ale.berna@gmail.com',
+        1,
+        'nuovo'
+    ),
+    (
+        83,
+        '1498531911',
+        'ale.berna@gmail.com',
+        0,
+        'come nuovo'
+    ),
+    (
+        85,
+        '232239209X',
+        'ale.berna@gmail.com',
+        1,
+        'danneggiato'
+    ),
+    (
+        86,
+        '8858529413',
+        'ale.math@gmail.com',
+        1,
+        'come nuovo'
+    ),
+    (
+        87,
+        '8858407865',
+        'ale.math@gmail.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        88,
+        '885842431X',
+        'ale.math@gmail.com',
+        1,
+        'usato'
+    ),
+    (
+        89,
+        '8893903008',
+        'ale.math@gmail.com',
+        1,
+        'usato'
+    ),
+    (
+        90,
+        '9788807821097',
+        'ale.math@gmail.com',
+        1,
+        'danneggiato'
+    ),
+    (
+        91,
+        '8890185074',
+        'ale.math@gmail.com',
+        0,
+        'come nuovo'
+    ),
+    (92, '8868301385', 'user@user.com', 1, 'usato'),
+    (
+        93,
+        '8858821815',
+        'user@user.com',
+        0,
+        'usato ma ben conservato'
+    ),
+    (
+        94,
+        '8832104849',
+        'user@user.com',
+        1,
+        'danneggiato'
+    ),
+    (
+        95,
+        '8834741587',
+        'utente@utente.com',
+        1,
+        'come nuovo'
+    ),
+    (
+        96,
+        '8854980579',
+        'luca.rib@gmail.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        97,
+        '1498531911',
+        'luca.rib@gmail.com',
+        0,
+        'danneggiato'
+    ),
+    (
+        98,
+        '8851800413',
+        'ale.math@gmail.com',
+        1,
+        'danneggiato'
+    ),
+    (
+        99,
+        '8858693361',
+        'luca.rib@gmail.com',
+        1,
+        'usato ma ben conservato'
+    ),
+    (
+        100,
+        '8831804499',
+        'luca.rib@gmail.com',
+        1,
+        'come nuovo'
+    ),
+    (
+        101,
+        '8831804499',
+        'ale.berna@gmail.com',
+        1,
+        'usato'
     );
+
 --
 -- Dump dei dati per la tabella `Desiderio`
 --
 INSERT INTO
     `Desiderio` (`email`, `ISBN`)
 VALUES
+    ('ale.berna@gmail.com', '8820093839'),
+    ('ale.berna@gmail.com', '8832104849'),
+    ('ale.berna@gmail.com', '8858407865'),
+    ('ale.berna@gmail.com', '8858819551'),
+    ('ale.berna@gmail.com', '8858821815'),
+    ('ale.berna@gmail.com', '8893903008'),
+    ('ale.berna@gmail.com', '9788804611516'),
+    ('ale.math@gmail.com', '8832104849'),
+    ('ale.math@gmail.com', '8854980579'),
+    ('ale.math@gmail.com', '8858407245'),
+    ('ale.math@gmail.com', '8858415833'),
+    ('ale.math@gmail.com', '8858819551'),
+    ('ale.math@gmail.com', '8868301385'),
+    ('ale.math@gmail.com', '9780192835956'),
+    ('ale.math@gmail.com', '9788807820885'),
     ('elena@elena.com', '8822762576'),
     ('frafra35@pucci.com', '1781101582'),
     ('frafra35@pucci.com', '8811815290'),
@@ -1395,8 +1662,18 @@ VALUES
     ('gingin@pucci.com', '8858818962'),
     ('gingin@pucci.com', '8868572982'),
     ('gingin@pucci.com', '9791220225007'),
+    ('luca.rib@gmail.com', '8830448036'),
+    ('luca.rib@gmail.com', '8836005195'),
+    ('luca.rib@gmail.com', '8836011098'),
+    ('luca.rib@gmail.com', '885842431X'),
+    ('luca.rib@gmail.com', '8858819551'),
+    ('luca.rib@gmail.com', '8858821815'),
+    ('luca.rib@gmail.com', '8868301385'),
+    ('luca.rib@gmail.com', '9788807821097'),
+    ('luca.rib@gmail.com', '9788883423178'),
     ('mari123@gmail.com', '8845985466'),
     ('mari123@gmail.com', '8852024182'),
+    ('mari123@gmail.com', '8858775880'),
     ('mariabranch@pucci.com', '8831804499'),
     ('mariabranch@pucci.com', '8835700159'),
     ('mariabranch@pucci.com', '8852035826'),
@@ -1415,24 +1692,36 @@ VALUES
     ('pinetto@pino.com', '8858407148'),
     ('sarah@pucci.com', '1451685556'),
     ('user@user.com', '1477730141'),
+    ('user@user.com', '1498531911'),
     ('user@user.com', '3319672207'),
+    ('user@user.com', '8834741587'),
+    ('user@user.com', '8835703891'),
+    ('user@user.com', '8845975819'),
     ('user@user.com', '8851800413'),
     ('user@user.com', '885205720X'),
     ('user@user.com', '8852220828'),
-    ('user@user.com', '8858820746'),
+    ('user@user.com', '8855057014'),
+    ('user@user.com', '8858840941'),
+    ('user@user.com', '8890185074'),
     ('user@user.com', '8893679833'),
-    ('user@user.com', '8811135605'),
+    ('user@user.com', '9788804639718'),
+    ('user@user.com', '9788807821097'),
+    ('user@user.com', '9788891802699'),
     ('utente@utente.com', '8804591382'),
     ('utente@utente.com', '8831804499'),
     ('utente@utente.com', '8845984672'),
     ('utente@utente.com', '8845985466'),
+    ('utente@utente.com', '8850322089'),
     ('utente@utente.com', '8854980579'),
+    ('utente@utente.com', '8858407245'),
     ('utente@utente.com', '8858611446'),
     ('utente@utente.com', '8858693361'),
     ('utente@utente.com', '8858819551'),
     ('utente@utente.com', '8858862104'),
+    ('utente@utente.com', '8893429713'),
     ('utente@utente.com', '9788808170033'),
     ('utente@utente.com', '9791041969258');
+
 --
 -- Dump dei dati per la tabella `Scambio`
 --
@@ -1567,7 +1856,68 @@ VALUES
         '2025-01-29',
         NULL,
         'accettato'
+    ),
+    (
+        17,
+        'utente@utente.com',
+        'mariabranch@pucci.com',
+        46,
+        14,
+        '2025-01-30',
+        NULL,
+        'in attesa'
+    ),
+    (
+        18,
+        'user@user.com',
+        'ale.berna@gmail.com',
+        34,
+        83,
+        '2025-01-30',
+        NULL,
+        'accettato'
+    ),
+    (
+        19,
+        'user@user.com',
+        'ale.math@gmail.com',
+        35,
+        91,
+        '2025-01-30',
+        NULL,
+        'accettato'
+    ),
+    (
+        21,
+        'ale.berna@gmail.com',
+        'luca.rib@gmail.com',
+        81,
+        78,
+        '2025-01-30',
+        NULL,
+        'accettato'
+    ),
+    (
+        22,
+        'luca.rib@gmail.com',
+        'user@user.com',
+        97,
+        93,
+        '2025-01-30',
+        NULL,
+        'accettato'
+    ),
+    (
+        23,
+        'luca.rib@gmail.com',
+        'utente@utente.com',
+        75,
+        29,
+        '2025-01-30',
+        NULL,
+        'in attesa'
     );
+
 --
 -- Dump dei dati per la tabella `Recensione`
 --
@@ -1580,6 +1930,27 @@ INSERT INTO
         `contenuto`
     )
 VALUES
+    (
+        'ale.berna@gmail.com',
+        21,
+        '2025-01-30',
+        5,
+        'libro tenuto bene e consegna veloce'
+    ),
+    (
+        'ale.math@gmail.com',
+        19,
+        '2025-01-30',
+        4,
+        'Libro in ottime condizioni'
+    ),
+    (
+        'luca.rib@gmail.com',
+        22,
+        '2025-01-30',
+        5,
+        'Molto veloce a rispondere e a spedire il libro'
+    ),
     (
         'mari123@gmail.com',
         15,
@@ -1614,4 +1985,18 @@ VALUES
         '2025-01-29',
         5,
         'Libro tenuto molto bene e consegna veloce'
+    ),
+    (
+        'user@user.com',
+        18,
+        '2025-01-30',
+        3,
+        'molto veloce a spedire ma alcune pagine erano piegate'
+    ),
+    (
+        'user@user.com',
+        19,
+        '2025-01-30',
+        5,
+        'Libro tenuto molto bene'
     );

@@ -239,7 +239,7 @@ function getHeaderSection($path): string
  *
  * @return string HTML contenente i vari elementi \<li\>
  */
-function getFooterAboutLi($path): string
+function getFooterNavigaLi($path): string
 {
 	$currentPage = $path;
 	$prefix = getPrefix();
@@ -252,18 +252,15 @@ function getFooterAboutLi($path): string
 	$li = '';
 	foreach ($aboutReferences as $ref) {
 		if ($currentPage != $ref['href']) {
-			$li .=
-				'<li><a href="' .
-				$ref['href'] .
-				'">' .
-				$ref['text'] .
-				'</a></li>';
+			$li .= '<li><a href="' . $ref['href'] . '">' . $ref['text'] . '</a></li>';
+		} else {
+			$li .= '<li class="activePage">' . $ref['text'] . '</li>';
 		}
 	}
 	return $li;
 }
 
-function getStartFooterLi($path): string
+function getFooterProfiloLi($path): string
 {
 	$currentPage = $path;
 	$prefix = getPrefix();
@@ -272,11 +269,28 @@ function getStartFooterLi($path): string
 		['href' => $prefix . '/registrati', 'text' => 'Registrati'],
 	];
 
+	$loggedReferences = [
+		['href' => $prefix . '/profilo/' . $_SESSION['user'], 'text' => 'Il mio profilo'],
+		['href' => $prefix . '/profilo/' . $_SESSION['user'] . '/scambi', 'text' => 'I miei scambi'],
+		['href' => $prefix . '/api/logout', 'text' => 'Esci dal profilo'],
+	];
+
 	$li = '';
 	ensure_session();
 
-	if (isset($_SESSION['user'])) {
-		$li .= '<li><a href="' . $prefix . '/api/logout">Esci</a></li>';
+	if (is_logged_in()) {
+		foreach ($loggedReferences as $ref) {
+			if ($currentPage != $ref['href']) {
+				$li .=
+					'<li><a href="' .
+					$ref['href'] .
+					'">' .
+					$ref['text'] .
+					'</a></li>';
+			} else {
+				$li .= '<li class="activePage">' . $ref['text'] . '</li>';
+			}	
+		}
 	} else {
 		foreach ($startReferences as $ref) {
 			if ($currentPage != $ref['href']) {
@@ -301,8 +315,8 @@ function getFooterSection($path): string
 {
 	$footer = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'footer.html');
 
-	$footer = str_replace('<!-- [aboutlinkfooter] -->', getFooterAboutLi($path), $footer);
-	$footer = str_replace('<!-- [startlinkfooter] -->', getStartFooterLi($path), $footer);
+	$footer = str_replace('<!-- [aboutlinkfooter] -->', getFooterNavigaLi($path), $footer);
+	$footer = str_replace('<!-- [startlinkfooter] -->', getFooterProfiloLi($path), $footer);
 	return $footer;
 }
 

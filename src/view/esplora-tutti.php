@@ -25,7 +25,9 @@ if (isset($_GET['filtroGenere'])) {
 } else {
 	$ricercaValue = $_GET['search'] ?? '';
 }
-if ($isFiltroActive) {
+if (!is_logged_in()) {
+	$filtroGenereButton = '';
+} else if ($isFiltroActive) {
 	$filtroGenereButton = <<<HTML
 	<button type='submit' name='filtroGenere' id='filtroGenere' class='button-layout secondary' value="false" aria-pressed="true">Filtra per Generi preferiti <span aria-hidden="true"><img src="{$prefix}/assets/imgs/filter.svg" alt=""></span></button>
 	HTML;
@@ -52,7 +54,7 @@ HTML;
 $esplora = str_replace('<!-- [ricerca] -->', $ricerca, $esplora);
 
 $db = new DBAccess();
-if (isset($_GET) && isset($_GET['filtroGenere']) && $_GET['filtroGenere'] === 'true') {
+if (isset($_GET) && isset($_GET['filtroGenere']) && $_GET['filtroGenere'] === 'true' && is_logged_in()) {
 	try {
 		$tutti = $db->get_books_by_preferences($_SESSION['user']);
 	} catch (Exception $e) {

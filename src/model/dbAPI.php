@@ -1012,4 +1012,59 @@ class DBAccess
 		}
 	}
 
+	public function update_user_provincia($user, $nuovaProvincia)
+	{
+		$query = "UPDATE Utente SET provincia = ? WHERE username = ?";
+		try {
+			$this->void_query($query, "ss", [$nuovaProvincia, $user]);
+		} catch (Exception $e) {
+			error_log("update_user_provincia: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function update_user_comune($user, $nuovoComune)
+	{
+		$query = "UPDATE Utente SET comune = ? WHERE username = ?";
+		try {
+			$this->void_query($query, "ss", [$nuovoComune, $user]);
+		} catch (Exception $e) {
+			error_log("update_user_comune: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function update_user_nome($user, $nuovoNome)
+	{
+		$query = "UPDATE Utente SET nome = ? WHERE username = ?";
+		try {
+			$this->void_query($query, "ss", [$nuovoNome, $user]);
+		} catch (Exception $e) {
+			error_log("update_user_nome: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function update_user_cognome($user, $nuovoCognome)
+	{
+		$query = "UPDATE Utente SET cognome = ? WHERE username = ?";
+		try {
+			$this->void_query($query, "ss", [$nuovoCognome, $user]);
+		} catch (Exception $e) {
+			error_log("update_user_cognome: " . $e->getMessage());
+			throw $e;
+		}
+	}
+
+	public function update_user_password($user, $nuovaPassword)
+	{
+		$query = "UPDATE Utente SET password_hash = ? WHERE username = ?";
+		try {
+			$passwordHashed = password_hash($nuovaPassword, PASSWORD_BCRYPT);
+			$this->void_query($query, "ss", [$passwordHashed, $user]);
+		} catch (Exception $e) {
+			error_log("update_user_password: " . $e->getMessage());
+			throw $e;
+		}
+	}
 }

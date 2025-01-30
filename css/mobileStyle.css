@@ -104,9 +104,6 @@
 	font-size: var(--font-md);
 }
 
-footer {
-	padding: 2em;
-}
 
 footer .logo p {
 	font-size: var(--font-md);
@@ -396,11 +393,6 @@ footer .logo p {
 	padding: 0em;
 }
 
-/* FOOTER */
-#pre-footer {
-	display: flex;
-	flex-direction: column;
-}
 
 .user-row {
 	display: flex;

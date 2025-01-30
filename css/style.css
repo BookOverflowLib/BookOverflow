@@ -609,7 +609,7 @@ main {
 }
 
 #citazione > blockquote ::after {
-	content: '”';
+	content: '”' / '';
 }
 
 #citazione > p {
@@ -856,7 +856,7 @@ section > p > a {
 }
 
 .sezione-scambi > h2::before {
-	content: '📚';
+	content: '📚' / '';
 	margin-right: 0.5em;
 }
 
@@ -1009,7 +1009,7 @@ li.activePage {
 }
 
 .luogo::before {
-	content: '📍';
+	content: '📍' / '';
 	margin-right: 0.5em;
 }
 
@@ -1059,7 +1059,7 @@ li.activePage {
 }
 
 .button-genere {
-	font-family: 'Onest-VariableFont_wght', sans-serif;
+	font-family: 'Onest', sans-serif;
 	box-shadow: inset 0 0 0 2px var(--secondary-300);
 	border-radius: 9999px;
 	padding: 0.5em 1em;
@@ -1122,14 +1122,14 @@ li.activePage {
 
 .motivo1::before,
 .motivo1::after {
-	content: '💰';
+	content: '💰' / '';
 	margin-right: 0.5em;
 	margin-left: 0.5em;
 }
 
 .motivo2::before,
 .motivo2::after {
-	content: '🌱';
+	content: '🌱' / '';
 	margin-right: 0.5em;
 	margin-left: 0.5em;
 }
@@ -1537,7 +1537,7 @@ dialog::backdrop {
 }
 
 textarea {
-	font-family: 'Onest-VariableFont_wght', sans-serif;
+	font-family: 'Onest', sans-serif;
 	font-size: var(--font-base);
 	background-color: var(--neutral-50);
 	border-radius: 0.5em;

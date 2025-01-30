@@ -18,34 +18,39 @@ if (!isset($_POST, $_POST['username'])) {
 	redirect("Errore: dati mancanti");
 }
 
+$prefix = getPrefix();
+$previousUrl = $_SERVER['HTTP_REFERER'] ?? $prefix . '/';
+$admin = is_admin();
 
-if (is_admin() || $_SESSION['user'] === $_POST['username']) {
-	deleteUser($_POST['username']);
-} else {
-	redirect("Errore: operazione non valida");
-}
-
-function deleteUser($username)
-{
+if ($admin || $_SESSION['user'] === $_POST['username']) {
 	$db = new DBAccess();
 	try {
 		$db->delete_user($username);
 	} catch (Exception $e) {
-		$_SESSION['error'] = exceptionToError($e, "utente non rimosso");
+		// in caso di errore torna alla pagina precedente in modo da poter visualizzare l'errore
+		redirect($previousUrl, exceptionToError($e, "utente non rimosso"));
+		exit();
 	}
-	session_destroy();
-	$prefix = getPrefix();
-	header('Location: ' . $prefix . '/accedi');
-	exit();
+
+	if ($admin) {
+		// nel caso in cui l'eliminazione venga fatta dal pannello di amministrazione
+		redirect($previousUrl);
+		exit();
+	} else {
+		// nel caso in cui l'eliminazione venga fatta dal proprio profilo
+		session_destroy();
+		redirect($prefix . '/');
+		exit();
+	}
+} else {
+	redirect($previousUrl, "Errore: operazione non valida");
 }
 
-function redirect(string $error = null): never
+function redirect(string $url, string $error = null): never
 {
-	$prefix = getPrefix();
 	if ($error) {
 		$_SESSION['error'] = $error;
 	}
-	$previousUrl = parse_url($_SERVER['HTTP_REFERER'] ?? $prefix . '/', PHP_URL_PATH);
-	header('Location: ' . $previousUrl);
+	header('Location: ' . $url);
 	exit();
 }

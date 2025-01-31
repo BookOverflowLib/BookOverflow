@@ -6,7 +6,7 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 ensure_session();
 $db = new DBAccess();
 $prefix = getPrefix();
-const VALID_ENDPOINTS = [
+$VALID_ENDPOINTS = [
 	'/api/accetta-scambio',
 	'/api/rifiuta-scambio',
 	'/api/rimuovi-scambio',
@@ -27,7 +27,7 @@ if (!isset($_POST['id_scambio'])) {
 if (!is_numeric($_POST['id_scambio'])) {
 	redirect("Errore: id_scambio non valido");
 }
-if (!in_array($_SERVER['REQUEST_URI'], VALID_ENDPOINTS, true)) {
+if (!in_array($_SERVER['REQUEST_URI'], $VALID_ENDPOINTS, true)) {
 	redirect("Errore: endpoint non valido");
 }
 

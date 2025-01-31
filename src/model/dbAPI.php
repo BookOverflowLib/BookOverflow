@@ -904,7 +904,7 @@ class DBAccess
 			$generi = $this->get_generi_by_username($user);
 			$generiString = $generi[0]['generi_preferiti'];
 
-			if (empty($generiString)) {
+			if (empty($generiString) || $generiString === "[]") {
 				return [];
 			}
 

@@ -1408,29 +1408,6 @@ INSERT INTO
         `condizioni`
     )
 VALUES
-    (1, '8893679833', 'admin@admin.com', 1, 'nuovo'),
-    (
-        2,
-        '9788891808394',
-        'admin@admin.com',
-        1,
-        'danneggiato'
-    ),
-    (
-        3,
-        '8841253169',
-        'admin@admin.com',
-        1,
-        'come nuovo'
-    ),
-    (
-        4,
-        '9788834009635',
-        'admin@admin.com',
-        1,
-        'danneggiato'
-    ),
-    (5, '8841216301', 'admin@admin.com', 1, 'nuovo'),
     (6, '9788804646846', 'user@user.com', 0, 'nuovo'),
     (
         9,

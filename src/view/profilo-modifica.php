@@ -126,6 +126,7 @@ function getCampiDati($page, $user)
 			name="password"
 			minlength="8"
 			pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+			placeholder="Lascia il campo vuoto per mantenere la password attuale"
 			title="Deve contenere almeno 8 caratteri, una lettera maiuscola, una lettera minuscola, un numero e un carattere speciale"
 			type="password" />
 		<div id="password_help" class="form_help">
@@ -147,6 +148,7 @@ function getCampiDati($page, $user)
 			class="form-input"
 			id="conferma_password"
 			name="conferma_password"
+			placeholder="Lascia il campo vuoto per mantenere la password attuale"
 			type="password" />
 	</div>
 	HTML;
@@ -156,6 +158,6 @@ function getCampiDati($page, $user)
 	$annulla = <<<HTML
 	<a href="{$prefix}/profilo/{$user['username']}" class="button-layout-light text-center">Annulla</a>
 	HTML;
-	$campi = $nome . $cognome . $provinciaComune . $password . $conferma. $annulla;
+	$campi = $nome . $cognome . $provinciaComune . $password . $conferma . $annulla;
 	return str_replace('<!-- [campiDati] -->', $campi, $page);
 }

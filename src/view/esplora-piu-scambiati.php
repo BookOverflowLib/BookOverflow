@@ -14,10 +14,10 @@ $esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Più scambiati', $esplo
 
 $sottotitolo = 'La collezione dei libri più scambiati tra gli utenti!';
 $esplora = str_replace('<!-- [sottotitolo] -->', $sottotitolo, $esplora);
+$esplora = str_replace('<!-- [ricerca] -->', '', $esplora);
 
 $db = new DBAccess();
 $piu_scambiati = $db->get_piu_scambiati();
-
 $esplora = str_replace('<!-- [caroselloTuttiLibri] -->', getLibriCopertinaGrande($piu_scambiati, 999), $esplora);
 
 $page = str_replace('<!-- [content] -->', $esplora, $page);

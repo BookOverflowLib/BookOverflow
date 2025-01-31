@@ -846,7 +846,7 @@ class DBAccess
 			WHERE s.stato = 'accettato'
 		) AS L
 		GROUP BY L.ISBN
-		ORDER BY L.ID DESC
+		ORDER BY numero_scambi DESC
 		SQL;
 
 		try {

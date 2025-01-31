@@ -39,16 +39,18 @@ if (!is_logged_in()) {
 
 $ricerca = <<<HTML
 	<script src="{$prefix}/js/ricercaEsplora.js" defer></script>
-	<h2>Filtra ricerca</h2>
-	<form id="ricercaForm" method='GET'>
-		<div class='search-layout'>
-			<label for="searchInput" class="sr-only">Cerca tra i libri presenti</label>
-			<input type='search' name='search' id='searchInput' value="{$ricercaValue}" placeholder='Cerca per titolo, autore o ISBN ...'>
-			<button type='submit' class="button-layout-icon" id='ricercaButton'><span class="sr-only">Cerca</span><img src="{$prefix}/assets/imgs/cerca.svg" alt="" aria-hidden="true"></button>
-			<button type='reset' name='reset' id='reset' class='button-layout destructive'>Azzera filtri <span aria-hidden="true"><img src="{$prefix}/assets/imgs/trash.svg" alt=""/></span></button>
-			{$filtroGenereButton}
-		</div>
-	</form>
+	<div class="sezione-stretta">
+		<h2>Filtra ricerca</h2>
+		<form id="ricercaForm" method='GET'>
+			<div class='search-layout'>
+				<label for="searchInput" class="sr-only">Cerca tra i libri presenti</label>
+				<input type='search' name='search' id='searchInput' value="{$ricercaValue}" placeholder='Cerca per titolo, autore o ISBN ...'>
+				<button type='submit' class="button-layout-icon" id='ricercaButton'><span class="sr-only">Cerca</span><img src="{$prefix}/assets/imgs/cerca.svg" alt="" aria-hidden="true"></button>
+				<button type='reset' name='reset' id='reset' class='button-layout destructive'>Azzera filtri <span aria-hidden="true"><img src="{$prefix}/assets/imgs/trash.svg" alt=""/></span></button>
+				{$filtroGenereButton}
+			</div>
+		</form>
+	</div>
 HTML;
 
 $esplora = str_replace('<!-- [ricerca] -->', $ricerca, $esplora);

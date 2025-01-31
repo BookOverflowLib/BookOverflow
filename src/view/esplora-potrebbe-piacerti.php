@@ -16,10 +16,10 @@ $esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Potrebbe piacerti', $es
 
 $sottotitolo = 'Libri offerti da utenti interessati ai tuoi: lasciati ispirare anche da queste proposte!';
 $esplora = str_replace('<!-- [sottotitolo] -->', $sottotitolo, $esplora);
+$esplora = str_replace('<!-- [ricerca] -->', '', $esplora);
 
 $db = new DBAccess();
 $match_potrebbe_piacerti = $db->get_potrebbe_piacerti_by_user($_SESSION['user']);
-
 $esplora = str_replace('<!-- [caroselloTuttiLibri] -->', getLibriCopertinaGrande($match_potrebbe_piacerti, 999), $esplora);
 
 $page = str_replace('<!-- [content] -->', $esplora, $page);

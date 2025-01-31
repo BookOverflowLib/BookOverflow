@@ -263,11 +263,12 @@ function iniziaEsplorare($isTuoProfilo, $page)
 
 function redirect(string $error = null): never
 {
+	$prefix = getPrefix();
 	if ($error) {
 		$_SESSION['error'] = $error;
-		header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user'] . '/seleziona-generi');
+		header('Location: ' . $prefix . '/profilo/' . $_SESSION['user'] . '/seleziona-generi');
 	} else {
-		header('Location: ' . $GLOBALS['prefix'] . '/profilo/' . $_SESSION['user'] . '#generi');
+		header('Location: ' . $prefix . '/profilo/' . $_SESSION['user'] . '#generi');
 	}
 	exit();
 }

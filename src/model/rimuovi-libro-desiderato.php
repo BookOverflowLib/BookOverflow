@@ -18,7 +18,8 @@ if (isset($_POST) && isset($_SESSION['user'])) {
 	$_SESSION['error'] = "Errore: libro non rimosso";
 }
 
-$previousUrl = $_SERVER['HTTP_REFERER'] ?? '/profilo/' . $_SESSION['user'];
+$prefix = getPrefix();
+$previousUrl = $_SERVER['HTTP_REFERER'] ?? $prefix . '/profilo/' . $_SESSION['user'];
 $previousUrl = parse_url($previousUrl, PHP_URL_PATH);
 header('Location: ' . $previousUrl);
 exit();

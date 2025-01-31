@@ -7,8 +7,9 @@ require_once $GLOBALS['MODEL_PATH'] . 'registration-select.php';
 ensure_session();
 
 if (isset($_SESSION['user'])) {
-    header('Location: /profilo/' . $_SESSION['user']);
-    exit();
+	$prefix = getPrefix();
+	header('Location: ' . $prefix . '/profilo/' . $_SESSION['user']);
+	exit();
 }
 
 $page = getTemplatePage('Registrati');

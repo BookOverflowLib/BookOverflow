@@ -7,18 +7,11 @@ ensure_session();
 $db = new DBAccess();
 $prefix = getPrefix();
 
-$VALID_ENDPOINTS = [
-	'/api/accetta-scambio',
-	'/api/rifiuta-scambio',
-	'/api/rimuovi-scambio',
-	'/' . $prefix . '/api/accetta-scambio',
-	'/' . $prefix . '/api/rifiuta-scambio',
-	'/' . $prefix . '/api/rimuovi-scambio'
+$valid_endpoints = [
+	$prefix . '/api/accetta-scambio',
+	$prefix . '/api/rifiuta-scambio',
+	$prefix . '/api/rimuovi-scambio'
 ];
-
-print_r($_SERVER['REQUEST_URI']);
-echo "<br>";
-print_r($VALID_ENDPOINTS);
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 	redirect("Errore: richiesta non valida");
@@ -32,7 +25,7 @@ if (!isset($_POST['id_scambio'])) {
 if (!is_numeric($_POST['id_scambio'])) {
 	redirect("Errore: id_scambio non valido");
 }
-if (!in_array($_SERVER['REQUEST_URI'], $VALID_ENDPOINTS, true)) {
+if (!in_array($_SERVER['REQUEST_URI'], $valid_endpoints, true)) {
 	redirect("Errore: endpoint non valido");
 }
 
@@ -40,13 +33,13 @@ $id = (int) $_POST['id_scambio'];
 
 try {
 	switch ($_SERVER['REQUEST_URI']) {
-		case '/api/accetta-scambio':
+		case $prefix . '/api/accetta-scambio':
 			$db->accetta_scambio_by_id($id);
 			break;
-		case '/api/rifiuta-scambio':
+		case $prefix . '/api/rifiuta-scambio':
 			$db->rifiuta_scambio_by_id($id);
 			break;
-		case '/api/rimuovi-scambio':
+		case $preifx . '/api/rimuovi-scambio':
 			$db->remove_scambio_by_id($id);
 			break;
 		default:

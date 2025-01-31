@@ -54,7 +54,7 @@ function ratingStars($rating): string
 	// STELLE PIENE
 	for ($i = 0; $i < $n_full_star; $i++) {
 		$tmp_star = str_replace('{{star-offset}}', '100', $star_svg);
-		$tmp_star = str_replace('{{id}}', '1'+$i, $tmp_star);
+		$tmp_star = str_replace('{{id}}', '1' + $i, $tmp_star);
 
 		$rating_stars .= $tmp_star;
 		$total_star--;
@@ -67,7 +67,7 @@ function ratingStars($rating): string
 			strval($n_partial_star * 100),
 			$star_svg
 		);
-		$par_star = str_replace('{{id}}', '2'+$i, $par_star);
+		$par_star = str_replace('{{id}}', '2' + $i, $par_star);
 		$rating_stars .= $par_star;
 		$total_star--;
 	}
@@ -75,7 +75,7 @@ function ratingStars($rating): string
 	//STELLE VUOTE
 	while ($total_star > 0) {
 		$tmp_star = str_replace('{{star-offset}}', '0', $star_svg);
-		$tmp_star = str_replace('{{id}}', '3'+$i, $tmp_star);
+		$tmp_star = str_replace('{{id}}', '3' + $i, $tmp_star);
 		$rating_stars .= $tmp_star;
 		$total_star--;
 	}
@@ -597,12 +597,12 @@ function isTuoProfilo($profileId)
 
 function getLibriListBookButtons($list_name, $isbn, $titolo)
 {
-
+	$prefix = getPrefix();
 	$api = $list_name === 'libri-offerti' ? '/api/rimuovi-libro-offerto' : '/api/rimuovi-libro-desiderato';
 	$bookButtons = <<<HTML
-	<form action="{$api}" method="post">
-		<input type="hidden" name="isbn" value="{$isbn}"/>
-		<input type="submit" class="button-layout danger bold" value="Elimina" aria-label="Elimina {$titolo} dalla lista">
+	<form action="{$prefix}{$api}" method="post">
+		<input type="hidden" name="isbn" id="isbn-hidden" value="{$isbn}"/>
+		<input type="submit" class="button-layout destructive bold" id="elimina-button" name="elimina-button" value="Elimina" aria-label="Elimina {$titolo} dalla lista"/>
 	</form>
 	HTML;
 	return $bookButtons;
@@ -644,37 +644,40 @@ function addButtonsLibriList($libri_page, $list_name): string
 		</div>
 		HTML;
 	}
-
+	$prefix = getPrefix();
 	$cercaLibriDialog = <<<HTML
 	<dialog id="aggiungi-libro-dialog">
 		<div class="dialog-window">
 			<h2>Cerca un libro</h2>
-			<form action={$form_action} method="post">
-				<label for="titolo" class="sr-only">Cerca un libro</label>
-				<input type="search"
-					name="cerca"
-					id="cerca"
-					placeholder="Cerca un libro ..." 
-					autocomplete="off"
-					/>
-				<span class="sr-only" role="alert" aria-atomic="false" id="sr-risultati"></span>
-				<div id="book-results">
-					<p>Nessun risultato</p>
-				</div>
-				{$select_condizioni}
-				<input type="hidden" name="ISBN" value=""/>
-				<input type="hidden" name="titolo" value=""/>
-				<input type="hidden" name="autore" value=""/>
-				<input type="hidden" name="editore" value=""/>
-				<input type="hidden" name="anno" value=""/>
-				<input type="hidden" name="genere" value=""/>
-				<input type="hidden" name="descrizione" value=""/>
-				<input type="hidden" name="lingua" value=""/>
-				<input type="hidden" name="path_copertina" value=""/>
-				<div class="dialog-buttons">
-					<input type="submit" id="aggiungi-libro" class="button-layout" value="Aggiungi libro"/>
-					<button id="close-dialog" class="button-layout-light" type="reset" formnovalidate>Annulla</button>
-				</div>
+			<form action="{$prefix}{$form_action}" method="post">
+				<fieldset>
+					<legend class="sr-only">Cerca un libro da aggiungere alla lista</legend>
+					<label for="cerca" class="sr-only">Cerca un libro</label>
+					<input type="search"
+						name="cerca"
+						id="cerca"
+						placeholder="Cerca un libro ..." 
+						autocomplete="off"
+						/>
+					<span class="sr-only" role="alert" aria-atomic="false" id="sr-risultati"></span>
+					<div id="book-results">
+						<p>Nessun risultato</p>
+					</div>
+					{$select_condizioni}
+					<input type="hidden" name="ISBN" value=""/>
+					<input type="hidden" name="titolo" value=""/>
+					<input type="hidden" name="autore" value=""/>
+					<input type="hidden" name="editore" value=""/>
+					<input type="hidden" name="anno" value=""/>
+					<input type="hidden" name="genere" value=""/>
+					<input type="hidden" name="descrizione" value=""/>
+					<input type="hidden" name="lingua" value=""/>
+					<input type="hidden" name="path_copertina" value=""/>
+					<div class="dialog-buttons">
+						<input type="submit" id="aggiungi-libro" class="button-layout" value="Aggiungi libro"/>
+						<button id="close-dialog" class="button-layout-light" type="reset" formnovalidate>Annulla</button>
+					</div>
+				</fieldset>
 			</form>
 		</div>
 	</dialog>

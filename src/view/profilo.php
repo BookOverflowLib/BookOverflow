@@ -4,12 +4,15 @@ require_once $GLOBALS['MODEL_PATH'] . 'dbAPI.php';
 require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
+
+$prefix = getPrefix();
 $profileId = getProfileId();
 if ($profileId === 'admin' && $_SESSION['user'] !== 'admin') {
 	header('Location: ' . getPrefix() . '/404');
 }
 
 $isTuoProfilo = isTuoProfilo($profileId);
+
 
 $db = new DBAccess();
 try {
@@ -23,12 +26,18 @@ $user = getUser($db, $profileId);
 if (isset($_SESSION['user']) && $_SESSION['user'] === 'admin' && $profileId === 'admin') {
 	$page = generatePageAdmin($user);
 } else {
+	
 	$page = generatePage($user, $isTuoProfilo, $db);
 	$page = getBannerNuovoProfilo($isTuoProfilo, $page);
 	$page = iniziaEsplorare($isTuoProfilo, $page);
 	$page = addErrorsToPage($page);
 	$page = addSettingsProfilo($page, $isTuoProfilo);
 	$page = dialogSure($page, "il tuo account", "Perderai le tue liste, i tuoi scambi e tutti i dati del tuo account");
+	if ($isTuoProfilo) {
+		$page = str_replace('<!-- [gestioneUtenti] -->', '<script src="' . $prefix . '/js/gestioneUtenti.js"></script>', $page);
+	}else{
+		$page = str_replace('<!-- [gestioneUtenti] -->', '', $page);
+	}
 }
 $page = populateWebdirPrefixPlaceholders($page);
 

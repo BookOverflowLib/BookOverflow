@@ -53,7 +53,7 @@ function generateUserRow($utente, $db)
 	return <<<HTML
     <div class="user-row" id="user-{$utente['username']}">
         <a class="user-data" href="{$prefix}/profilo/{$utente['username']}">
-            <img src="{$utente['path_immagine']}" alt="">
+            <img src="{$utente['path_immagine']}" alt=""/>
             <div>
                 <p class="bold">{$utente['nome']} {$utente['cognome']}</p>
                 <p><span aria-hidden="true">@</span><span class="sr-only">Username</span>{$utente['username']}</p>

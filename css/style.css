@@ -579,10 +579,6 @@ main {
 	gap: 2em;
 }
 
-#piu-scambiati > article {
-	max-width: 60em;
-	margin: auto;
-}
 
 .carosello-libri {
 	display: grid;

@@ -60,9 +60,9 @@ function generateUserRow($scambio, $db)
 	$utenteProponente = $db->get_user_by_identifier($scambio['emailProponente'])[0];
 
 	$isScambioRicevuto = $utenteAccettatore['username'] === $_GET['user'];
-	if(!is_admin()){
-		$scambio_buttons = generateScambioButtons($scambio, $isScambioRicevuto);
-	}else{
+	if (!is_admin()) {
+		$scambio_buttons = generateScambioButtons($scambio, $isScambioRicevuto, $utenteAccettatore, $utenteProponente);
+	} else {
 		$scambio_buttons = '';
 	}
 	$scambio_utente = generateScambioUtente($isScambioRicevuto, $utenteAccettatore, $utenteProponente);
@@ -101,11 +101,13 @@ function generateUserRow($scambio, $db)
     HTML;
 }
 
-function generateScambioButtons($scambio, $isScambioRicevuto)
+function generateScambioButtons($scambio, $isScambioRicevuto, $utenteAccettatore, $utenteProponente)
 {
 	$prefix = getPrefix();
 
 	$emailRecensito = $isScambioRicevuto ? $scambio['emailProponente'] : $scambio['emailAccettatore'];
+
+	$userCoinvolto = $isScambioRicevuto ? $utenteProponente : $utenteAccettatore;
 
 	if ($isScambioRicevuto) {
 		if ($scambio['stato'] === 'in attesa') {
@@ -138,7 +140,7 @@ function generateScambioButtons($scambio, $isScambioRicevuto)
 	if ($scambio['stato'] === 'rifiutato' || $scambio['stato'] === 'accettato') {
 		$recensioneButton = '';
 		if (checkRecensioneDisponibile($emailRecensito, $scambio['ID'])) {
-			$recensioneButton = $scambio['stato'] === 'accettato' ? '<button class="button-layout button-recensione" type="button">Scrivi una recensione</button>' : '';
+			$recensioneButton = $scambio['stato'] === 'accettato' ? '<button class="button-layout button-recensione" type="button">Scrivi una recensione <span class="sr-only">a ' . $userCoinvolto['username'] . '</span></button>' : '';
 		}
 		return <<<HTML
             <div class="storico-buttons {$scambio['stato']}">

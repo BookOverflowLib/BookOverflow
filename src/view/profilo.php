@@ -230,7 +230,8 @@ function getBannerNuovoProfilo($isTuoProfilo, $page)
 		<div class="message-box">
 			{$icon}
 			<div>
-				<h2>Completa il tuo profilo</h2>
+				
+				<h2><span class="sr-only">Suggerimento</span> Completa il tuo profilo</h2>
 				<p class="center">Aggiungi subito:</p>
 				<ul>
 					{$list}

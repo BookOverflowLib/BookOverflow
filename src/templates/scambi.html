@@ -11,11 +11,14 @@
 </section>
 <dialog id="recensione-dialog">
 	<div class="dialog-window">
-		<h2>
+		<h2 id="dialog-title">
 			Com'è andata la tua esperienza con
 			<span class="nome-utente"></span>?
 		</h2>
-		<form action="<!-- [prefix] -->/api/aggiungi-recensione" method="post">
+		<form
+			action="<!-- [prefix] -->/api/aggiungi-recensione"
+			method="post"
+			aria-describedby="dialog-title">
 			<fieldset class="form-data">
 				<div>
 					<label class="" for="testo-recensione"

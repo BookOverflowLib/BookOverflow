@@ -601,7 +601,7 @@ function getLibriListBookButtons($list_name, $isbn, $titolo)
 	$api = $list_name === 'libri-offerti' ? '/api/rimuovi-libro-offerto' : '/api/rimuovi-libro-desiderato';
 	$bookButtons = <<<HTML
 	<form action="{$api}" method="post">
-		<input type="hidden" name="isbn" value="{$isbn}">
+		<input type="hidden" name="isbn" value="{$isbn}"/>
 		<input type="submit" class="button-layout danger bold" value="Elimina" aria-label="Elimina {$titolo} dalla lista">
 	</form>
 	HTML;
@@ -662,17 +662,17 @@ function addButtonsLibriList($libri_page, $list_name): string
 					<p>Nessun risultato</p>
 				</div>
 				{$select_condizioni}
-				<input type="hidden" name="ISBN" value="">
-				<input type="hidden" name="titolo" value="">
-				<input type="hidden" name="autore" value="">
-				<input type="hidden" name="editore" value="">
-				<input type="hidden" name="anno" value="">
-				<input type="hidden" name="genere" value="">
-				<input type="hidden" name="descrizione" value="">
-				<input type="hidden" name="lingua" value="">
-				<input type="hidden" name="path_copertina" value="">
+				<input type="hidden" name="ISBN" value=""/>
+				<input type="hidden" name="titolo" value=""/>
+				<input type="hidden" name="autore" value=""/>
+				<input type="hidden" name="editore" value=""/>
+				<input type="hidden" name="anno" value=""/>
+				<input type="hidden" name="genere" value=""/>
+				<input type="hidden" name="descrizione" value=""/>
+				<input type="hidden" name="lingua" value=""/>
+				<input type="hidden" name="path_copertina" value=""/>
 				<div class="dialog-buttons">
-					<input type="submit" id="aggiungi-libro" class="button-layout" value="Aggiungi libro">
+					<input type="submit" id="aggiungi-libro" class="button-layout" value="Aggiungi libro"/>
 					<button id="close-dialog" class="button-layout-light" type="reset" formnovalidate>Annulla</button>
 				</div>
 			</form>

@@ -16,6 +16,10 @@ $VALID_ENDPOINTS = [
 	'/' . $prefix . '/api/rimuovi-scambio'
 ];
 
+print_r($_SERVER['REQUEST_URI']);
+echo "<br>";
+print_r($VALID_ENDPOINTS);
+
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 	redirect("Errore: richiesta non valida");
 }

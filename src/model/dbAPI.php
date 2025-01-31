@@ -903,6 +903,11 @@ class DBAccess
 		try {
 			$generi = $this->get_generi_by_username($user);
 			$generiString = $generi[0]['generi_preferiti'];
+
+			if (empty($generiString)) {
+				return [];
+			}
+
 			$generiString = str_replace(['[', ']'], '', $generiString);
 
 			$query = str_replace("?", $generiString, $query);

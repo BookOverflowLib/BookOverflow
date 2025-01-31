@@ -5,11 +5,14 @@ require_once $GLOBALS['MODEL_PATH'] . 'utils.php';
 
 ensure_session();
 $db = new DBAccess();
-
+$prefix = getPrefix();
 const VALID_ENDPOINTS = [
 	'/api/accetta-scambio',
 	'/api/rifiuta-scambio',
-	'/api/rimuovi-scambio'
+	'/api/rimuovi-scambio',
+	$prefix . '/api/accetta-scambio',
+	$prefix . '/api/rifiuta-scambio',
+	$prefix . '/api/rimuovi-scambio'
 ];
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {

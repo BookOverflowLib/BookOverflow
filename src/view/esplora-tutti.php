@@ -25,13 +25,15 @@ if (isset($_GET['filtroGenere'])) {
 } else {
 	$ricercaValue = $_GET['search'] ?? '';
 }
-if ($isFiltroActive) {
+if (!is_logged_in()) {
+	$filtroGenereButton = '';
+} else if ($isFiltroActive) {
 	$filtroGenereButton = <<<HTML
-	<button type='submit' name='filtroGenere' id='filtroGenere' class='button-layout secondary' value="false" aria-pressed="true">Filtra per Generi preferiti <span aria-hidden="true"><img src="{$prefix}/assets/imgs/filter.svg" alt=""></span></button>
+	<button type='submit' name='filtroGenere' id='filtroGenere' class='button-layout secondary' value="false" aria-pressed="true">Filtra per Generi preferiti <span aria-hidden="true"><img src="{$prefix}/assets/imgs/filter.svg" alt=""/></span></button>
 	HTML;
 } else {
 	$filtroGenereButton = <<<HTML
-	<button type='submit' name='filtroGenere' id='filtroGenere' class='button-layout secondary-light' value="true" aria-pressed="false">Filtra per Generi preferiti <span aria-hidden="true"><img src="{$prefix}/assets/imgs/filter.svg" alt=""></span></button>
+	<button type='submit' name='filtroGenere' id='filtroGenere' class='button-layout secondary-light' value="true" aria-pressed="false">Filtra per Generi preferiti <span aria-hidden="true"><img src="{$prefix}/assets/imgs/filter.svg" alt=""/></span></button>
 	HTML;
 }
 
@@ -41,9 +43,9 @@ $ricerca = <<<HTML
 	<form id="ricercaForm" method='GET'>
 		<div class='search-layout'>
 			<label for="searchInput" class="sr-only">Cerca tra i libri presenti</label>
-			<input type='search' name='search' id='searchInput' value="{$ricercaValue}" placeholder='Cerca per titolo, autore o ISBN ...'/>
+			<input type='search' name='search' id='searchInput' value="{$ricercaValue}" placeholder='Cerca per titolo, autore o ISBN ...'>
 			<button type='submit' class="button-layout-icon" id='ricercaButton'><span class="sr-only">Cerca</span><img src="{$prefix}/assets/imgs/cerca.svg" alt="" aria-hidden="true"></button>
-			<button type='reset' name='reset' id='reset' class='button-layout destructive'>Azzera filtri <span aria-hidden="true"><img src="{$prefix}/assets/imgs/trash.svg" alt=""></span></button>
+			<button type='reset' name='reset' id='reset' class='button-layout destructive'>Azzera filtri <span aria-hidden="true"><img src="{$prefix}/assets/imgs/trash.svg" alt=""/></span></button>
 			{$filtroGenereButton}
 		</div>
 	</form>
@@ -52,7 +54,7 @@ HTML;
 $esplora = str_replace('<!-- [ricerca] -->', $ricerca, $esplora);
 
 $db = new DBAccess();
-if (isset($_GET) && isset($_GET['filtroGenere']) && $_GET['filtroGenere'] === 'true') {
+if (isset($_GET) && isset($_GET['filtroGenere']) && $_GET['filtroGenere'] === 'true' && is_logged_in()) {
 	try {
 		$tutti = $db->get_books_by_preferences($_SESSION['user']);
 	} catch (Exception $e) {

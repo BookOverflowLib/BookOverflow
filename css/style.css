@@ -1334,7 +1334,7 @@ dialog::backdrop {
 	margin-bottom: 1em;
 }
 
-.dialog-window > form > input[type='search'] {
+.dialog-window > form  input[type='search'] {
 	margin-top: 1em;
 	width: 100%;
 }
@@ -1674,7 +1674,7 @@ textarea {
 }
 
 #inizia-esplorare > p {
-	font-size: var(--font-md);
+	font-size: var(--font-base);
 }
 
 .scambio-button > p {
@@ -1706,7 +1706,7 @@ textarea {
 	margin-bottom: 0.5em;
 }
 
-.nav-footer > nav > p {
+.nav-footer > nav > h3 {
 	margin-bottom: 1em;
 }
 

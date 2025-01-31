@@ -57,7 +57,7 @@ function fetch_books_API() {
                     <div class="search-results-row">
                         <input type="radio" name="search-result" value="" id="${isbn}" required/>
                         <label for="${isbn}">
-                            <img src="${immagine}" width="50"/>
+                            <img src="${immagine}" width="50" alt=""/>
                             <div>
                                 
                                 <p class="bold titolo"><span class="sr-only">Titolo </span>${titolo}</p>

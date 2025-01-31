@@ -253,7 +253,7 @@ function iniziaEsplorare($isTuoProfilo, $page)
 	$sec = <<<HTML
 	<section class="sezione-stretta">
 		<div id="inizia-esplorare">
-			<p class="">Inizia subito ad esplorare!</p>
+			<p>Inizia subito ad esplorare!</p>
 			<a class="button-layout" href="{$prefix}/esplora">Esplora</a>
 		</div>
 	</section>

@@ -561,7 +561,7 @@ main {
 	margin: 1em 0 2em;
 }
 
-#landing svg {
+#landing img {
 	width: 90%;
 	height: auto;
 	overflow: hidden;
@@ -575,8 +575,6 @@ main {
 
 #piu-scambiati {
 	background-color: var(--background-200);
-	padding: 2em;
-	gap: 2em;
 }
 
 

@@ -25,7 +25,7 @@ then in a new terminal
 ssh-copy-id -p 8022 USERNAME@127.0.0.1
 ```
 
-To upload changes to the server (keys need to have been set up first):
+To upload changes to the tecweb server (keys need to have been set up first):
 - open tunnel:
     ```bash
     ssh paolotti.studenti.math.unipd.it -l USERNAME -L8080:tecweb:80 -L8443:tecweb:443 -L8022:tecweb:22
@@ -39,3 +39,14 @@ To upload changes to the server (keys need to have been set up first):
     ```bash
     [ "$(basename "$PWD")" != "public_html" ] && cd public_html; username=$(whoami) && DB_HOST="localhost" DB_DATABASE="$username" DB_USERNAME="$username" DB_PASSWORD="$(cat ../pwd_db_2024-25.txt)" PREFIX="/$username" && echo -e "DB_HOST=$DB_HOST\nDB_DATABASE=$DB_DATABASE\nDB_USERNAME=$DB_USERNAME\nDB_PASSWORD=$DB_PASSWORD\nPREFIX=$PREFIX" > .env
     ```
+
+To upload to the CAA server:
+- upload files: 
+  ```bash
+    rsync -avrP --exclude-from=.rsyncignore . abernard@caa.studenti.math.unipd.it:public_html
+    ```
+- generate `.env`
+    ```bash
+    [ "$(basename "$PWD")" != "public_html" ] && cd public_html; username=$(whoami) && DB_HOST="localhost" DB_DATABASE="$username" DB_USERNAME="$username" DB_PASSWORD="$(cat ../pwd_db_caa.txt)" PREFIX="/$username" && echo -e "DB_HOST=$DB_HOST\nDB_DATABASE=$DB_DATABASE\nDB_USERNAME=$DB_USERNAME\nDB_PASSWORD=$DB_PASSWORD\nPREFIX=$PREFIX" > .env
+    ```
+- import db with the script `utils/import_db_tecweb.sh`

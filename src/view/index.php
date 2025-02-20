@@ -15,5 +15,6 @@ $index = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'index.html');
 
 $page = str_replace('<!-- [content] -->', $index, $page);
 $page = str_replace('<!-- [piuScambiati] -->', $mostTradedCoversHTML, $page);
+$page = str_replace('<!-- [keywords] -->', 'scambio libri in Italia, libri, scambio, libri Italia, trova libri, BookOverflow', $page);
 $page = populateWebdirPrefixPlaceholders($page);
 echo $page;

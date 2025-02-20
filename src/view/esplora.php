@@ -20,7 +20,7 @@ $esplora = getMatchPerTe($esplora);
 
 $esplora = getPotrebbePiacerti($esplora);
 
-
+$page = str_replace('<!-- [keywords] -->', 'esplora libri, esplora libri scambiati in Italia, esplora libri più scambiati in Italia, esplora tutti i libri in Italia, BookOverflow', $page);
 $page = str_replace('<!-- [content] -->', $esplora, $page);
 $page = populateWebdirPrefixPlaceholders($page);
 echo $page;

@@ -9,6 +9,7 @@ require_once $GLOBALS['MODEL_PATH'] . 'nyt-libri.php';
 ensure_session();
 
 $page = getTemplatePage("Esplora tutti");
+$page = str_replace('<!-- [keywords] -->', 'tutti libri scambiati Italia, libri, libri Italia, trova libri, BookOverflow', $page);
 $esplora = file_get_contents($GLOBALS['TEMPLATES_PATH'] . 'esplora-tutti.html');
 $esplora = str_replace('<!-- [esploraTuttiTitolo] -->', 'Esplora tutti', $esplora);
 

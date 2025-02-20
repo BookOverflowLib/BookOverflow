@@ -145,6 +145,7 @@ if (is_logged_in()) {
 
 $libro_page = str_replace('<!-- [scambiPossibili] -->', $scambi_html, $libro_page);
 
+$page = str_replace('<!-- [keywords] -->', $libro['titolo'] . ', ' . $libro['ISBN'] . ',' . ' libro, scambio libro in Italia, BookOverflow', $page);
 $page = str_replace('<!-- [content] -->', $libro_page, $page);
 $page = populateWebdirPrefixPlaceholders($page);
 $page = addErrorsToPage($page);

@@ -3,6 +3,6 @@ Disallow: /
 Allow: /$
 Allow: /esplora
 Allow: /esplora/esplora-tutti
-Allow: esplora/piu-scambiati
+Allow: /esplora/piu-scambiati
 Allow: /come-funziona
 Allow: /libro/

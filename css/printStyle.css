@@ -4,6 +4,49 @@
 	font-size: medium;
 }
 
+:root {
+	--svg-invert: invert(0);
+	--text: #18140c;
+	--link-visited: #5a3c10;
+
+	--text-opposite: #f3efe6;
+	--text-error: #911f1f;
+
+	--neutral-50: #e7e5e4;
+	--neutral-100: #d6d3d1;
+	--neutral-200: #a8a29e;
+	--neutral-300: #78716c;
+	--neutral-400: #57534e;
+	--neutral-500: #44403c;
+
+	--background: #f8f6f1;
+	--background-50: #faf5eb;
+	--background-100: #f5ebd6;
+	--background-100-alpha: #f7ead4cc;
+	--background-200: #ebd6ad;
+	--background-300: #e0c285;
+	--background-400: #d6ad5c;
+	--background-500: #cc9933;
+	--background-600: #a37a29;
+
+	--text-800: #5f3d07;
+
+	--primary-200: #f3d8a5;
+	--primary-300: #edc478;
+
+	--secondary-50: #f4f6ee;
+	--secondary-100: #eaeedd;
+	--secondary-200: #d5dcbc;
+	--secondary-300: #c0cb9a;
+	--secondary-500: #95a857;
+
+	--accent-200: #e2b6c2;
+	--accent-300: #d392a4;
+	--accent-400: #c56d86;
+	--accent-500: #b64968;
+	--accent-600: #923a53;
+}
+
 body {
 	display: flex;
 	flex-direction: column;

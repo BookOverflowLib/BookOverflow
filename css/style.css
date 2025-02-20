@@ -538,6 +538,7 @@ footer > .logo {
 }
 
 main {
+	min-height: 30em;
 	margin-top: 2em;
 }
 

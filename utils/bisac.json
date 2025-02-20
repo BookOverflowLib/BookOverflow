@@ -1,214 +1,214 @@
 {
-    "study aids": {
-        "name": "Aiuti allo studio",
-        "emoji": "📝"
-    },
-    "pets": {
-        "name": "Animali",
-        "emoji": "🐾"
-    },
-    "antiques & collectibles": {
-        "name": "Antichi e da collezione",
-        "emoji": "🏺"
-    },
-    "architecture": {
-        "name": "Architettura",
-        "emoji": "🏛"
-    },
-    "art": {
-        "name": "Arte",
-        "emoji": "🎨"
-    },
-    "language arts & disciplines": {
-        "name": "Arti e discipline linguistiche",
-        "emoji": "🗣"
-    },
-    "performing arts": {
-        "name": "Arti performative",
-        "emoji": "🎭"
-    },
-    "crafts & hobbies": {
-        "name": "Artigianato e hobby",
-        "emoji": "🧶"
-    },
-    "self-help": {
-        "name": "Crescita Personale",
-        "emoji": "🌱"
-    },
-    "bibles": {
-        "name": "Bibbia",
-        "emoji": "⛪️"
-    },
-    "biography & autobiography": {
-        "name": "Biografie e Autobiografie",
-        "emoji": "👤"
-    },
-    "house & home": {
-        "name": "Casa",
-        "emoji": "🏠"
-    },
-    "literary collections": {
-        "name": "Collezioni letterarie",
-        "emoji": "📚"
-    },
-    "computers": {
-        "name": "Computers",
-        "emoji": "💻"
-    },
-    "body, mind & spirit": {
-        "name": "Corpo, mente e spirito",
-        "emoji": "🧘"
-    },
-    "literary criticism": {
-        "name": "Critica letteraria",
-        "emoji": "📖"
-    },
-    "cooking": {
-        "name": "Cucina",
-        "emoji": "👨‍🍳"
-    },
-    "design": {
-        "name": "Design",
-        "emoji": "✏️"
-    },
-    "fiction": {
-        "name": "Di fantasia",
-        "emoji": "🦄"
-    },
-    "drama": {
-        "name": "Drammatico",
-        "emoji": "🎭"
-    },
-    "business & economics": {
-        "name": "Economia e Business",
-        "emoji": "💼"
-    },
-    "family & relationships": {
-        "name": "Famiglia e relazioni",
-        "emoji": "👨‍👩‍👧‍👦"
-    },
-    "philosophy": {
-        "name": "Filosofia",
-        "emoji": "🤔"
-    },
-    "photography": {
-        "name": "Fotografia",
-        "emoji": "📸"
-    },
-    "comics & graphic novels": {
-        "name": "Fumetti e graphic novels",
-        "emoji": "💥"
-    },
-    "gardening": {
-        "name": "Giardinaggio",
-        "emoji": "🌺"
-    },
-    "games & activities": {
-        "name": "Giochi e attività",
-        "emoji": "🎮"
-    },
-    "education": {
-        "name": "Istruzione",
-        "emoji": "📚"
-    },
-    "law": {
-        "name": "Legge",
-        "emoji": "⚖️"
-    },
-    "mathematics": {
-        "name": "Matematica",
-        "emoji": "🔢"
-    },
-    "medical": {
-        "name": "Medicina",
-        "emoji": "⚕️"
-    },
-    "music": {
-        "name": "Musica",
-        "emoji": "🎵"
-    },
-    "juvenile fiction": {
-        "name": "Narrativa giovanile",
-        "emoji": "👶"
-    },
-    "young adult fiction": {
-        "name": "Narrativa per giovani adulti",
-        "emoji": "👱"
-    },
-    "nature": {
-        "name": "Natura",
-        "emoji": "🌿"
-    },
-    "poetry": {
-        "name": "Poesia",
-        "emoji": "🖋"
-    },
-    "psychology": {
-        "name": "Psicologia",
-        "emoji": "🧠"
-    },
-    "religion": {
-        "name": "Religione",
-        "emoji": "🙏"
-    },
-    "reference": {
-        "name": "Riferimenti Bibliografici",
-        "emoji": "📖"
-    },
-    "young adult nonfiction": {
-        "name": "Saggistica per giovani adulti",
-        "emoji": "👨‍🎓"
-    },
-    "juvenile nonfiction": {
-        "name": "Saggistica per ragazzi",
-        "emoji": "🧑"
-    },
-    "health & fitness": {
-        "name": "Salute e fitness",
-        "emoji": "💪"
-    },
-    "science": {
-        "name": "Scienza",
-        "emoji": "🔬"
-    },
-    "political science": {
-        "name": "Scienze politiche",
-        "emoji": "🏛"
-    },
-    "social science": {
-        "name": "Scienze sociali",
-        "emoji": "👥"
-    },
-    "sports & recreation": {
-        "name": "Sport e attività ricreative",
-        "emoji": "⚽️"
-    },
-    "history": {
-        "name": "Storia",
-        "emoji": "📜"
-    },
-    "foreign language study": {
-        "name": "Studio di lingue straniere",
-        "emoji": "🌍"
-    },
-    "technology & engineering": {
-        "name": "Tecnologia e ingegneria",
-        "emoji": "⚙️"
-    },
-    "transportation": {
-        "name": "Trasporti",
-        "emoji": "🚗"
-    },
-    "true crime": {
-        "name": "True crime",
-        "emoji": "🔍"
-    },
-    "humor": {
-        "name": "Umorismo",
-        "emoji": "🤣"
-    },
-    "travel": {
-        "name": "Viaggio",
-        "emoji": "✈️"
-    }
+	"study aids": {
+		"name": "Aiuti allo studio",
+		"emoji": "📝"
+	},
+	"pets": {
+		"name": "Animali",
+		"emoji": "🐾"
+	},
+	"antiques & collectibles": {
+		"name": "Antichi e da collezione",
+		"emoji": "🏺"
+	},
+	"architecture": {
+		"name": "Architettura",
+		"emoji": "🏗️"
+	},
+	"art": {
+		"name": "Arte",
+		"emoji": "🎨"
+	},
+	"language arts & disciplines": {
+		"name": "Arti e discipline linguistiche",
+		"emoji": "📢"
+	},
+	"performing arts": {
+		"name": "Arti performative",
+		"emoji": "🎭"
+	},
+	"crafts & hobbies": {
+		"name": "Artigianato e hobby",
+		"emoji": "🧶"
+	},
+	"self-help": {
+		"name": "Crescita Personale",
+		"emoji": "🌱"
+	},
+	"bibles": {
+		"name": "Bibbia",
+		"emoji": "⛪️"
+	},
+	"biography & autobiography": {
+		"name": "Biografie e Autobiografie",
+		"emoji": "👤"
+	},
+	"house & home": {
+		"name": "Casa",
+		"emoji": "🏠"
+	},
+	"literary collections": {
+		"name": "Collezioni letterarie",
+		"emoji": "📚"
+	},
+	"computers": {
+		"name": "Computers",
+		"emoji": "💻"
+	},
+	"body, mind & spirit": {
+		"name": "Corpo, mente e spirito",
+		"emoji": "🧘"
+	},
+	"literary criticism": {
+		"name": "Critica letteraria",
+		"emoji": "📖"
+	},
+	"cooking": {
+		"name": "Cucina",
+		"emoji": "👨‍🍳"
+	},
+	"design": {
+		"name": "Design",
+		"emoji": "✏️"
+	},
+	"fiction": {
+		"name": "Di fantasia",
+		"emoji": "🦄"
+	},
+	"drama": {
+		"name": "Drammatico",
+		"emoji": "🎭"
+	},
+	"business & economics": {
+		"name": "Economia e Business",
+		"emoji": "💼"
+	},
+	"family & relationships": {
+		"name": "Famiglia e relazioni",
+		"emoji": "👨‍👩‍👧‍👦"
+	},
+	"philosophy": {
+		"name": "Filosofia",
+		"emoji": "🤔"
+	},
+	"photography": {
+		"name": "Fotografia",
+		"emoji": "📸"
+	},
+	"comics & graphic novels": {
+		"name": "Fumetti e graphic novels",
+		"emoji": "💥"
+	},
+	"gardening": {
+		"name": "Giardinaggio",
+		"emoji": "🌺"
+	},
+	"games & activities": {
+		"name": "Giochi e attività",
+		"emoji": "🎮"
+	},
+	"education": {
+		"name": "Istruzione",
+		"emoji": "📚"
+	},
+	"law": {
+		"name": "Legge",
+		"emoji": "⚖️"
+	},
+	"mathematics": {
+		"name": "Matematica",
+		"emoji": "🔢"
+	},
+	"medical": {
+		"name": "Medicina",
+		"emoji": "⚕️"
+	},
+	"music": {
+		"name": "Musica",
+		"emoji": "🎵"
+	},
+	"juvenile fiction": {
+		"name": "Narrativa giovanile",
+		"emoji": "👶"
+	},
+	"young adult fiction": {
+		"name": "Narrativa per giovani adulti",
+		"emoji": "👱"
+	},
+	"nature": {
+		"name": "Natura",
+		"emoji": "🌿"
+	},
+	"poetry": {
+		"name": "Poesia",
+		"emoji": "✍️"
+	},
+	"psychology": {
+		"name": "Psicologia",
+		"emoji": "🧠"
+	},
+	"religion": {
+		"name": "Religione",
+		"emoji": "🙏"
+	},
+	"reference": {
+		"name": "Riferimenti Bibliografici",
+		"emoji": "📖"
+	},
+	"young adult nonfiction": {
+		"name": "Saggistica per giovani adulti",
+		"emoji": "👨‍🎓"
+	},
+	"juvenile nonfiction": {
+		"name": "Saggistica per ragazzi",
+		"emoji": "🧑"
+	},
+	"health & fitness": {
+		"name": "Salute e fitness",
+		"emoji": "💪"
+	},
+	"science": {
+		"name": "Scienza",
+		"emoji": "🔬"
+	},
+	"political science": {
+		"name": "Scienze politiche",
+		"emoji": "🧑‍⚖️"
+	},
+	"social science": {
+		"name": "Scienze sociali",
+		"emoji": "👥"
+	},
+	"sports & recreation": {
+		"name": "Sport e attività ricreative",
+		"emoji": "⚽️"
+	},
+	"history": {
+		"name": "Storia",
+		"emoji": "📜"
+	},
+	"foreign language study": {
+		"name": "Studio di lingue straniere",
+		"emoji": "🌍"
+	},
+	"technology & engineering": {
+		"name": "Tecnologia e ingegneria",
+		"emoji": "⚙️"
+	},
+	"transportation": {
+		"name": "Trasporti",
+		"emoji": "🚗"
+	},
+	"true crime": {
+		"name": "True crime",
+		"emoji": "🔍"
+	},
+	"humor": {
+		"name": "Umorismo",
+		"emoji": "🤣"
+	},
+	"travel": {
+		"name": "Viaggio",
+		"emoji": "✈️"
+	}
 }

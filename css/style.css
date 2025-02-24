@@ -8,8 +8,8 @@
 	--link-visited: #5a3c10;
 	/* --link-visited-alt: #762900; */
 	/* --link-visited-alt: #43804d; */
-	--link-visited-alt: #760000;
-	--link-visited-alt2: #762900;
+	--link-visited-alt: #762900;
+	--link-visited-alt2: #664411;
 
 	--text-opposite: #f3efe6;
 	--text-error: #911f1f;
@@ -624,7 +624,6 @@ main {
 	display: block;
 	border-radius: inherit;
 	text-decoration: underline;
-	transition: text-decoration-color 0.5s ease-in-out; /*Placebo?*/
 }
 
 .libro > a > img {
@@ -1309,18 +1308,25 @@ li.activePage {
 	align-items: center;
 	text-decoration: none;
 	transition: all 0.3s ease-in-out;
+	text-decoration: underline;
+	--libro-table-underline-disabled: var(--background-100);
 }
 
 .book-row .book-info > a:hover {
 	background-color: var(--background-200);
 	border-bottom-right-radius: 1em;
 	border-top-right-radius: 1em;
+	--libro-table-underline-disabled: var(--background-200);
 }
 
 .book-row .book-info > a > div {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;
+}
+
+.book-row .book-info > a:visited {
+	text-decoration-color: var(--libro-table-underline-disabled);
 }
 
 .book-buttons {
@@ -1516,11 +1522,19 @@ dialog::backdrop {
 	padding: 0.5em;
 	border-radius: 1em;
 	transition: all 0.3s ease-in-out;
+	text-decoration: underline;
+	--dati-utente-underline-disabled: var(--background);
 }
 
 .storico-utente-scambio > div > a:hover {
+	--dati-utente-underline-disabled: var(--background-100);
 	background-color: var(--background-100);
 }
+
+.storico-utente-scambio > div > a:visited{
+	text-decoration-color: var(--dati-utente-underline-disabled);
+}
+
 
 .storico-dai > div > div,
 .storico-ricevi > div > div,
@@ -1838,10 +1852,18 @@ textarea {
 	gap: 1em;
 	transition: all ease-in 0.3s;
 	border-radius: 1em;
+	text-decoration: underline;
+	--dati-recensore-underline-disabled: var(--background-100);
 }
 .dati-recensore:hover {
+	--dati-recensore-underline-disabled: var(--background);
 	background-color: var(--background);
 }
+
+.dati-recensore:visited {
+	text-decoration-color: var(--dati-recensore-underline-disabled);
+}
+
 .dati-recensore img {
 	width: 4em;
 	height: 4em;

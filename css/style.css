@@ -601,6 +601,7 @@ main {
 }
 
 .libro {
+	--libro-underline-disabled: var(--background);
 	max-width: 10em;
 	max-height: 20em;
 	padding: 1em;
@@ -609,13 +610,15 @@ main {
 }
 
 .libro:hover {
+	--libro-underline-disabled: var(--background-100);
 	background-color: var(--background-100);
 }
 
 .libro > a {
 	display: block;
 	border-radius: inherit;
-	text-decoration: none;
+	text-decoration: underline;
+	transition: text-decoration-color 0.5s ease-in-out; /*Placebo?*/
 }
 
 .libro > a > img {
@@ -629,6 +632,15 @@ main {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+
+.libro > a:visited {
+	color: var(--link-visited);
+	text-decoration-color: var(--libro-underline-disabled);
+}
+
+.libro-index {
+	--libro-underline-disabled: var(--background-200);
 }
 
 .titolo-libro {

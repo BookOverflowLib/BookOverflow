@@ -6,10 +6,6 @@
 	--svg-invert: invert(0);
 	--text: #18140c;
 	--link-visited: #5a3c10;
-	/* --link-visited-alt: #762900; */
-	/* --link-visited-alt: #43804d; */
-	--link-visited-alt: #762900;
-	--link-visited-alt2: #664411;
 
 	--text-opposite: #f3efe6;
 	--text-error: #911f1f;
@@ -53,8 +49,6 @@
 	--svg-invert: invert(1);
 	--text: #ffffff;
 	--link-visited: #e7ccb1;
-	--link-visited-alt: #e7ccb1;
-	--link-visited-alt2: #e7ccb1;
 
 	--text-opposite: #f3efe6;
 	--text-error: #ff525f;
@@ -1264,7 +1258,7 @@ li.activePage {
 }
 
 .book-table a:visited {
-    color: var(--link-visited-alt);
+    color: var(--link-visited);
 }
 
 .book-table > :nth-child(even) {
@@ -1476,7 +1470,7 @@ dialog::backdrop {
 }
 
 .storico-table a:visited {
-	color: var(--link-visited-alt2);
+	color: var(--link-visited);
 }
 
 .storico-row {
@@ -1501,7 +1495,7 @@ dialog::backdrop {
 }
 
 .storico-books a:visited {
-	color: var(--link-visited-alt2);
+	color: var(--link-visited);
 }
 
 .storico-dai > div,

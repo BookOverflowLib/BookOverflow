@@ -53,6 +53,8 @@
 	--svg-invert: invert(1);
 	--text: #ffffff;
 	--link-visited: #e7ccb1;
+	--link-visited-alt: #e7ccb1;
+	--link-visited-alt2: #e7ccb1;
 
 	--text-opposite: #f3efe6;
 	--text-error: #ff525f;

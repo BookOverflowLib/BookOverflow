@@ -5,7 +5,8 @@
 [data-theme='light'] {
 	--svg-invert: invert(0);
 	--text: #18140c;
-	--link-visited: #5a3c10;
+	/* --link-visited: #633B00; */
+	--link-visited: #762900;
 
 	--text-opposite: #f3efe6;
 	--text-error: #911f1f;
@@ -49,6 +50,8 @@
 	--svg-invert: invert(1);
 	--text: #ffffff;
 	--link-visited: #e7ccb1;
+	--link-visited: #F6C27E;
+	--link-visited: #FFD298;
 
 	--text-opposite: #f3efe6;
 	--text-error: #ff525f;
@@ -538,6 +541,9 @@ footer > .logo {
 .underline {
 	text-decoration: underline;
 }
+.non-underlined {
+	text-decoration: none;
+}
 
 main {
 	min-height: 30em;
@@ -610,12 +616,19 @@ main {
 
 .libro:hover {
 	background-color: var(--background-100);
+	text-decoration: underline;
+	text-decoration-color: var(--link-visited);
+	text-underline-offset: 4px;
 }
 
 .libro > a {
 	display: block;
 	border-radius: inherit;
 	text-decoration: none;
+}
+
+.libro > a:visited {
+	color: var(--link-visited);
 }
 
 .libro > a > img {

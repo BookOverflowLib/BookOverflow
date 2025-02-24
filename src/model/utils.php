@@ -496,6 +496,28 @@ function getGeneriPreferiti($generi)
  */
 function getLibriCopertinaGrande($libri, $max_risultati): string
 {
+	return getLibriCopertinaGrandeCommon($libri, $max_risultati, 0);
+}
+
+function getLibriCopertinaGrandeIndex($libri, $max_risultati): string
+{
+	return getLibriCopertinaGrandeCommon($libri, $max_risultati, 1);
+}
+
+function getLibriCopertinaGrandeCommon ($libri, $max_risultati, $page): string
+{
+	$css_classes = '';
+	switch ($page) {
+		case 0: 
+			$css_classes = 'libro';
+			break;
+		case 1:
+			$css_classes = 'libro libro-index';
+			break;
+		default:
+			$css_classes = 'libro';
+			break;
+	}
 	$output = '';
 	if (!$libri || $libri == null) {
 		return '<p class="carosello-libri-vuoto">Non ci sono ancora libri in questa lista!</p>';
@@ -505,7 +527,7 @@ function getLibriCopertinaGrande($libri, $max_risultati): string
 		$path_copertina = $libri[$i]['path_copertina'];
 		$prefix = getPrefix();
 		$libroTemplate = <<<HTML
-		<div class="libro">
+		<div class="{$css_classes}">
 			<a href="{$prefix}/libro/{$libri[$i]['ISBN']}" aria-label="{$libri[$i]['titolo']}, {$libri[$i]['autore']}">
 				<img alt="" src="{$path_copertina}" width="150" />
 				<p class="titolo-libro">{$libri[$i]["titolo"]}</p>

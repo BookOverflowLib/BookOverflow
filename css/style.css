@@ -607,6 +607,7 @@ main {
 }
 
 .libro {
+	--libro-underline-disabled: var(--background);
 	max-width: 10em;
 	max-height: 20em;
 	padding: 1em;
@@ -615,6 +616,7 @@ main {
 }
 
 .libro:hover {
+	--libro-underline-disabled: var(--background-100);
 	background-color: var(--background-100);
 	text-decoration: underline;
 	text-decoration-color: var(--link-visited);
@@ -624,7 +626,7 @@ main {
 .libro > a {
 	display: block;
 	border-radius: inherit;
-	text-decoration: none;
+	text-decoration: underline;
 }
 
 .libro > a:visited {
@@ -642,6 +644,15 @@ main {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+
+.libro > a:visited {
+	color: var(--link-visited);
+	text-decoration-color: var(--libro-underline-disabled);
+}
+
+.libro-index {
+	--libro-underline-disabled: var(--background-200);
 }
 
 .titolo-libro {
@@ -1259,6 +1270,10 @@ li.activePage {
 	border-radius: 1em;
 }
 
+.book-table a:visited {
+    color: var(--link-visited);
+}
+
 .book-table > :nth-child(even) {
 	box-shadow: inset 0 0 0 2px var(--primary-200);
 	background-color: var(--background-100);
@@ -1300,18 +1315,25 @@ li.activePage {
 	align-items: center;
 	text-decoration: none;
 	transition: all 0.3s ease-in-out;
+	text-decoration: underline;
+	--libro-table-underline-disabled: var(--background-100);
 }
 
 .book-row .book-info > a:hover {
 	background-color: var(--background-200);
 	border-bottom-right-radius: 1em;
 	border-top-right-radius: 1em;
+	--libro-table-underline-disabled: var(--background-200);
 }
 
 .book-row .book-info > a > div {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;
+}
+
+.book-row .book-info > a:visited {
+	text-decoration-color: var(--libro-table-underline-disabled);
 }
 
 .book-buttons {
@@ -1460,6 +1482,10 @@ dialog::backdrop {
 	border-radius: 1em;
 }
 
+.storico-table a:visited {
+	color: var(--link-visited);
+}
+
 .storico-row {
 	padding: 1em;
 	display: grid;
@@ -1481,6 +1507,10 @@ dialog::backdrop {
 	align-items: start;
 }
 
+.storico-books a:visited {
+	color: var(--link-visited);
+}
+
 .storico-dai > div,
 .storico-ricevi > div,
 .storico-utente-scambio > div > a {
@@ -1499,11 +1529,19 @@ dialog::backdrop {
 	padding: 0.5em;
 	border-radius: 1em;
 	transition: all 0.3s ease-in-out;
+	text-decoration: underline;
+	--dati-utente-underline-disabled: var(--background);
 }
 
 .storico-utente-scambio > div > a:hover {
+	--dati-utente-underline-disabled: var(--background-100);
 	background-color: var(--background-100);
 }
+
+.storico-utente-scambio > div > a:visited{
+	text-decoration-color: var(--dati-utente-underline-disabled);
+}
+
 
 .storico-dai > div > div,
 .storico-ricevi > div > div,
@@ -1821,10 +1859,18 @@ textarea {
 	gap: 1em;
 	transition: all ease-in 0.3s;
 	border-radius: 1em;
+	text-decoration: underline;
+	--dati-recensore-underline-disabled: var(--background-100);
 }
 .dati-recensore:hover {
+	--dati-recensore-underline-disabled: var(--background);
 	background-color: var(--background);
 }
+
+.dati-recensore:visited {
+	text-decoration-color: var(--dati-recensore-underline-disabled);
+}
+
 .dati-recensore img {
 	width: 4em;
 	height: 4em;

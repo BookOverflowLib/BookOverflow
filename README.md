@@ -1,5 +1,5 @@
 # BookOverflow
-<p style="text-align: center;"> [Live Demo](https://bookoverflow.lribon.duckdns.org/) </p>
+[Live Demo](https://bookoverflow.lribon.duckdns.org/)
 ## Usage
 If it is your first time running this docker or if you did changes to the Dockerfile/docker-compose:
 ```bash
